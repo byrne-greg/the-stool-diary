@@ -4,30 +4,39 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { PageCenterContent } from '../page-layout'
 
-const Footer = ({ siteTitle }) => {
-  // data
-  // const { site: { siteMetadata } } = useStaticQuery(graphql`
-  //   query FooterQuery {
-  //     site {
-  //       siteMetadata {
-  //         author
-  //         inceptionYear
-  //       }
-  //     }
-  //   }
-  // `)
-  // const { author, inceptionYear } = siteMetadata
-  // const currentYear = new Date().getFullYear()
-
+const Footer = () => {
+  const { currentYear, inceptionYear, author } = getFooterData();
   return (
     <PageCenterContent>
       <footer>
-        © {new Date().getFullYear()}, Built with
-        {` `}
-        <a href="https://www.gatsbyjs.org">Gatsby</a>
+        {deriveFooterText(currentYear, inceptionYear, author)}
       </footer>
     </PageCenterContent>
   );
 };
-
 export default Footer
+
+
+function getFooterData() {
+  const { site: { siteMetadata } } = useStaticQuery(graphql`
+  query FooterQuery {
+    site {
+      siteMetadata {
+        author
+        inceptionYear
+      }
+    }
+  }
+`)
+  const { author, inceptionYear } = siteMetadata
+  const currentYear = new Date().getFullYear()
+  return { author: author, inceptionYear: inceptionYear, currentYear: currentYear }
+}
+
+function deriveFooterText(currentYear, inceptionYear, author) {
+  const baseCopyrightText = `© ${inceptionYear}`
+  const copyright = currentYear > inceptionYear ? `${baseCopyrightText}-${currentYear}` : baseCopyrightText
+  return copyright + " // " + author
+}
+
+
