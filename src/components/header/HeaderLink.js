@@ -7,8 +7,8 @@ const LinkStyle = styled(GatsbyLink)`
   text-decoration: none;
 `
 
-const Link = ({ to = "/", children }) => (
+const HeaderLink = ({ to = "/", children }) => (
   <LinkStyle to="/">{children}</LinkStyle>
 )
 
-export default Link
+export default HeaderLink

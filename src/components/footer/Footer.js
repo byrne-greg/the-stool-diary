@@ -3,7 +3,6 @@ import { useStaticQuery, graphql } from 'gatsby'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { PageCenterContent } from '../page-layout'
-import { Link } from '../link'
 
 const Footer = ({ siteTitle }) => {
   // data

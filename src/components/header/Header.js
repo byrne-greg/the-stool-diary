@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { PageCenterContent } from "../page-layout";
-import { Link } from '../link';
+import { HeaderLink } from '.';
 
 const HeaderStyle = styled.header`
   background: rebeccapurple;
@@ -13,7 +13,7 @@ const Header = ({ siteTitle }) => (
   <HeaderStyle>
     <PageCenterContent>
       <h1 style={{ margin: 0 }}>
-        <Link>{siteTitle}</Link>
+        <HeaderLink>{siteTitle}</HeaderLink>
       </h1>
     </PageCenterContent>
   </HeaderStyle>
