@@ -1,13 +1,17 @@
 import React from 'react'
-import { useStaticQuery, graphql } from 'gatsby'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import { PageCenterContent } from '../page-layout'
 
 const CardStyle = styled.div`
-  padding: 1rem;
+  padding: 0.5rem 1rem;
   margin: 0.5rem 0.5rem;
   border: 1px solid grey;
+  width: 345px;
+
+  // remove any margin from any child elements inserted via stylesheet
+  * {
+    margin: 0;
+  }
 `
 
 const Card = ({ children }) => {
