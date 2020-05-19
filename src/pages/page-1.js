@@ -1,6 +1,6 @@
 import React from "react"
 import { Link } from "gatsby"
-import { PageLayout } from "../components/page-layout"
+import { PageLayout } from "../components/layout"
 import { ImgGatsbyAstronaut } from "../components/images"
 
 const FirstPage = () => (

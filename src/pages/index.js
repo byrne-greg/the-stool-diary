@@ -1,6 +1,6 @@
 import React from "react"
 import { Link } from "gatsby"
-import { PageLayout } from "../components/page-layout"
+import { PageLayout } from "../components/layout"
 import { Card, CardContent, CardContainer, CardTitle, CardMedia, CardActions } from "../components/card"
 import { ImgGatsbyAstronaut } from "../components/images"
 
