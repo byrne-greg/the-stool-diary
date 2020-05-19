@@ -7,11 +7,6 @@ const CardStyle = styled.div`
   margin: 0.5rem 0.5rem;
   border: 1px solid grey;
   width: 345px;
-
-  // remove any margin from any child elements inserted via stylesheet
-  * {
-    margin: 0;
-  }
 `
 
 const Card = ({ children }) => {
