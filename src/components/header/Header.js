@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import { PageCenterContent } from "../page-layout";
+import { PageCenter } from "../page-layout";
 import { HeaderLink } from '.';
 
 const HeaderStyle = styled.header`
@@ -11,11 +11,11 @@ const HeaderStyle = styled.header`
 
 const Header = ({ siteTitle }) => (
   <HeaderStyle>
-    <PageCenterContent>
+    <PageCenter>
       <h1 style={{ margin: 0 }}>
         <HeaderLink>{siteTitle}</HeaderLink>
       </h1>
-    </PageCenterContent>
+    </PageCenter>
   </HeaderStyle>
 )
 

@@ -2,16 +2,16 @@ import React from 'react'
 import { useStaticQuery, graphql } from 'gatsby'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import { PageCenterContent } from '../page-layout'
+import { PageCenter } from '../page-layout'
 
 const Footer = () => {
   const { currentYear, inceptionYear, author } = getFooterData();
   return (
-    <PageCenterContent>
+    <PageCenter>
       <footer>
         {deriveFooterText(currentYear, inceptionYear, author)}
       </footer>
-    </PageCenterContent>
+    </PageCenter>
   );
 };
 export default Footer
