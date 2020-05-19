@@ -1,10 +1,10 @@
 import React from "react"
 import { Link } from "gatsby"
-import { Layout } from "../components/page-layout"
+import { PageLayout } from "../components/page-layout"
 import { ImgGatsbyAstronaut } from "../components/images"
 
 const FirstPage = () => (
-  <Layout title="Page one">
+  <PageLayout title="Page one">
     <h1>Hi from the first page</h1>
     <p>Welcome to your new Gatsby site.</p>
     <p>Now go build something great.</p>
@@ -19,7 +19,7 @@ const FirstPage = () => (
         <Link to="/page-2/">Go to page 2</Link>
       </li>
     </ul>
-  </Layout>
+  </PageLayout>
 )
 
 export default FirstPage

@@ -1,4 +1,5 @@
 import PageCenter from "./PageCenter"
-import Layout from "./Layout"
+import PageLayout from "./PageLayout"
 
-export { Layout, PageCenter }
+export { PageLayout, PageCenter }
+export default PageLayout

@@ -14,7 +14,7 @@ import { PageCenter } from "."
 import { SEO } from "../meta"
 import "./layout.css"
 
-const Layout = ({ title, children }) => {
+const PageLayout = ({ title, children }) => {
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -37,8 +37,8 @@ const Layout = ({ title, children }) => {
   )
 }
 
-Layout.propTypes = {
+PageLayout.propTypes = {
   children: PropTypes.node.isRequired,
 }
 
-export default Layout
+export default PageLayout

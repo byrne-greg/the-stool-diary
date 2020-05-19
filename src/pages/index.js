@@ -1,11 +1,11 @@
 import React from "react"
 import { Link } from "gatsby"
-import { Layout } from "../components/page-layout"
+import { PageLayout } from "../components/page-layout"
 import { Card, CardContent, CardContainer, CardTitle, CardMedia, CardActions } from "../components/card"
 import { ImgGatsbyAstronaut } from "../components/images"
 
 const IndexPage = () => (
-  <Layout title="Home">
+  <PageLayout title="Home">
     <div>
       <h1>Hi people</h1>
       <CardContainer>
@@ -47,7 +47,7 @@ const IndexPage = () => (
         <Link to="/page-2/">Go to page 2</Link>
       </li>
     </ul>
-  </Layout>
+  </PageLayout>
 
 )
 
