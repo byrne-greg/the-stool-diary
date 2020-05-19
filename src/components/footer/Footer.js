@@ -2,7 +2,7 @@ import React from 'react'
 import { useStaticQuery, graphql } from 'gatsby'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import { PageCenter } from '../page-layout'
+import { PageCenter } from '../layout'
 
 const Footer = () => {
   const { currentYear, inceptionYear, author } = getFooterData();

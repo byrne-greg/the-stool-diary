@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import { PageCenter } from "../page-layout";
+import { PageCenter } from "../layout";
 import { HeaderLink } from '.';
 
 const HeaderStyle = styled.header`
