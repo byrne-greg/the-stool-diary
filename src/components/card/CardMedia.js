@@ -6,10 +6,10 @@ const CardMediaStyle = styled.div`
   padding: 0.5rem 0;
 `
 
-const CardMedia = ({ gatsbyImageComp }) => {
+const CardMedia = ({ imgComp }) => {
   return (
     <CardMediaStyle>
-      {gatsbyImageComp}
+      {imgComp}
     </CardMediaStyle>
   )
 }

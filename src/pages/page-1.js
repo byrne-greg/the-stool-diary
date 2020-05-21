@@ -21,14 +21,14 @@ const IndexPage = () => (
           </CardActions>
         </Card>
         <Card>
-          <CardMedia gatsbyImageComp={<ImgGatsbyAstronaut />} />
+          <CardMedia imgComp={<ImgGatsbyAstronaut />} />
           <CardTitle>Card 2</CardTitle>
           <CardContent>
             This is Card Two content with just media
           </CardContent>
         </Card>
         <Card>
-          <CardMedia gatsbyImageComp={<ImgGatsbyAstronaut />} />
+          <CardMedia imgComp={<ImgGatsbyAstronaut />} />
           <CardTitle>Card 3</CardTitle>
           <CardContent>
             This is Card Three content that is much bigger than the other cards and has both actions and media.

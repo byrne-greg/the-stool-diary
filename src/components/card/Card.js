@@ -6,7 +6,7 @@ const CardStyle = styled.div`
   padding: 0.5rem 1rem;
   margin: 0.5rem 0.5rem;
   border: 1px solid grey;
-  width: 345px;
+  width: 22rem;
 `
 
 const Card = ({ children }) => {
