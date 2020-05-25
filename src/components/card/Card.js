@@ -7,6 +7,8 @@ const CardStyle = styled.div`
   margin: 0.5rem 0.5rem;
   border: 1px solid grey;
   width: 22rem;
+  display: flex;
+  flex-direction: column;
 `
 
 const Card = ({ children }) => {
