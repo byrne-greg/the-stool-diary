@@ -3,7 +3,7 @@ import { CardContainer, Card, CardMedia, CardTitle, CardContent, CardActions } f
 import { ImgStoolType1, ImgStoolType2, ImgStoolType3, ImgStoolType4, ImgStoolType5, ImgStoolType6, ImgStoolType7 } from "../../images"
 
 const StoolTypeCapture = () => {
-  const [stoolType, setStoolType] = useState(null);
+  const [selectedStoolType, setSelectedStoolType] = useState(null);
 
   const stoolClassifications = [
     {
@@ -43,22 +43,48 @@ const StoolTypeCapture = () => {
     },
   ]
 
+
+
   return (
     <CardContainer>
-      {stoolClassifications.map(stoolClass => (
-        <Card key={stoolClass.type}>
-          <CardMedia imgComp={stoolClass.image} />
-          <CardTitle>Type {stoolClass.type}</CardTitle>
-          <CardContent>
-            {stoolClass.description}
-          </CardContent>
-          <CardActions>
-            <button>Select</button>
-          </CardActions>
-        </Card>
-      ))}
+      {stoolClassifications.filter(stoolClass => selectedStoolType === null || selectedStoolType === stoolClass.type).map(stoolClass => (
+        <StoolCard
+          key={stoolClass.type}
+          type={stoolClass.type}
+          image={stoolClass.image}
+          description={stoolClass.description}
+          handleClick={(value) => setSelectedStoolType(value)}
+          selectedType={selectedStoolType}
+        />))}
     </CardContainer>
   )
 }
 
 export default StoolTypeCapture
+
+
+const StoolCard = ({ type, image, description, handleClick, selectedType }) => (
+  <Card >
+    <CardMedia imgComp={image} />
+    <CardTitle>Type {type}</CardTitle>
+    <CardContent>
+      {description}
+    </CardContent>
+    <CardActions>
+      {selectedType === null ? <StoolCardButton onClick={() => handleClick(type)}>Select</StoolCardButton>
+        : <StoolCardButton onClick={() => handleClick(null)}>Back</StoolCardButton>}
+    </CardActions>
+  </Card>
+)
+
+const StoolCardButton = ({ children, ...props }) => (
+  <button {...props}>{children}</button>
+)
+
+const SelectStoolCardButton = ({ setStateFn, type }) => (
+  <StoolCardButton onClick={() => setStateFn(type)}>Select</StoolCardButton>
+)
+
+const ReselectStoolCardButton = ({ setStateFn }) => (
+  <StoolCardButton onClick={() => setStateFn(null)}>Back</StoolCardButton>
+)
