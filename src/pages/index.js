@@ -4,19 +4,17 @@ import { PageLayout } from "../components/layout"
 import { Card, CardContent, CardContainer, CardTitle, CardMedia, CardActions } from "../components/card"
 import { ImgGatsbyAstronaut } from "../components/images"
 import { StoolTypeCapture } from "../components/form/stool"
+import { RecordStoolScreen } from "../components/screens"
 
 const WIP = () => {
   return (
-    <StoolTypeCapture />
+    <RecordStoolScreen />
   )
 }
 
 const IndexPage = () => (
   <PageLayout title="Home">
-    <div>
-      <h1>Hi people</h1>
-      <WIP />
-    </div>
+    <WIP />
     <ul>
       <li>
         <Link to="/page-1/">Go to page 1</Link>
