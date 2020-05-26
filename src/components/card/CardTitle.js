@@ -3,8 +3,8 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
 const CardTitleStyle = styled.h2`
-  padding: 0.5rem 0;
-  margin: 0.25rem 0;
+  padding: 0.6rem 1rem;
+  margin: 0;
 `
 
 const CardTitle = ({ children }) => {

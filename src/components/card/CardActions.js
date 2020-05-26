@@ -3,24 +3,27 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
 const CardActionsStyle = styled.div`
-  padding: 0.5rem 0;
+ 
   margin-top: auto;
 
   // if we are on small device, make buttons blocky
   @media (max-width: 800px) {
+    padding: 0.5rem 0 0 0;
     display: flex;
     flex-direction: column;
     button { 
       width: 100%; 
-      margin: 0.5rem 0;
+      border-radius: 0 0 16px 16px;
     }
   }
 
   // if we are on large device, make buttons normal size with margin spaces
   @media (min-width: 800px) {
+    padding: 1rem 1rem;
     // every button descendent thats not first child
     button :not(:first-child) {  
       margin-left: 1rem;
+      border-radius: 0 0 16px 16px;
     }
   }
   

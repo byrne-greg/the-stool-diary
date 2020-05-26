@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { CardContainer, Card, CardMedia, CardTitle, CardContent, CardActions } from "../../card"
+import { CardContainer, SpacedCard, CardMedia, CardTitle, CardContent, CardActions } from "../../card"
 import { ImgStoolType1, ImgStoolType2, ImgStoolType3, ImgStoolType4, ImgStoolType5, ImgStoolType6, ImgStoolType7 } from "../../images"
+import { PrimaryButton, SecondaryButton } from '../../button';
 
 const StoolTypeCapture = () => {
   const [selectedStoolType, setSelectedStoolType] = useState(null);
@@ -63,28 +64,22 @@ const StoolTypeCapture = () => {
 export default StoolTypeCapture
 
 
-const StoolCard = ({ type, image, description, handleClick, selectedType }) => (
-  <Card >
-    <CardMedia imgComp={image} />
-    <CardTitle>Type {type}</CardTitle>
-    <CardContent>
-      {description}
-    </CardContent>
-    <CardActions>
-      {selectedType === null ? <StoolCardButton onClick={() => handleClick(type)}>Select</StoolCardButton>
-        : <StoolCardButton onClick={() => handleClick(null)}>Back</StoolCardButton>}
-    </CardActions>
-  </Card>
-)
+const StoolCard = ({ type, image, description, handleClick, selectedType }) => {
 
-const StoolCardButton = ({ children, ...props }) => (
-  <button {...props}>{children}</button>
-)
+  const selectCardFn = () => handleClick(type)
+  const unselectCardFn = () => handleClick(null);
 
-const SelectStoolCardButton = ({ setStateFn, type }) => (
-  <StoolCardButton onClick={() => setStateFn(type)}>Select</StoolCardButton>
-)
-
-const ReselectStoolCardButton = ({ setStateFn }) => (
-  <StoolCardButton onClick={() => setStateFn(null)}>Back</StoolCardButton>
-)
+  return (
+    <SpacedCard onClick={selectedType === null ? selectCardFn : unselectCardFn}>
+      <CardMedia imgComp={image} />
+      <CardTitle>Type {type}</CardTitle>
+      <CardContent>
+        {description}
+      </CardContent>
+      <CardActions>
+        {selectedType === null ? <PrimaryButton>Select</PrimaryButton>
+          : <SecondaryButton>Back</SecondaryButton>}
+      </CardActions>
+    </SpacedCard >
+  )
+}

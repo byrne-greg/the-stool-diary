@@ -9,7 +9,7 @@ const IndexPage = () => (
     <div>
       <h1>Hi people</h1>
       <CardContainer>
-        <Card>
+        <Card noShadow>
           <CardTitle>Card 1</CardTitle>
           <CardContent>
             This is Card One content with just actions
@@ -20,14 +20,14 @@ const IndexPage = () => (
             <button>Button 3</button>
           </CardActions>
         </Card>
-        <Card>
+        <Card noShadow>
           <CardMedia imgComp={<ImgGatsbyAstronaut />} />
           <CardTitle>Card 2</CardTitle>
           <CardContent>
             This is Card Two content with just media
           </CardContent>
         </Card>
-        <Card>
+        <Card noShadow>
           <CardMedia imgComp={<ImgGatsbyAstronaut />} />
           <CardTitle>Card 3</CardTitle>
           <CardContent>
