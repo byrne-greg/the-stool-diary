@@ -5,11 +5,10 @@ import PropTypes from 'prop-types'
 const CardStyle = styled.div`
   padding: 0.5rem 0 0 0;
   border-radius: 16px 16px 16px 16px;
-  // border: 2px solid grey;
   width: 22rem;
   display: flex;
   flex-direction: column;
-  ${({ noShadow }) => !noShadow && `box-shadow: 2px 2px 8px 2px rgba(100,100,100,0.75);`}
+  ${({ noShadow }) => !noShadow && `box-shadow: 2px 2px 6px 2px rgba(100,100,100,0.75);`}
 `
 
 const CardStyleWithMargin = styled(CardStyle)`
