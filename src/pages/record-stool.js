@@ -2,15 +2,16 @@
 import React from "react"
 import { PageProps, Link } from "gatsby"
 import { PageLayout } from "../components/layout"
+import { RecordStoolScreen } from "../components/screens"
 
 
-const SecondPage = (props: PageProps) => (
+const RecordStoolPage = () => (
   <PageLayout title="Page two">
-    <h1>Hi from the second page</h1>
-    <p>Welcome to page 2 ({props.path})</p>
+    <h1>Record Stool Page</h1>
+    <RecordStoolScreen />
     <ul>
       <li>
-        <Link to="/page-1/">Go to page 1</Link>
+        <Link to="/card-test/">Go to Card Test</Link>
       </li>
       <li>
         <Link to="/">Go home</Link>
@@ -19,4 +20,4 @@ const SecondPage = (props: PageProps) => (
   </PageLayout>
 )
 
-export default SecondPage
+export default RecordStoolPage

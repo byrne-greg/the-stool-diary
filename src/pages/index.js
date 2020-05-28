@@ -17,10 +17,10 @@ const IndexPage = () => (
     <WIP />
     <ul>
       <li>
-        <Link to="/page-1/">Go to page 1</Link>
+        <Link to="/card-test/">Go to Card Test</Link>
       </li>
       <li>
-        <Link to="/page-2/">Go to page 2</Link>
+        <Link to="/record-stool/">Go to Record Stool Screen</Link>
       </li>
     </ul>
   </PageLayout>

@@ -41,10 +41,7 @@ const IndexPage = () => (
     </div>
     <ul>
       <li>
-        <Link to="/page-1/">Go to page 1</Link>
-      </li>
-      <li>
-        <Link to="/page-2/">Go to page 2</Link>
+        <Link to="/record-stool/">Go to Record Stool Screen</Link>
       </li>
       <li>
         <Link to="/">Go home</Link>
