@@ -13,6 +13,9 @@ const CardActionsStyle = styled.div`
     flex-direction: column;
     button { 
       width: 100%; 
+    }
+
+    button :last-child {
       border-radius: 0 0 16px 16px;
     }
   }
