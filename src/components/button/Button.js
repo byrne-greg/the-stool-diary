@@ -28,4 +28,8 @@ const SecondaryButton = ({ children, ...props }) => (
   <SecondaryButtonStyle {...props}>{children}</SecondaryButtonStyle>
 )
 
-export { PrimaryButton, SecondaryButton }
+const BasicButton = ({ children, ...props }) => (
+  <BasicButtonStyle {...props}>{children}</BasicButtonStyle>
+)
+
+export { PrimaryButton, SecondaryButton, BasicButton }

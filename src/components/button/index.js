@@ -1,3 +1,3 @@
-import { PrimaryButton, SecondaryButton } from "./Button";
+import { PrimaryButton, SecondaryButton, BasicButton } from "./Button";
 
-export { PrimaryButton, SecondaryButton }
+export { PrimaryButton, SecondaryButton, BasicButton }
