@@ -8,7 +8,7 @@ const CardStyle = styled.div`
   width: 22rem;
   display: flex;
   flex-direction: column;
-  ${({ noShadow }) => !noShadow && `box-shadow: 0px 2px 8px 2px rgba(100,100,100,0.75);`}
+  ${({ noShadow }) => !noShadow && `box-shadow: 0px 2px 6px 2px rgba(100,100,100,0.75);`}
 `
 
 const CardStyleWithMargin = styled(CardStyle)`

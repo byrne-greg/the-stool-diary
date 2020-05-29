@@ -48,7 +48,18 @@ export const Card_with_CardActions_MultipleItems = () => (<>
   </Card>
 </>);
 
-export const Spaced_Card_with_text = () => (<>
+export const Multiple_Cards_with_NoShadow = () => (<>
+  <Card noShadow onClick={action('card clicked')}>
+    <CardTitle>Card 1</CardTitle>
+    <CardContent>Cards with Outer Margin</CardContent>
+  </Card>
+  <Card noShadow onClick={action('card clicked')}>
+    <CardTitle>Card 2</CardTitle>
+    <CardContent>Cards with Outer Margin</CardContent>
+  </Card>
+</>)
+
+export const Multiple_Spaced_Cards = () => (<>
   <SpacedCard onClick={action('card clicked')}>
     <CardTitle>Card 1</CardTitle>
     <CardContent>Cards with Outer Margin</CardContent>
