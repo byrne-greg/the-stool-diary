@@ -6,10 +6,18 @@ import PropTypes from 'prop-types'
 import AccordionItemSection from './AccordionItemSection'
 
 const AccordionItemStyle = styled.div`
-  padding: 1rem;
   width: 95%;
-  border-width: 1px 0px 1px 0px;
-  border-color: grey;
+  
+  
+
+`
+
+const AccordionItemTitleStyle = styled.div`
+  padding: 1rem;
+  background-color: #F7F7F7;
+  // border-width: 1px 0px 1px 0px;
+  border-width: 1px 1px 1px 1px;
+  border-color: #DFDFDF;
   border-style: solid;
 `
 
@@ -20,7 +28,9 @@ const AccordionItem = ({ title, children }) => {
 
   return (
     <AccordionItemStyle onClick={handleClick}>
-      <h2>{title}</h2>
+      <AccordionItemTitleStyle>
+        <h2>{title}</h2>
+      </AccordionItemTitleStyle>
       <AccordionItemSection isOpened={isItemOpened}>
         {children}
       </AccordionItemSection>
