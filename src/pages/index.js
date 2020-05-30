@@ -5,10 +5,15 @@ import { Card, CardContent, CardContainer, CardTitle, CardMedia, CardActions } f
 import { ImgGatsbyAstronaut } from "../components/images"
 import { StoolTypeCapture } from "../components/form/stool"
 import { RecordStoolScreen } from "../components/screens"
+import { Accordion, AccordionItem } from "../components/accordion"
 
 const WIP = () => {
   return (
-    <RecordStoolScreen />
+    <Accordion>
+      <AccordionItem title="Record Stool">
+        <RecordStoolScreen />
+      </AccordionItem>
+    </Accordion>
   )
 }
 

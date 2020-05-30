@@ -5,12 +5,6 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import AccordionItemSection from './AccordionItemSection'
 
-const AccordionItemStyle = styled.div`
-  width: 95%;
-  
-  
-
-`
 
 const AccordionItemTitleStyle = styled.div`
   padding: 1rem;
@@ -27,14 +21,14 @@ const AccordionItem = ({ title, children }) => {
   const handleClick = () => { setIsItemOpened(!isItemOpened) }
 
   return (
-    <AccordionItemStyle onClick={handleClick}>
+    <div onClick={handleClick}>
       <AccordionItemTitleStyle>
         <h2>{title}</h2>
       </AccordionItemTitleStyle>
       <AccordionItemSection isOpened={isItemOpened}>
         {children}
       </AccordionItemSection>
-    </AccordionItemStyle>
+    </div>
   )
 }
 

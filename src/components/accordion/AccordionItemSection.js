@@ -12,8 +12,7 @@ const AccordionItemSectionStyle = styled(animated.div)`
   background-color: white;
 
   * { 
-    margin: 0;
-    padding: 1rem 1rem;
+    padding: 1rem;
   }
 
 `
@@ -23,25 +22,28 @@ const AccordionItemSection = ({ isOpened = false, children }) => {
   const collapseAnimation = useSpring({
     from: {
       maxHeight: 0,
+      display: 'none'
     },
     to: async next => {
-      await next(isOpened ? { maxHeight: 2000 } : { maxHeight: 0 })
-      await next(isOpened && { maxHeight: 'fit-content' })
+      await next(isOpened ? { maxHeight: 2000, display: 'block' } : { maxHeight: 0 })
+      await next(isOpened ? { maxHeight: 'fit-content' } : { display: 'none' })
     },
     delay: isOpened ? 0 : 125,
   })
 
-  const skewAndDisplayAnimation = useSpring({
-    from: { transform: 'scaleY(0)', display: 'none' },
+  const opacityAndDisplayAnimation = useSpring({
+    from: { opacity: 0, display: 'none' },
     to: async next => {
-      await next(isOpened ? { display: 'block' } : { transform: 'scaleY(0)' })
-      await next(isOpened ? { transform: 'scaleY(1)' } : { display: 'none' })
+      await next(isOpened ? { display: 'block' } : { opacity: 0 })
+      await next(isOpened ? { opacity: 1 } : { display: 'none' })
     },
+    delay: isOpened ? 100 : 0,
   })
+
 
   return (
     <AccordionItemSectionStyle style={collapseAnimation}>
-      <animated.div style={skewAndDisplayAnimation}>
+      <animated.div style={opacityAndDisplayAnimation}>
         {children}
       </animated.div>
     </AccordionItemSectionStyle>
