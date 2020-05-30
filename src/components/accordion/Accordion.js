@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 const AccordionStyle = styled.div`
   display: flex;
   flex-direction: column;
+  cursor: pointer;
 `
 
 const Accordion = ({ children }) => {
