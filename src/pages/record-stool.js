@@ -6,12 +6,12 @@ import { RecordStoolScreen } from "../components/screens"
 
 
 const RecordStoolPage = () => (
-  <PageLayout title="Page two">
-    <h1>Record Stool Page</h1>
+  <PageLayout title="Record Stool Type">
+    <h1>Record Stool Type Page</h1>
     <RecordStoolScreen />
     <ul>
       <li>
-        <Link to="/card-test/">Go to Card Test</Link>
+        <Link to="/record-stool-date-time/">Go to Record Stool Date Time</Link>
       </li>
       <li>
         <Link to="/">Go home</Link>

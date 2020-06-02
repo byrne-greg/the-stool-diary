@@ -1,17 +1,17 @@
 import React from "react"
 import { Link } from "gatsby"
 import { PageLayout } from "../components/layout"
-import { Card, CardContent, CardContainer, CardTitle, CardMedia, CardActions } from "../components/card"
-import { ImgGatsbyAstronaut } from "../components/images"
-import { StoolTypeCapture } from "../components/form/stool"
-import { RecordStoolScreen } from "../components/screens"
+import { RecordStoolScreen, RecordStoolTimeScreen } from "../components/screens"
 import { Accordion, AccordionItem } from "../components/accordion"
 
 const WIP = () => {
   return (
     <Accordion>
-      <AccordionItem title="Record Stool">
+      <AccordionItem title="Record Stool Type">
         <RecordStoolScreen />
+      </AccordionItem>
+      <AccordionItem title="Record Stool Time">
+        <RecordStoolTimeScreen />
       </AccordionItem>
     </Accordion>
   )

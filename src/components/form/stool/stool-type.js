@@ -70,16 +70,18 @@ const StoolCard = ({ type, image, description, handleClick, selectedType }) => {
   const unselectCardFn = () => handleClick(null);
 
   return (
-    <SpacedCard onClick={selectedType === null ? selectCardFn : unselectCardFn}>
-      <CardMedia imgComp={image} />
-      <CardTitle>Type {type}</CardTitle>
-      <CardContent>
-        {description}
-      </CardContent>
-      <CardActions>
-        {selectedType === null ? <PrimaryButton>Select</PrimaryButton>
-          : <SecondaryButton>Back</SecondaryButton>}
-      </CardActions>
-    </SpacedCard >
+    <>
+      <SpacedCard onClick={selectedType === null ? selectCardFn : unselectCardFn}>
+        <CardMedia imgComp={image} />
+        <CardTitle>Type {type}</CardTitle>
+        <CardContent>
+          {description}
+        </CardContent>
+        <CardActions>
+          {selectedType === null ? <PrimaryButton>Select</PrimaryButton>
+            : <SecondaryButton>Back</SecondaryButton>}
+        </CardActions>
+      </SpacedCard >
+    </>
   )
 }
