@@ -11,8 +11,8 @@ const AccordionItemSectionStyle = styled(animated.div)`
   border-style: solid;
   background-color: white;
 
-  * { 
-    padding: 1rem;
+  * > { 
+    padding: 1rem 0;
   }
 
 `
