@@ -1,4 +1,4 @@
-import RecordStoolScreen from "./RecordStoolScreen"
-import RecordStoolTimeScreen from "./RecordStoolTimeScreen"
+import RecordStoolForm from "./RecordStoolForm"
 
-export { RecordStoolScreen, RecordStoolTimeScreen }
+
+export { RecordStoolForm }

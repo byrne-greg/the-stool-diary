@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
+import styled from 'styled-components'
 import { CardContainer, SpacedCard, CardMedia, CardTitle, CardContent, CardActions } from "../../card"
 import { ImgStoolType1, ImgStoolType2, ImgStoolType3, ImgStoolType4, ImgStoolType5, ImgStoolType6, ImgStoolType7 } from "../../images"
 import { PrimaryButton, SecondaryButton } from '../../button';
 
-const StoolTypeCapture = () => {
-  const [selectedStoolType, setSelectedStoolType] = useState(null);
+const StoolTypeCapture = ({ stoolRecordFormType, setStoolRecordFormType }) => {
 
   const stoolClassifications = [
     {
@@ -48,14 +48,14 @@ const StoolTypeCapture = () => {
 
   return (
     <CardContainer>
-      {stoolClassifications.filter(stoolClass => selectedStoolType === null || selectedStoolType === stoolClass.type).map(stoolClass => (
+      {stoolClassifications.filter(stoolClass => stoolRecordFormType === null || stoolRecordFormType === stoolClass.type).map(stoolClass => (
         <StoolCard
           key={stoolClass.type}
           type={stoolClass.type}
           image={stoolClass.image}
           description={stoolClass.description}
-          handleClick={(value) => setSelectedStoolType(value)}
-          selectedType={selectedStoolType}
+          handleClick={(value) => setStoolRecordFormType(value)}
+          isSelected={stoolRecordFormType === stoolClass.type}
         />))}
     </CardContainer>
   )
@@ -64,24 +64,40 @@ const StoolTypeCapture = () => {
 export default StoolTypeCapture
 
 
-const StoolCard = ({ type, image, description, handleClick, selectedType }) => {
+const StoolCard = ({ type, image, description, handleClick, isSelected }) => {
 
   const selectCardFn = () => handleClick(type)
   const unselectCardFn = () => handleClick(null);
 
+  const SelectedSpacedCard = styled(SpacedCard)`
+    border: 4px solid #1FA7CB;
+  `
+
+  const StoolCardContent = () => (
+    <>
+      <CardMedia imgComp={image} />
+      <CardTitle>Type {type}</CardTitle>
+      <CardContent>
+        {description}
+      </CardContent>
+      <CardActions>
+        {!isSelected ? <PrimaryButton>Select</PrimaryButton>
+          : <SecondaryButton>Back</SecondaryButton>}
+      </CardActions>
+    </>
+  )
+
   return (
     <>
-      <SpacedCard onClick={selectedType === null ? selectCardFn : unselectCardFn}>
-        <CardMedia imgComp={image} />
-        <CardTitle>Type {type}</CardTitle>
-        <CardContent>
-          {description}
-        </CardContent>
-        <CardActions>
-          {selectedType === null ? <PrimaryButton>Select</PrimaryButton>
-            : <SecondaryButton>Back</SecondaryButton>}
-        </CardActions>
-      </SpacedCard >
+      {!isSelected ?
+        (<SpacedCard onClick={!isSelected ? selectCardFn : unselectCardFn}>
+          <StoolCardContent />
+        </SpacedCard >)
+        :
+        (<SelectedSpacedCard onClick={!isSelected ? selectCardFn : unselectCardFn}>
+          <StoolCardContent />
+        </SelectedSpacedCard >)
+      }
     </>
   )
 }

@@ -1,4 +1,4 @@
-import StoolTypeCapture from "./stool-type"
-import StoolDateTimeCapture from "./stool-datetime"
+import StoolTypeCapture from "./StoolTypeCapture"
+import StoolDateTimeCapture from "./StoolDateTimeCapture"
 
 export { StoolTypeCapture, StoolDateTimeCapture }

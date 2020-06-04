@@ -1,14 +1,14 @@
 // Gatsby supports TypeScript natively!
 import React from "react"
-import { PageProps, Link } from "gatsby"
+import { Link } from "gatsby"
 import { PageLayout } from "../components/layout"
-import { RecordStoolScreen } from "../components/screens"
+import { StoolTypeCapture } from "../components/form/stool"
 
 
 const RecordStoolPage = () => (
   <PageLayout title="Record Stool Type">
-    <h1>Record Stool Type Page</h1>
-    <RecordStoolScreen />
+    <h1>Record Stool Type Form Page</h1>
+    <StoolTypeCapture />
     <ul>
       <li>
         <Link to="/record-stool-date-time/">Go to Record Stool Date Time</Link>
