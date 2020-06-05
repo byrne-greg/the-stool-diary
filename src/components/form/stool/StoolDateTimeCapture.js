@@ -17,11 +17,14 @@ const StoolDateTimeCapture = ({ stoolRecordFormDateTime = moment(), setStoolReco
   `
 
   return (
-    <MuiPickersUtilsProvider utils={MomentUtils}>
-      <DateTimePickerStyle>
-        <DateTimePicker value={stoolRecordFormDateTime === null ? moment() : stoolRecordFormDateTime} onChange={setStoolRecordFormDateTime} />
-      </DateTimePickerStyle>
-    </MuiPickersUtilsProvider>
+    <>
+      <h3>Date &amp; Time</h3>
+      <MuiPickersUtilsProvider utils={MomentUtils}>
+        <DateTimePickerStyle>
+          <DateTimePicker value={stoolRecordFormDateTime === null ? moment() : stoolRecordFormDateTime} onChange={setStoolRecordFormDateTime} />
+        </DateTimePickerStyle>
+      </MuiPickersUtilsProvider>
+    </>
   )
 }
 

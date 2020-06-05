@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components'
-import { StoolTypeCapture, StoolDateTimeCapture } from '../form/stool';
+import { StoolTypeCapture, StoolDateTimeCapture, StoolCaptureSummary } from '../form/stool';
 import { PrimaryButton, SecondaryButton, ButtonGroup } from '../button';
 
 
@@ -20,7 +20,7 @@ const RecordStoolForm = () => {
   const formScreens = [
     <StoolTypeCapture stoolRecordFormType={selectedStoolType} setStoolRecordFormType={setSelectedStoolType} />,
     <StoolDateTimeCapture stoolRecordFormDateTime={selectedStoolDateTime} setStoolRecordFormDateTime={setSelectedStoolDateTime} />,
-    <div>Complete</div>
+    <StoolCaptureSummary selectedStoolType={selectedStoolType} handleTypeReselect={() => { setFormStage(0); setSelectedStoolType(null) }} />
   ]
 
 
@@ -36,14 +36,16 @@ const RecordStoolForm = () => {
 
   const next = () => moveFormScreen(1);
   const back = () => moveFormScreen(-1);
+  const isAtEnd = formStage === formScreens.length - 1;
+
 
   return (
     <>
-      <h2>Record Stool Form</h2>
+      <h2>Record a Stool</h2>
       <FormScreenStyle>
         {formScreens[formStage]}
         <ButtonGroup>
-          <PrimaryButton onClick={next}>Next</PrimaryButton>
+          {!isAtEnd ? <PrimaryButton onClick={next}>Next</PrimaryButton> : <PrimaryButton onClick={next}>Save</PrimaryButton>}
           <SecondaryButton onClick={back}>Back</SecondaryButton>
         </ButtonGroup>
 
