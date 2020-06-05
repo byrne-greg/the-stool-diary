@@ -1,6 +1,9 @@
 import React, { Children } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
+import buttonColors from "./ButtonColors"
+
+
 
 const BasicButtonStyle = styled.button`
   padding: 0.75rem 1rem;
@@ -8,28 +11,28 @@ const BasicButtonStyle = styled.button`
   border-radius: 8px 8px 8px 8px;
 `
 
-const PrimaryButtonStyle = styled(BasicButtonStyle)`
-  background-color: #1FA7CB;
-  border: 2px solid #1FA7CB;
+const PrimaryActionButtonStyle = styled(BasicButtonStyle)`
+  background-color: ${({ buttonColor = buttonColors.PRIMARY }) => buttonColor};
+  border: 2px solid ${({ buttonColor = buttonColors.PRIMARY }) => buttonColor};
   color: white;
 `
 
-const SecondaryButtonStyle = styled(BasicButtonStyle)`
+const SecondaryActionButtonStyle = styled(BasicButtonStyle)`
   background-color: white;
-  border: 4px solid #1FA7CB;
-  color: black;
+  border: 2px solid ${({ buttonColor = buttonColors.PRIMARY }) => buttonColor};
+  color: ${({ buttonColor = buttonColors.PRIMARY }) => buttonColor};
 `
 
-const PrimaryButton = ({ children, ...props }) => (
-  <PrimaryButtonStyle {...props}>{children}</PrimaryButtonStyle>
+const PrimaryActionButton = ({ children, ...props }) => (
+  <PrimaryActionButtonStyle  {...props} >{children}</PrimaryActionButtonStyle>
 )
 
-const SecondaryButton = ({ children, ...props }) => (
-  <SecondaryButtonStyle {...props}>{children}</SecondaryButtonStyle>
+const SecondaryActionButton = ({ children, ...props }) => (
+  <SecondaryActionButtonStyle  {...props}>{children}</SecondaryActionButtonStyle>
 )
 
 const BasicButton = ({ children, ...props }) => (
   <BasicButtonStyle {...props}>{children}</BasicButtonStyle>
 )
 
-export { PrimaryButton, SecondaryButton, BasicButton }
+export { PrimaryActionButton, SecondaryActionButton, BasicButton }

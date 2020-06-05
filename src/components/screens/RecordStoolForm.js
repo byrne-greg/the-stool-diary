@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components'
 import { StoolTypeCapture, StoolDateTimeCapture, StoolCaptureSummary } from '../form/stool';
-import { PrimaryButton, SecondaryButton, ButtonGroup } from '../button';
+import { PrimaryActionButton, SecondaryActionButton, ButtonGroup } from '../button';
+import buttonColor from '../button/ButtonColors'
 
 
 const FormScreenStyle = styled.div`
@@ -45,8 +46,11 @@ const RecordStoolForm = () => {
       <FormScreenStyle>
         {formScreens[formStage]}
         <ButtonGroup>
-          {!isAtEnd ? <PrimaryButton onClick={next}>Next</PrimaryButton> : <PrimaryButton onClick={next}>Save</PrimaryButton>}
-          <SecondaryButton onClick={back}>Back</SecondaryButton>
+          {!isAtEnd ?
+            <PrimaryActionButton onClick={next}>Next</PrimaryActionButton> :
+            <PrimaryActionButton buttonColor={buttonColor.POSITIVE} onClick={next}>Save</PrimaryActionButton>
+          }
+          <SecondaryActionButton onClick={back}>Back</SecondaryActionButton>
         </ButtonGroup>
 
       </FormScreenStyle>

@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { CardContainer, SpacedCard, CardMedia, CardTitle, CardContent, CardActions } from "../../card"
-import { PrimaryButton, SecondaryButton } from '../../button';
+import { PrimaryActionButton, SecondaryActionButton } from '../../button';
 import stoolClassifications from './stool-classifications'
 
 const StoolTypeCapture = ({ stoolRecordFormType, setStoolRecordFormType }) => {
@@ -41,8 +41,8 @@ const StoolCard = ({ type, image, description, handleClick, isSelected }) => {
           {description}
         </CardContent>
         <CardActions>
-          {!isSelected ? <PrimaryButton>Select</PrimaryButton>
-            : <SecondaryButton>Back</SecondaryButton>}
+          {!isSelected ? <PrimaryActionButton>Select</PrimaryActionButton>
+            : <SecondaryActionButton>Back</SecondaryActionButton>}
         </CardActions>
       </SpacedCard >
 

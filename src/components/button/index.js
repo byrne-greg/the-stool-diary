@@ -1,4 +1,4 @@
-import { PrimaryButton, SecondaryButton, BasicButton } from "./Button";
+import { PrimaryActionButton, SecondaryActionButton, BasicButton } from "./Button";
 import ButtonGroup from "./ButtonGroup"
 
-export { ButtonGroup, PrimaryButton, SecondaryButton, BasicButton }
+export { ButtonGroup, PrimaryActionButton, SecondaryActionButton, BasicButton }

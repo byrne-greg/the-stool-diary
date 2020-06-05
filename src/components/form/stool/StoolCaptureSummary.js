@@ -1,6 +1,6 @@
 import React from 'react'
 import { CardContainer, SpacedCard, CardMedia, CardTitle, CardContent, CardActions } from "../../card"
-import { PrimaryButton, SecondaryButton } from '../../button';
+import { PrimaryActionButton, SecondaryActionButton } from '../../button';
 import stoolClassifications from './stool-classifications'
 
 const StoolCaptureSummary = ({ selectedStoolType, handleTypeReselect }) => {
@@ -17,7 +17,7 @@ const StoolCaptureSummary = ({ selectedStoolType, handleTypeReselect }) => {
             {selectedStoolClassification.description}
           </CardContent>
           <CardActions>
-            <SecondaryButton onClick={handleTypeReselect}>Reselect</SecondaryButton>
+            <SecondaryActionButton onClick={handleTypeReselect}>Reselect</SecondaryActionButton>
           </CardActions>
         </SpacedCard >
       </CardContainer>
