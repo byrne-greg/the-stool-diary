@@ -69,10 +69,6 @@ const StoolCard = ({ type, image, description, handleClick, isSelected }) => {
   const selectCardFn = () => handleClick(type)
   const unselectCardFn = () => handleClick(null);
 
-  const SelectedSpacedCard = styled(SpacedCard)`
-    border: 4px solid #1FA7CB;
-  `
-
   const StoolCardContent = () => (
     <>
       <CardMedia imgComp={image} />
@@ -89,15 +85,11 @@ const StoolCard = ({ type, image, description, handleClick, isSelected }) => {
 
   return (
     <>
-      {!isSelected ?
-        (<SpacedCard onClick={!isSelected ? selectCardFn : unselectCardFn}>
-          <StoolCardContent />
-        </SpacedCard >)
-        :
-        (<SelectedSpacedCard onClick={!isSelected ? selectCardFn : unselectCardFn}>
-          <StoolCardContent />
-        </SelectedSpacedCard >)
-      }
+
+      <SpacedCard onClick={!isSelected ? selectCardFn : unselectCardFn}>
+        <StoolCardContent />
+      </SpacedCard >
+
     </>
   )
 }
