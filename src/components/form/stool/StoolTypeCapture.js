@@ -42,7 +42,7 @@ const StoolCard = ({ type, image, description, handleClick, isSelected }) => {
         </CardContent>
         <CardActions>
           {!isSelected ? <PrimaryActionButton>Select</PrimaryActionButton>
-            : <SecondaryActionButton>Back</SecondaryActionButton>}
+            : <SecondaryActionButton>Select a different stool type</SecondaryActionButton>}
         </CardActions>
       </SpacedCard >
 

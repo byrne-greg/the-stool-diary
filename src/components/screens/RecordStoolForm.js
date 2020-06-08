@@ -19,12 +19,10 @@ const RecordStoolForm = () => {
   const [selectedStoolDateTime, setSelectedStoolDateTime] = useState(null);
   const [formStage, setFormStage] = useState(0);
   const formScreens = [
-    <StoolTypeCapture stoolRecordFormType={selectedStoolType} setStoolRecordFormType={setSelectedStoolType} />,
+    <StoolTypeCapture stoolRecordFormType={selectedStoolType} setStoolRecordFormType={(stoolType) => { setSelectedStoolType(stoolType); next() }} />,
     <StoolDateTimeCapture stoolRecordFormDateTime={selectedStoolDateTime} setStoolRecordFormDateTime={setSelectedStoolDateTime} />,
     <StoolCaptureSummary selectedStoolType={selectedStoolType} handleTypeReselect={() => { setFormStage(0); setSelectedStoolType(null) }} />
   ]
-
-
 
   const moveFormScreen = (num) => {
     const newScreen = formStage + num;
@@ -38,6 +36,7 @@ const RecordStoolForm = () => {
   const next = () => moveFormScreen(1);
   const back = () => moveFormScreen(-1);
   const isAtEnd = formStage === formScreens.length - 1;
+  const isAtStart = formStage === 0;
 
 
   return (
@@ -46,11 +45,16 @@ const RecordStoolForm = () => {
       <FormScreenStyle>
         {formScreens[formStage]}
         <ButtonGroup>
-          {!isAtEnd ?
-            <PrimaryActionButton onClick={next}>Next</PrimaryActionButton> :
-            <PrimaryActionButton buttonColor={buttonColor.POSITIVE} onClick={next}>Save</PrimaryActionButton>
+
+          {
+            // only show primary action if we have a stool type while provisional based on if user is at the end or not
+            selectedStoolType !== null ?
+              !isAtEnd ?
+                <PrimaryActionButton onClick={next}>Next</PrimaryActionButton> :
+                <PrimaryActionButton buttonColor={buttonColor.POSITIVE} onClick={next}>Save</PrimaryActionButton>
+              : null
           }
-          <SecondaryActionButton onClick={back}>Back</SecondaryActionButton>
+          {!isAtStart && (<SecondaryActionButton onClick={back}>Back</SecondaryActionButton>)}
         </ButtonGroup>
 
       </FormScreenStyle>
