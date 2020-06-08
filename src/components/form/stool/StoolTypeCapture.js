@@ -5,20 +5,23 @@ import { StoolTypeCard } from '../../card/composite';
 import stoolClassifications from '../../../utils/stool-classifications'
 
 
-const StoolTypeCapture = ({ stoolRecordFormType, setStoolRecordFormType }) => {
+const StoolTypeCapture = ({ stoolRecordFormType = null, setStoolRecordFormType = () => { } }) => {
+  console.log('StoolTypeCapture', stoolRecordFormType)
+
+
 
   return (
     <>
       <h3>Type</h3>
       <CardContainer>
-        {stoolClassifications.filter(stoolClass => stoolRecordFormType === null || stoolRecordFormType === stoolClass.type).map(stoolClass => (
+        {stoolClassifications.map(stoolClass => (
           <StoolTypeCard
             key={stoolClass.type}
             type={stoolClass.type}
             image={stoolClass.image}
             description={stoolClass.description}
             handleClick={(value) => setStoolRecordFormType(value)}
-            isSelected={stoolRecordFormType === stoolClass.type}
+          // isSelected={stoolRecordFormType === stoolClass.type}
           />))}
       </CardContainer>
     </>

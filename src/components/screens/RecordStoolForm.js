@@ -13,22 +13,29 @@ const FormScreenStyle = styled.div`
 
 const RecordStoolForm = () => {
 
-
-
   const [selectedStoolType, setSelectedStoolType] = useState(null);
   const [selectedStoolDateTime, setSelectedStoolDateTime] = useState(null);
   const [formStage, setFormStage] = useState(0);
   const formScreens = [
     <StoolTypeCapture
       stoolRecordFormType={selectedStoolType}
-      setStoolRecordFormType={(stoolType) => { setSelectedStoolType(stoolType); next() }} />,
+      setStoolRecordFormType={(stoolType) => {
+        setSelectedStoolType(stoolType);
+        next();
+      }} />,
     <StoolDateTimeCapture
       stoolRecordFormDateTime={selectedStoolDateTime}
       setStoolRecordFormDateTime={setSelectedStoolDateTime} />,
     <StoolCaptureSummary
       selectedStoolDateTime={selectedStoolDateTime}
       selectedStoolType={selectedStoolType}
-      handleTypeReselect={() => { reset(); setSelectedStoolType(null) }} />
+      handleTypeReselect={() => {
+        start();
+        setSelectedStoolType(null)
+      }}
+      handleDateTimeReselect={() => {
+        back();
+      }} />
   ]
 
   const moveFormScreen = (num) => {
@@ -42,9 +49,12 @@ const RecordStoolForm = () => {
 
   const next = () => moveFormScreen(1);
   const back = () => moveFormScreen(-1);
-  const reset = () => setFormStage(0);
+  const start = () => setFormStage(0);
+  const end = () => setFormStage(formScreens.length - 1)
   const isAtEnd = formStage === formScreens.length - 1;
   const isAtStart = formStage === 0;
+
+  console.log('selectedStoolType', selectedStoolType, 'selectedStoolDateTime', selectedStoolDateTime, 'formStage', formStage)
 
 
   return (
@@ -56,13 +66,13 @@ const RecordStoolForm = () => {
 
           {
             // only show primary action if we have a stool type while provisional based on if user is at the end or not
-            selectedStoolType !== null ?
+            !isAtStart ?
               !isAtEnd ?
                 <PrimaryActionButton onClick={next}>Next</PrimaryActionButton> :
                 <PrimaryActionButton buttonColor={buttonColor.POSITIVE} onClick={next}>Save</PrimaryActionButton>
               : null
           }
-          {!isAtStart && (<SecondaryActionButton onClick={back}>Back</SecondaryActionButton>)}
+          {!isAtStart && !isAtEnd && (<SecondaryActionButton onClick={back}>Back</SecondaryActionButton>)}
         </ButtonGroup>
 
       </FormScreenStyle>

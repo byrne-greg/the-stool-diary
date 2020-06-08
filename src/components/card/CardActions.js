@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
-const CardActionsStyle = styled.div`
+export const CardActionsStyle = styled.div`
   margin-top: auto;
 
   // if we are on small device, make buttons blocky
