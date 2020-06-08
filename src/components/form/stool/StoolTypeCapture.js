@@ -1,8 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
-import { CardContainer, SpacedCard, CardMedia, CardTitle, CardContent, CardActions } from "../../card"
-import { PrimaryActionButton, SecondaryActionButton } from '../../button';
-import stoolClassifications from './stool-classifications'
+import { CardContainer } from "../../card"
+import { StoolTypeCard } from '../../card/composite';
+import stoolClassifications from '../../../utils/stool-classifications'
+
 
 const StoolTypeCapture = ({ stoolRecordFormType, setStoolRecordFormType }) => {
 
@@ -11,7 +12,7 @@ const StoolTypeCapture = ({ stoolRecordFormType, setStoolRecordFormType }) => {
       <h3>Type</h3>
       <CardContainer>
         {stoolClassifications.filter(stoolClass => stoolRecordFormType === null || stoolRecordFormType === stoolClass.type).map(stoolClass => (
-          <StoolCard
+          <StoolTypeCard
             key={stoolClass.type}
             type={stoolClass.type}
             image={stoolClass.image}
@@ -27,25 +28,5 @@ const StoolTypeCapture = ({ stoolRecordFormType, setStoolRecordFormType }) => {
 export default StoolTypeCapture
 
 
-const StoolCard = ({ type, image, description, handleClick, isSelected }) => {
 
-  const selectCardFn = () => handleClick(type)
-  const unselectCardFn = () => handleClick(null);
 
-  return (
-    <>
-      <SpacedCard onClick={!isSelected ? selectCardFn : unselectCardFn}>
-        <CardMedia imgComp={image} />
-        <CardTitle>Type {type}</CardTitle>
-        <CardContent>
-          {description}
-        </CardContent>
-        <CardActions>
-          {!isSelected ? <PrimaryActionButton>Select</PrimaryActionButton>
-            : <SecondaryActionButton>Select a different stool type</SecondaryActionButton>}
-        </CardActions>
-      </SpacedCard >
-
-    </>
-  )
-}

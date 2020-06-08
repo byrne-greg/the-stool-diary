@@ -19,9 +19,16 @@ const RecordStoolForm = () => {
   const [selectedStoolDateTime, setSelectedStoolDateTime] = useState(null);
   const [formStage, setFormStage] = useState(0);
   const formScreens = [
-    <StoolTypeCapture stoolRecordFormType={selectedStoolType} setStoolRecordFormType={(stoolType) => { setSelectedStoolType(stoolType); next() }} />,
-    <StoolDateTimeCapture stoolRecordFormDateTime={selectedStoolDateTime} setStoolRecordFormDateTime={setSelectedStoolDateTime} />,
-    <StoolCaptureSummary selectedStoolType={selectedStoolType} handleTypeReselect={() => { setFormStage(0); setSelectedStoolType(null) }} />
+    <StoolTypeCapture
+      stoolRecordFormType={selectedStoolType}
+      setStoolRecordFormType={(stoolType) => { setSelectedStoolType(stoolType); next() }} />,
+    <StoolDateTimeCapture
+      stoolRecordFormDateTime={selectedStoolDateTime}
+      setStoolRecordFormDateTime={setSelectedStoolDateTime} />,
+    <StoolCaptureSummary
+      selectedStoolDateTime={selectedStoolDateTime}
+      selectedStoolType={selectedStoolType}
+      handleTypeReselect={() => { reset(); setSelectedStoolType(null) }} />
   ]
 
   const moveFormScreen = (num) => {
@@ -35,6 +42,7 @@ const RecordStoolForm = () => {
 
   const next = () => moveFormScreen(1);
   const back = () => moveFormScreen(-1);
+  const reset = () => setFormStage(0);
   const isAtEnd = formStage === formScreens.length - 1;
   const isAtStart = formStage === 0;
 

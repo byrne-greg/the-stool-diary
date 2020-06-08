@@ -1,26 +1,30 @@
 import React from 'react'
-import { CardContainer, SpacedCard, CardMedia, CardTitle, CardContent, CardActions } from "../../card"
-import { PrimaryActionButton, SecondaryActionButton } from '../../button';
-import stoolClassifications from './stool-classifications'
+import { CardContainer } from "../../card"
+import { StoolTypeCard } from "../../card/composite"
+import stoolClassifications from '../../../utils/stool-classifications'
 
-const StoolCaptureSummary = ({ selectedStoolType, handleTypeReselect }) => {
+const StoolCaptureSummary = ({ selectedStoolDateTime, selectedStoolType, handleTypeReselect }) => {
+  console.log(selectedStoolDateTime);
 
   const selectedStoolClassification = stoolClassifications.filter(stoolClass => stoolClass.type === selectedStoolType)[0]
   return (
     <>
       <h3>Summary</h3>
-      <CardContainer>
-        <SpacedCard>
-          <CardMedia imgComp={selectedStoolClassification.image} />
-          <CardTitle>Type {selectedStoolClassification.type}</CardTitle>
-          <CardContent>
-            {selectedStoolClassification.description}
-          </CardContent>
-          <CardActions>
-            <SecondaryActionButton onClick={handleTypeReselect}>Reselect</SecondaryActionButton>
-          </CardActions>
-        </SpacedCard >
-      </CardContainer>
+      <div>
+        <h4>Selected Stool Type</h4>
+        <CardContainer>
+          <StoolTypeCard
+            type={selectedStoolClassification.type}
+            image={selectedStoolClassification.image}
+            description={selectedStoolClassification.description}
+            handleClick={handleTypeReselect} isSelected />
+        </CardContainer>
+      </div>
+      <div>
+        <h4>Selected Date/Time</h4>
+        <div>{selectedStoolDateTime.format()}</div>
+      </div>
+
     </>
   )
 }

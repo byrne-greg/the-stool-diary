@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import moment from 'moment'
 import {
   DatePicker,
@@ -9,7 +9,15 @@ import {
 import MomentUtils from '@date-io/moment';
 import styled from 'styled-components'
 
-const StoolDateTimeCapture = ({ stoolRecordFormDateTime = moment(), setStoolRecordFormDateTime = () => { } }) => {
+const StoolDateTimeCapture = ({ stoolRecordFormDateTime, setStoolRecordFormDateTime }) => {
+
+  // if on mount we don't have a selected datetime for form, then set current moment
+  useEffect(() => {
+    if (stoolRecordFormDateTime === null) {
+      setStoolRecordFormDateTime(moment())
+    }
+  }, [stoolRecordFormDateTime])
+
 
   const DateTimePickerStyle = styled.div`
     padding: 1rem 0;
@@ -21,10 +29,13 @@ const StoolDateTimeCapture = ({ stoolRecordFormDateTime = moment(), setStoolReco
 
   return (
     <>
+
       <h3>Date &amp; Time</h3>
       <MuiPickersUtilsProvider utils={MomentUtils}>
         <DateTimePickerStyle>
-          <DateTimePicker value={stoolRecordFormDateTime === null ? moment() : stoolRecordFormDateTime} onChange={setStoolRecordFormDateTime} />
+          <DateTimePicker
+            value={stoolRecordFormDateTime === null ? moment() : stoolRecordFormDateTime}
+            onChange={(date) => setStoolRecordFormDateTime(date)} />
         </DateTimePickerStyle>
       </MuiPickersUtilsProvider>
     </>
