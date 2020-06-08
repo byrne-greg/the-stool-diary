@@ -15,7 +15,7 @@ const AccordionItemTitleStyle = styled.div`
   border-style: solid;
 `
 
-const AccordionItem = ({ title, children }) => {
+const AccordionItem = ({ title, description, children }) => {
   const [isItemOpened, setIsItemOpened] = useState(false);
 
   const handleClick = () => { setIsItemOpened(!isItemOpened) }
@@ -24,6 +24,7 @@ const AccordionItem = ({ title, children }) => {
     <div onClick={handleClick}>
       <AccordionItemTitleStyle>
         <h2>{title}</h2>
+        <p>{description}</p>
       </AccordionItemTitleStyle>
       <AccordionItemSection isOpened={isItemOpened}>
         {children}
