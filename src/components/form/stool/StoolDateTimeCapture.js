@@ -14,6 +14,9 @@ const StoolDateTimeCapture = ({ stoolRecordFormDateTime = moment(), setStoolReco
   const DateTimePickerStyle = styled.div`
     padding: 1rem 0;
     text-align: center;
+    input {
+      font-size: 1.5rem;
+    }
   `
 
   return (
