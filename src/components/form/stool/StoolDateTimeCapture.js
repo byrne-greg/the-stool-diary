@@ -9,6 +9,15 @@ import {
 import MomentUtils from '@date-io/moment';
 import styled from 'styled-components'
 
+
+const DateTimePickerStyle = styled.div`
+    padding: 1rem 0;
+    text-align: center;
+    input {
+      font-size: 1.5rem;
+    }
+  `
+
 const StoolDateTimeCapture = ({ stoolRecordFormDateTime, setStoolRecordFormDateTime }) => {
 
   // if on mount we don't have a selected datetime for form, then set current moment
@@ -17,15 +26,6 @@ const StoolDateTimeCapture = ({ stoolRecordFormDateTime, setStoolRecordFormDateT
       setStoolRecordFormDateTime(moment())
     }
   }, [stoolRecordFormDateTime])
-
-
-  const DateTimePickerStyle = styled.div`
-    padding: 1rem 0;
-    text-align: center;
-    input {
-      font-size: 1.5rem;
-    }
-  `
 
   return (
     <>
