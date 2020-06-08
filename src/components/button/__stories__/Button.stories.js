@@ -13,6 +13,7 @@ export const Primary_Action = () => (
   <ButtonGroup>
     <PrimaryActionButton onClick={action('clicked')}>Primary Default</PrimaryActionButton>
     <PrimaryActionButton buttonColor={buttonColor.POSITIVE} onClick={action('clicked')}>Primary Positive</PrimaryActionButton>
+    <PrimaryActionButton buttonColor={buttonColor.TERTIARY} onClick={action('clicked')}>Primary Tertiary</PrimaryActionButton>
   </ButtonGroup>
 )
 
@@ -21,6 +22,7 @@ export const Secondary_Action = () => (
   <ButtonGroup>
     <SecondaryActionButton onClick={action('clicked')}>Secondary Default</SecondaryActionButton>
     <SecondaryActionButton buttonColor={buttonColor.POSITIVE} onClick={action('clicked')}>Secondary Positive</SecondaryActionButton>
+    <SecondaryActionButton buttonColor={buttonColor.TERTIARY} onClick={action('clicked')}>Secondary Tertiary</SecondaryActionButton>
   </ButtonGroup>
 )
 
