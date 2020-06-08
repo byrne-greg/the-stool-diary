@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { CardStyle } from "./Card"
 import PropTypes from 'prop-types'
 
 const CardContainerStyle = styled.div`
@@ -11,6 +12,11 @@ const CardContainerStyle = styled.div`
   outline: 0;
   position: relative;
   justify-content: space-evenly;
+
+  ${CardStyle} {
+    width: 20rem;
+    margin: 1.25rem 0.5rem;
+  }
 `
 
 const CardContainer = ({ colDirection = 'row', children }) => {

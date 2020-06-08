@@ -1,7 +1,9 @@
 import React from 'react'
-import { CardContainer } from "../../card"
+import { CardContainer, Card, CardContent } from "../../card"
 import { StoolTypeCard } from "../../card/composite"
 import stoolClassifications from '../../../utils/stool-classifications'
+
+
 
 const StoolCaptureSummary = ({ selectedStoolDateTime, selectedStoolType, handleTypeReselect }) => {
   console.log(selectedStoolDateTime);
@@ -22,7 +24,9 @@ const StoolCaptureSummary = ({ selectedStoolDateTime, selectedStoolType, handleT
       </div>
       <div>
         <h4>Selected Date/Time</h4>
-        <div>{selectedStoolDateTime.format()}</div>
+        <Card>
+          <CardContent>{selectedStoolDateTime.format("dddd, MMMM Do YYYY, h:mm:ss a")}</CardContent>
+        </Card>
       </div>
 
     </>

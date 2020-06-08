@@ -1,5 +1,5 @@
 import React from 'react'
-import { SpacedCard, CardMedia, CardTitle, CardContent, CardActions } from '../'
+import { Card, CardMedia, CardTitle, CardContent, CardActions } from '../'
 import { PrimaryActionButton, SecondaryActionButton } from '../../button'
 
 const StoolTypeCard = ({ type, image, description, handleClick, isSelected }) => {
@@ -9,7 +9,7 @@ const StoolTypeCard = ({ type, image, description, handleClick, isSelected }) =>
 
   return (
     <>
-      <SpacedCard onClick={!isSelected ? selectCardFn : unselectCardFn}>
+      <Card onClick={!isSelected ? selectCardFn : unselectCardFn}>
         <CardMedia imgComp={image} />
         <CardTitle>Type {type}</CardTitle>
         <CardContent>
@@ -19,7 +19,7 @@ const StoolTypeCard = ({ type, image, description, handleClick, isSelected }) =>
           {!isSelected ? <PrimaryActionButton>Select</PrimaryActionButton>
             : <SecondaryActionButton>Select a different stool type</SecondaryActionButton>}
         </CardActions>
-      </SpacedCard >
+      </Card >
 
     </>
   )

@@ -1,6 +1,6 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { Card, SpacedCard, CardContent, CardTitle } from '../'
+import { CardContainer, Card, CardContent, CardTitle } from '../'
 import CardActions from '../CardActions';
 
 
@@ -59,14 +59,17 @@ export const Multiple_Cards_with_NoShadow = () => (<>
   </Card>
 </>)
 
-export const Multiple_Spaced_Cards = () => (<>
-  <SpacedCard onClick={action('card clicked')}>
-    <CardTitle>Card 1</CardTitle>
-    <CardContent>Cards with Outer Margin</CardContent>
-  </SpacedCard>
-  <SpacedCard onClick={action('card clicked')}>
-    <CardTitle>Card 2</CardTitle>
-    <CardContent>Cards with Outer Margin</CardContent>
-  </SpacedCard>
-</>)
+export const Cards_in_Container = () => (
+  <>
+    <CardContainer>
+      <Card onClick={action('card clicked')}>
+        <CardTitle>Card 1</CardTitle>
+        <CardContent>Cards with Outer Margin</CardContent>
+      </Card>
+      <Card onClick={action('card clicked')}>
+        <CardTitle>Card 2</CardTitle>
+        <CardContent>Cards with Outer Margin</CardContent>
+      </Card>
+    </CardContainer>
+  </>)
 
