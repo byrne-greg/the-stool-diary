@@ -15,7 +15,6 @@ const StoolTypeCapture = ({ setSelectedType = () => { }, formNavButtons }) => {
             image={stoolClass.image}
             description={stoolClass.description}
             handleClick={(value) => setSelectedType(value)}
-          // isSelected={selectedType === stoolClass.type}
           />))}
       </CardContainer>
       {formNavButtons}

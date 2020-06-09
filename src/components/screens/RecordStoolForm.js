@@ -6,7 +6,7 @@ import { PrimaryActionButton } from '../button';
 import buttonColor from '../button/ButtonColors'
 import { FormNavigationButtons } from '../button/composite'
 import { INITIAL_FORM_STATE } from '../form/state/formModel'
-import { loadFormScreens, updateFormCurrentScreen, moveFormScreenForward, moveFormScreenBackward } from '../form/state/formActions'
+import { loadFormScreens, updateFormCurrentScreen, updateFormHasReachedSummary, moveFormScreenForward, moveFormScreenBackward } from '../form/state/formActions'
 import { formReducer } from '../form/state/formReducers'
 import { INITIAL_STOOL_STATE } from '../form/stool/state/stoolModel'
 import { updateStoolType, updateStoolDateTime } from '../form/stool/state/stoolActions'
@@ -18,15 +18,19 @@ const RecordStoolForm = () => {
   const [stoolState, stoolDispatch] = useReducer(stoolReducer, INITIAL_STOOL_STATE);
   const updateType = (stoolType) => updateStoolType(stoolDispatch, stoolType)
   const updateDatetime = (dateTime) => updateStoolDateTime(stoolDispatch, dateTime)
-  const getStoolType = () => stoolState.type
+  const getStoolType = () => { console.log('getting stool type', stoolState.type); return stoolState.type }
   const getStoolDateTime = () => stoolState.dateTime
 
   const [formState, formDispatch] = useReducer(formReducer, INITIAL_FORM_STATE);
   const goForwardScreen = () => moveFormScreenForward(formDispatch);
   const goBackwardScreen = () => moveFormScreenBackward(formDispatch);
   const goStartScreen = () => updateFormCurrentScreen(formDispatch, 0)
+  const goEndScreen = () => updateFormCurrentScreen(formDispatch, formState.screens.length - 1)
+  const setFormHasReachedSummary = () => updateFormHasReachedSummary(formDispatch, true);
   const loadScreens = (formScreens) => loadFormScreens(formDispatch, formScreens);
   const getCurrentScreen = () => formState.screens[formState.currentScreen]
+  const getFormHasReachedSummary = () => formState.hasReachedSummary
+
 
   console.log(stoolState)
   console.log(formState)
@@ -41,6 +45,9 @@ const RecordStoolForm = () => {
       goForwardScreen={goForwardScreen}
       goBackwardScreen={goBackwardScreen}
       goStartScreen={goStartScreen}
+      goEndScreen={goEndScreen}
+      setFormHasReachedSummary={setFormHasReachedSummary}
+      getFormHasReachedSummary={getFormHasReachedSummary}
       loadScreens={loadScreens}
       getCurrentScreen={getCurrentScreen}
     />
@@ -59,6 +66,9 @@ const RecordStoolFormScreens = ({
   goForwardScreen,
   goBackwardScreen,
   goStartScreen,
+  goEndScreen,
+  setFormHasReachedSummary,
+  getFormHasReachedSummary,
   loadScreens,
   getCurrentScreen
 }) => {
@@ -67,6 +77,8 @@ const RecordStoolFormScreens = ({
       <StoolTypeCapture
         setSelectedType={(stoolType) => {
           updateType(stoolType)
+          // TODO this is causing undefined errors when reaching summary, reselecting stool, and proceeding to end
+          // getFormHasReachedSummary() ? goEndScreen() : goForwardScreen();
           goForwardScreen();
         }}
       />,
@@ -84,6 +96,8 @@ const RecordStoolFormScreens = ({
         selectedDateTime={getStoolDateTime()}
         handleTypeReselect={() => { goStartScreen(); updateType(null) }}
         handleDateTimeReselect={() => { goBackwardScreen(); }}
+        hasFormReachedSummary={getFormHasReachedSummary()}
+        setFormHasReachedSummary={setFormHasReachedSummary}
         formNavButtons={
           <FormNavigationButtons
             primaryActionOverride={<PrimaryActionButton buttonColor={buttonColor.POSITIVE} onClick={() => { goForwardScreen() }}> Save</PrimaryActionButton >}
@@ -91,7 +105,7 @@ const RecordStoolFormScreens = ({
           />}
       />]
     loadScreens(stoolFormScreens)
-  }, [stoolState])
+  }, [stoolState, getFormHasReachedSummary()])
 
 
 
