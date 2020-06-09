@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import moment from 'moment'
 import { DateTimePicker } from '../../datetime-picker'
 import { ButtonGroup } from '../../button'

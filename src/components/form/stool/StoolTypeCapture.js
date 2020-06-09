@@ -3,7 +3,6 @@ import { CardContainer } from "../../card"
 import { StoolTypeCard } from '../../card/composite';
 import stoolClassifications from '../../../utils/stool-classifications'
 
-
 const StoolTypeCapture = ({ setSelectedType = () => { }, formNavButtons }) => {
   return (
     <>
