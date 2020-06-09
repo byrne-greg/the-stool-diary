@@ -1,13 +1,10 @@
 import React from 'react'
-import styled from 'styled-components'
 import { CardContainer } from "../../card"
 import { StoolTypeCard } from '../../card/composite';
 import stoolClassifications from '../../../utils/stool-classifications'
 
 
-const StoolTypeCapture = ({ stoolRecordFormType, setStoolRecordFormType = () => { }, formNavButtons }) => {
-  console.log('StoolDateTimeCapture-stoolRecordFormType', stoolRecordFormType)
-
+const StoolTypeCapture = ({ setSelectedType = () => { }, formNavButtons }) => {
   return (
     <>
       <h3>Type</h3>
@@ -18,8 +15,8 @@ const StoolTypeCapture = ({ stoolRecordFormType, setStoolRecordFormType = () => 
             type={stoolClass.type}
             image={stoolClass.image}
             description={stoolClass.description}
-            handleClick={(value) => setStoolRecordFormType(value)}
-          // isSelected={stoolRecordFormType === stoolClass.type}
+            handleClick={(value) => setSelectedType(value)}
+          // isSelected={selectedType === stoolClass.type}
           />))}
       </CardContainer>
       {formNavButtons}

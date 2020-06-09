@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { CardContainer, Card, CardContent, CardActions } from "../../card"
 import { StoolTypeCard, ItemNotFoundCard } from "../../card/composite"
@@ -10,22 +10,21 @@ const CaptureSummarySectionStyle = styled.section`
   padding: 1rem 0 2rem 0;
 `
 
-const StoolCaptureSummary = ({ selectedStoolDateTime, selectedStoolType, handleTypeReselect, handleDateTimeReselect, formNavButtons }) => {
-  console.log('StoolCaptureSummary-selectedStoolType', selectedStoolType)
+const StoolCaptureSummary = ({ selectedType, selectedDateTime, handleTypeReselect, handleDateTimeReselect, formNavButtons }) => {
 
-  const selectedStoolClassification = stoolClassifications.filter(stoolClass => stoolClass.type === selectedStoolType)[0]
-  console.log('StoolCaptureSummary-selectedStoolClassification', selectedStoolClassification)
+  const stoolClassificationOnSelectedType = stoolClassifications.filter(stoolClass => stoolClass.type === selectedType)[0]
+  const { type: stoolType, image: stoolImage, description: stoolDescription } = stoolClassificationOnSelectedType;
   return (
     <>
       <h3>Summary</h3>
       <CaptureSummarySectionStyle>
         <h4>Selected Stool Type</h4>
         <CardContainer>
-          {selectedStoolClassification ?
+          {stoolClassificationOnSelectedType ?
             (<StoolTypeCard
-              type={selectedStoolClassification.type}
-              image={selectedStoolClassification.image}
-              description={selectedStoolClassification.description}
+              type={stoolType}
+              image={stoolImage}
+              description={stoolDescription}
               handleClick={handleTypeReselect}
               isSelected />)
             :
@@ -38,7 +37,7 @@ const StoolCaptureSummary = ({ selectedStoolDateTime, selectedStoolType, handleT
         <h4>Selected Date/Time</h4>
         <Card noShadow>
           <CardContent>
-            <DateTimePicker label="Selected Stool Date/Time" value={selectedStoolDateTime} readOnly />
+            <DateTimePicker label="Selected Stool Date/Time" value={selectedDateTime} readOnly />
           </CardContent>
           <CardActions>
             <SecondaryActionButton onClick={handleDateTimeReselect}>Select a different date/time</SecondaryActionButton>

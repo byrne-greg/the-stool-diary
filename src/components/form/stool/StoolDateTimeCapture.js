@@ -3,10 +3,7 @@ import moment from 'moment'
 import { DateTimePicker } from '../../datetime-picker'
 import { ButtonGroup } from '../../button'
 
-const StoolDateTimeCapture = ({ stoolRecordFormDateTime, setStoolRecordFormDateTime, formNavButtons }) => {
-  console.log('StoolDateTimeCapture-stoolRecordFormDateTime', stoolRecordFormDateTime)
-
-  const placeholderValue = stoolRecordFormDateTime === null ? moment() : stoolRecordFormDateTime
+const StoolDateTimeCapture = ({ selectedDateTime = moment(), setSelectedDateTime, formNavButtons }) => {
 
   return (
     <>
@@ -14,8 +11,8 @@ const StoolDateTimeCapture = ({ stoolRecordFormDateTime, setStoolRecordFormDateT
       <ButtonGroup>
         <DateTimePicker
           label="Click to Select a Date/Time"
-          value={placeholderValue}
-          handleChange={(date) => setStoolRecordFormDateTime(date)} />
+          value={selectedDateTime}
+          handleChange={(datetime) => setSelectedDateTime(datetime)} />
       </ButtonGroup>
       {formNavButtons}
     </>

@@ -50,61 +50,84 @@ const formReducer = (state, action) => {
 
 const RecordStoolForm = () => {
 
-  // Replace with Context
   const [stoolState, stoolDispatch] = useReducer(stoolReducer, INITIAL_STOOL_STATE);
+  const updateStoolType = (stoolType) => stoolDispatch({ type: "UPDATE_TYPE", value: stoolType })
+  const updateStoolDatetime = (dateTime) => stoolDispatch({ type: "UPDATE_DATETIME", value: dateTime })
+  const getStoolType = () => stoolState.type
+  const getStoolDateTime = () => stoolState.dateTime
+
   const [formState, formDispatch] = useReducer(formReducer, INITIAL_FORM_STATE);
+  const goForwardScreen = () => formDispatch({ type: "MOVE_SCREEN_FORWARD" });
+  const goBackwardScreen = () => formDispatch({ type: "MOVE_SCREEN_BACKWARD" });
+  const goStartScreen = () => formDispatch({ type: 'UPDATE_CURRENT_SCREEN', value: 0 })
+  const loadScreens = (formScreens) => formDispatch({ type: 'UPDATE_SCREENS', value: formScreens })
+  const getCurrentScreen = () => formState.screens[formState.currentScreen]
 
   return (
-    <RecordStoolFormInternal stoolState={stoolState} stoolDispatch={stoolDispatch} formState={formState} formDispatch={formDispatch} />
+    <RecordStoolFormScreens
+      stoolState={stoolState}
+      getStoolType={getStoolType}
+      getStoolDateTime={getStoolDateTime}
+      updateStoolType={updateStoolType}
+      updateStoolDatetime={updateStoolDatetime}
+      goForwardScreen={goForwardScreen}
+      goBackwardScreen={goBackwardScreen}
+      goStartScreen={goStartScreen}
+      loadScreens={loadScreens}
+      getCurrentScreen={getCurrentScreen}
+    />
   )
 }
 
-const RecordStoolFormInternal = ({ stoolState, stoolDispatch, formState, formDispatch }) => {
+const RecordStoolFormScreens = ({
+  stoolState,
+  getStoolType,
+  getStoolDateTime,
+  updateStoolDatetime,
+  goForwardScreen,
+  goBackwardScreen,
+  goStartScreen,
+  updateStoolType,
+  loadScreens,
+  getCurrentScreen
+}) => {
+
 
   useEffect(() => {
-    const formScreens = [
+    const stoolFormScreens = [
       <StoolTypeCapture
-        stoolRecordFormType={stoolState.type}
-        setStoolRecordFormType={(stoolType) => {
-          stoolDispatch({ type: "UPDATE_TYPE", value: stoolType })
-          next();
+        setSelectedType={(stoolType) => {
+          updateStoolType(stoolType)
+          goForwardScreen();
         }}
       />,
       <StoolDateTimeCapture
-        stoolRecordFormDateTime={stoolState.dateTime}
-        setStoolRecordFormDateTime={(dateTime) => stoolDispatch({ type: "UPDATE_DATETIME", value: dateTime })}
+        selectedDateTime={getStoolDateTime()}
+        setSelectedDateTime={(dateTime) => updateStoolDatetime(dateTime)}
         formNavButtons={
           <FormNavigationButtons
-            handleNavForward={() => { stoolState.dateTime === null && stoolDispatch({ type: "UPDATE_DATETIME", value: moment() }); next(); }}
-            handleNavBackward={back}
+            handleNavForward={() => { getStoolDateTime() === null && updateStoolDatetime(moment()); goForwardScreen(); }}
+            handleNavBackward={() => { goBackwardScreen(); }}
           />}
       />,
       <StoolCaptureSummary
-        selectedStoolDateTime={stoolState.dateTime}
-        selectedStoolType={stoolState.type}
-        handleTypeReselect={() => {
-          start();
-          stoolDispatch({ type: "UPDATE_TYPE", value: null })
-        }}
-        handleDateTimeReselect={() => {
-          back();
-        }}
+        selectedType={getStoolType()}
+        selectedDateTime={getStoolDateTime()}
+        handleTypeReselect={() => { goStartScreen(); updateStoolType(null) }}
+        handleDateTimeReselect={() => { goBackwardScreen(); }}
         formNavButtons={
           <FormNavigationButtons
-            primaryActionOverride={<PrimaryActionButton buttonColor={buttonColor.POSITIVE} onClick={next} > Save</PrimaryActionButton >}
-            handleNavBackward={back}
+            primaryActionOverride={<PrimaryActionButton buttonColor={buttonColor.POSITIVE} onClick={() => { goForwardScreen() }}> Save</PrimaryActionButton >}
+            handleNavBackward={() => { goBackwardScreen() }}
           />}
       />]
-    formDispatch({ type: 'UPDATE_SCREENS', value: formScreens })
-  }, [stoolState, stoolDispatch])
+    loadScreens(stoolFormScreens)
+  }, [stoolState])
 
-  console.log(stoolState)
-  console.log(formState)
+  // console.log(stoolState)
+  // console.log(formState)
 
 
-  const next = () => formDispatch({ type: "MOVE_SCREEN_FORWARD" });
-  const back = () => formDispatch({ type: "MOVE_SCREEN_BACKWARD" });
-  const start = () => formDispatch({ type: 'UPDATE_CURRENT_SCREEN', value: 0 })
 
 
 
@@ -112,7 +135,7 @@ const RecordStoolFormInternal = ({ stoolState, stoolDispatch, formState, formDis
     <>
       <h2>Record a Stool</h2>
       <FormScreenStyle>
-        {formState.screens[formState.currentScreen]}
+        {getCurrentScreen()}
       </FormScreenStyle>
 
     </>
