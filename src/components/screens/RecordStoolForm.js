@@ -1,72 +1,118 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import styled from 'styled-components'
 import { StoolTypeCapture, StoolDateTimeCapture, StoolCaptureSummary } from '../form/stool';
 import { PrimaryActionButton, SecondaryActionButton, ButtonGroup } from '../button';
 import buttonColor from '../button/ButtonColors'
 import { FormNavigationButtons } from '../button/composite'
+import moment from 'moment'
 
 
 const FormScreenStyle = styled.div`
   margin: 1rem auto;
 `
 
+const INITIAL_STOOL_STATE = {
+  type: null,
+  dateTime: null,
+}
+const stoolReducer = (state, action) => {
+  if (action.type === "UPDATE_TYPE") {
+    const newState = { ...state, type: action.value }
+    return newState
+  }
+  if (action.type === "UPDATE_DATETIME") {
+    const newState = { ...state, dateTime: action.value }
+    return newState
+  }
+}
 
+const INITIAL_FORM_STATE = {
+  currentScreen: 0,
+  hasReachedSummary: false,
+  screens: [],
+}
+const formReducer = (state, action) => {
+  switch (action.type) {
+    case "UPDATE_SCREENS": return { ...state, screens: action.value }
+    case "UPDATE_HAS_REACHED_SUMMARY": return { ...state, hasReachedSummary: action.value }
+    case "UPDATE_CURRENT_SCREEN": return { ...state, currentScreen: action.value }
+    case "MOVE_SCREEN_FORWARD": return {
+      ...state,
+      currentScreen: state.currentScreen + 1 > state.screens.length - 1 ? state.screens.length - 1 : state.currentScreen + 1
+    }
+    case "MOVE_SCREEN_BACKWARD": return {
+      ...state,
+      currentScreen: state.currentScreen - 1 < 0 ? 0 : state.currentScreen - 1
+    }
+    default: throw new Error("Cannot execute form dispatch action")
+  }
+}
 
 const RecordStoolForm = () => {
 
-  const [selectedStoolType, setSelectedStoolType] = useState(null);
-  const [selectedStoolDateTime, setSelectedStoolDateTime] = useState(null);
-  const [formStage, setFormStage] = useState(0);
-  const moveFormScreen = (num) => {
-    const newScreen = formStage + num;
-    if (newScreen < 0 || newScreen > formScreens.length - 1) {
-      setFormStage(0)
-    } else {
-      setFormStage(newScreen);
-    }
-  }
-  const next = () => moveFormScreen(1);
-  const back = () => moveFormScreen(-1);
-  const start = () => setFormStage(0);
+  // Replace with Context
+  const [stoolState, stoolDispatch] = useReducer(stoolReducer, INITIAL_STOOL_STATE);
+  const [formState, formDispatch] = useReducer(formReducer, INITIAL_FORM_STATE);
+
+  return (
+    <RecordStoolFormInternal stoolState={stoolState} stoolDispatch={stoolDispatch} formState={formState} formDispatch={formDispatch} />
+  )
+}
+
+const RecordStoolFormInternal = ({ stoolState, stoolDispatch, formState, formDispatch }) => {
+
+  useEffect(() => {
+    const formScreens = [
+      <StoolTypeCapture
+        stoolRecordFormType={stoolState.type}
+        setStoolRecordFormType={(stoolType) => {
+          stoolDispatch({ type: "UPDATE_TYPE", value: stoolType })
+          next();
+        }}
+      />,
+      <StoolDateTimeCapture
+        stoolRecordFormDateTime={stoolState.dateTime}
+        setStoolRecordFormDateTime={(dateTime) => stoolDispatch({ type: "UPDATE_DATETIME", value: dateTime })}
+        formNavButtons={
+          <FormNavigationButtons
+            handleNavForward={() => { stoolState.dateTime === null && stoolDispatch({ type: "UPDATE_DATETIME", value: moment() }); next(); }}
+            handleNavBackward={back}
+          />}
+      />,
+      <StoolCaptureSummary
+        selectedStoolDateTime={stoolState.dateTime}
+        selectedStoolType={stoolState.type}
+        handleTypeReselect={() => {
+          start();
+          stoolDispatch({ type: "UPDATE_TYPE", value: null })
+        }}
+        handleDateTimeReselect={() => {
+          back();
+        }}
+        formNavButtons={
+          <FormNavigationButtons
+            primaryActionOverride={<PrimaryActionButton buttonColor={buttonColor.POSITIVE} onClick={next} > Save</PrimaryActionButton >}
+            handleNavBackward={back}
+          />}
+      />]
+    formDispatch({ type: 'UPDATE_SCREENS', value: formScreens })
+  }, [stoolState, stoolDispatch])
+
+  console.log(stoolState)
+  console.log(formState)
 
 
-  const formScreens = [
-    <StoolTypeCapture
-      stoolRecordFormType={selectedStoolType}
-      setStoolRecordFormType={(stoolType) => {
-        setSelectedStoolType(stoolType);
-        next();
-      }}
-    />,
-    <StoolDateTimeCapture
-      stoolRecordFormDateTime={selectedStoolDateTime}
-      setStoolRecordFormDateTime={setSelectedStoolDateTime}
-      formNavButtons={<FormNavigationButtons handleNavForward={next} handleNavBackward={back} />}
-    />,
-    <StoolCaptureSummary
-      selectedStoolDateTime={selectedStoolDateTime}
-      selectedStoolType={selectedStoolType}
-      handleTypeReselect={() => {
-        start();
-        setSelectedStoolType(null)
-      }}
-      handleDateTimeReselect={() => {
-        back();
-      }}
-      formNavButtons={<FormNavigationButtons primaryActionOverride={<PrimaryActionButton buttonColor={buttonColor.POSITIVE} onClick={next}>Save</PrimaryActionButton>} handleNavBackward={back} />}
-    />
-  ]
+  const next = () => formDispatch({ type: "MOVE_SCREEN_FORWARD" });
+  const back = () => formDispatch({ type: "MOVE_SCREEN_BACKWARD" });
+  const start = () => formDispatch({ type: 'UPDATE_CURRENT_SCREEN', value: 0 })
 
-  const end = () => setFormStage(formScreens.length - 1)
-  const isAtEnd = formStage === formScreens.length - 1;
-  const isAtStart = formStage === 0
 
 
   return (
     <>
       <h2>Record a Stool</h2>
       <FormScreenStyle>
-        {formScreens[formStage]}
+        {formState.screens[formState.currentScreen]}
       </FormScreenStyle>
 
     </>

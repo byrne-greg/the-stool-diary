@@ -5,10 +5,8 @@ import { StoolTypeCard } from '../../card/composite';
 import stoolClassifications from '../../../utils/stool-classifications'
 
 
-const StoolTypeCapture = ({ stoolRecordFormType = null, setStoolRecordFormType = () => { }, formNavButtons }) => {
-  console.log('StoolTypeCapture', stoolRecordFormType)
-
-
+const StoolTypeCapture = ({ stoolRecordFormType, setStoolRecordFormType = () => { }, formNavButtons }) => {
+  console.log('StoolDateTimeCapture-stoolRecordFormType', stoolRecordFormType)
 
   return (
     <>

@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { CardContainer, Card, CardContent, CardActions } from "../../card"
-import { StoolTypeCard } from "../../card/composite"
+import { StoolTypeCard, ItemNotFoundCard } from "../../card/composite"
 import stoolClassifications from '../../../utils/stool-classifications'
 import { SecondaryActionButton } from '../../button'
 import { DateTimePicker } from '../../datetime-picker'
@@ -11,20 +11,27 @@ const CaptureSummarySectionStyle = styled.section`
 `
 
 const StoolCaptureSummary = ({ selectedStoolDateTime, selectedStoolType, handleTypeReselect, handleDateTimeReselect, formNavButtons }) => {
+  console.log('StoolCaptureSummary-selectedStoolType', selectedStoolType)
 
   const selectedStoolClassification = stoolClassifications.filter(stoolClass => stoolClass.type === selectedStoolType)[0]
+  console.log('StoolCaptureSummary-selectedStoolClassification', selectedStoolClassification)
   return (
     <>
       <h3>Summary</h3>
       <CaptureSummarySectionStyle>
         <h4>Selected Stool Type</h4>
         <CardContainer>
-          <StoolTypeCard
-            type={selectedStoolClassification.type}
-            image={selectedStoolClassification.image}
-            description={selectedStoolClassification.description}
-            handleClick={handleTypeReselect}
-            isSelected />
+          {selectedStoolClassification ?
+            (<StoolTypeCard
+              type={selectedStoolClassification.type}
+              image={selectedStoolClassification.image}
+              description={selectedStoolClassification.description}
+              handleClick={handleTypeReselect}
+              isSelected />)
+            :
+            (
+              <ItemNotFoundCard />
+            )}
         </CardContainer>
       </CaptureSummarySectionStyle>
       <CaptureSummarySectionStyle>

@@ -1,3 +1,4 @@
+import ItemNotFoundCard from './ItemNotFoundCard'
 import StoolTypeCard from './StoolTypeCard'
 
-export { StoolTypeCard } 
+export { ItemNotFoundCard, StoolTypeCard } 

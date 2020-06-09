@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, CardMedia, CardTitle, CardContent, CardActions } from '../'
+import { Card, CardMedia, CardTitle, CardContent, CardActions } from '..'
 import { PrimaryActionButton, SecondaryActionButton } from '../../button'
 
 const StoolTypeCard = ({ type, image, description, handleClick, isSelected }) => {
