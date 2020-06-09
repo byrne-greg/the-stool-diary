@@ -10,7 +10,7 @@ const CaptureSummarySectionStyle = styled.section`
   padding: 1rem 0 2rem 0;
 `
 
-const StoolCaptureSummary = ({ selectedStoolDateTime, selectedStoolType, handleTypeReselect, handleDateTimeReselect }) => {
+const StoolCaptureSummary = ({ selectedStoolDateTime, selectedStoolType, handleTypeReselect, handleDateTimeReselect, formNavButtons }) => {
 
   const selectedStoolClassification = stoolClassifications.filter(stoolClass => stoolClass.type === selectedStoolType)[0]
   return (
@@ -38,6 +38,8 @@ const StoolCaptureSummary = ({ selectedStoolDateTime, selectedStoolType, handleT
           </CardActions>
         </Card>
       </CaptureSummarySectionStyle>
+      {formNavButtons}
+
 
     </>
   )

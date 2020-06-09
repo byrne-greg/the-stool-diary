@@ -3,7 +3,7 @@ import moment from 'moment'
 import { DateTimePicker } from '../../datetime-picker'
 import { ButtonGroup } from '../../button'
 
-const StoolDateTimeCapture = ({ stoolRecordFormDateTime, setStoolRecordFormDateTime }) => {
+const StoolDateTimeCapture = ({ stoolRecordFormDateTime, setStoolRecordFormDateTime, formNavButtons }) => {
 
   // if on mount we don't have a selected datetime for form, then set current moment
   useEffect(() => {
@@ -21,6 +21,7 @@ const StoolDateTimeCapture = ({ stoolRecordFormDateTime, setStoolRecordFormDateT
           value={stoolRecordFormDateTime}
           handleChange={(date) => setStoolRecordFormDateTime(date)} />
       </ButtonGroup>
+      {formNavButtons}
     </>
 
   )

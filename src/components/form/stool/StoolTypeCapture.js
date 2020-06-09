@@ -5,7 +5,7 @@ import { StoolTypeCard } from '../../card/composite';
 import stoolClassifications from '../../../utils/stool-classifications'
 
 
-const StoolTypeCapture = ({ stoolRecordFormType = null, setStoolRecordFormType = () => { } }) => {
+const StoolTypeCapture = ({ stoolRecordFormType = null, setStoolRecordFormType = () => { }, formNavButtons }) => {
   console.log('StoolTypeCapture', stoolRecordFormType)
 
 
@@ -24,6 +24,7 @@ const StoolTypeCapture = ({ stoolRecordFormType = null, setStoolRecordFormType =
           // isSelected={stoolRecordFormType === stoolClass.type}
           />))}
       </CardContainer>
+      {formNavButtons}
     </>
   )
 }
