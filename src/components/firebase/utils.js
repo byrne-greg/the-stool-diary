@@ -1,4 +1,5 @@
 import firebase from 'gatsby-plugin-firebase'
+import { getDisplayDate } from '@material-ui/pickers/_helpers/text-field-helper';
 
 const db = firebase.firestore();
 
@@ -10,4 +11,21 @@ export const persistData = (namespace, obj) => {
     .catch(function (error) {
       console.error("Error adding document: ", error);
     });
+}
+
+export const retrieveData = (namespace) => {
+
+  async function getData(namespace) {
+    const data = [];
+    await db.collection(namespace).get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        console.log(`${doc.id} => ${doc.data()}`);
+        data.push({ ...doc.data(), id: doc.id })
+      });
+    })
+    console.log(data);
+    return data;
+  }
+
+  return getData(namespace);
 }

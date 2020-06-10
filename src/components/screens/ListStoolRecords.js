@@ -2,23 +2,8 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import moment from 'moment'
 import stoolClassifications from '../../utils/stool-classifications'
-
-
-const SAMPLE_TEST_DATA = [
-  {
-    type: 1,
-    datetime: moment().format()
-  },
-  {
-    type: 3,
-    datetime: moment().format()
-  },
-  {
-    type: 5,
-    datetime: moment().format()
-  }
-]
-
+import { retrieveData } from '../firebase/utils'
+import { STOOL_NAMESPACE } from '../firebase/namespaces'
 
 const ListItem = styled.li`
   margin: 0;
@@ -32,11 +17,12 @@ const ListItemAvatar = styled.div`
   padding: 0 0.5rem;
   width: 10rem;
 `
-const ListItemTitle = styled.div`
-  padding: 0 0.5rem;
+const ListItemTitle = styled.h3`
+  margin: 0;
+  padding: 0 0.5rem 0.5rem 0.5rem;
 `
-const ListItemDescription = styled.div`
-  padding: 0 0.5rem;
+const ListItemDescription = styled.p`
+  padding: 0 0.5rem 0.5rem 0.5rem;
 `
 
 const ListItemTextContainer = styled.div`
@@ -49,24 +35,29 @@ const ListStoolRecords = () => {
   const [stoolRecords, setStoolRecords] = useState([]);
 
   useEffect(() => {
-    setStoolRecords(SAMPLE_TEST_DATA)
+    const retrieveStoolRecords = async () => {
+      setStoolRecords(await retrieveData(STOOL_NAMESPACE));
+    }
+    retrieveStoolRecords();
   }, [])
+
+  const recordsSortedByLatestFirst = stoolRecords.slice().sort((a, b) => new Date(b.dateTime) - new Date(a.dateTime))
 
   return (
     <>
       <ul>
-        {stoolRecords.map((stoolRecord) => {
+        {recordsSortedByLatestFirst.map((stoolRecord) => {
           const stoolClass = stoolClassifications.find(stoolClass => stoolClass.type === stoolRecord.type)
-          console.log(stoolClass);
-          return (<>
-            <ListItem key={`${stoolClass.type}-${stoolClass.datetime}`}>
+          console.log(stoolRecord)
+          return (
+            <ListItem key={`${stoolRecord.type}-${stoolRecord.dateTime}`}>
               <ListItemAvatar>{stoolClass.image}</ListItemAvatar>
               <ListItemTextContainer>
-                <ListItemTitle>Type: {stoolRecord.type}</ListItemTitle>
-                <ListItemDescription>Date/Time: {moment(stoolRecord.datetime).format("dddd, MMMM Do YYYY, h:mm:ss a")}</ListItemDescription>
+                <ListItemTitle>Type {stoolRecord.type}</ListItemTitle>
+                <ListItemDescription>{moment(stoolRecord.dateTime).format("h:mm:ss a, dddd, MMMM Do YYYY")}</ListItemDescription>
               </ListItemTextContainer>
             </ListItem>
-          </>)
+          )
         })}
       </ul>
     </>
