@@ -29,7 +29,7 @@ const StoolCaptureSummary = ({
     setFormHasReachedSummary();
   }, [hasFormReachedSummary])
 
-  const stoolClassificationOnSelectedType = stoolClassifications.filter(stoolClass => stoolClass.type === selectedType)[0]
+  const stoolClassificationOnSelectedType = stoolClassifications.find(stoolClass => stoolClass.type === selectedType)
   const { type: stoolType, image: stoolImage, description: stoolDescription } = stoolClassificationOnSelectedType;
   return (
     <>
