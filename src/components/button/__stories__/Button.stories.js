@@ -14,6 +14,7 @@ export const Primary_Action = () => (
     <PrimaryActionButton onClick={action('clicked')}>Primary Default</PrimaryActionButton>
     <PrimaryActionButton buttonColor={buttonColor.POSITIVE} onClick={action('clicked')}>Primary Positive</PrimaryActionButton>
     <PrimaryActionButton buttonColor={buttonColor.TERTIARY} onClick={action('clicked')}>Primary Tertiary</PrimaryActionButton>
+    <PrimaryActionButton buttonColor={buttonColor.CALL_TO_ACTION} onClick={action('clicked')}>Primary Call-to-Action</PrimaryActionButton>
   </ButtonGroup>
 )
 
@@ -23,6 +24,7 @@ export const Secondary_Action = () => (
     <SecondaryActionButton onClick={action('clicked')}>Secondary Default</SecondaryActionButton>
     <SecondaryActionButton buttonColor={buttonColor.POSITIVE} onClick={action('clicked')}>Secondary Positive</SecondaryActionButton>
     <SecondaryActionButton buttonColor={buttonColor.TERTIARY} onClick={action('clicked')}>Secondary Tertiary</SecondaryActionButton>
+    <SecondaryActionButton buttonColor={buttonColor.CALL_TO_ACTION} onClick={action('clicked')}>Secondary Call-to-Action</SecondaryActionButton>
   </ButtonGroup>
 )
 
