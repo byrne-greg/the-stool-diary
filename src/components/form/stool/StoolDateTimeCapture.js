@@ -3,7 +3,7 @@ import moment from 'moment'
 import { DateTimePicker } from '../../datetime-picker'
 import { ButtonGroup } from '../../button'
 
-const StoolDateTimeCapture = ({ selectedDateTime = moment(), setSelectedDateTime, formNavButtons }) => {
+const StoolDateTimeCapture = ({ selectedDateTime = moment().format(), setSelectedDateTime, formNavButtons }) => {
 
   return (
     <>
@@ -12,7 +12,7 @@ const StoolDateTimeCapture = ({ selectedDateTime = moment(), setSelectedDateTime
         <DateTimePicker
           label="Click to Select a Date/Time"
           value={selectedDateTime}
-          handleChange={(datetime) => setSelectedDateTime(datetime)} />
+          handleChange={(datetime) => setSelectedDateTime(datetime.format())} />
       </ButtonGroup>
       {formNavButtons}
     </>

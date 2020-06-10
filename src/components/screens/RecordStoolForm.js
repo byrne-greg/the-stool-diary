@@ -11,6 +11,8 @@ import { formReducer } from '../form/state/formReducers'
 import { INITIAL_STOOL_STATE } from '../form/stool/state/stoolModel'
 import { updateStoolType, updateStoolDateTime } from '../form/stool/state/stoolActions'
 import { stoolReducer } from '../form/stool/state/stoolReducers'
+import { persistData } from '../firebase/utils'
+import { } from '../firebase/namespaces'
 
 
 const RecordStoolForm = () => {
@@ -20,6 +22,7 @@ const RecordStoolForm = () => {
   const updateDatetime = (dateTime) => updateStoolDateTime(stoolDispatch, dateTime)
   const getStoolType = () => { console.log('getting stool type', stoolState.type); return stoolState.type }
   const getStoolDateTime = () => stoolState.dateTime
+  const persistStoolData = () => persistData(STOOL_NAMESPACE, stoolState);
 
   const [formState, formDispatch] = useReducer(formReducer, INITIAL_FORM_STATE);
   const goForwardScreen = () => moveFormScreenForward(formDispatch);
@@ -50,6 +53,7 @@ const RecordStoolForm = () => {
       getFormHasReachedSummary={getFormHasReachedSummary}
       loadScreens={loadScreens}
       getCurrentScreen={getCurrentScreen}
+      persistStoolData={persistStoolData}
     />
   )
 }
@@ -70,7 +74,8 @@ const RecordStoolFormScreens = ({
   setFormHasReachedSummary,
   getFormHasReachedSummary,
   loadScreens,
-  getCurrentScreen
+  getCurrentScreen,
+  persistStoolData
 }) => {
   useEffect(() => {
     const stoolFormScreens = [
@@ -87,7 +92,7 @@ const RecordStoolFormScreens = ({
         setSelectedDateTime={(dateTime) => updateDatetime(dateTime)}
         formNavButtons={
           <FormNavigationButtons
-            handleNavForward={() => { getStoolDateTime() === null && updateDatetime(moment()); goForwardScreen(); }}
+            handleNavForward={() => { getStoolDateTime() === null && updateDatetime(moment().format()); goForwardScreen(); }}
             handleNavBackward={() => { goBackwardScreen(); }}
           />}
       />,
@@ -100,7 +105,10 @@ const RecordStoolFormScreens = ({
         setFormHasReachedSummary={setFormHasReachedSummary}
         formNavButtons={
           <FormNavigationButtons
-            primaryActionOverride={<PrimaryActionButton buttonColor={buttonColor.POSITIVE} onClick={() => { goForwardScreen() }}> Save</PrimaryActionButton >}
+            primaryActionOverride={<PrimaryActionButton buttonColor={buttonColor.POSITIVE} onClick={() => {
+              persistStoolData(stoolState);
+              goStartScreen();
+            }}> Save</PrimaryActionButton >}
             handleNavBackward={() => { goBackwardScreen() }}
           />}
       />]
