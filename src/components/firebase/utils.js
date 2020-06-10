@@ -1,5 +1,4 @@
 import firebase from 'gatsby-plugin-firebase'
-import { getDisplayDate } from '@material-ui/pickers/_helpers/text-field-helper';
 
 const db = firebase.firestore();
 
