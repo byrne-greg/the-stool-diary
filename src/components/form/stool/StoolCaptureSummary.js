@@ -52,14 +52,16 @@ const StoolCaptureSummary = ({
       </CaptureSummarySectionStyle>
       <CaptureSummarySectionStyle>
         <h4>Selected Date/Time</h4>
-        <Card noShadow>
-          <CardContent>
-            <DateTimePicker label="Selected Stool Date/Time" value={selectedDateTime} readOnly />
-          </CardContent>
-          <CardActions>
-            <SecondaryActionButton onClick={handleDateTimeReselect}>Select a different date/time</SecondaryActionButton>
-          </CardActions>
-        </Card>
+        <CardContainer>
+          <Card noShadow>
+            <CardContent>
+              <DateTimePicker label="Selected Stool Date/Time" value={selectedDateTime} readOnly />
+            </CardContent>
+            <CardActions>
+              <SecondaryActionButton onClick={handleDateTimeReselect}>Select a different date/time</SecondaryActionButton>
+            </CardActions>
+          </Card>
+        </CardContainer>
       </CaptureSummarySectionStyle>
       {formNavButtons}
 
