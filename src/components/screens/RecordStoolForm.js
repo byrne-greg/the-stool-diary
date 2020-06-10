@@ -12,7 +12,7 @@ import { INITIAL_STOOL_STATE } from '../form/stool/state/stoolModel'
 import { updateStoolType, updateStoolDateTime } from '../form/stool/state/stoolActions'
 import { stoolReducer } from '../form/stool/state/stoolReducers'
 import { persistData } from '../firebase/utils'
-import { } from '../firebase/namespaces'
+import { STOOL_NAMESPACE } from '../firebase/namespaces'
 
 
 const RecordStoolForm = () => {
