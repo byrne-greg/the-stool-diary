@@ -58,7 +58,7 @@ const StoolCaptureSummary = ({
               <DateTimePicker label="Selected Stool Date/Time" value={selectedDateTime} readOnly />
             </CardContent>
             <CardActions>
-              <SecondaryActionButton onClick={handleDateTimeReselect}>Select a different date/time</SecondaryActionButton>
+              <SecondaryActionButton onClick={handleDateTimeReselect}>Click to reselect a different date/time</SecondaryActionButton>
             </CardActions>
           </Card>
         </CardContainer>
