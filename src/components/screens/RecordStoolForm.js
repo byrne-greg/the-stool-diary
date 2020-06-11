@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer } from 'react';
 import styled from 'styled-components'
 import moment from 'moment'
-import { StoolTypeCapture, StoolDateTimeCapture, StoolCaptureSummary } from '../form/stool';
+import { StoolTypeCapture, StoolDateTimeCapture, StoolSizeCapture, StoolCaptureSummary } from '../form/stool';
 import { PrimaryActionButton } from '../button';
 import buttonColor from '../button/ButtonColors'
 import { FormNavigationButtons } from '../button/composite'
@@ -86,6 +86,13 @@ const RecordStoolFormScreens = ({
           // getFormHasReachedSummary() ? goEndScreen() : goForwardScreen();
           goForwardScreen();
         }}
+      />,
+      <StoolSizeCapture
+        formNavButtons={
+          <FormNavigationButtons
+            handleNavForward={() => { goForwardScreen(); }}
+            handleNavBackward={() => { goBackwardScreen(); }}
+          />}
       />,
       <StoolDateTimeCapture
         selectedDateTime={getStoolDateTime()}

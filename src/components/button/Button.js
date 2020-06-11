@@ -1,4 +1,4 @@
-import React, { Children } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import buttonColors from "./ButtonColors"
@@ -14,27 +14,74 @@ export const BasicButton = ({ children, ...props }) => (
 
 // --------------------
 
-export const PrimaryActionButtonStyle = styled(BasicButtonStyle)`
+export const FilledButtonStyle = styled(BasicButtonStyle)`
   background-color: ${({ buttonColor = buttonColors.PRIMARY }) => buttonColor};
   border: 2px solid ${({ buttonColor = buttonColors.PRIMARY }) => buttonColor};
   color: white;
 `
+export const FilledButton = ({ children, ...props }) => (
+  <FilledButtonStyle  {...props} >{children}</FilledButtonStyle>)
 export const PrimaryActionButton = ({ children, ...props }) => (
-  <PrimaryActionButtonStyle  {...props} >{children}</PrimaryActionButtonStyle>
+  <FilledButton  {...props} >{children}</FilledButton>
 )
 
 // --------------------
 
-export const SecondaryActionButtonStyle = styled(BasicButtonStyle)`
+export const OutlineButtonStyle = styled(BasicButtonStyle)`
   background-color: white;
   border: 2px solid ${({ buttonColor = buttonColors.PRIMARY }) => buttonColor};
   color: ${({ buttonColor = buttonColors.PRIMARY }) => buttonColor};
 `
+export const OutlineButton = ({ children, ...props }) => (
+  <OutlineButtonStyle  {...props}>{children}</OutlineButtonStyle>)
 export const SecondaryActionButton = ({ children, ...props }) => (
-  <SecondaryActionButtonStyle  {...props}>{children}</SecondaryActionButtonStyle>
+  <OutlineButton  {...props}>{children}</OutlineButton>
 )
 
 // --------------------
 
+export const RadioButtonLabelStyle = styled.label`
+  ${({ isChecked, buttonColor = buttonColors.PRIMARY }) => isChecked ?
+    `
+      background-color: ${buttonColor};
+      border: 2px solid ${buttonColor};
+      color: white;
+    `
+    :
+    `
+      background-color: white;
+      border: 2px solid ${buttonColor};
+      color: ${buttonColor};
+    `
+  }
+
+  display: block;
+  padding: 0.75rem 1rem;
+  margin: 0;
+`
+export const RadioButtonInputStyle = styled.input`
+  display: none;
+`
+export const RadioButton = ({ radioGroupSelectedValue, value, text, onChange, buttonColor }) => {
+
+  const isChecked = radioGroupSelectedValue === value;
+
+  return (
+    <>
+      <RadioButtonLabelStyle buttonColor={buttonColor} isChecked={isChecked} htmlFor={text}>
+        <RadioButtonInputStyle
+          type="radio"
+          id={text}
+          name="radio"
+          value={value}
+          checked={isChecked}
+          onChange={onChange}
+        />
+        {text}
+      </RadioButtonLabelStyle>
+
+    </>
+  )
+}
 
 
