@@ -48,8 +48,9 @@ export const RadioButtonGroupStyle = styled(ButtonGroupScreenResponseStyle)`
 text-align: center;
 `
 export const RadioButtonGroup = ({ buttonData = [], buttonColor = buttonColors.PRIMARY, onSelected = (() => { }) }) => {
-  const firstButtonDataValue = buttonData.length > 0 && buttonData[0].value
-  const [selectedValue, setSelectedValue] = useState(firstButtonDataValue ? firstButtonDataValue : null);
+
+  const [selectedValue, setSelectedValue] = useState(null);
+
   return (
     <RadioButtonGroupStyle>
       {buttonData.map((button) => {

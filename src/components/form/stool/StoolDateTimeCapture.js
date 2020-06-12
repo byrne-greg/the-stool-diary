@@ -1,19 +1,58 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import moment from 'moment'
-import { DateTimePicker } from '../../datetime-picker'
-import { ButtonGroup } from '../../button'
+import { TimePicker, DatePicker } from '../../datetime-picker'
+import { ButtonGroup, ToggleButton } from '../../button'
 
-const StoolDateTimeCapture = ({ selectedDateTime = moment().format(), setSelectedDateTime, formNavButtons }) => {
+/** 
+ * Test Paths
+ * 
+ * 1. Given: No interaction - Press Next, Then on unmount: Default time stamp is persisted
+ * 2. Given: Change Date only, Then on unmount: Changed date time is persisted (dateOnly: true)
+ * 3. Given: Change Add time toggle only, Then on unmount: Changed date time is persisted (dateOnly: false)
+ * 4. Given: Change Add time and Change Time, Then on unmount : Changed date time is persisted (dateOnly: false)
+ * 5. Given: Persisted timestamp with dateOnly true, Then on remount: Persisted timestamp with Add Time toggle off
+ * 6. Given: Persisted timestamp with dateOnly false, Then on remount: Persisted timestamp with Add Time toggle time and time in box
+ */
+
+const StoolDateTimeCapture = ({ persistedDateTime = {}, persistDateTime = () => { }, formNavButtons }) => {
+
+  const getTimestampDateStringObj = (datetime) => {
+    const momentInst = datetime ? datetime : moment();
+    return { timestamp: momentInst.format(), dateString: momentInst.format('YYYY-MM-DD') }
+  }
+  const [isAddingTime, setIsAddingTime] = useState(persistedDateTime.dateOnly === true ? false : true);
+
+  useEffect(() => {
+    // if we don't have a time already, persist a default one for no-user-interaction scenarios
+    if (!persistedDateTime.timestamp && !persistedDateTime.dateString) {
+      persistDateTime({ ...getTimestampDateStringObj(), dateOnly: true });
+    }
+  }, [persistedDateTime])
 
   return (
     <>
       <h3>Date &amp; Time</h3>
       <ButtonGroup>
-        <DateTimePicker
-          label="Click to Select a Date/Time"
-          value={selectedDateTime}
-          handleChange={(datetime) => setSelectedDateTime(datetime.format())} />
+        <DatePicker
+          label="Click to Select a Date"
+          value={persistedDateTime.dateString}
+          handleChange={(datetime) => persistDateTime({ ...getTimestampDateStringObj(datetime), dateOnly: true })} />
       </ButtonGroup>
+      <ButtonGroup>
+        <ToggleButton
+          text={'Add time?'}
+          defaultCheck={isAddingTime}
+          onSelected={(isChecked) => {
+            setIsAddingTime(isChecked);
+            persistDateTime({ ...persistedDateTime, dateOnly: isAddingTime })
+          }} />
+      </ButtonGroup>
+      {isAddingTime && <ButtonGroup>
+        <TimePicker
+          label="Click to Select a Time"
+          value={persistedDateTime.timestamp}
+          handleChange={(datetime) => persistDateTime({ ...getTimestampDateStringObj(datetime), dateOnly: false })} />
+      </ButtonGroup>}
       {formNavButtons}
     </>
   )

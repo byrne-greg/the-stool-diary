@@ -21,7 +21,7 @@ const RecordStoolForm = () => {
   const updateType = (stoolType) => updateStoolType(stoolDispatch, stoolType)
   const updateDatetime = (dateTime) => updateStoolDateTime(stoolDispatch, dateTime)
   const updateSize = (size) => updateStoolSize(stoolDispatch, size);
-  const getStoolType = () => { console.log('getting stool type', stoolState.type); return stoolState.type }
+  const getStoolType = () => stoolState.type
   const getStoolDateTime = () => stoolState.dateTime
   const getStoolSize = () => stoolState.size
   const persistStoolData = () => persistData(STOOL_NAMESPACE, stoolState);
@@ -38,8 +38,8 @@ const RecordStoolForm = () => {
   const getFormHasReachedSummary = () => formState.hasReachedSummary
 
 
-  console.log(stoolState)
-  console.log(formState)
+  console.log('stoolState', stoolState)
+  console.log('formState', formState)
 
   return (
     <RecordStoolFormScreens
@@ -106,11 +106,19 @@ const RecordStoolFormScreens = ({
           />}
       />,
       <StoolDateTimeCapture
-        selectedDateTime={getStoolDateTime()}
-        setSelectedDateTime={(dateTime) => updateDatetime(dateTime)}
+        persistedDateTime={getStoolDateTime()}
+        persistDateTime={(dateTime) => updateDatetime(dateTime)}
         formNavButtons={
           <FormNavigationButtons
-            handleNavForward={() => { getStoolDateTime() === null && updateDatetime(moment().format()); goForwardScreen(); }}
+            handleNavForward={() => {
+              // getStoolDateTime().timestamp === null &&
+              //   updateDatetime({
+              //     timestamp: moment().format(),
+              //     dateString: moment().format('LL'),
+              //     dateOnly: true
+              //   });
+              goForwardScreen();
+            }}
             handleNavBackward={() => { goBackwardScreen(); }}
           />}
       />,

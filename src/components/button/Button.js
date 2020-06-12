@@ -92,7 +92,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 
 
-export const ToggleButton = ({ toggleColorOn = buttonColors.POSITIVE, toggleColorOff = buttonColors.OFF, text, onSelected = () => { } }) => {
+export const ToggleButton = ({ toggleColorOn = buttonColors.POSITIVE, toggleColorOff = buttonColors.OFF, text, defaultCheck = true, onSelected = () => { } }) => {
 
   const ColoredToggle = withStyles({
     switchBase: {
@@ -108,7 +108,7 @@ export const ToggleButton = ({ toggleColorOn = buttonColors.POSITIVE, toggleColo
     track: {},
   })(Switch)
 
-  const [isChecked, setIsChecked] = useState(true)
+  const [isChecked, setIsChecked] = useState(defaultCheck)
 
   return (
     <>

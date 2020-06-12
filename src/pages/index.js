@@ -7,7 +7,9 @@ import ListStoolRecords from "../components/screens/ListStoolRecords"
 
 const WIP = () => {
   return (
-    <ListStoolRecords />
+    <>
+      {/* <ListStoolRecords /> */}
+    </>
   )
 }
 
@@ -20,6 +22,9 @@ const IndexPage = () => (
       </li>
       <li>
         <Link to="/list-stool/">Go to Test List Stool Records Page</Link>
+      </li>
+      <li>
+        <Link to="/stool-datetime-capture/">Go to Test Stool Date Time Capture</Link>
       </li>
     </ul>
   </PageLayout>

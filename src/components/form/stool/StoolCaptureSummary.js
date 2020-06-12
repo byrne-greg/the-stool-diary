@@ -4,7 +4,7 @@ import { CardContainer, Card, CardContent, CardActions } from "../../card"
 import { StoolTypeCard, ItemNotFoundCard } from "../../card/composite"
 import stoolClassifications from '../../../utils/stool-classifications'
 import { SecondaryActionButton, FilledButton } from '../../button'
-import { DateTimePicker } from '../../datetime-picker'
+import { DateTimePicker, DatePicker } from '../../datetime-picker'
 import { updateFormHasReachedSummary } from '../state/formActions'
 import buttonColors from '../../button/ButtonColors'
 
@@ -27,8 +27,8 @@ const StoolCaptureSummary = ({
 
   useEffect(() => {
     // despite the dependency being the value of hasFormReachedSummary, it will enter useEffect when this value is the same
-    console.log("StoolCaptureSummary - useEffect")
-    console.log(hasFormReachedSummary)
+    // console.log("StoolCaptureSummary - useEffect")
+    // console.log(hasFormReachedSummary)
     setFormHasReachedSummary();
   }, [hasFormReachedSummary])
 
@@ -74,7 +74,11 @@ const StoolCaptureSummary = ({
         <CardContainer>
           <Card noShadow>
             <CardContent>
-              <DateTimePicker label="Selected Stool Date/Time" value={selectedDateTime} readOnly />
+              {selectedDateTime.dateOnly ? (
+                <DatePicker label="Selected Stool Date" value={selectedDateTime.timestamp} readOnly />
+              ) : (
+                  <DateTimePicker label="Selected Stool Date/Time" value={selectedDateTime.timestamp} readOnly />
+                )}
             </CardContent>
             <CardActions>
               <SecondaryActionButton onClick={handleDateTimeReselect}>Click to reselect</SecondaryActionButton>
