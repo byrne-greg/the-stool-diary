@@ -17,7 +17,7 @@ const StoolTypeCard = ({ type, image, description, handleClick, isSelected }) =>
         </CardContent>
         <CardActions>
           {!isSelected ? <PrimaryActionButton>Select</PrimaryActionButton>
-            : <SecondaryActionButton>Click to reselect a different stool type</SecondaryActionButton>}
+            : <SecondaryActionButton>Click to reselect</SecondaryActionButton>}
         </CardActions>
       </Card >
 
