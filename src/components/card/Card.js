@@ -22,7 +22,7 @@ export const CardStyle = styled.div`
 
 const Card = ({ children, noShadow = false, ...props }) => {
   return (
-    <CardStyle noShadow={noShadow}  {...props}>
+    <CardStyle  {...props} noShadow={noShadow}  >
       {children}
     </CardStyle>
   )
