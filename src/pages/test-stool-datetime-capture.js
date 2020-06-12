@@ -1,17 +1,13 @@
-// Gatsby supports TypeScript natively!
 import React, { useState } from "react"
 import { Link } from "gatsby"
-import moment from 'moment'
 import { PageLayout } from "../components/layout"
 import { StoolDateTimeCapture } from "../components/form/stool"
-import { FilledButton, OutlineButton } from "../components/button"
-
-
+import { FilledButton } from "../components/button"
+import { INITIAL_STOOL_STATE } from "../components/form/stool/state/stoolModel"
 
 const StoolDateTimeCapturePage = () => {
   const [display, setDisplay] = useState(false);
-  const noMockDateTime = { timestamp: null, dateString: null, dateOnly: null }
-  const [mockPersistedDateTime, setMockPersistedDateTime] = useState(noMockDateTime);
+  const [mockPersistedDateTime, setMockPersistedDateTime] = useState(INITIAL_STOOL_STATE.dateTime);
 
 
   return (

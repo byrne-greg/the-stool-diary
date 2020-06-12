@@ -18,14 +18,18 @@ const IndexPage = () => (
     <WIP />
     <ul>
       <li>
-        <Link to="/record-stool/">Go to Test Record Stool Page</Link>
+        <Link to="/test-list-stool/">Test List Stool Records Screen</Link>
       </li>
       <li>
-        <Link to="/list-stool/">Go to Test List Stool Records Page</Link>
+        <Link to="/test-record-stool/">Test Record Stool Form</Link>
       </li>
       <li>
-        <Link to="/stool-datetime-capture/">Go to Test Stool Date Time Capture</Link>
+        <Link to="/test-stool-size-capture/">Test Stool Size Capture Screen</Link>
       </li>
+      <li>
+        <Link to="/test-stool-datetime-capture/">Test Stool Date Time Capture Screen</Link>
+      </li>
+
     </ul>
   </PageLayout>
 
