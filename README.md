@@ -6,7 +6,6 @@ Immediate tasks:
 
 UX/UI
 - High priority
-  * Add a size capture to record stool form (S/M/L)
   * Add a colour capture to record stool form (predefined colors, perhaps an "Other" leading to a color wheel)
   * Split date and time and make time an optional
   * Change the list record stools to show stool and non-stool days (more timeline/calendar)

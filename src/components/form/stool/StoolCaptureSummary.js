@@ -3,9 +3,10 @@ import styled from 'styled-components'
 import { CardContainer, Card, CardContent, CardActions } from "../../card"
 import { StoolTypeCard, ItemNotFoundCard } from "../../card/composite"
 import stoolClassifications from '../../../utils/stool-classifications'
-import { SecondaryActionButton } from '../../button'
+import { SecondaryActionButton, FilledButton } from '../../button'
 import { DateTimePicker } from '../../datetime-picker'
 import { updateFormHasReachedSummary } from '../state/formActions'
+import buttonColors from '../../button/ButtonColors'
 
 const CaptureSummarySectionStyle = styled.section`
   padding: 1rem 0 2rem 0;
@@ -14,8 +15,10 @@ const CaptureSummarySectionStyle = styled.section`
 const StoolCaptureSummary = ({
   selectedType = null,
   selectedDateTime = null,
+  selectedSize = null,
   handleTypeReselect = () => { },
   handleDateTimeReselect = () => { },
+  handleSizeReselect = () => { },
   setFormHasReachedSummary = () => { },
   hasFormReachedSummary = null,
   formNavButtons = null
@@ -50,6 +53,22 @@ const StoolCaptureSummary = ({
             )}
         </CardContainer>
       </CaptureSummarySectionStyle>
+
+      <CaptureSummarySectionStyle>
+        <h4>Selected Size</h4>
+        <CardContainer>
+          <Card noShadow>
+            <CardContent center>
+              {/* TODO shouldn't be a button */}
+              <FilledButton buttonColor={buttonColors.TERTIARY}>{selectedSize}</FilledButton>
+            </CardContent>
+            <CardActions>
+              <SecondaryActionButton onClick={handleSizeReselect}>Click to reselect</SecondaryActionButton>
+            </CardActions>
+          </Card>
+        </CardContainer>
+      </CaptureSummarySectionStyle>
+
       <CaptureSummarySectionStyle>
         <h4>Selected Date/Time</h4>
         <CardContainer>
@@ -58,7 +77,7 @@ const StoolCaptureSummary = ({
               <DateTimePicker label="Selected Stool Date/Time" value={selectedDateTime} readOnly />
             </CardContent>
             <CardActions>
-              <SecondaryActionButton onClick={handleDateTimeReselect}>Click to reselect a different date/time</SecondaryActionButton>
+              <SecondaryActionButton onClick={handleDateTimeReselect}>Click to reselect</SecondaryActionButton>
             </CardActions>
           </Card>
         </CardContainer>

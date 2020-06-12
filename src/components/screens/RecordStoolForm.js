@@ -9,7 +9,7 @@ import { INITIAL_FORM_STATE } from '../form/state/formModel'
 import { loadFormScreens, updateFormCurrentScreen, updateFormHasReachedSummary, moveFormScreenForward, moveFormScreenBackward } from '../form/state/formActions'
 import { formReducer } from '../form/state/formReducers'
 import { INITIAL_STOOL_STATE } from '../form/stool/state/stoolModel'
-import { updateStoolType, updateStoolDateTime } from '../form/stool/state/stoolActions'
+import { updateStoolType, updateStoolDateTime, updateStoolSize } from '../form/stool/state/stoolActions'
 import { stoolReducer } from '../form/stool/state/stoolReducers'
 import { persistData } from '../firebase/utils'
 import { STOOL_NAMESPACE } from '../firebase/namespaces'
@@ -20,8 +20,10 @@ const RecordStoolForm = () => {
   const [stoolState, stoolDispatch] = useReducer(stoolReducer, INITIAL_STOOL_STATE);
   const updateType = (stoolType) => updateStoolType(stoolDispatch, stoolType)
   const updateDatetime = (dateTime) => updateStoolDateTime(stoolDispatch, dateTime)
+  const updateSize = (size) => updateStoolSize(stoolDispatch, size);
   const getStoolType = () => { console.log('getting stool type', stoolState.type); return stoolState.type }
   const getStoolDateTime = () => stoolState.dateTime
+  const getStoolSize = () => stoolState.size
   const persistStoolData = () => persistData(STOOL_NAMESPACE, stoolState);
 
   const [formState, formDispatch] = useReducer(formReducer, INITIAL_FORM_STATE);
@@ -29,6 +31,7 @@ const RecordStoolForm = () => {
   const goBackwardScreen = () => moveFormScreenBackward(formDispatch);
   const goStartScreen = () => updateFormCurrentScreen(formDispatch, 0)
   const goEndScreen = () => updateFormCurrentScreen(formDispatch, formState.screens.length - 1)
+  const goSelectScreen = (index) => updateFormCurrentScreen(formDispatch, index)
   const setFormHasReachedSummary = () => updateFormHasReachedSummary(formDispatch, true);
   const loadScreens = (formScreens) => loadFormScreens(formDispatch, formScreens);
   const getCurrentScreen = () => formState.screens[formState.currentScreen]
@@ -43,12 +46,15 @@ const RecordStoolForm = () => {
       stoolState={stoolState}
       getStoolType={getStoolType}
       getStoolDateTime={getStoolDateTime}
+      getStoolSize={getStoolSize}
       updateType={updateType}
       updateDatetime={updateDatetime}
+      updateSize={updateSize}
       goForwardScreen={goForwardScreen}
       goBackwardScreen={goBackwardScreen}
       goStartScreen={goStartScreen}
       goEndScreen={goEndScreen}
+      goSelectScreen={goSelectScreen}
       setFormHasReachedSummary={setFormHasReachedSummary}
       getFormHasReachedSummary={getFormHasReachedSummary}
       loadScreens={loadScreens}
@@ -65,12 +71,15 @@ const RecordStoolFormScreens = ({
   stoolState,
   getStoolType,
   getStoolDateTime,
+  getStoolSize,
   updateType,
   updateDatetime,
+  updateSize,
   goForwardScreen,
   goBackwardScreen,
   goStartScreen,
   goEndScreen,
+  goSelectScreen,
   setFormHasReachedSummary,
   getFormHasReachedSummary,
   loadScreens,
@@ -88,6 +97,8 @@ const RecordStoolFormScreens = ({
         }}
       />,
       <StoolSizeCapture
+        selectedSize={getStoolSize()}
+        setSelectedSize={(size) => updateSize(size)}
         formNavButtons={
           <FormNavigationButtons
             handleNavForward={() => { goForwardScreen(); }}
@@ -105,9 +116,11 @@ const RecordStoolFormScreens = ({
       />,
       <StoolCaptureSummary
         selectedType={getStoolType()}
+        selectedSize={getStoolSize()}
         selectedDateTime={getStoolDateTime()}
         handleTypeReselect={() => { goStartScreen(); updateType(null) }}
-        handleDateTimeReselect={() => { goBackwardScreen(); }}
+        handleSizeReselect={() => { goSelectScreen(1) }}
+        handleDateTimeReselect={() => { goSelectScreen(2) }}
         hasFormReachedSummary={getFormHasReachedSummary()}
         setFormHasReachedSummary={setFormHasReachedSummary}
         formNavButtons={
