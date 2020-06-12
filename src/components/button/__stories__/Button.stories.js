@@ -39,9 +39,9 @@ export const Secondary_Action = () => (
 export const Outline = () => (
   <ButtonGroup>
     <OutlineButton onClick={action('clicked')}>Filled - Default</OutlineButton>
-    <OutlineButton buttonColor={buttonColor.POSITIVE} onClick={action('clicked')}>Filled - Positive</OutlineButton>
-    <OutlineButton buttonColor={buttonColor.TERTIARY} onClick={action('clicked')}>Filled - Tertiary</OutlineButton>
-    <OutlineButton buttonColor={buttonColor.CALL_TO_ACTION} onClick={action('clicked')}>Filled - Call-to-Action</OutlineButton>
+    <OutlineButton buttonColor={buttonColor.POSITIVE} onClick={action('clicked')}>Outline - Positive</OutlineButton>
+    <OutlineButton buttonColor={buttonColor.TERTIARY} onClick={action('clicked')}>Outline - Tertiary</OutlineButton>
+    <OutlineButton buttonColor={buttonColor.CALL_TO_ACTION} onClick={action('clicked')}>Outline - Call-to-Action</OutlineButton>
   </ButtonGroup>
 )
 
