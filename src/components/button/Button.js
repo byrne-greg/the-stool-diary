@@ -91,6 +91,9 @@ import Switch from '@material-ui/core/Switch';
 import { withStyles } from '@material-ui/core/styles';
 
 
+export const ToggleButtonStyle = styled.div`
+  text-align: center;
+`;
 
 export const ToggleButton = ({ toggleColorOn = buttonColors.POSITIVE, toggleColorOff = buttonColors.OFF, text, defaultCheck = true, onSelected = () => { } }) => {
 
@@ -112,17 +115,19 @@ export const ToggleButton = ({ toggleColorOn = buttonColors.POSITIVE, toggleColo
 
   return (
     <>
-      <FormControlLabel
-        control={
-          <ColoredToggle
-            checked={isChecked}
-            onChange={() => { setIsChecked(!isChecked); onSelected(!isChecked) }}
-            name={text}
-            color='primary'
-          />
-        }
-        label={text}
-      />
+      <ToggleButtonStyle>
+        <FormControlLabel
+          control={
+            <ColoredToggle
+              checked={isChecked}
+              onChange={() => { setIsChecked(!isChecked); onSelected(!isChecked) }}
+              name={text}
+              color='primary'
+            />
+          }
+          label={text}
+        />
+      </ToggleButtonStyle>
     </>
   )
 }

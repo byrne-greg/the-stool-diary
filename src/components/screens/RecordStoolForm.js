@@ -110,15 +110,7 @@ const RecordStoolFormScreens = ({
         persistDateTime={(dateTime) => updateDatetime(dateTime)}
         formNavButtons={
           <FormNavigationButtons
-            handleNavForward={() => {
-              // getStoolDateTime().timestamp === null &&
-              //   updateDatetime({
-              //     timestamp: moment().format(),
-              //     dateString: moment().format('LL'),
-              //     dateOnly: true
-              //   });
-              goForwardScreen();
-            }}
+            handleNavForward={() => { goForwardScreen(); }}
             handleNavBackward={() => { goBackwardScreen(); }}
           />}
       />,
