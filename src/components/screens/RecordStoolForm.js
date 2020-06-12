@@ -97,8 +97,8 @@ const RecordStoolFormScreens = ({
         }}
       />,
       <StoolSizeCapture
-        selectedSize={getStoolSize()}
-        setSelectedSize={(size) => updateSize(size)}
+        persistedSize={getStoolSize()}
+        persistSize={(size) => updateSize(size)}
         formNavButtons={
           <FormNavigationButtons
             handleNavForward={() => { goForwardScreen(); }}
