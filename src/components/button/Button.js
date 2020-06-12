@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import buttonColors from "./ButtonColors"
@@ -80,6 +80,49 @@ export const RadioButton = ({ radioGroupSelectedValue, value, text, onChange, bu
         {text}
       </RadioButtonLabelStyle>
 
+    </>
+  )
+}
+
+// ------------------
+
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
+import { withStyles } from '@material-ui/core/styles';
+
+
+
+export const ToggleButton = ({ toggleColorOn = buttonColors.POSITIVE, toggleColorOff = buttonColors.OFF, text, onSelected = () => { } }) => {
+
+  const ColoredToggle = withStyles({
+    switchBase: {
+      color: toggleColorOff,
+      '&$checked': {
+        color: toggleColorOn,
+      },
+      '&$checked + $track': {
+        backgroundColor: toggleColorOn,
+      },
+    },
+    checked: {},
+    track: {},
+  })(Switch)
+
+  const [isChecked, setIsChecked] = useState(true)
+
+  return (
+    <>
+      <FormControlLabel
+        control={
+          <ColoredToggle
+            checked={isChecked}
+            onChange={() => { setIsChecked(!isChecked); onSelected(!isChecked) }}
+            name={text}
+            color='primary'
+          />
+        }
+        label={text}
+      />
     </>
   )
 }

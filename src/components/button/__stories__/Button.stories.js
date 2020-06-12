@@ -1,6 +1,6 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { PrimaryActionButton, SecondaryActionButton, BasicButton, FilledButton, OutlineButton } from '..'
+import { PrimaryActionButton, SecondaryActionButton, BasicButton, FilledButton, OutlineButton, ToggleButton } from '..'
 import buttonColor from '../ButtonColors'
 import { ButtonGroup, RadioButtonGroup } from '..';
 
@@ -45,15 +45,22 @@ export const Outline = () => (
   </ButtonGroup>
 )
 
+export const Basic = () => <BasicButton onClick={action('clicked')}>Basic Button</BasicButton>
 
 export const Radio_Button_Group = () => {
   const selectableButtonValues = [
-    { value: 1, text: 'Small', onClick: () => { console.log('selected Small') } },
-    { value: 2, text: 'Medium', onClick: () => { console.log('selected Medium') } },
-    { value: 3, text: 'Large', onClick: () => { console.log('selected Large') } },
+    { value: 1, text: 'Small', onClick: () => { action('selected Small') } },
+    { value: 2, text: 'Medium', onClick: () => { action('selected Medium') } },
+    { value: 3, text: 'Large', onClick: () => { action('selected Large') } },
   ]
   return (
     <RadioButtonGroup buttonData={selectableButtonValues} />)
 }
 
-export const Basic = () => <BasicButton onClick={action('clicked')}>Basic Button</BasicButton>
+export const Toggle = () => {
+  return (
+    <ToggleButton text="Toggle" onSelected={(isChecked) => console.log(`Toggle Button is checked: ${isChecked}`)} />
+  )
+
+}
+

@@ -2,6 +2,7 @@ export default {
   PRIMARY: '#18819D',
   POSITIVE: '#2B882F',
   TERTIARY: '#624983',
-  CALL_TO_ACTION: '#E70572'
+  CALL_TO_ACTION: '#E70572',
+  OFF: '#636E72'
 
 }
