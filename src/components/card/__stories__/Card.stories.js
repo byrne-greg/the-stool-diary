@@ -11,22 +11,39 @@ export default {
 export const Card_with_text = () => (<>
   <Card onClick={action('card clicked')}>Card with Text</Card>
 </>)
-export const Card_with_CardContent = () => (<>
-  <Card onClick={action('card clicked')}>
-    <CardContent>Card with CardContent</CardContent>
-  </Card>
-</>)
+
 export const Card_with_CardTitle = () => (<>
   <Card onClick={action('card clicked')}>
     <CardTitle>Card with CardTitle</CardTitle>
   </Card>
 </>)
+
 export const Card_with_CardTitle_and_CardContent = () => (<>
   <Card onClick={action('card clicked')}>
     <CardTitle>Card Title</CardTitle>
     <CardContent>This is the CardContent</CardContent>
   </Card>
 </>);
+
+export const Card_with_CardContent = () => (<>
+  <Card onClick={action('card clicked')}>
+    <CardContent>Card with CardContent</CardContent>
+  </Card>
+</>)
+
+export const Card_with_CardContent_Centered = () => (<>
+  <Card onClick={action('card clicked')}>
+    <CardTitle>Card Title</CardTitle>
+    <CardContent center>This is Centered CardContent</CardContent>
+    <CardActions>
+      <button>a button</button>
+    </CardActions>
+  </Card>
+</>)
+
+
+
+
 
 export const Card_with_CardActions_OneItem = () => (<>
   <Card onClick={action('card clicked')}>
@@ -47,6 +64,7 @@ export const Card_with_CardActions_MultipleItems = () => (<>
     </CardActions>
   </Card>
 </>);
+
 
 export const Multiple_Cards_with_NoShadow = () => (<>
   <Card noShadow onClick={action('card clicked')}>

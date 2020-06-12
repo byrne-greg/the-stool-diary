@@ -4,11 +4,13 @@ import PropTypes from 'prop-types'
 
 const CardContentStyle = styled.div`
   padding: 0.5rem 1rem;
+
+  ${({ center }) => center && `text-align: center;`}
 `
 
-const CardContent = ({ children }) => {
+const CardContent = ({ children, center = false }) => {
   return (
-    <CardContentStyle>
+    <CardContentStyle center={center}>
       {children}
     </CardContentStyle>
   )
