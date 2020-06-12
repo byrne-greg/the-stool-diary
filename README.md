@@ -10,7 +10,9 @@ UX/UI
   * Add a colour capture to record stool form (predefined colors, perhaps an "Other" leading to a color wheel)
   * Split date and time and make time an optional
   * Change the list record stools to show stool and non-stool days (more timeline/calendar)
+  * Change focus to top of pages during record stool form
 - Low priority
+  * Accessibility - header element order on page
   * CSS for hovers and selections
   * Layout colors (e.g. header)
   
