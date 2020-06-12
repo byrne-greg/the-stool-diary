@@ -89,7 +89,7 @@ const RecordStoolFormScreens = ({
   useEffect(() => {
     const stoolFormScreens = [
       <StoolTypeCapture
-        setSelectedType={(stoolType) => {
+        persistType={(stoolType) => {
           updateType(stoolType)
           // TODO this is causing undefined errors when reaching summary, reselecting stool, and proceeding to end
           // getFormHasReachedSummary() ? goEndScreen() : goForwardScreen();
