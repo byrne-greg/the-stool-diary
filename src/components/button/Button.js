@@ -56,7 +56,7 @@ export const RadioButtonLabelStyle = styled.label`
   }
 
   display: block;
-  padding: 0.75rem 1rem;
+  padding: 1.2rem 1.2rem;
   margin: 0;
 `
 export const RadioButtonInputStyle = styled.input`
