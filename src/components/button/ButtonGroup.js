@@ -31,13 +31,24 @@ export const ButtonGroup = ({ children }) => (
 
 
 export const RadioButtonGroupStyle = styled(ButtonGroupScreenResponseStyle)`
+ 
+@media (min-width: 600px) {
   *:not(:last-child) {
     border-right: 0;
   }
+}
 
+@media (max-width: 600px) {
+  *:not(:last-child) {
+    border-bottom: 0;
+  }
+}
+
+text-align: center;
 `
-export const RadioButtonGroup = ({ buttonData = [] }) => {
-  const [selectedValue, setSelectedValue] = useState(null);
+export const RadioButtonGroup = ({ buttonData = [], onSelected = (() => { }) }) => {
+  const firstButtonDataValue = buttonData.length > 0 && buttonData[0].value
+  const [selectedValue, setSelectedValue] = useState(firstButtonDataValue ? firstButtonDataValue : null);
   return (
     <RadioButtonGroupStyle>
       {buttonData.map((button) => {
@@ -47,7 +58,7 @@ export const RadioButtonGroup = ({ buttonData = [] }) => {
             radioGroupSelectedValue={selectedValue}
             value={button.value}
             text={button.text}
-            onChange={() => { setSelectedValue(button.value); button.onClick() }}
+            onChange={() => { setSelectedValue(button.value); onSelected(); button.onClick() }}
           />
         )
       }
