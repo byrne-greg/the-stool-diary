@@ -21,18 +21,39 @@ describe('StoolSizeCapture', () => {
         // ASSERT
         expect(buttonLabel).toBeTruthy()
       });
+    });
 
-      xtest(`when stool size ${STOOL_SIZES[stoolSizeKey]}persisted value is given, then that option is already displayed`, () => {
-        // TODO
+    stoolSizeValues.forEach(stoolSizeKey => {
+      test(`when stool size ${STOOL_SIZES[stoolSizeKey]} is already persisted value, then that option is already checked`, () => {
+        // ARRANGE
+
+
+        // ACT
+        const { getByTestId } = render(
+          <StoolSizeCapture persistedSize={STOOL_SIZES[stoolSizeKey]} />
+        )
+        const radioButton = getByTestId(`radio-${STOOL_SIZES[stoolSizeKey]}`)
+
+        // ASSERT
+        expect(radioButton.checked).toBeTruthy()
       })
     });
 
 
-    xtest(`when form navigation buttons are included, then they are displayed`, () => {
-      // TODO
-    })
+    test(`when form navigation buttons are included, then they are displayed`, () => {
+      // ARRANGE
 
+      // ACT
+      const { getByText } = render(
+        <StoolSizeCapture formNavButtons={<button>FormNavButtons</button>} />
+      )
+      const buttonLabel = getByText('FormNavButtons')
+
+      // ASSERT
+      expect(buttonLabel).toBeTruthy()
+    })
   });
+
 
   describe('Persistence', () => {
     test(`when component is mounted, then persist function is called with ${STOOL_SIZES.SMALL} stool size`, async () => {
@@ -67,7 +88,5 @@ describe('StoolSizeCapture', () => {
         expect(lastRecordedValue).toBe(STOOL_SIZES[stoolSizeKey])
       });
     })
-
-
   });
 });

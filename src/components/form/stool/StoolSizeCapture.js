@@ -4,7 +4,7 @@ import { RadioButtonGroup } from '../../button'
 import buttonColors from '../../button/ButtonColors'
 import { STOOL_SIZES } from './state/stoolModelEnums'
 
-const StoolSizeCapture = ({ persistedSize, persistSize = () => { }, formNavButtons }) => {
+const StoolSizeCapture = ({ persistedSize = null, persistSize = () => { }, formNavButtons = null }) => {
 
   const { t } = useTranslation();
 
