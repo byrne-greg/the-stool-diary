@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, Suspense } from 'react'
+import { useTranslation } from 'react-i18next';
 import { RadioButtonGroup } from '../../button'
 import buttonColors from '../../button/ButtonColors'
 
@@ -12,10 +13,12 @@ import buttonColors from '../../button/ButtonColors'
 
 const StoolSizeCapture = ({ persistedSize, persistSize, formNavButtons }) => {
 
+  const { t, i18n } = useTranslation();
+
   const buttonData = [
-    { value: 'Small', text: 'Small' },
-    { value: 'Medium', text: 'Medium' },
-    { value: 'Large', text: 'Large' },
+    { value: 'Small', text: t('small') },
+    { value: 'Medium', text: t('medium') },
+    { value: 'Large', text: t('large') },
   ]
 
   const defaultValue = persistedSize ? persistedSize : buttonData[0].value;
@@ -28,8 +31,12 @@ const StoolSizeCapture = ({ persistedSize, persistSize, formNavButtons }) => {
 
   return (
     <>
-      <h3>Size</h3>
-      <RadioButtonGroup buttonColor={buttonColors.TERTIARY} buttonData={buttonData} defaultSelectedValue={defaultValue} onSelected={(value) => persistSize(value)} />
+      <h3>{t('size')}</h3>
+      <RadioButtonGroup
+        buttonColor={buttonColors.TERTIARY}
+        buttonData={buttonData}
+        defaultSelectedValue={defaultValue}
+        onSelected={(value) => persistSize(value)} />
       {formNavButtons}
     </>
   )

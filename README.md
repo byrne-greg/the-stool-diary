@@ -18,3 +18,9 @@ Technical
 * Add authentication
 * Change Firestore DB rules to be more stringent
 * Move Stool Classifications to GraphQL db?
+
+
+i18n:
+
+These files are generated from `*.locale.{language-code}.json` files around the src/components directory structure.
+They are collected and generated into the respective `translation.json` from `gatsby-node.js`
