@@ -24,7 +24,7 @@ export const DateTimePicker = ({ label, value = null, handleChange, readOnly = f
   return (
     <>
       <MuiPickersUtilsProvider utils={MomentUtils}>
-        <DateTimePickerStyle>
+        <DateTimePickerStyle data-testid={'datetimepicker'}>
           <MaterialDateTimePicker
             format={'hh:mm A - DD/MM/YY'}
             label={label}
@@ -47,7 +47,7 @@ export const DatePicker = ({ label, value = null, handleChange, readOnly = false
   return (
     <>
       <MuiPickersUtilsProvider utils={MomentUtils}>
-        <DateTimePickerStyle>
+        <DateTimePickerStyle data-testid={'datepicker'}>
           <MaterialDatePicker
             format={'Do MMMM YYYY'}
             label={label}
@@ -70,7 +70,7 @@ export const TimePicker = ({ label, value = null, handleChange, readOnly = false
   return (
     <>
       <MuiPickersUtilsProvider utils={MomentUtils}>
-        <DateTimePickerStyle>
+        <DateTimePickerStyle data-testid={'timepicker'}>
           <MaterialTimePicker
             label={label}
             value={value === null ? moment() : value}

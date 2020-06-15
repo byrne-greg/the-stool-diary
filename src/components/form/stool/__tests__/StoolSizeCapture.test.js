@@ -9,7 +9,7 @@ const stoolSizeValues = Object.keys(STOOL_SIZES);
 describe('StoolSizeCapture', () => {
   describe('UI', () => {
     stoolSizeValues.forEach(stoolSizeKey => {
-      test(`when stool size options are presented, then ${STOOL_SIZES[stoolSizeKey]} size option is visible by the user`, () => {
+      test(`when stool size options are presented, then ${STOOL_SIZES[stoolSizeKey]} size option is visible by the user`, async () => {
         // ARRANGE
 
         // ACT
@@ -24,7 +24,7 @@ describe('StoolSizeCapture', () => {
     });
 
     stoolSizeValues.forEach(stoolSizeKey => {
-      test(`when stool size ${STOOL_SIZES[stoolSizeKey]} is already persisted value, then that option is already checked`, () => {
+      test(`when stool size ${STOOL_SIZES[stoolSizeKey]} is already persisted value, then that option is already checked`, async () => {
         // ARRANGE
 
 
@@ -40,7 +40,7 @@ describe('StoolSizeCapture', () => {
     });
 
 
-    test(`when form navigation buttons are included, then they are displayed`, () => {
+    test(`when form navigation buttons are included, then they are displayed`, async () => {
       // ARRANGE
 
       // ACT
@@ -55,7 +55,7 @@ describe('StoolSizeCapture', () => {
   });
 
 
-  describe('Persistence', () => {
+  describe('Functional', () => {
     test(`when component is mounted, then persist function is called with ${STOOL_SIZES.SMALL} stool size`, async () => {
 
       // ARRANGE
@@ -81,7 +81,7 @@ describe('StoolSizeCapture', () => {
         const { getByTestId } = render(
           <StoolSizeCapture persistSize={persistSizeMock} />
         )
-        fireEvent.click(getByTestId(`radio-${STOOL_SIZES[stoolSizeKey]}`))
+        await fireEvent.click(getByTestId(`radio-${STOOL_SIZES[stoolSizeKey]}`))
 
         // ASSERT
         const lastRecordedValue = persistSizeMock.mock.results[persistSizeMock.mock.results.length - 1].value

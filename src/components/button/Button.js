@@ -101,7 +101,7 @@ export const ToggleButtonStyle = styled.div`
   text-align: center;
 `;
 
-export const ToggleButton = ({ toggleColorOn = buttonColors.POSITIVE, toggleColorOff = buttonColors.OFF, text, defaultCheck = true, onSelected = () => { } }) => {
+export const ToggleButton = ({ toggleColorOn = buttonColors.POSITIVE, toggleColorOff = buttonColors.OFF, text, defaultCheck = false, onSelected = () => { } }) => {
 
   const ColoredToggle = withStyles({
     switchBase: {
@@ -121,7 +121,7 @@ export const ToggleButton = ({ toggleColorOn = buttonColors.POSITIVE, toggleColo
 
   return (
     <>
-      <ToggleButtonStyle>
+      <ToggleButtonStyle data-testid={'toggle-button'}>
         <FormControlLabel
           control={
             <ColoredToggle
@@ -129,9 +129,11 @@ export const ToggleButton = ({ toggleColorOn = buttonColors.POSITIVE, toggleColo
               onChange={() => { setIsChecked(!isChecked); onSelected(!isChecked) }}
               name={text}
               color='primary'
+              data-testid={'toggle-button-input'}
             />
           }
           label={text}
+          data-testid={'toggle-button-label'}
         />
       </ToggleButtonStyle>
     </>
