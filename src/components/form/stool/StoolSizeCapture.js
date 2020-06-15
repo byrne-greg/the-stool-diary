@@ -1,24 +1,17 @@
-import React, { useEffect, Suspense } from 'react'
+import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next';
 import { RadioButtonGroup } from '../../button'
 import buttonColors from '../../button/ButtonColors'
+import { STOOL_SIZES } from './state/stoolModelEnums'
 
-/**
- * Test Paths:
- * 
- * 1. Given: no user interaction, Then: default size is persisted on unmount
- * 2. Given: user chooses value, Then: user chosen value is persisted on unmount
- * 3. Given: persisted size value, Then: user chosen value is selected on mount
- */
+const StoolSizeCapture = ({ persistedSize, persistSize = () => { }, formNavButtons }) => {
 
-const StoolSizeCapture = ({ persistedSize, persistSize, formNavButtons }) => {
-
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   const buttonData = [
-    { value: 'Small', text: t('small') },
-    { value: 'Medium', text: t('medium') },
-    { value: 'Large', text: t('large') },
+    { value: STOOL_SIZES.SMALL, text: t('small') },
+    { value: STOOL_SIZES.MEDIUM, text: t('medium') },
+    { value: STOOL_SIZES.LARGE, text: t('large') },
   ]
 
   const defaultValue = persistedSize ? persistedSize : buttonData[0].value;

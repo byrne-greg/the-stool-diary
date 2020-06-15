@@ -2,8 +2,8 @@ import React from 'react'
 import { PrimaryActionButton, SecondaryActionButton, ButtonGroup } from '../'
 
 const FormNavigationButtons = ({
-  handleNavForward = () => { console.error("FormNavigationButtons.handleNavForward not defined") },
-  handleNavBackward = () => { console.error("FormNavigationButtons.handleNavBackward not defined") },
+  handleNavForward = () => { },
+  handleNavBackward = () => { },
   disableNext = false,
   disableBack = false,
   primaryActionOverride = null,
@@ -11,10 +11,22 @@ const FormNavigationButtons = ({
   return (
     <ButtonGroup>
       {!primaryActionOverride ?
-        (<PrimaryActionButton disableNext={disableNext} onClick={handleNavForward}>Next</PrimaryActionButton>)
+        (<PrimaryActionButton
+          disableNext={disableNext}
+          onClick={handleNavForward}
+          data-testid={'formnavigationbuttons-button-forward'}
+        >
+          Next
+        </PrimaryActionButton>)
         : primaryActionOverride}
       {!secondaryActionOverride ?
-        (<SecondaryActionButton disableBack={disableBack} onClick={handleNavBackward}>Back</SecondaryActionButton>)
+        (<SecondaryActionButton
+          disableBack={disableBack}
+          onClick={handleNavBackward}
+          data-testid={'formnavigationbuttons-button-backward'}
+        >
+          Back
+        </SecondaryActionButton>)
         : secondaryActionOverride}
     </ButtonGroup>
   )

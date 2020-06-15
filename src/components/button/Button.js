@@ -68,14 +68,20 @@ export const RadioButton = ({ radioGroupSelectedValue, value, text, onChange, bu
 
   return (
     <>
-      <RadioButtonLabelStyle buttonColor={buttonColor} isChecked={isChecked} htmlFor={text}>
+      <RadioButtonLabelStyle
+        buttonColor={buttonColor}
+        isChecked={isChecked}
+        htmlFor={text}
+        data-testid={`label-${value}`}
+      >
         <RadioButtonInputStyle
           type="radio"
-          id={text}
-          name="radio"
+          id={`radio-${value}`}
+          name={`radio-${value}`}
           value={value}
           checked={isChecked}
           onChange={onChange}
+          data-testid={`radio-${value}`}
         />
         {text}
       </RadioButtonLabelStyle>
