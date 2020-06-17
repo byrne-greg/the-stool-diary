@@ -18,7 +18,7 @@ const StoolTypeCapturePage = () => {
 
       <hr />
 
-      {display && (<StoolTypeCapture persistedType={mockPersistedData} persistType={(size) => { mockPersistData(size); setDisplay(false); }} />)}
+      {display && (<StoolTypeCapture persistedType={mockPersistedData} persistType={(type) => { console.log('persisting type ', type); mockPersistData(type); setDisplay(false); }} />)}
 
       <hr />
 

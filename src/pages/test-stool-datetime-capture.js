@@ -18,7 +18,7 @@ const StoolDateTimeCapturePage = () => {
 
       <hr />
 
-      {display && (<StoolDateTimeCapture persistedDateTime={mockPersistedDateTime} persistDateTime={(datetime) => setMockPersistedDateTime(datetime)} />)}
+      {display && (<StoolDateTimeCapture persistedDateTime={mockPersistedDateTime} persistDateTime={(datetime) => { console.log('persisting datetime ', datetime); setMockPersistedDateTime(datetime) }} />)}
 
       <hr />
 

@@ -18,7 +18,7 @@ const StoolSizeCapturePage = () => {
 
       <hr />
 
-      {display && (<StoolSizeCapture persistedSize={mockPersistedData} persistSize={(size) => mockPersistData(size)} />)}
+      {display && (<StoolSizeCapture persistedSize={mockPersistedData} persistSize={(size) => { console.log('persisting size ', size); mockPersistData(size) }} />)}
 
       <hr />
 
