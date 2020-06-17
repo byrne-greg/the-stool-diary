@@ -3,18 +3,7 @@ import moment from 'moment'
 import { TimePicker, DatePicker } from '../../datetime-picker'
 import { ButtonGroup, ToggleButton } from '../../button'
 import { useTranslation } from 'react-i18next'
-import { INITIAL_STOOL_STATE } from './state/stoolModel'
-
-/** 
- * Test Paths
- * 
- * 1. Given: No interaction - Press Next, Then on unmount: Default time stamp is persisted
- * 2. Given: Change Date only, Then on unmount: Changed date time is persisted (dateOnly: true)
- * 3. Given: Change Add time toggle only, Then on unmount: Changed date time is persisted (dateOnly: false)
- * 4. Given: Change Add time and Change Time, Then on unmount : Changed date time is persisted (dateOnly: false)
- * 5. Given: Persisted timestamp with dateOnly true, Then on remount: Persisted timestamp with Add Time toggle off
- * 6. Given: Persisted timestamp with dateOnly false, Then on remount: Persisted timestamp with Add Time toggle time and time in box
- */
+import { INITIAL_STOOL_STATE, STOOL_DATESTRING_FORMAT } from './state/stoolModel'
 
 const StoolDateTimeCapture = ({ persistedDateTime = INITIAL_STOOL_STATE.dateTime, persistDateTime = () => { }, formNavButtons }) => {
 
@@ -22,7 +11,7 @@ const StoolDateTimeCapture = ({ persistedDateTime = INITIAL_STOOL_STATE.dateTime
 
   const getTimestampDateStringObj = (datetime) => {
     const momentInst = datetime ? datetime : moment();
-    return { timestamp: momentInst.format(), dateString: momentInst.format('YYYY-MM-DD') }
+    return { timestamp: momentInst.format(), dateString: momentInst.format(STOOL_DATESTRING_FORMAT) }
   }
 
   const [isAddingTime, setIsAddingTime] = useState(!persistedDateTime.dateOnly);
