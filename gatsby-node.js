@@ -31,9 +31,6 @@ function generateTranslationFiles() {
 
     // output our merged json file to the locales dir (if it doesn't exist, make it)
     const languageLocaleDir = path.join(absoluteSrcDir, "/locales/" + language)
-    if (!fs.existsSync(languageLocaleDir)) {
-      fs.mkdirSync(languageLocaleDir);
-    }
     fs.writeFileSync(path.join(languageLocaleDir, "/translation.json"), JSON.stringify(languageTranslation, null, 2));
   })
 
