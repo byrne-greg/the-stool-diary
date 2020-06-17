@@ -1,8 +1,10 @@
 import React from 'react';
-import { render, fireEvent, getByTestId } from '@testing-library/react'
+import { render, fireEvent } from '@testing-library/react'
+import moment from 'moment';
 import StoolDateTimeCapture from '../StoolDateTimeCapture';
 import defaultLocale from '../locales/StoolDateTimeCapture.locale.en.json'
-import { INITIAL_STOOL_STATE } from "../state/stoolModel"
+import { INITIAL_STOOL_STATE, STOOL_DATESTRING_FORMAT } from "../state/stoolModel"
+
 
 describe('StoolDateTimeCapture', () => {
   describe('UI', () => {
@@ -49,34 +51,45 @@ describe('StoolDateTimeCapture', () => {
       expect(toggle.checked).toBeFalsy()
     })
 
-    xtest(`when the add time toggle is turned on, then the time picker is displayed`, async () => {
-
-      // TODO erring - wont turn the toggle on
-
+    test(`when a date with no time is persisted and the user returns, then the persisted date is displayed and the add time toggle is off`, () => {
       // ARRANGE
-      let persistedValue = INITIAL_STOOL_STATE.dateTime;
-      const persistDateTime = (value) => persistedValue = value
-
+      let persistedValue = { dateOnly: true, timestamp: '2020-06-17T18:40:53+01:00', dateString: '2020-06-17' };
 
       // ACT
-      const { getByTestId, getByLabelText } = render(
+      const { queryByTestId, getByTestId } = render(
         <StoolDateTimeCapture
           persistedDateTime={persistedValue}
-          persistDateTime={persistDateTime}
         />
       )
-      const toggle = getByTestId('toggle-button')
-      const toggleInput = getByLabelText(defaultLocale["Add time?"])
-      expect(toggleInput.checked).toBeFalsy()
-      await fireEvent.click(toggle);
+      const datepicker = getByTestId('datepicker')
+      const addTimeToggle = getByTestId('toggle-button')
+      const timepicker = queryByTestId('timepicker')
 
       // ASSERT
-      expect(toggle.checked).toBeTruthy()
-    });
+      expect(datepicker.querySelector('input').value).toBe('17th June 2020')
+      expect(addTimeToggle.querySelector('input').checked).toBeFalsy()
+      expect(timepicker).toBeNull()
+    })
 
-    test.todo(`when a date with no time is persisted and the user returns, then the persisted date is displayed and the add time toggle is off`)
+    test(`when a date and time is persisted and the user returns, then the persisted date and time is displayed and the add time toggle is on`, () => {
+      // ARRANGE
+      let persistedValue = { dateOnly: false, timestamp: '2020-06-17T18:40:53+01:00', dateString: '2020-06-17' };
 
-    test.todo(`when a date and time is persisted and the user returns, then the persisted date and time is displayed and the add time toggle is on`)
+      // ACT
+      const { getByTestId } = render(
+        <StoolDateTimeCapture
+          persistedDateTime={persistedValue}
+        />
+      )
+      const addTimeToggle = getByTestId('toggle-button')
+      const datepicker = getByTestId('datepicker')
+      const timepicker = getByTestId('timepicker')
+
+      // ASSERT
+      expect(datepicker.querySelector('input').value).toBe('17th June 2020')
+      expect(addTimeToggle.querySelector('input').checked).toBeTruthy()
+      expect(timepicker.querySelector('input').value).toBe('06:40 PM')
+    })
 
     test(`when form navigation buttons are included, then they are displayed`, async () => {
       // ARRANGE
@@ -94,9 +107,136 @@ describe('StoolDateTimeCapture', () => {
 
 
   describe('Functional', () => {
-    test.todo(`when the date is selected from the date picker, then it is persisted with date only`)
+    test(`when the add time toggle is turned on, then the time picker is displayed`, async () => {
 
-    test.todo(`when the time is selected from the time picker, then it is persisted`)
+      // ARRANGE
 
-  });
+      // ACT
+      const { getByTestId } = render(
+        <StoolDateTimeCapture />
+      )
+      const toggle = getByTestId('toggle-button')
+      // reusing a var with the queried element actually stores its current state beyond the fireEvent call but as a function it dynamically gets state
+      const getToggleInput = () => toggle.querySelector('input')
+      expect(getToggleInput().checked).toBeFalsy()
+      await fireEvent.click(getToggleInput());
+
+      // ASSERT
+      expect(getToggleInput().checked).toBeTruthy()
+    });
+
+    test(`when the add time toggle is switched on, then it persists the date only mode turned off`, async () => {
+      // ARRANGE
+      const persistDateTimeMockFn = jest.fn(val => val);
+
+      // ACT
+      const { getByTestId, } = render(
+        <StoolDateTimeCapture
+          persistDateTime={persistDateTimeMockFn}
+        />
+      )
+      const addTimeToggle = getByTestId('toggle-button');
+      await fireEvent.click(addTimeToggle.querySelector('input'))
+
+      // ASSERT
+      expect(persistDateTimeMockFn.mock.calls.length).toBe(2)
+      const persistedResults = persistDateTimeMockFn.mock.results;
+      expect(persistedResults[persistedResults.length - 1].value).toStrictEqual({
+        ...INITIAL_STOOL_STATE.dateTime,
+        dateOnly: false
+      })
+    })
+
+
+    test(`when the component is mounted, then it persists the current datetime`, () => {
+      // ARRANGE
+      const persistDateTimeMockFn = jest.fn();
+
+      // ACT
+      render(
+        <StoolDateTimeCapture
+          persistDateTime={persistDateTimeMockFn}
+        />
+      )
+
+      // ASSERT
+      expect(persistDateTimeMockFn.mock.calls.length).toBe(1)
+    })
+
+    test(`when the component is mounted, then it persists the current datetime in date only mode`, () => {
+      // ARRANGE
+      const persistDateTimeMockFn = jest.fn(val => val);
+
+      // ACT
+      render(
+        <StoolDateTimeCapture
+          persistDateTime={persistDateTimeMockFn}
+        />
+      )
+
+      // ASSERT
+      expect(persistDateTimeMockFn.mock.calls.length).toBe(1)
+      expect(persistDateTimeMockFn.mock.results[0].value).toStrictEqual({
+        timestamp: moment().format(),
+        dateString: moment().format(STOOL_DATESTRING_FORMAT),
+        dateOnly: true
+      })
+    })
+
+
+    test(`when the date is selected from the date picker, then it is persisted with date only`, async () => {
+      // ARRANGE
+      const persistDateTimeMockFn = jest.fn(val => val);
+
+      // ACT
+      const { getByTestId, findByText, } = render(
+        <StoolDateTimeCapture persistDateTime={persistDateTimeMockFn} />
+      )
+      const datepicker = getByTestId('datepicker')
+      const getToggleInput = () => datepicker.querySelector('input')
+      await fireEvent.click(getToggleInput());
+      const todayButton = await findByText('Today');
+      await fireEvent.click(todayButton);
+      const okButton = await findByText('OK');
+      await fireEvent.click(okButton);
+
+      // ASSERT
+      const persistedResults = persistDateTimeMockFn.mock.results;
+      expect(persistDateTimeMockFn.mock.calls.length).toBe(2)
+      expect(persistedResults[persistedResults.length - 1].value).toStrictEqual({
+        timestamp: moment().format(),
+        dateString: moment().format(STOOL_DATESTRING_FORMAT),
+        dateOnly: true
+      })
+    })
+
+    test(`when the time is selected from the time picker, then it is persisted`, async () => {
+      // ARRANGE
+      const persistDateTimeMockFn = jest.fn(val => val);
+
+      // ACT
+      const { getByTestId, findByText, } = render(
+        <StoolDateTimeCapture persistDateTime={persistDateTimeMockFn} />
+      )
+      const addTimeToggle = getByTestId('toggle-button');
+      await fireEvent.click(addTimeToggle.querySelector('input'))
+      const timepicker = getByTestId('timepicker')
+      const getToggleInput = () => timepicker.querySelector('input')
+      await fireEvent.click(getToggleInput());
+      const todayButton = await findByText('Today');
+      await fireEvent.click(todayButton);
+      const okButton = await findByText('OK');
+      await fireEvent.click(okButton);
+
+      // ASSERT
+      expect(persistDateTimeMockFn.mock.calls.length).toBe(3)
+      const persistedResults = persistDateTimeMockFn.mock.results;
+      expect(persistedResults[persistedResults.length - 1].value).toStrictEqual({
+        timestamp: moment().format(),
+        dateString: moment().format(STOOL_DATESTRING_FORMAT),
+        dateOnly: false
+      })
+    })
+  })
+
 });
