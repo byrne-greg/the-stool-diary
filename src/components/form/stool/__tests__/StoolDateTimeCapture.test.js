@@ -73,7 +73,8 @@ describe('StoolDateTimeCapture', () => {
 
     test(`when a date and time is persisted and the user returns, then the persisted date and time is displayed and the add time toggle is on`, () => {
       // ARRANGE
-      let persistedValue = { dateOnly: false, timestamp: '2020-06-17T18:40:53+01:00', dateString: '2020-06-17' };
+      const mockTimestamp = '2020-06-17T18:40:53+01:00'
+      let persistedValue = { dateOnly: false, timestamp: mockTimestamp, dateString: '2020-06-17' };
 
       // ACT
       const { getByTestId } = render(
@@ -88,7 +89,7 @@ describe('StoolDateTimeCapture', () => {
       // ASSERT
       expect(datepicker.querySelector('input').value).toBe('17th June 2020')
       expect(addTimeToggle.querySelector('input').checked).toBeTruthy()
-      expect(timepicker.querySelector('input').value).toBe('06:40 PM')
+      expect(timepicker.querySelector('input').value).toBe(moment(mockTimestamp).format('hh:mm A'))
     })
 
     test(`when form navigation buttons are included, then they are displayed`, async () => {
