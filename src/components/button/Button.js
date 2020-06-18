@@ -22,7 +22,7 @@ export const FilledButtonStyle = styled(BasicButtonStyle)`
 export const FilledButton = ({ children, ...props }) => (
   <FilledButtonStyle  {...props} >{children}</FilledButtonStyle>)
 export const PrimaryActionButton = ({ children, ...props }) => (
-  <FilledButton  {...props} >{children}</FilledButton>
+  <FilledButton {...props} data-testid="primary-action-button">{children}</FilledButton>
 )
 
 // --------------------
@@ -35,7 +35,7 @@ export const OutlineButtonStyle = styled(BasicButtonStyle)`
 export const OutlineButton = ({ children, ...props }) => (
   <OutlineButtonStyle  {...props}>{children}</OutlineButtonStyle>)
 export const SecondaryActionButton = ({ children, ...props }) => (
-  <OutlineButton  {...props}>{children}</OutlineButton>
+  <OutlineButton  {...props} data-testid="secondary-action-button">{children}</OutlineButton>
 )
 
 // --------------------
