@@ -26,7 +26,7 @@ const ImgStoolType5 = () => {
     }
   `)
 
-  return <Img fluid={data.placeholderImage.childImageSharp.fluid} />
+  return data ? <Img fluid={data.placeholderImage.childImageSharp.fluid} /> : null;
 }
 
 export default ImgStoolType5
