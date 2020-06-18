@@ -9,7 +9,7 @@ const StoolTypeCard = ({ type, image, description, handleClick, isSelected }) =>
 
   return (
     <>
-      <Card onClick={!isSelected ? selectCardFn : unselectCardFn}>
+      <Card data-testid={`stool-type-card-type-${type}`} onClick={!isSelected ? selectCardFn : unselectCardFn} >
         <CardMedia imgComp={image} />
         <CardTitle>Type {type}</CardTitle>
         <CardContent>
