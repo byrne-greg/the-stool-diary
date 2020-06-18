@@ -3,7 +3,10 @@ import { render, fireEvent } from '@testing-library/react'
 import moment from 'moment';
 import StoolDateTimeCapture from '../StoolDateTimeCapture';
 import defaultLocale from '../locales/StoolDateTimeCapture.locale.en.json'
-import { INITIAL_STOOL_STATE, STOOL_DATESTRING_FORMAT } from "../state/stoolModel"
+import { INITIAL_STOOL_STATE } from "../state/stoolModel"
+
+const TIMESTAMP_REGEX = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\+|-)\d{2}:\d{2}/gm
+const DATESTRING_REGEX = /\d{4}-\d{2}-\d{2}/gm
 
 
 describe('StoolDateTimeCapture', () => {
@@ -177,11 +180,10 @@ describe('StoolDateTimeCapture', () => {
 
       // ASSERT
       expect(persistDateTimeMockFn.mock.calls.length).toBe(1)
-      expect(persistDateTimeMockFn.mock.results[0].value).toStrictEqual({
-        timestamp: moment().format(),
-        dateString: moment().format(STOOL_DATESTRING_FORMAT),
-        dateOnly: true
-      })
+      const persistedTimestamp = persistDateTimeMockFn.mock.results[0].value
+      expect(persistedTimestamp.timestamp).toMatch(TIMESTAMP_REGEX)
+      expect(persistedTimestamp.dateString).toMatch(DATESTRING_REGEX)
+      expect(persistedTimestamp.dateOnly).toBeTruthy()
     })
 
 
@@ -202,42 +204,39 @@ describe('StoolDateTimeCapture', () => {
       await fireEvent.click(okButton);
 
       // ASSERT
-      const persistedResults = persistDateTimeMockFn.mock.results;
       expect(persistDateTimeMockFn.mock.calls.length).toBe(2)
-      expect(persistedResults[persistedResults.length - 1].value).toStrictEqual({
-        timestamp: moment().format(),
-        dateString: moment().format(STOOL_DATESTRING_FORMAT),
-        dateOnly: true
-      })
-    })
-
-    test(`when the time is selected from the time picker, then it is persisted`, async () => {
-      // ARRANGE
-      const persistDateTimeMockFn = jest.fn(val => val);
-
-      // ACT
-      const { getByTestId, findByText, } = render(
-        <StoolDateTimeCapture persistDateTime={persistDateTimeMockFn} />
-      )
-      const addTimeToggle = getByTestId('toggle-button');
-      await fireEvent.click(addTimeToggle.querySelector('input'))
-      const timepicker = getByTestId('timepicker')
-      const getToggleInput = () => timepicker.querySelector('input')
-      await fireEvent.click(getToggleInput());
-      const todayButton = await findByText('Today');
-      await fireEvent.click(todayButton);
-      const okButton = await findByText('OK');
-      await fireEvent.click(okButton);
-
-      // ASSERT
-      expect(persistDateTimeMockFn.mock.calls.length).toBe(3)
-      const persistedResults = persistDateTimeMockFn.mock.results;
-      expect(persistedResults[persistedResults.length - 1].value).toStrictEqual({
-        timestamp: moment().format(),
-        dateString: moment().format(STOOL_DATESTRING_FORMAT),
-        dateOnly: false
-      })
+      const persistedTimestamp = persistDateTimeMockFn.mock.results[persistDateTimeMockFn.mock.results.length - 1].value
+      expect(persistedTimestamp.timestamp).toMatch(TIMESTAMP_REGEX)
+      expect(persistedTimestamp.dateString).toMatch(DATESTRING_REGEX)
+      expect(persistedTimestamp.dateOnly).toBeTruthy()
     })
   })
 
-});
+  test(`when the time is selected from the time picker, then it is persisted`, async () => {
+    // ARRANGE
+    const persistDateTimeMockFn = jest.fn(val => val);
+
+    // ACT
+    const { getByTestId, findByText, } = render(
+      <StoolDateTimeCapture persistDateTime={persistDateTimeMockFn} />
+    )
+    const addTimeToggle = getByTestId('toggle-button');
+    await fireEvent.click(addTimeToggle.querySelector('input'))
+    const timepicker = getByTestId('timepicker')
+    const getToggleInput = () => timepicker.querySelector('input')
+    await fireEvent.click(getToggleInput());
+    const todayButton = await findByText('Today');
+    await fireEvent.click(todayButton);
+    const okButton = await findByText('OK');
+    await fireEvent.click(okButton);
+
+    // ASSERT
+    expect(persistDateTimeMockFn.mock.calls.length).toBe(3)
+    const persistedTimestamp = persistDateTimeMockFn.mock.results[persistDateTimeMockFn.mock.results.length - 1].value
+    expect(persistedTimestamp.timestamp).toMatch(TIMESTAMP_REGEX)
+    expect(persistedTimestamp.dateString).toMatch(DATESTRING_REGEX)
+    expect(persistedTimestamp.dateOnly).toBeFalsy()
+  })
+})
+
+
