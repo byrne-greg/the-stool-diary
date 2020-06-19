@@ -1,12 +1,10 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react'
-import StoolSizeCapture from '../StoolSizeCapture';
-import { STOOL_SIZES } from '../state/stoolModelEnums';
 import StoolTypeCapture from '../StoolTypeCapture';
 import stoolClassifications from '../../../../utils/stool-classifications';
 
 
-describe('StoolSizeCapture', () => {
+describe('StoolTypeCapture', () => {
   describe('UI', () => {
 
     stoolClassifications.forEach(stoolClassification => {
