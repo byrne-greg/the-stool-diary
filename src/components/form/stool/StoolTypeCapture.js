@@ -2,11 +2,13 @@ import React from 'react'
 import { CardContainer } from "../../card"
 import { StoolTypeCard } from '../../card/composite';
 import stoolClassifications from '../../../utils/stool-classifications'
+import { useTranslation } from 'react-i18next';
 
 const StoolTypeCapture = ({ persistType = () => { }, formNavButtons }) => {
+  const { t } = useTranslation();
   return (
     <>
-      <h3>Type</h3>
+      <h3>{t('Type')}</h3>
       <CardContainer>
         {stoolClassifications.map(stoolClass => (
           <StoolTypeCard

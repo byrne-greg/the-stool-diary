@@ -9,9 +9,9 @@ const StoolSizeCapture = ({ persistedSize = null, persistSize = () => { }, formN
   const { t } = useTranslation();
 
   const buttonData = [
-    { value: STOOL_SIZES.SMALL, text: t('small') },
-    { value: STOOL_SIZES.MEDIUM, text: t('medium') },
-    { value: STOOL_SIZES.LARGE, text: t('large') },
+    { value: STOOL_SIZES.SMALL, text: t('Small') },
+    { value: STOOL_SIZES.MEDIUM, text: t('Medium') },
+    { value: STOOL_SIZES.LARGE, text: t('Large') },
   ]
 
   const defaultValue = persistedSize ? persistedSize : buttonData[0].value;
@@ -24,7 +24,7 @@ const StoolSizeCapture = ({ persistedSize = null, persistSize = () => { }, formN
 
   return (
     <>
-      <h3>{t('size')}</h3>
+      <h3>{t('Size')}</h3>
       <RadioButtonGroup
         buttonColor={buttonColors.TERTIARY}
         buttonData={buttonData}
