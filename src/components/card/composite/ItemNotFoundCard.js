@@ -1,15 +1,19 @@
 import React from 'react'
 import { Card, CardMedia, CardTitle, CardContent } from '..'
 
-const ItemNotFoundCard = ({ handleCardClick }) => {
-
+const ItemNotFoundCard = ({
+  handleCardClick = () => { },
+  title = "Item Not Found",
+  description = "We could not find the item you were looking for here 😞",
+  image = null
+}) => {
   return (
     <>
       <Card onClick={handleCardClick}>
-        {/* <CardMedia imgComp={image} /> */}
-        <CardTitle>Item Not Found</CardTitle>
+        {image && (<CardMedia imgComp={image} />)}
+        <CardTitle>{title}</CardTitle>
         <CardContent>
-          We could not find the item you were looking for here :sadface:
+          {description}
         </CardContent>
       </Card >
 
