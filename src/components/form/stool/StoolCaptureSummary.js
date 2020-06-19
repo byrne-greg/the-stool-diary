@@ -33,7 +33,6 @@ const StoolCaptureSummary = ({
   }, [hasFormReachedSummary])
 
   const stoolClassificationOnSelectedType = stoolClassifications.find(stoolClass => stoolClass.type === selectedType)
-  const { type: stoolType, image: stoolImage, description: stoolDescription } = stoolClassificationOnSelectedType;
   return (
     <>
       <h3>Summary</h3>
@@ -42,9 +41,9 @@ const StoolCaptureSummary = ({
         <CardContainer>
           {stoolClassificationOnSelectedType ?
             (<StoolTypeCard
-              type={stoolType}
-              image={stoolImage}
-              description={stoolDescription}
+              type={stoolClassificationOnSelectedType.type}
+              image={stoolClassificationOnSelectedType.image}
+              description={stoolDescription.description}
               handleClick={handleTypeReselect}
               isSelected />)
             :
@@ -72,18 +71,22 @@ const StoolCaptureSummary = ({
       <CaptureSummarySectionStyle>
         <h4>Selected Date/Time</h4>
         <CardContainer>
-          <Card noShadow>
-            <CardContent>
-              {selectedDateTime.dateOnly ? (
-                <DatePicker label="Selected Stool Date" value={selectedDateTime.timestamp} readOnly />
-              ) : (
-                  <DateTimePicker label="Selected Stool Date/Time" value={selectedDateTime.timestamp} readOnly />
-                )}
-            </CardContent>
-            <CardActions>
-              <SecondaryActionButton onClick={handleDateTimeReselect}>Click to reselect</SecondaryActionButton>
-            </CardActions>
-          </Card>
+          {selectedDateTime ? (
+            <Card noShadow>
+              <CardContent>
+                {selectedDateTime.dateOnly ? (
+                  <DatePicker label="Selected Stool Date" value={selectedDateTime.timestamp} readOnly />
+                ) : (
+                    <DateTimePicker label="Selected Stool Date/Time" value={selectedDateTime.timestamp} readOnly />
+                  )}
+              </CardContent>
+              <CardActions>
+                <SecondaryActionButton onClick={handleDateTimeReselect}>Click to reselect</SecondaryActionButton>
+              </CardActions>
+            </Card>
+          ) : (
+              <ItemNotFoundCard />
+            )}
         </CardContainer>
       </CaptureSummarySectionStyle>
       {formNavButtons}
