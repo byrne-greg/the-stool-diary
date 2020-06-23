@@ -43,7 +43,7 @@ const StoolCaptureSummary = ({
             (<StoolTypeCard
               type={stoolClassificationOnSelectedType.type}
               image={stoolClassificationOnSelectedType.image}
-              description={stoolDescription.description}
+              description={stoolClassificationOnSelectedType.description}
               handleClick={handleTypeReselect}
               isSelected />)
             :
