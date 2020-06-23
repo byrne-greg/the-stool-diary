@@ -4,11 +4,11 @@ import StoolSizeCapture from '../StoolSizeCapture';
 import { STOOL_SIZES } from '../state/stoolModelEnums';
 
 
-const stoolSizeValues = Object.keys(STOOL_SIZES);
+const stoolSizeKeys = Object.keys(STOOL_SIZES);
 
 describe('StoolSizeCapture', () => {
   describe('UI', () => {
-    stoolSizeValues.forEach(stoolSizeKey => {
+    stoolSizeKeys.forEach(stoolSizeKey => {
       test(`when stool size options are presented, then ${STOOL_SIZES[stoolSizeKey]} size option is visible by the user`, async () => {
         // ARRANGE
 
@@ -23,7 +23,7 @@ describe('StoolSizeCapture', () => {
       });
     });
 
-    stoolSizeValues.forEach(stoolSizeKey => {
+    stoolSizeKeys.forEach(stoolSizeKey => {
       test(`when stool size ${STOOL_SIZES[stoolSizeKey]} is already persisted value, then that option is already checked`, async () => {
         // ARRANGE
 
@@ -71,7 +71,7 @@ describe('StoolSizeCapture', () => {
     });
 
 
-    stoolSizeValues.forEach(stoolSizeKey => {
+    stoolSizeKeys.forEach(stoolSizeKey => {
       test(`when ${STOOL_SIZES[stoolSizeKey]} stool size is selected, then persist function is called with ${STOOL_SIZES[stoolSizeKey]} stool size`, async () => {
 
         // ARRANGE
