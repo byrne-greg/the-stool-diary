@@ -1,7 +1,10 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react'
 import StoolCaptureSummary from '../StoolCaptureSummary';
+import { STOOL_SIZES } from '../state/stoolModelEnums';
+import stoolClassifications from '../../../../utils/stool-classifications';
 
+const stoolSizeKeys = Object.keys(STOOL_SIZES);
 
 
 describe('StoolCaptureSummary', () => {
@@ -29,22 +32,38 @@ describe('StoolCaptureSummary', () => {
       expect(container).toBeDefined();
     })
 
+    stoolClassifications.forEach(stoolClass => {
+      test(`when selected stool type ${stoolClass.type} was persisted, then it is visible to the user`, async () => {
+        // ARRANGE
+        const stoolType = stoolClass.type;
 
-    test(`when selected stool type was persisted, then it is visible to the user`, async () => {
-      // ARRANGE
+        // ACT
+        const { getByTestId } = render(
+          <StoolCaptureSummary selectedType={stoolType} />
+        )
+        const stoolTypeCard = getByTestId(`stool-type-card-type-${stoolType}`)
 
-      // ACT
-      const { getByTestId } = render(
-        <StoolCaptureSummary selectedType={1} />
-      )
-      const stoolTypeCard = getByTestId(`stool-type-card-type-${1}`)
+        // ASSERT
+        expect(stoolTypeCard).toBeTruthy()
 
-      // ASSERT
-      expect(stoolTypeCard).toBeTruthy()
-
+      })
     })
 
-    test.todo(`when selected stool size was persisted, then it is visible to the user`)
+    stoolSizeKeys.forEach(stoolSizeKey => {
+      test(`when selected stool size ${STOOL_SIZES[stoolSizeKey]} was persisted, then it is visible to the user and is checked`, async () => {
+        // ARRANGE
+
+
+        // ACT
+        const { getByText } = render(
+          <StoolCaptureSummary selectedSize={STOOL_SIZES[stoolSizeKey]} />
+        )
+        const selectedSizeChoice = getByText(STOOL_SIZES[stoolSizeKey])
+
+        // ASSERT
+        expect(selectedSizeChoice).toBeTruthy()
+      })
+    })
 
     test.todo(`when selected stool datetime was persisted, then it is visible to the user`)
 
