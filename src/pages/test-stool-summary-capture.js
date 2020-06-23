@@ -1,9 +1,14 @@
 import React, { useState } from "react"
 import { Link } from "gatsby"
+import styled from "styled-components"
 import { PageLayout } from "../components/layout"
 import { StoolCaptureSummary } from "../components/form/stool"
 import { FilledButton } from "../components/button"
 import { INITIAL_STOOL_STATE } from "../components/form/stool/state/stoolModel"
+
+const PaddedDiv = styled.div`
+  padding: 1rem 0;
+`
 
 const StoolCaptureSummaryPage = () => {
   const [display, setDisplay] = useState(false);
@@ -12,22 +17,23 @@ const StoolCaptureSummaryPage = () => {
 
   return (
     <PageLayout title="Test Screen - Stool Capture Summary">
-      <FilledButton onClick={() => setDisplay(!display)}>{display ? `Unmount` : `Mount`} the Stool Capture Summary Screen</FilledButton>
-      <p>Persisted data: </p>
-      <p>{JSON.stringify(mockPersistedData)}</p>
-
-      <hr />
-
-      {display && (<StoolCaptureSummary />)}
-
-      <hr />
-
-
-      <ul>
-        <li>
-          <Link to="/">Go home</Link>
-        </li>
-      </ul>
+      <PaddedDiv>
+        <p>Current persisted data: </p>
+        <code>{JSON.stringify(mockPersistedData, null, 2)}</code>
+      </PaddedDiv>
+      <PaddedDiv>
+        <FilledButton onClick={() => setDisplay(!display)}>{display ? `Unmount` : `Mount`} the Stool Capture Summary Screen</FilledButton>
+      </PaddedDiv>
+      <PaddedDiv>
+        {display && (<StoolCaptureSummary />)}
+      </PaddedDiv>
+      <PaddedDiv>
+        <ul>
+          <li>
+            <Link to="/">Go home</Link>
+          </li>
+        </ul>
+      </PaddedDiv>
     </PageLayout>
   )
 }
