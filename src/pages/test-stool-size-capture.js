@@ -14,7 +14,6 @@ const PaddedDiv = styled.div`
 const StoolSizeCaptureTestPage = () => {
   const [display, setDisplay] = useState(false);
   const [mockPersistedData, mockPersistData] = useState(INITIAL_STOOL_STATE.size);
-  const [persistedValue, setPersistedValue] = useState(null);
 
   return (
     <PageLayout title="Stool Size Capture - Test Page">
