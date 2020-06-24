@@ -10,12 +10,12 @@ const PaddedDiv = styled.div`
   padding: 1rem 0;
 `
 
-const StoolTypeCapturePage = () => {
+const StoolTypeCaptureTestPage = () => {
   const [display, setDisplay] = useState(false);
   const [mockPersistedData, mockPersistData] = useState(INITIAL_STOOL_STATE.type);
 
   return (
-    <PageLayout title="Test Screen - Stool Type Capture">
+    <PageLayout title="Stool Type Capture Test Page">
       <PaddedDiv>
         <p>Current persisted data: </p>
         <code>{JSON.stringify(mockPersistedData, null, 2)}</code>
@@ -37,4 +37,4 @@ const StoolTypeCapturePage = () => {
   )
 }
 
-export default StoolTypeCapturePage
+export default StoolTypeCaptureTestPage

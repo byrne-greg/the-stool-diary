@@ -10,13 +10,13 @@ const PaddedDiv = styled.div`
   padding: 1rem 0;
 `
 
-const StoolDateTimeCapturePage = () => {
+const StoolDateTimeCaptureTestPage = () => {
   const [display, setDisplay] = useState(false);
   const [mockPersistedDateTime, setMockPersistedDateTime] = useState(INITIAL_STOOL_STATE.dateTime);
 
 
   return (
-    <PageLayout title="Test Screen - Stool Date Time Capture">
+    <PageLayout title="Stool Date Time Capture Test Page">
       <PaddedDiv>
         <p>Current persisted data: </p>
         <code>{JSON.stringify(mockPersistedDateTime, null, 2)}</code>
@@ -38,4 +38,4 @@ const StoolDateTimeCapturePage = () => {
   )
 }
 
-export default StoolDateTimeCapturePage
+export default StoolDateTimeCaptureTestPage
