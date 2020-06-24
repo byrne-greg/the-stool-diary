@@ -24,7 +24,7 @@ describe('StoolSizeCapture', () => {
     });
 
     stoolSizeKeys.forEach(stoolSizeKey => {
-      test(`when stool size ${STOOL_SIZES[stoolSizeKey]} is already persisted value, then that option is already checked`, async () => {
+      test(`when stool size ${STOOL_SIZES[stoolSizeKey]} is already persisted value, then that option is already selected`, async () => {
         // ARRANGE
 
 
@@ -38,6 +38,23 @@ describe('StoolSizeCapture', () => {
         expect(radioButton.checked).toBeTruthy()
       })
     });
+
+    stoolSizeKeys.forEach(stoolSizeKey => {
+      test(`when ${STOOL_SIZES[stoolSizeKey]} stool size is selected, then ${STOOL_SIZES[stoolSizeKey]} stool size is selected`, async () => {
+
+        // ARRANGE
+
+        // ACT
+        const { getByTestId } = render(
+          <StoolSizeCapture />
+        )
+        const radioLabel = getByTestId(`label-${STOOL_SIZES[stoolSizeKey]}`)
+        await fireEvent.click(radioLabel)
+
+        // ASSERT
+        expect(radioLabel.querySelector('input').checked).toBeTruthy();
+      });
+    })
 
 
     test(`when form navigation buttons are included, then they are displayed`, async () => {

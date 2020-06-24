@@ -40,7 +40,7 @@ export const SecondaryActionButton = ({ children, ...props }) => (
 
 // --------------------
 
-export const RadioButtonLabelStyle = styled.label`
+export const RadioLabelStyle = styled.label`
   ${({ isChecked, buttonColor = buttonColors.PRIMARY }) => isChecked ?
     `
       background-color: ${buttonColor};
@@ -59,7 +59,7 @@ export const RadioButtonLabelStyle = styled.label`
   padding: 1.2rem 1.2rem;
   margin: 0;
 `
-export const RadioButtonInputStyle = styled.input`
+export const RadioInputStyle = styled.input`
   display: none;
 `
 export const RadioButton = ({ radioGroupSelectedValue, value, text, onChange, buttonColor }) => {
@@ -68,13 +68,13 @@ export const RadioButton = ({ radioGroupSelectedValue, value, text, onChange, bu
 
   return (
     <>
-      <RadioButtonLabelStyle
+      <RadioLabelStyle
         buttonColor={buttonColor}
         isChecked={isChecked}
-        htmlFor={text}
+        htmlFor={`radio-${value}`}
         data-testid={`label-${value}`}
       >
-        <RadioButtonInputStyle
+        <RadioInputStyle
           type="radio"
           id={`radio-${value}`}
           name={`radio-${value}`}
@@ -84,7 +84,7 @@ export const RadioButton = ({ radioGroupSelectedValue, value, text, onChange, bu
           data-testid={`radio-${value}`}
         />
         {text}
-      </RadioButtonLabelStyle>
+      </RadioLabelStyle>
 
     </>
   )
