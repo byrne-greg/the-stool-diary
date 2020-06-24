@@ -71,8 +71,8 @@
     "clean": "gatsby clean",
     "test": "jest",
     "test:watch": "jest --watch",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "storybook": "NODE_ENV=production start-storybook -p 6006 -s static",
+    "build-storybook": "NODE_ENV=production build-storybook -s static"
   },
   "repository": {
     "type": "git",
