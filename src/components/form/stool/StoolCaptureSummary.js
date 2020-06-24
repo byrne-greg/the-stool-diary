@@ -55,24 +55,21 @@ const StoolCaptureSummary = ({
 
       <CaptureSummarySectionStyle>
         <h4>Selected Size</h4>
-        {selectedSize ?
-          (
-            <Card noShadow>
-              <CardContent center>
-                {/* TODO shouldn't be a button */}
-                <FilledButton buttonColor={buttonColors.TERTIARY}>{selectedSize}</FilledButton>
-              </CardContent>
-              <CardActions>
-                <SecondaryActionButton onClick={handleSizeReselect}>Click to reselect</SecondaryActionButton>
-              </CardActions>
-            </Card>
-          ) : (
-            <CardContainer>
-              <ItemNotFoundCard />
-            </CardContainer>
-          )}
         <CardContainer>
-
+          {selectedSize ?
+            (
+              <Card noShadow>
+                <CardContent center>
+                  {/* TODO shouldn't be a button */}
+                  <FilledButton buttonColor={buttonColors.TERTIARY}>{selectedSize}</FilledButton>
+                </CardContent>
+                <CardActions>
+                  <SecondaryActionButton onClick={handleSizeReselect}>Click to reselect</SecondaryActionButton>
+                </CardActions>
+              </Card>
+            ) : (
+              <ItemNotFoundCard />
+            )}
         </CardContainer>
       </CaptureSummarySectionStyle>
 
