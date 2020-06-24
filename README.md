@@ -18,6 +18,7 @@ Technical
 * Add authentication
 * Change Firestore DB rules to be more stringent
 * Move Stool Classifications to GraphQL db?
+* Check renders on RecordStoolForm and see if we can use useMemo/useCallback to optimize renders
 
 
 i18n:
