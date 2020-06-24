@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import buttonColors from "./ButtonColors"
@@ -117,7 +117,10 @@ export const ToggleButton = ({ toggleColorOn = buttonColors.POSITIVE, toggleColo
     track: {},
   })(Switch)
 
-  const [isChecked, setIsChecked] = useState(defaultCheck)
+  const [isChecked, setIsChecked] = useState(null)
+  useEffect(() => {
+    setIsChecked(defaultCheck);
+  }, [defaultCheck])
 
   return (
     <>

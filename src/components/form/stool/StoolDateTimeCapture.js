@@ -14,14 +14,16 @@ const StoolDateTimeCapture = ({ persistedDateTime = INITIAL_STOOL_STATE.dateTime
     return { timestamp: momentInst.format(), dateString: momentInst.format(STOOL_DATESTRING_FORMAT) }
   }
 
-  const [isAddingTime, setIsAddingTime] = useState(!persistedDateTime.dateOnly);
-
+  const [isAddingTime, setIsAddingTime] = useState(null);
   useEffect(() => {
     // if we don't have a time already, persist a default one for no-user-interaction scenarios
     if (!persistedDateTime.timestamp && !persistedDateTime.dateString) {
       persistDateTime({ ...getTimestampDateStringObj(), dateOnly: true });
       setIsAddingTime(false);
+    } else {
+      setIsAddingTime(!persistedDateTime.dateOnly)
     }
+
   }, [persistedDateTime])
 
   return (
