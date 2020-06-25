@@ -8,6 +8,8 @@ export default {
   title: 'Card',
 };
 
+export const Info = () => <p>A showcase of the various custom cards</p>
+
 export const Card_with_text = () => (<>
   <Card onClick={action('card clicked')}>Card with Text</Card>
 </>)
