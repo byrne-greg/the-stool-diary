@@ -56,7 +56,7 @@ describe('StoolDateTimeCapture', () => {
 
     test(`when a date with no time is persisted and the user returns, then the persisted date is displayed and the add time toggle is off`, () => {
       // ARRANGE
-      let persistedValue = { dateOnly: true, timestamp: '2020-06-17T18:40:53+01:00', dateString: '2020-06-17' };
+      const persistedValue = { dateOnly: true, timestamp: '2020-06-17T18:40:53+01:00', dateString: '2020-06-17' };
 
       // ACT
       const { queryByTestId, getByTestId } = render(
@@ -77,7 +77,7 @@ describe('StoolDateTimeCapture', () => {
     test(`when a date and time is persisted and the user returns, then the persisted date and time is displayed and the add time toggle is on`, () => {
       // ARRANGE
       const mockTimestamp = '2020-06-17T18:40:53+01:00'
-      let persistedValue = { dateOnly: false, timestamp: mockTimestamp, dateString: '2020-06-17' };
+      const persistedValue = { dateOnly: false, timestamp: mockTimestamp, dateString: '2020-06-17' };
 
       // ACT
       const { getByTestId } = render(
