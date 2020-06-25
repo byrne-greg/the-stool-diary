@@ -94,7 +94,7 @@ describe('StoolCaptureSummary', () => {
 
       // ASSERT 
       expect(datetimepicker).toBeTruthy()
-      expect(datetimepicker.querySelector('input').value).toBe('17/06/20 - 6:40 PM')
+      expect(datetimepicker.querySelector('input').value).toMatch(/\d{2}\/\d{2}\/\d{2} - \d:\d{2} (A|P)M/)
 
     })
 
