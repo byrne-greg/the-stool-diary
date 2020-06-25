@@ -9,6 +9,8 @@ export default {
   title: 'Button',
 };
 
+export const Info = () => <p>A showcase of the various types of custom buttons</p>
+
 export const Primary_Action = () => (
   <ButtonGroup>
     <PrimaryActionButton onClick={action('clicked')}>Primary - Default</PrimaryActionButton>
@@ -38,7 +40,7 @@ export const Secondary_Action = () => (
 
 export const Outline = () => (
   <ButtonGroup>
-    <OutlineButton onClick={action('clicked')}>Filled - Default</OutlineButton>
+    <OutlineButton onClick={action('clicked')}>Outline - Default</OutlineButton>
     <OutlineButton buttonColor={buttonColor.POSITIVE} onClick={action('clicked')}>Outline - Positive</OutlineButton>
     <OutlineButton buttonColor={buttonColor.TERTIARY} onClick={action('clicked')}>Outline - Tertiary</OutlineButton>
     <OutlineButton buttonColor={buttonColor.CALL_TO_ACTION} onClick={action('clicked')}>Outline - Call-to-Action</OutlineButton>
