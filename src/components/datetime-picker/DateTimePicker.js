@@ -26,7 +26,7 @@ export const DateTimePicker = ({ label, value = null, handleChange, readOnly = f
       <MuiPickersUtilsProvider utils={MomentUtils}>
         <DateTimePickerStyle data-testid={'datetimepicker'}>
           <MaterialDateTimePicker
-            format={'DD/MM/YY - hh:mm A'}
+            format={'DD/MM/YY - h:mm A'}
             label={label}
             value={value === null ? moment() : value}
             onChange={handleChange}

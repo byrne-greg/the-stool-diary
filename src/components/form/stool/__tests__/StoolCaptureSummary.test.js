@@ -65,7 +65,38 @@ describe('StoolCaptureSummary', () => {
       })
     })
 
-    test.todo(`when selected stool datetime was persisted, then it is visible to the user`)
+    test(`when selected stool date only was persisted, then the date persisted is visible to the user`, async () => {
+      // ARRANGE
+      const persistedValue = { dateOnly: true, timestamp: '2020-06-17T18:40:53+01:00', dateString: '2020-06-17' };
+
+      // ACT
+      const { getByTestId } = render(
+        <StoolCaptureSummary selectedDateTime={persistedValue} />
+      )
+      const datepicker = getByTestId('datepicker')
+
+      // ASSERT
+      expect(datepicker).toBeTruthy()
+      expect(datepicker.querySelector('input').value).toBe('17th June 2020')
+
+    })
+
+
+    test(`when selected stool date and time was persisted, then the date and time persisted is visible to the user`, async () => {
+      // ARRANGE
+      const persistedValue = { dateOnly: false, timestamp: '2020-06-17T18:40:53+01:00', dateString: '2020-06-17' };
+
+      // ACT
+      const { getByTestId } = render(
+        <StoolCaptureSummary selectedDateTime={persistedValue} />
+      )
+      const datetimepicker = getByTestId('datetimepicker')
+
+      // ASSERT 
+      expect(datetimepicker).toBeTruthy()
+      expect(datetimepicker.querySelector('input').value).toBe('17/06/20 - 6:40 PM')
+
+    })
 
     test(`when form navigation buttons are included, then they are displayed`, async () => {
       // ARRANGE
