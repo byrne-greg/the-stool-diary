@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
 const CardContentStyle = styled.div`
-  padding: 0.5rem 1rem;
+  padding: 1rem;  
 
   ${({ center }) => center && `text-align: center;`}
 `

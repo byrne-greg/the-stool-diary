@@ -7,6 +7,7 @@ import { SecondaryActionButton, FilledButton } from '../../button'
 import { DateTimePicker, DatePicker } from '../../datetime-picker'
 import { updateFormHasReachedSummary } from '../state/formActions'
 import buttonColors from '../../button/ButtonColors'
+import { StoolSizeLabel } from '../../button/composite'
 
 const CaptureSummarySectionStyle = styled.section`
   padding: 1rem 0 2rem 0;
@@ -61,8 +62,7 @@ const StoolCaptureSummary = ({
             (
               <Card noShadow data-testid={`selected-stool-size-card-${selectedSize}`}>
                 <CardContent center>
-                  {/* TODO shouldn't be a button */}
-                  <p>{selectedSize}</p>
+                  <StoolSizeLabel buttonColor={buttonColors.TERTIARY}>{selectedSize}</StoolSizeLabel>
                 </CardContent>
                 <CardActions>
                   <SecondaryActionButton onClick={handleSizeReselect}>Click to reselect</SecondaryActionButton>
