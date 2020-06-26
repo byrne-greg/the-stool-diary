@@ -13,7 +13,7 @@ const ItemNotFoundCard = ({
   const { t } = useTranslation();
 
   const translatedTitle = title === null ? t('Item Not Found') : t(title);
-  const translatedDesc = description === null ? t("We could not find the item you were looking for here 😞") : t(description)
+  const translatedDesc = description === null ? `${t("We could not find the item you were looking for here")} 😞` : t(description)
 
 
   return (
