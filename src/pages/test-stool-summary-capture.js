@@ -3,7 +3,7 @@ import { Link } from "gatsby"
 import styled from "styled-components"
 import { PageLayout } from "../components/layout"
 import { StoolCaptureSummary } from "../components/form/stool"
-import { FilledButton } from "../components/button"
+import { FilledButton, RadioButtonGroup } from "../components/button"
 import { INITIAL_STOOL_STATE } from "../components/form/stool/state/stoolModel"
 import stoolClassifications from "../utils/stool-classifications"
 import { STOOL_SIZES } from '../components/form/stool/state/stoolModelEnums';
@@ -32,6 +32,11 @@ const StoolCaptureSummaryTestPage = () => {
     }
   }
 
+  const addMockPersistedDateTimeRadioButtonData = [
+    { value: "null", text: 'Off' },
+    { value: { dateOnly: false, timestamp: '2020-06-17T18:40:53+01:00', dateString: '2020-06-17' }, text: 'On' },
+  ]
+
 
   return (
     <PageLayout title="Stool Capture Summary Test Page">
@@ -56,10 +61,17 @@ const StoolCaptureSummaryTestPage = () => {
         </select>
       </PaddedDiv>
       <PaddedDiv>
+        <p>Add mock persisted date time</p>
+        <RadioButtonGroup
+          buttonData={addMockPersistedDateTimeRadioButtonData}
+          defaultSelectedValue={"null"}
+          onSelected={(value) => mockPersistData({ ...mockPersistedData, dateTime: value === "null" ? null : value })} />
+      </PaddedDiv>
+      <PaddedDiv>
         <FilledButton onClick={() => setDisplay(!display)}>{display ? `Unmount` : `Mount`} the Stool Capture Summary Screen</FilledButton>
       </PaddedDiv>
       <PaddedDiv>
-        {display && (<StoolCaptureSummary selectedType={mockPersistedData.type} selectedSize={mockPersistedData.size} />)}
+        {display && (<StoolCaptureSummary selectedType={mockPersistedData.type} selectedSize={mockPersistedData.size} selectedDateTime={mockPersistedData.dateTime} />)}
       </PaddedDiv>
       <PaddedDiv>
         <ul>
