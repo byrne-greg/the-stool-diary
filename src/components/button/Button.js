@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import lodash from 'lodash'
 import PropTypes from 'prop-types'
 import buttonColors from "./ButtonColors"
 
@@ -64,7 +65,7 @@ export const RadioInputStyle = styled.input`
 `
 export const RadioButton = ({ radioGroupSelectedValue, value, text, onChange, buttonColor }) => {
 
-  const isChecked = radioGroupSelectedValue === value;
+  const isChecked = lodash.isEqual(radioGroupSelectedValue, value)
 
   return (
     <>
