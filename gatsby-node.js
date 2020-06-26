@@ -13,7 +13,6 @@ const path = require("path")
 const glob = require('glob');
 
 function generateTranslationFiles() {
-  console.log("i18n: Generating translation files")
   const supportedLanguages = ['en', 'fr'];
   supportedLanguages.forEach(language => {
 
@@ -25,6 +24,7 @@ function generateTranslationFiles() {
     const localeFilePattern = `*.locale.${language}.json`
     glob.sync(path.join(absoluteSrcDir, '/**/', localeFilePattern)).forEach(file => {
       // merge this json file into a common translations object
+      console.info(`i18n: merging translation file ${path.relative(__dirname, file)}`)
 
       languageTranslation = { ...languageTranslation, ...JSON.parse(fs.readFileSync(file)) }
     })
@@ -34,11 +34,14 @@ function generateTranslationFiles() {
     fs.writeFileSync(path.join(languageLocaleDir, "/translation.json"), JSON.stringify(languageTranslation, null, 2));
   })
 
-  console.log("i18n: Copying locales to public dir")
+  console.info("i18n: Copying locales to public dir")
   fs.copySync(
     path.join(__dirname, "/src/locales"),
     path.join(__dirname, "/public/locales")
   )
+
+
+  console.log("\x1b[32msuccess", "\x1b[37mi18n: translation files generated")
 }
 
 // --------------------
