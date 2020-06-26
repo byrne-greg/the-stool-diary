@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 import { CardContainer, Card, CardContent, CardActions } from "../../card"
 import { StoolTypeCard, ItemNotFoundCard } from "../../card/composite"
 import stoolClassifications from '../../../utils/stool-classifications'
-import { SecondaryActionButton, FilledButton } from '../../button'
+import { SecondaryActionButton } from '../../button'
 import { DateTimePicker, DatePicker } from '../../datetime-picker'
 import { updateFormHasReachedSummary } from '../state/formActions'
 import buttonColors from '../../button/ButtonColors'
@@ -25,7 +26,7 @@ const StoolCaptureSummary = ({
   formNavButtons = null
 }) => {
 
-
+  const { t } = useTranslation();
   useEffect(() => {
     // despite the dependency being the value of hasFormReachedSummary, it will enter useEffect when this value is the same
     // console.log("StoolCaptureSummary - useEffect")
@@ -36,9 +37,9 @@ const StoolCaptureSummary = ({
   const stoolClassificationOnSelectedType = stoolClassifications.find(stoolClass => stoolClass.type === selectedType)
   return (
     <>
-      <h3>Summary</h3>
+      <h3>{t(`Summary`)}</h3>
       <CaptureSummarySectionStyle>
-        <h4>Selected Stool Type</h4>
+        <h4>{t(`Selected Stool Type`)}</h4>
         <CardContainer>
           {stoolClassificationOnSelectedType ?
             (<StoolTypeCard
@@ -56,7 +57,7 @@ const StoolCaptureSummary = ({
       </CaptureSummarySectionStyle>
 
       <CaptureSummarySectionStyle>
-        <h4>Selected Size</h4>
+        <h4>{t(`Selected Size`)}</h4>
         <CardContainer>
           {selectedSize ?
             (
@@ -75,7 +76,7 @@ const StoolCaptureSummary = ({
       </CaptureSummarySectionStyle>
 
       <CaptureSummarySectionStyle>
-        <h4>Selected Date/Time</h4>
+        <h4>{t(`Selected Date/Time`)}</h4>
         <CardContainer>
           {selectedDateTime ? (
             <Card noShadow data-testid={'selected-stool-date-time-card'}>
@@ -87,7 +88,7 @@ const StoolCaptureSummary = ({
                   )}
               </CardContent>
               <CardActions>
-                <SecondaryActionButton onClick={handleDateTimeReselect}>Click to reselect</SecondaryActionButton>
+                <SecondaryActionButton onClick={handleDateTimeReselect}>{t(`Click to reselect`)}</SecondaryActionButton>
               </CardActions>
             </Card>
           ) : (
