@@ -41,6 +41,7 @@ const StoolCaptureSummary = ({
         <CardContainer>
           {stoolClassificationOnSelectedType ?
             (<StoolTypeCard
+              data-testid={`selected-stool-type-card-${stoolClassificationOnSelectedType.type}`}
               type={stoolClassificationOnSelectedType.type}
               image={stoolClassificationOnSelectedType.image}
               description={stoolClassificationOnSelectedType.description}
@@ -58,10 +59,10 @@ const StoolCaptureSummary = ({
         <CardContainer>
           {selectedSize ?
             (
-              <Card noShadow>
+              <Card noShadow data-testid={`selected-stool-size-card-${selectedSize}`}>
                 <CardContent center>
                   {/* TODO shouldn't be a button */}
-                  <FilledButton buttonColor={buttonColors.TERTIARY}>{selectedSize}</FilledButton>
+                  <p>{selectedSize}</p>
                 </CardContent>
                 <CardActions>
                   <SecondaryActionButton onClick={handleSizeReselect}>Click to reselect</SecondaryActionButton>
@@ -77,7 +78,7 @@ const StoolCaptureSummary = ({
         <h4>Selected Date/Time</h4>
         <CardContainer>
           {selectedDateTime ? (
-            <Card noShadow>
+            <Card noShadow data-testid={'selected-stool-date-time-card'}>
               <CardContent>
                 {selectedDateTime.dateOnly ? (
                   <DatePicker label="Selected Stool Date" value={selectedDateTime.timestamp} readOnly />
