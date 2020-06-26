@@ -32,9 +32,10 @@ function generateTranslationFiles() {
     // output our merged json file to the locales dir (if it doesn't exist, make it)
     const languageLocaleDir = path.join(absoluteSrcDir, "/locales/" + language)
     fs.writeFileSync(path.join(languageLocaleDir, "/translation.json"), JSON.stringify(languageTranslation, null, 2));
+    console.info(`i18n: ${language} translation file generated to ${path.relative(__dirname, languageLocaleDir)}`)
   })
 
-  console.info("i18n: Copying locales to public dir")
+  console.info("i18n: Copying all translation locales to public dir")
   fs.copySync(
     path.join(__dirname, "/src/locales"),
     path.join(__dirname, "/public/locales")
