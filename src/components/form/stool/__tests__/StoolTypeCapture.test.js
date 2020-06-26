@@ -12,12 +12,12 @@ describe('StoolTypeCapture', () => {
         // ARRANGE
 
         // ACT
-        const { getByText, getByTestId } = render(
+        const { queryByText, queryByTestId } = render(
           <StoolTypeCapture />
         )
-        const typeLabel = getByText("Type " + stoolClassification.type)
-        const descriptionLabel = getByText(stoolClassification.description)
-        const stoolTypeSelectButton = getByTestId(`stool-type-card-type-${stoolClassification.type}`).querySelector('button')
+        const typeLabel = queryByText("Type " + stoolClassification.type)
+        const descriptionLabel = queryByText(stoolClassification.description)
+        const stoolTypeSelectButton = queryByTestId(`stool-type-card-type-${stoolClassification.type}`).querySelector('button')
 
         // ASSERT
         expect(typeLabel).toBeTruthy()
@@ -32,10 +32,10 @@ describe('StoolTypeCapture', () => {
       // ARRANGE
 
       // ACT
-      const { getByText } = render(
+      const { queryByText } = render(
         <StoolTypeCapture formNavButtons={<button>FormNavButtons</button>} />
       )
-      const buttonLabel = getByText('FormNavButtons')
+      const buttonLabel = queryByText('FormNavButtons')
 
       // ASSERT
       expect(buttonLabel).toBeTruthy()

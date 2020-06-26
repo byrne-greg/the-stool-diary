@@ -16,10 +16,10 @@ describe('StoolDateTimeCapture', () => {
       // ARRANGE
 
       // ACT
-      const { getByTestId } = render(
+      const { queryByTestId } = render(
         <StoolDateTimeCapture />
       )
-      const datepicker = getByTestId('datepicker')
+      const datepicker = queryByTestId('datepicker')
 
       // ASSERT
       expect(datepicker).toBeTruthy()
@@ -29,10 +29,10 @@ describe('StoolDateTimeCapture', () => {
       // ARRANGE
 
       // ACT
-      const { getByTestId } = render(
+      const { queryByTestId } = render(
         <StoolDateTimeCapture />
       )
-      const toggle = getByTestId('toggle-button')
+      const toggle = queryByTestId('toggle-button')
 
       // ASSERT
       expect(toggle).toBeTruthy()
@@ -99,10 +99,10 @@ describe('StoolDateTimeCapture', () => {
       // ARRANGE
 
       // ACT
-      const { getByText } = render(
+      const { queryByText } = render(
         <StoolDateTimeCapture formNavButtons={<button>FormNavButtons</button>} />
       )
-      const buttonLabel = getByText('FormNavButtons')
+      const buttonLabel = queryByText('FormNavButtons')
 
       // ASSERT
       expect(buttonLabel).toBeTruthy()

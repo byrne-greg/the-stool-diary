@@ -13,10 +13,10 @@ describe('StoolSizeCapture', () => {
         // ARRANGE
 
         // ACT
-        const { getByTestId } = render(
+        const { queryByTestId } = render(
           <StoolSizeCapture />
         )
-        const buttonLabel = getByTestId(`label-${STOOL_SIZES[stoolSizeKey]}`)
+        const buttonLabel = queryByTestId(`label-${STOOL_SIZES[stoolSizeKey]}`)
 
         // ASSERT
         expect(buttonLabel).toBeTruthy()
@@ -61,10 +61,10 @@ describe('StoolSizeCapture', () => {
       // ARRANGE
 
       // ACT
-      const { getByText } = render(
+      const { queryByText } = render(
         <StoolSizeCapture formNavButtons={<button>FormNavButtons</button>} />
       )
-      const buttonLabel = getByText('FormNavButtons')
+      const buttonLabel = queryByText('FormNavButtons')
 
       // ASSERT
       expect(buttonLabel).toBeTruthy()
