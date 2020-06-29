@@ -20,10 +20,12 @@ export const ListItemTitle = styled.h3`
 `
 
 export const ListItemDescription = styled.p`
+  margin: 0;
   padding: 0 0.5rem 0.5rem 0.5rem;
 `
 
 export const ListItemTextContainer = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: space-evenly;
 `
