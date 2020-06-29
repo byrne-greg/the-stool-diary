@@ -2,7 +2,7 @@ import React from 'react'
 import moment from 'moment'
 import { ListItem, ListItemAvatar, ListItemTextContainer, ListItemTitle, ListItemDescription } from "../ListItem"
 import stoolClassifications from "../../../utils/stool-classifications"
-import { StoolSizeLabel } from '../../button/composite'
+import { Tag } from '../../tag'
 
 const ListStoolItem = ({ stoolType = 0, stoolDateTime = "", stoolSize = "SMALL" }) => {
 
@@ -15,7 +15,7 @@ const ListStoolItem = ({ stoolType = 0, stoolDateTime = "", stoolSize = "SMALL" 
         <ListItemTitle>Type {stoolType}</ListItemTitle>
         <ListItemDescription>{moment(stoolDateTime).format("h:mm:ss a, dddd, MMMM Do YYYY")}</ListItemDescription>
         <div>
-          <StoolSizeLabel>{stoolSize}</StoolSizeLabel>
+          <Tag>{stoolSize}</Tag>
         </div>
       </ListItemTextContainer>
     </ListItem>
