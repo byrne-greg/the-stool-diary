@@ -1,8 +1,6 @@
 import React from "react"
 import { Link } from "gatsby"
 import { PageLayout } from "../components/layout"
-import { RecordStoolForm } from "../components/screens"
-import ListStoolRecords from "../components/screens/ListStoolRecords"
 
 
 const WIP = () => {

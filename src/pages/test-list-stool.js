@@ -2,12 +2,11 @@
 import React from "react"
 import { Link } from "gatsby"
 import { PageLayout } from "../components/layout"
-import ListStoolRecordsScreen from "../components/screens/ListStoolRecords"
+import { ListStoolRecordsScreen } from "../components/screens"
 
 const ListStoolRecordsPage = () => (
   <PageLayout title="List Recorded Stool">
     <ListStoolRecordsScreen />
-    <div></div>
     <ul>
       <li>
         <Link to="/">Go home</Link>

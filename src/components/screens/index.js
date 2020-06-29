@@ -1,5 +1,5 @@
 import RecordStoolForm from "./RecordStoolForm"
-import ListStoolRecords from "./ListStoolRecords"
+import ListStoolRecordsScreen from "./ListStoolRecordsScreen"
 
 
-export { RecordStoolForm, ListStoolRecords }
+export { RecordStoolForm, ListStoolRecordsScreen }
