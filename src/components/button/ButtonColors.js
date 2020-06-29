@@ -1,8 +1,9 @@
+import colors from "../../utils/colors"
 export default {
-  PRIMARY: '#18819D',
-  POSITIVE: '#2B882F',
-  TERTIARY: '#624983',
-  CALL_TO_ACTION: '#E70572',
-  OFF: '#636E72'
+  PRIMARY: colors.BLUE,
+  POSITIVE: colors.GREEN,
+  TERTIARY: colors.PURPLE,
+  CALL_TO_ACTION: colors.PINK,
+  OFF: colors.GREY
 
 }
