@@ -1,5 +1,7 @@
 import React from 'react'
 import ListStoolItemComp from '../ListStoolItem'
+import { List } from '../../List'
+import stoolClassifications from '../../../../utils/stool-classifications'
 
 export default {
   title: "List/List Item/Composites/List Stool Item"
@@ -17,44 +19,12 @@ export const NoProps = () => {
   )
 }
 
-export const Type1 = () => {
+export const StoolTypesList = () => {
   return (
-    <ListStoolItemComp stoolType={1} stoolDateTime={Date.now()} />
-  )
-}
-
-export const Type2 = () => {
-  return (
-    <ListStoolItemComp stoolType={2} stoolDateTime={Date.now()} />
-  )
-}
-
-export const Type3 = () => {
-  return (
-    <ListStoolItemComp stoolType={3} stoolDateTime={Date.now()} />
-  )
-}
-
-export const Type4 = () => {
-  return (
-    <ListStoolItemComp stoolType={4} stoolDateTime={Date.now()} />
-  )
-}
-
-export const Type5 = () => {
-  return (
-    <ListStoolItemComp stoolType={5} stoolDateTime={Date.now()} />
-  )
-}
-
-export const Type6 = () => {
-  return (
-    <ListStoolItemComp stoolType={6} stoolDateTime={Date.now()} />
-  )
-}
-
-export const Type7 = () => {
-  return (
-    <ListStoolItemComp stoolType={7} stoolDateTime={Date.now()} />
+    <List>
+      {stoolClassifications.map((stoolClass) =>
+        <ListStoolItemComp stoolType={stoolClass.type} stoolDateTime={Date.now()} />
+      )}
+    </List>
   )
 }
