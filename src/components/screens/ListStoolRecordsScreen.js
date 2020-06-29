@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import moment from 'moment'
+import { CalendarHeatmap } from '../calendar-heatmap'
 import stoolClassifications from '../../utils/stool-classifications'
 import { retrieveData } from '../firebase/utils'
 import { STOOL_NAMESPACE } from '../firebase/namespaces'
+import { ListStoolItem } from '../list/composites'
+import { List } from '../list'
 
 const ListItem = styled.li`
   margin: 0;
@@ -30,7 +33,7 @@ const ListItemTextContainer = styled.div`
   flex-direction: column;
 `
 
-const ListStoolRecords = () => {
+const ListStoolRecordsScreen = () => {
 
   const [stoolRecords, setStoolRecords] = useState([]);
 
@@ -45,23 +48,18 @@ const ListStoolRecords = () => {
 
   return (
     <>
-      <ul>
-        {recordsSortedByLatestFirst.map((stoolRecord) => {
-          const stoolClass = stoolClassifications.find(stoolClass => stoolClass.type === stoolRecord.type)
-          console.log(stoolRecord)
-          return (
-            <ListItem key={`${stoolRecord.type}-${stoolRecord.dateTime}`}>
-              <ListItemAvatar>{stoolClass.image}</ListItemAvatar>
-              <ListItemTextContainer>
-                <ListItemTitle>Type {stoolRecord.type}</ListItemTitle>
-                <ListItemDescription>{moment(stoolRecord.dateTime).format("h:mm:ss a, dddd, MMMM Do YYYY")}</ListItemDescription>
-              </ListItemTextContainer>
-            </ListItem>
-          )
-        })}
-      </ul>
+      <CalendarHeatmap
+        startDate={new Date('2016-01-01')}
+        endDate={new Date('2016-04-01')}
+        values={[
+          { date: '2016-01-01', count: 12 },
+          { date: '2016-01-22', count: 122 },
+          { date: '2016-01-30', count: 38 },
+        ]}
+      />
+      <ListStoolRecords recordedStools={recordsSortedByLatestFirst} />
     </>
   )
 }
 
-export default ListStoolRecords
+export default ListStoolRecordsScreen

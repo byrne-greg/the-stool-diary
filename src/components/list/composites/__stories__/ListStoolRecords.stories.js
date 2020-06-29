@@ -1,21 +1,20 @@
 import React from 'react'
-import ListStoolItemComp from '../ListStoolItem'
-import List from '../../List'
+import ListStoolRecords from '../ListStoolRecords'
 import { STOOL_SIZES } from '../../../form/stool/state/stoolModelEnums'
 
 export default {
-  title: "List/List Item/Composites/List Stool Item"
+  title: "List/Composites/List Stool Records"
 }
 
 export const Info = () => {
   return (
-    <p>Showcase demonstration of the different List Item composite components</p>
+    <p>Showcase demonstration of the different List composite components</p>
   )
 }
 
 export const NoProps = () => {
   return (
-    <ListStoolItemComp />
+    <ListStoolRecords />
   )
 }
 
@@ -30,10 +29,6 @@ export const StoolTypesList = () => {
     { type: 7, dateTime: Date.now(), size: STOOL_SIZES.SMALL },
   ]
   return (
-    <List>
-      {allRecordedStoolData.map((stoolRecord) =>
-        <ListStoolItemComp stoolType={stoolRecord.type} stoolDateTime={stoolRecord.dateTime} stoolSize={stoolRecord.size} />
-      )}
-    </List>
+    <ListStoolRecords recordedStools={allRecordedStoolData} />
   )
 }
