@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default {
-  title: "Record Stool Form"
+  title: "Screens/Record Stool Form"
 }
 
 export const Info = () => <p>The following components are test screens for the individual record stool form pages</p>

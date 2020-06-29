@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import styled from 'styled-components'
 import { CalendarHeatmap } from '../calendar-heatmap'
 import { retrieveData } from '../firebase/utils'
 import { STOOL_NAMESPACE } from '../firebase/namespaces'
