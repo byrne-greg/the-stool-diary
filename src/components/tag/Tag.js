@@ -11,7 +11,7 @@ export const FilledTagStyle = styled.span`
   border: 2px solid ${({ tagColor = color.PRIMARY }) => tagColor};
   color: white;
 `
-export const Tag = ({ children, ...props }) => (
+const Tag = ({ children, ...props }) => (
   <FilledTagStyle  {...props} >{children}</FilledTagStyle>)
 
 
