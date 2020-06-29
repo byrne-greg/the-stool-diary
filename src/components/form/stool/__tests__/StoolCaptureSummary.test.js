@@ -3,6 +3,7 @@ import { render, fireEvent } from '@testing-library/react'
 import StoolCaptureSummary from '../StoolCaptureSummary';
 import { STOOL_SIZES } from '../state/stoolModelEnums';
 import stoolClassifications from '../../../../utils/stool-classifications';
+import { convertToProperCase } from '../../../../utils/text';
 
 const stoolSizeKeys = Object.keys(STOOL_SIZES);
 
@@ -47,7 +48,7 @@ describe('StoolCaptureSummary', () => {
         const { queryByText } = render(
           <StoolCaptureSummary selectedSize={STOOL_SIZES[stoolSizeKey]} />
         )
-        const selectedSizeChoice = queryByText(STOOL_SIZES[stoolSizeKey])
+        const selectedSizeChoice = queryByText(convertToProperCase(STOOL_SIZES[stoolSizeKey]))
 
         // ASSERT
         expect(selectedSizeChoice).toBeTruthy()
