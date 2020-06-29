@@ -1,6 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 import { ListItem, ListItemAvatar, ListItemTextContainer, ListItemTitle, ListItemDescription } from "../ListItem"
 import stoolClassifications from "../../../utils/stool-classifications"
 import { Tag } from '../../tag'
@@ -14,16 +15,18 @@ const TagContainer = styled.div`
 
 const ListStoolItem = ({ stoolType = 0, stoolDateTime = "", stoolSize = null }) => {
 
+  const { t } = useTranslation();
+
   const stoolClass = stoolClassifications.find(stoolClass => stoolClass.type === stoolType)
 
   return (
     <ListItem key={`${stoolType}-${stoolDateTime}`}>
       {stoolClass && (<ListItemAvatar>{stoolClass.image}</ListItemAvatar>)}
       <ListItemTextContainer>
-        <ListItemTitle>Type {stoolType}</ListItemTitle>
+        <ListItemTitle>{t(Type)} {stoolType}</ListItemTitle>
         <ListItemDescription>{moment(stoolDateTime).format("h:mm:ss a, dddd, MMMM Do YYYY")}</ListItemDescription>
         {stoolSize && (<TagContainer>
-          <Tag>{convertToProperCase(stoolSize)}</Tag>
+          <Tag>{t(convertToProperCase(stoolSize))}</Tag>
         </TagContainer>)}
       </ListItemTextContainer>
     </ListItem>
