@@ -8,7 +8,7 @@ import { SecondaryActionButton } from '../../button'
 import { DateTimePicker, DatePicker } from '../../datetime-picker'
 import { updateFormHasReachedSummary } from '../state/formActions'
 import buttonColors from '../../button/ButtonColors'
-import { Tag } from '../../Tag'
+import { Tag } from '../../tag'
 
 const CaptureSummarySectionStyle = styled.section`
   padding: 1rem 0 2rem 0;
