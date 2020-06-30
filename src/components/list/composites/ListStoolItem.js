@@ -23,7 +23,7 @@ const ListStoolItem = ({ stoolType = 0, stoolDateTime = "", stoolSize = null }) 
     <ListItem key={`${stoolType}-${stoolDateTime}`}>
       {stoolClass && (<ListItemAvatar>{stoolClass.image}</ListItemAvatar>)}
       <ListItemTextContainer>
-        <ListItemTitle>{t(Type)} {stoolType}</ListItemTitle>
+        <ListItemTitle>{t('Type')} {stoolType}</ListItemTitle>
         <ListItemDescription>{moment(stoolDateTime).format("h:mm:ss a, dddd, MMMM Do YYYY")}</ListItemDescription>
         {stoolSize && (<TagContainer>
           <Tag>{t(convertToProperCase(stoolSize))}</Tag>
