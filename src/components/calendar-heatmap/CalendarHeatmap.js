@@ -1,12 +1,18 @@
 import React from 'react'
+import moment from 'moment'
 import ImportedCalendarHeatmap from 'react-calendar-heatmap';
 import 'react-calendar-heatmap/dist/styles.css';
 
-const CalendarHeatmap = () => {
+
+
+const CalendarHeatmap = ({ startDate, endDate, values = [] }) => {
+  const today = moment();
+  const weekAgoDate = today.subtract(1, 'y')
+
   return (
     <ImportedCalendarHeatmap
-      startDate={new Date('2019-04-01')}
-      endDate={new Date('2020-04-01')}
+      startDate={weekAgoDate.toDate()}
+      endDate={today.toDate()}
       values={[
         { date: '2020-03-29', count: 12 },
         { date: '2020-02-15', count: 122 },

@@ -1,36 +1,32 @@
 import React, { useState, useEffect } from 'react'
-import { CalendarHeatmap } from '../calendar-heatmap'
-import { retrieveData } from '../firebase/utils'
-import { STOOL_NAMESPACE } from '../firebase/namespaces'
+import styled from "styled-components"
+import moment from 'moment';
+import { CalendarHeatmap, CalendarHeatmapContainer } from '../calendar-heatmap'
 import { ListStoolRecords } from '../list/composites'
+import useStoolRecordsForPerson from '../firebase/hooks'
 
 
 
 const ListStoolRecordsScreen = () => {
 
-  const [stoolRecords, setStoolRecords] = useState([]);
+  const [stoolRecords] = useStoolRecordsForPerson();
 
-  useEffect(() => {
-    const retrieveStoolRecords = async () => {
-      setStoolRecords(await retrieveData(STOOL_NAMESPACE));
-    }
-    retrieveStoolRecords();
-  }, [])
+  const allRecordsSortedByLatestFirst = stoolRecords.slice().sort((a, b) => new Date(b.dateTime) - new Date(a.dateTime))
 
-  const recordsSortedByLatestFirst = stoolRecords.slice().sort((a, b) => new Date(b.dateTime) - new Date(a.dateTime))
+  // set chart timespan
+  const today = moment().toDate();
+  const fromDate = moment().startOf('year').toDate();
+  // create chart data
+  const dateSet = new Set();
+  allRecordsSortedByLatestFirst.forEach(record => dateSet.add(record.dateTime.dateString));
+  const calendarHeatmapData = [...dateSet].map(date => ({ day: date, value: allRecordsSortedByLatestFirst.filter(record => record.dateTime.dateString === date).length }))
 
   return (
     <>
-      <CalendarHeatmap
-        startDate={new Date('2016-01-01')}
-        endDate={new Date('2016-04-01')}
-        values={[
-          { date: '2016-01-01', count: 12 },
-          { date: '2016-01-22', count: 122 },
-          { date: '2016-01-30', count: 38 },
-        ]}
-      />
-      <ListStoolRecords recordedStools={recordsSortedByLatestFirst} />
+      <CalendarHeatmapContainer>
+        <CalendarHeatmap from={fromDate} to={today} data={calendarHeatmapData} />
+      </CalendarHeatmapContainer>
+      <ListStoolRecords recordedStools={allRecordsSortedByLatestFirst} />
     </>
   )
 }

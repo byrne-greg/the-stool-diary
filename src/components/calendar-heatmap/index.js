@@ -1,3 +1,5 @@
-import CalendarHeatmap from "./CalendarHeatmap"
+// import CalendarHeatmap from "./CalendarHeatmap"
+import CalendarHeatmap, { CalendarHeatmapContainer } from "./NivoCalendarHeatmap"
 
-export { CalendarHeatmap }
+
+export { CalendarHeatmap, CalendarHeatmapContainer }
