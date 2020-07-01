@@ -9,7 +9,11 @@ const ListStoolRecords = ({ recordedStools = [] }) => {
       {recordedStools.length > 0 ?
         (<List>
           {recordedStools.map(stoolRecord =>
-            <ListStoolItem stoolType={stoolRecord.type} stoolDateTime={stoolRecord.dateTime} stoolSize={stoolRecord.size} />
+            <ListStoolItem
+              key={`${stoolRecord.type}-${stoolRecord.size}-${stoolRecord.dateTime}`}
+              stoolType={stoolRecord.type}
+              stoolDateTime={stoolRecord.dateTime}
+              stoolSize={stoolRecord.size} />
           )}
         </List>) :
         <NoRecordsFound />

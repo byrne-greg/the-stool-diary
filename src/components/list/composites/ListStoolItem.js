@@ -20,7 +20,7 @@ const ListStoolItem = ({ stoolType = 0, stoolDateTime = "", stoolSize = null }) 
   const stoolClass = stoolClassifications.find(stoolClass => stoolClass.type === stoolType)
 
   return (
-    <ListItem key={`${stoolType}-${stoolDateTime}`}>
+    <ListItem>
       {stoolClass && (<ListItemAvatar>{stoolClass.image}</ListItemAvatar>)}
       <ListItemTextContainer>
         <ListItemTitle>{t('Type')} {stoolType}</ListItemTitle>
