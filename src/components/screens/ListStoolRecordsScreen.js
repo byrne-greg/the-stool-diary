@@ -40,11 +40,13 @@ const SimpleOneWeekView = ({ recordedStools = [] }) => {
 
   recordedStools.forEach(recordedStool => {
     console.log('collecting 7daydata', recordedStool)
-    console.log('collecting 7daydata - is moment inbetween', moment(recordedStool.dateTime.dateString).isBetween(moment().subtract(7, 'days').format("YYYY-MM-DD"), moment().format("YYYY-MM-DD"), 'day'))
+    console.log('collecting 7daydata - is moment inbetween', moment(recordedStool.dateTime.dateString).isBetween(moment().subtract(7, 'day').format("YYYY-MM-DD"), moment().format("YYYY-MM-DD"), 'day'))
     console.log('collecting 7daydata - recodedStoolDay', moment(recordedStool.dateTime.dateString).format('YYYY-MM-DD'))
     console.log('collecting 7daydata - startRange', moment().subtract(7, 'days').format('YYYY-MM-DD'))
     console.log('collecting 7daydata - endRange', moment().format('YYYY-MM-DD'))
-    if (moment(recordedStool.dateTime.dateString).isBetween(moment().subtract(7, 'days'), moment(), 'day')) {
+    if (moment(recordedStool.dateTime.dateString).isSameOrAfter(moment().subtract(7, 'days'), 'day')
+      && moment(recordedStool.dateTime.dateString).isSameOrBefore(moment(), 'day')
+    ) {
       lastSevenDaysData.forEach(dayData => {
         console.log('collecting 7daydata - does recorded stool datestring match 7day datestring', `${recordedStool.dateTime.dateString} === ${dayData.dateString}`, recordedStool.dateTime.dateString === dayData.dateString)
         if (recordedStool.dateTime.dateString === dayData.dateString) {
