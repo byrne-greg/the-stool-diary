@@ -12,7 +12,7 @@ const ListStoolRecords = ({ recordedStools = [] }) => {
             <ListStoolItem
               key={`${stoolRecord.type}-${stoolRecord.size}-${stoolRecord.dateTime}`}
               stoolType={stoolRecord.type}
-              stoolDateTime={stoolRecord.dateTime}
+              stoolDateTime={stoolRecord.dateTime.timestamp}
               stoolSize={stoolRecord.size} />
           )}
         </List>) :
