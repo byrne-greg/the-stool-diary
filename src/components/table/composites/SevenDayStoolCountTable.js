@@ -11,6 +11,24 @@ const TableBodyCell = styled.td`
   text-align: ${({ center = false }) => center ? 'center' : 'left'}
 `
 
+const StoolCount = styled.span`
+  text-align: 'center';
+  padding: 0.75rem;
+  background-color: ${({ count = 0 }) => {
+    // TODO: need to spec out a color scheme
+    let color;
+    switch (count) {
+      default: color = `azure`; break;
+      case 1: color = `aquamarine`; break;
+      case 2: color = `lightgreen`; break;
+      case 3: color = `cornflowerblue`; break;
+
+    }
+    console.log(count, color)
+    return color;
+  }}
+`
+
 const SevenDayStoolCountTable = ({ recordedStools = [] }) => {
 
   const { t } = useTranslation();
@@ -61,7 +79,8 @@ const SevenDayStoolCountTable = ({ recordedStools = [] }) => {
             <tr key={`${datetime.dateString} -${datetime.count} `}>
               <TableBodyCell>{moment(datetime.dateString).format('dddd, Do MMM')}</TableBodyCell>
               <TableBodyCell center>
-                <span style={{ backgroundColor: 'yellow', textAlign: 'center', padding: 10 }}>{datetime.count}</span>
+                <StoolCount count={datetime.count}>{datetime.count}</StoolCount>
+                {/* <span style={{ backgroundColor: 'yellow', textAlign: 'center', padding: 10 }}>{datetime.count}</span> */}
               </TableBodyCell>
             </tr>
           )}
