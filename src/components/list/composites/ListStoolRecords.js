@@ -10,7 +10,7 @@ const ListStoolRecords = ({ recordedStools = [] }) => {
         (<List>
           {recordedStools.map(stoolRecord =>
             <ListStoolItem
-              key={`${stoolRecord.type}-${stoolRecord.size}-${stoolRecord.dateTime}`}
+              key={`${stoolRecord.type}-${stoolRecord.size}-${stoolRecord.dateTime.timestamp}`}
               stoolType={stoolRecord.type}
               stoolDateTime={stoolRecord.dateTime.timestamp}
               stoolSize={stoolRecord.size} />
