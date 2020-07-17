@@ -8,9 +8,9 @@ const ListStoolRecords = ({ recordedStools = [] }) => {
     <>
       {recordedStools.length > 0 ?
         (<List>
-          {recordedStools.map(stoolRecord =>
+          {recordedStools.map((stoolRecord, index) =>
             <ListStoolItem
-              key={`${stoolRecord.type}-${stoolRecord.size}-${stoolRecord.dateTime.timestamp}`}
+              key={`${stoolRecord.type}-${stoolRecord.size}-${stoolRecord.dateTime.timestamp}-${index}`}
               stoolType={stoolRecord.type}
               stoolDateTime={stoolRecord.dateTime.timestamp}
               stoolSize={stoolRecord.size} />
