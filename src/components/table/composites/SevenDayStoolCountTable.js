@@ -1,39 +1,10 @@
-import React, { useMemo, useState } from 'react'
+import React, { useMemo } from 'react'
 import moment from 'moment'
 import styled from 'styled-components'
-import { IconButton } from '@material-ui/core';
-import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import Table from '@material-ui/core/Table';
-import TableHead from '@material-ui/core/TableHead';
-import TableBody from '@material-ui/core/TableBody';
-import TableRow from '@material-ui/core/TableRow';
-import TableCell from '@material-ui/core/TableCell';
-import Collapse from '@material-ui/core/Collapse';
 import { useTranslation } from 'react-i18next'
-import { ListStoolRecords } from '../../list/composites'
 import CollapsibleTable from '../CollapsibleTable';
+import { ListStoolRecords } from '../../list/composites'
 
-
-
-
-const StoolCount = styled.span`
-  text-align: 'center';
-  padding: 1rem;
-  border-radius: 100%;
-  background-color: ${({ count = 0 }) => {
-    // TODO: need to spec out a color scheme
-    let color;
-    switch (count) {
-      default: color = `azure`; break;
-      case 1: color = `aquamarine`; break;
-      case 2: color = `lightgreen`; break;
-      case 3: color = `cornflowerblue`; break;
-
-    }
-    return color;
-  }}
-`
 
 const SevenDayStoolCountTable = ({ recordedStools = [] }) => {
 
@@ -96,7 +67,24 @@ const SevenDayStoolCountTable = ({ recordedStools = [] }) => {
     </>
   )
 };
-
-
-
 export default SevenDayStoolCountTable;
+
+// -------
+
+const StoolCount = styled.span`
+  text-align: 'center';
+  padding: 1rem;
+  border-radius: 100%;
+  background-color: ${({ count = 0 }) => {
+    // TODO: need to spec out a color scheme
+    let color;
+    switch (count) {
+      default: color = `azure`; break;
+      case 1: color = `aquamarine`; break;
+      case 2: color = `lightgreen`; break;
+      case 3: color = `cornflowerblue`; break;
+
+    }
+    return color;
+  }}
+`
