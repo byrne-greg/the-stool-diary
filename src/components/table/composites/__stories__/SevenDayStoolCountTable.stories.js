@@ -5,7 +5,7 @@ import { STOOL_SIZES } from "../../../form/stool/state/stoolModelEnums"
 import { STOOL_DATESTRING_FORMAT } from "../../../form/stool/state/stoolModel"
 
 export default {
-  title: "Tables/Composites/Seven Day Stool Count"
+  title: "Table/Composites/Seven Day Stool Count"
 }
 
 export const Info = () => <p>The following components are demonstrations of table composite components</p>

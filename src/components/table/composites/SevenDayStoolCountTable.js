@@ -4,20 +4,23 @@ import styled from 'styled-components'
 import { IconButton } from '@material-ui/core';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import Table from '@material-ui/core/Table';
+import TableHead from '@material-ui/core/TableHead';
+import TableBody from '@material-ui/core/TableBody';
+import TableRow from '@material-ui/core/TableRow';
+import TableCell from '@material-ui/core/TableCell';
+import Collapse from '@material-ui/core/Collapse';
 import { useTranslation } from 'react-i18next'
 import { ListStoolRecords } from '../../list/composites'
+import CollapsibleTable from '../CollapsibleTable';
 
 
-const TableHeaderCell = styled.th`
-  text-align: ${({ center = false }) => center ? 'center' : 'left'}
-`
-const TableBodyCell = styled.td`
-  text-align: ${({ center = false }) => center ? 'center' : 'left'}
-`
+
 
 const StoolCount = styled.span`
   text-align: 'center';
-  padding: 0.75rem;
+  padding: 1rem;
+  border-radius: 100%;
   background-color: ${({ count = 0 }) => {
     // TODO: need to spec out a color scheme
     let color;
@@ -36,6 +39,7 @@ const SevenDayStoolCountTable = ({ recordedStools = [] }) => {
 
   const { t } = useTranslation();
 
+  // TODO: this could be separated into a utilities for recordedStool array slicer 
   const lastSevenDaysDataForDisplay = useMemo(() => {
     const formatToDateString = (moment) => moment.format('YYYY-MM-DD')
     const currentDateString = formatToDateString(moment());
@@ -67,62 +71,31 @@ const SevenDayStoolCountTable = ({ recordedStools = [] }) => {
   }, [recordedStools])
 
 
-  const isCollapsible = true;
+  const stoolTableHeaders = [
+    { display: t('Day') },
+    { display: t('Stool Count'), align: 'center' }
+  ]
+  const stoolTableRows =
+    lastSevenDaysDataForDisplay.map(dayData => {
+      return {
+        data: [
+          { display: moment(dayData.dateString).format('dddd, Do MMMM') },
+          { display: <StoolCount count={dayData.count}>{dayData.count}</StoolCount>, align: 'center' }
+        ],
+        collapsedData: { display: <ListStoolRecords recordedStools={dayData.stools} /> }
+      }
+    })
+  const stoolTableData = {
+    headers: stoolTableHeaders,
+    rows: stoolTableRows
+  }
+
   return (
     <>
-      <h3>{t('Last seven days stool count')}</h3>
-      <table>
-        <thead>
-          <tr>
-            {isCollapsible && <TableHeaderCell />}
-            <TableHeaderCell>{t('Day')}</TableHeaderCell>
-            <TableHeaderCell center>{t('Stool Count')}</TableHeaderCell>
-          </tr>
-        </thead>
-        <tbody>
-          {lastSevenDaysDataForDisplay.map(dayDataItem =>
-            <CollapsibleRow rowInfo={dayDataItem} key={`${dayDataItem.dateString}-${dayDataItem.count}`} />
-          )}
-        </tbody>
-      </table>
+      <CollapsibleTable tableData={stoolTableData} />
     </>
   )
 };
-
-const CollapsibleRow = ({ rowInfo, collapsedItem }) => {
-
-  const [isCollapsed, setIsCollapsed] = useState(true);
-  const collapseFunc = () => setIsCollapsed(!isCollapsed);
-  const isRowContainingData = rowInfo.stools.length > 0;
-  return (
-    <>
-      <tr onClick={isRowContainingData ? collapseFunc : () => { }} >
-        <TableBodyCell>{
-          isRowContainingData &&
-          <IconButton onClick={collapseFunc}>
-            {isCollapsed ? <KeyboardArrowRightIcon /> : <KeyboardArrowDownIcon />}
-          </IconButton>}
-        </TableBodyCell>
-        <TableBodyCell>{moment(rowInfo.dateString).format('dddd, Do MMMM')}</TableBodyCell>
-        <TableBodyCell center>
-          <StoolCount count={rowInfo.count}>{rowInfo.count}</StoolCount>
-        </TableBodyCell>
-      </tr>
-      <CollapsedRowItem>
-        {!isCollapsed &&
-          <td colSpan={3}>
-            <ListStoolRecords recordedStools={rowInfo.stools} />
-          </td>
-        }
-      </CollapsedRowItem>
-    </>
-  )
-}
-
-const CollapsedRowItem = styled.tr`
-  display: table-row;
-  vertical-align: middle;
-`
 
 
 
