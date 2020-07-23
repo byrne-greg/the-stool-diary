@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 import CollapsibleTable from '../CollapsibleTable';
 import { ListStoolRecords } from '../../list/composites'
+import COLORS from '../../../utils/colors'
 
 
 const SevenDayStoolCountTable = ({ recordedStools = [] }) => {
@@ -72,19 +73,21 @@ export default SevenDayStoolCountTable;
 // -------
 
 const StoolCount = styled.span`
-  text-align: 'center';
+  text-align: center;
   padding: 1rem;
-  border-radius: 100%;
-  background-color: ${({ count = 0 }) => {
-    // TODO: need to spec out a color scheme
-    let color;
-    switch (count) {
-      default: color = `azure`; break;
-      case 1: color = `aquamarine`; break;
-      case 2: color = `lightgreen`; break;
-      case 3: color = `cornflowerblue`; break;
-
+  border-radius: 35%;
+  font-weight: bolder;
+  ${({ count = -1 }) => {
+    if (count < 0) {
+      return `background-color: ${COLORS.GREY}; color: white`;
     }
-    return color;
+    switch (count) {
+      case 0: return `background-color: ${COLORS.VIRIDIS.SCALE1.BG}; color: ${COLORS.VIRIDIS.SCALE1.TEXT}`;
+      case 1: return `background-color: ${COLORS.VIRIDIS.SCALE3.BG}; color: ${COLORS.VIRIDIS.SCALE3.TEXT}`;
+      case 2: return `background-color: ${COLORS.VIRIDIS.SCALE5.BG}; color: ${COLORS.VIRIDIS.SCALE5.TEXT}`;
+      case 3: return `background-color: ${COLORS.VIRIDIS.SCALE7.BG}; color: ${COLORS.VIRIDIS.SCALE7.TEXT}`;
+      case 4: return `background-color: ${COLORS.VIRIDIS.SCALE9.BG}; color: ${COLORS.VIRIDIS.SCALE9.TEXT}`;
+      default: return `background-color: ${COLORS.VIRIDIS.SCALE10.BG}; color: ${COLORS.VIRIDIS.SCALE10.TEXT}`;
+    }
   }}
 `
