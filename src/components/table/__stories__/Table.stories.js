@@ -49,11 +49,11 @@ const mockTableData = {
 }
 
 
-import { Table } from '../Table'
-export const BasicTable = () => <Table tableData={mockTableData} />
+import { Table } from '../'
+export const Basic_Table = () => <Table tableData={mockTableData} />
 
 
-import { CollapsibleTable } from '../Table'
+import { CollapsibleTable } from '../'
 export const Collapsible = () => <CollapsibleTable tableData={mockTableData} />
 
 
