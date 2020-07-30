@@ -43,24 +43,7 @@ const SevenDayStoolCountTable = ({ recordedStools = [] }) => {
   }, [recordedStools])
 
 
-  const stoolTableHeaders = [
-    { display: t('Day') },
-    { display: t('Stool Count'), align: 'center' }
-  ]
-  const stoolTableRows =
-    lastSevenDaysDataForDisplay.map(dayData => {
-      return {
-        data: [
-          { display: moment(dayData.dateString).format('dddd, Do MMMM') },
-          { display: <StoolCount count={dayData.count}>{dayData.count}</StoolCount>, align: 'center' }
-        ],
-        collapsedData: { display: <ListStoolRecords recordedStools={dayData.stools} /> }
-      }
-    })
-  const stoolTableData = {
-    headers: stoolTableHeaders,
-    rows: stoolTableRows
-  }
+  const stoolTableData = getStoolTableData(lastSevenDaysDataForDisplay)
 
   return (
     <>
@@ -70,7 +53,7 @@ const SevenDayStoolCountTable = ({ recordedStools = [] }) => {
 };
 export default SevenDayStoolCountTable;
 
-// -------
+// ------- styled components
 
 const StoolCount = styled.span`
   text-align: center;
@@ -91,3 +74,35 @@ const StoolCount = styled.span`
     }
   }}
 `
+
+// ------- utility functions
+
+function getStoolTableData(stoolDayData) {
+  const { t } = useTranslation();
+
+  const stoolTableHeaders = [
+    { display: t('Day') },
+    { display: t('Stool Count'), align: 'center' }
+  ]
+  const stoolTableRows =
+    stoolDayData.map(dayData => {
+      const stoolTableRow = {
+        data: [
+          { display: moment(dayData.dateString).format('dddd, Do MMMM') },
+          { display: <StoolCount count={dayData.count}>{dayData.count}</StoolCount>, align: 'center' }
+        ],
+      }
+      // if we don't have stool records, then there is no need for a collapsed row
+      if (dayData.count > 0) {
+        stoolTableRow.collapsedData = { display: <ListStoolRecords recordedStools={dayData.stools} /> }
+      }
+      return stoolTableRow;
+    })
+
+  const stoolTableData = {
+    headers: stoolTableHeaders,
+    rows: stoolTableRows
+  }
+
+  return stoolTableData;
+}
