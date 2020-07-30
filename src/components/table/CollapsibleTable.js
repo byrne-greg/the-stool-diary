@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components'
+import moment from 'moment'
 import { makeStyles } from '@material-ui/core/styles';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
@@ -8,22 +9,84 @@ import MaterialTable from '@material-ui/core/Table';
 import MaterialTableBody from '@material-ui/core/TableBody';
 import MaterialTableCell from '@material-ui/core/TableCell';
 import MaterialTableHead from '@material-ui/core/TableHead';
+import MaterialTableSortLabel from '@material-ui/core/TableSortLabel';
 import MaterialTableRow from '@material-ui/core/TableRow';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import RemoveIcon from '@material-ui/icons/Remove';
 
+/*
+tableData takes the following shape:
+{
+  headers: [
+    display: item_to_display,
+    align: string_of_[center, left, right]
+  ],
+  rows: [
+    {
+      display: item_to_display(incl_components),
+      value: base_value,
+      type: string_of_[numeric, date]
+      align: string_of_[center, left, right]
+    }
+  ]
+}
+*/
+
 const CollapsibleTable = ({ tableData }) => {
 
-  const { headers, rows } = tableData;
-  return (
 
+
+  const { headers, rows } = tableData;
+
+  // always start by ordering based off the first header 
+  const [orderBy, setOrderBy] = useState(0);
+  const [isSortAsc, setIsSortAsc] = useState(true);
+
+  // TODO wrap in useMemo/useEffect ?
+  rows.sort((a, b) => {
+
+    const value1 = a.data[orderBy].value;
+    const type1 = a.data[orderBy].type;
+
+    const value2 = b.data[orderBy].value;
+    const type2 = b.data[orderBy].type;
+
+    // default value for non-recognised or mismatching types is not to sort
+    let placement = 0;
+    if (type1 === type2) {
+      if (type1 === 'numeric') {
+        placement = !isSortAsc ? value1 - value2 : value2 - value1;
+      } else if (type1 === 'date') {
+        const momentValue1 = moment(value1);
+        const momentValue2 = moment(value2);
+        if (momentValue1.isBefore(momentValue2)) {
+          placement = !isSortAsc ? 1 : -1;
+        } else if (momentValue1.isAfter(momentValue2)) {
+          placement = !isSortAsc ? -1 : 1;
+        } else return 0
+      }
+    }
+
+    return placement;
+
+  });
+
+  return (
     <MaterialTable aria-label="collapsible table">
       <MaterialTableHead>
         <MaterialTableRow>
           <MaterialTableCell /> {/* empty header cell for collapse toggle column */}
-          {headers.map(header => (
-            <MaterialTableCell align={header.align ? header.align : 'left'}>{header.display}</MaterialTableCell>
+          {headers.map((header, index) => (
+            <MaterialTableCell align={header.align ? header.align : 'left'}>
+              <MaterialTableSortLabel
+                active={orderBy === header.display}
+                direction={isSortAsc ? 'asc' : 'desc'}
+                onClick={() => { setIsSortAsc(!isSortAsc); setOrderBy(index) }}
+              >
+                {header.display}
+              </MaterialTableSortLabel>
+            </MaterialTableCell>
           ))}
         </MaterialTableRow>
       </MaterialTableHead>

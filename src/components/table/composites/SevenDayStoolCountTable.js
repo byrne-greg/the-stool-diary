@@ -88,8 +88,8 @@ function getStoolTableData(stoolDayData) {
     stoolDayData.map(dayData => {
       const stoolTableRow = {
         data: [
-          { display: moment(dayData.dateString).format('dddd, Do MMMM') },
-          { display: <StoolCount count={dayData.count}>{dayData.count}</StoolCount>, align: 'center' }
+          { display: moment(dayData.dateString).format('dddd, Do MMMM'), value: moment(dayData.dateString).format(), type: 'date' },
+          { display: <StoolCount count={dayData.count}>{dayData.count}</StoolCount>, value: dayData.count, type: 'numeric', align: 'center' }
         ],
       }
       // if we don't have stool records, then there is no need for a collapsed row
