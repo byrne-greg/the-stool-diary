@@ -7,7 +7,7 @@ import { ListStoolRecords } from '../../list/composites'
 import COLORS from '../../../utils/colors'
 
 
-const SevenDayStoolCountTable = ({ recordedStools = [] }) => {
+const WeeklyStoolCountTable = ({ recordedStools = [] }) => {
 
   const { t } = useTranslation();
 
@@ -51,7 +51,7 @@ const SevenDayStoolCountTable = ({ recordedStools = [] }) => {
     </>
   )
 };
-export default SevenDayStoolCountTable;
+export default WeeklyStoolCountTable;
 
 // ------- styled components
 

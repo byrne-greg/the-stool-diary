@@ -1,7 +1,7 @@
 import React from 'react'
 import { ListStoolRecords } from '../list/composites'
 import useStoolRecordsForPerson from '../firebase/hooks'
-import { SevenDayStoolCountTable } from '../table/composites';
+import { WeeklyStoolCountTable } from '../table/composites';
 
 const ListStoolRecordsScreen = () => {
 
@@ -11,7 +11,7 @@ const ListStoolRecordsScreen = () => {
 
   return (
     <>
-      <SevenDayStoolCountTable recordedStools={allRecordsSortedByLatestFirst} />
+      <WeeklyStoolCountTable recordedStools={allRecordsSortedByLatestFirst} />
       <ListStoolRecords recordedStools={allRecordsSortedByLatestFirst} />
     </>
   )

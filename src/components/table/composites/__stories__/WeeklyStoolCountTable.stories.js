@@ -5,13 +5,13 @@ import { STOOL_SIZES } from "../../../form/stool/state/stoolModelEnums"
 import { STOOL_DATESTRING_FORMAT } from "../../../form/stool/state/stoolModel"
 
 export default {
-  title: "Table/Composites/Seven Day Stool Count"
+  title: "Table/Composites/Weekly Stool Count"
 }
 
 export const Info = () => <p>The following components are demonstrations of table composite components</p>
 
-import SevenDayStoolCountTable from '../SevenDayStoolCountTable'
-export const NoRecords = () => <SevenDayStoolCountTable />
+import WeeklyStoolCountTable from '../WeeklyStoolCountTable'
+export const NoRecords = () => <WeeklyStoolCountTable />
 
 export const MixRecords = () => {
 
@@ -46,7 +46,7 @@ export const MixRecords = () => {
   const [mockStoolRecords, setMockStoolRecords] = useState(createRandomMockStoolRecords());
   return (
     <>
-      <SevenDayStoolCountTable recordedStools={mockStoolRecords} />
+      <WeeklyStoolCountTable recordedStools={mockStoolRecords} />
       <BasicButton onClick={() => setMockStoolRecords(createRandomMockStoolRecords())}>Randomize Stools</BasicButton>
     </>
   )
