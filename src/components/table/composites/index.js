@@ -1,3 +1,3 @@
-import WeeklyStoolCountTable from './WeeklyStoolCountTable'
+import SevenDayStoolCountTable from './SevenDayStoolCountTable'
 
-export { WeeklyStoolCountTable }
+export { SevenDayStoolCountTable }

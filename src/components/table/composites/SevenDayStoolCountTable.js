@@ -3,11 +3,11 @@ import moment from 'moment'
 import BaseStoolCountTable from './BaseStoolCountTable';
 
 
-const WeeklyStoolCountTable = ({ recordedStools = [] }) => {
+const SevenDayStoolCountTable = ({ recordedStools = [] }) => {
 
   return (
     <BaseStoolCountTable recordedStools={recordedStools} momentStartDate={moment().subtract(7, 'days')} momentEndDate={moment()} />
   )
 };
-export default WeeklyStoolCountTable;
+export default SevenDayStoolCountTable;
 
