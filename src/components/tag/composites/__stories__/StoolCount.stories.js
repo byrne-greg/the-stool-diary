@@ -1,5 +1,5 @@
 import React from 'react'
-
+import styled from 'styled-components'
 
 export default {
   title: "Tag/Composites/Stool Count"
@@ -13,15 +13,22 @@ export const Stool_Counts = () => {
   const numOfStoolCounts = new Array(6).fill(null);
 
   return (
-    <>
-      {[...numOfStoolCounts].map((_, index) => {
-        console.log(index)
-        return <StoolCount count={index} >{index}</StoolCount>
-      })}
-    </>
+    <FlexDiv>
+      {[...numOfStoolCounts].map((_, index) => <StoolCount count={index} >{index}</StoolCount>)}
+    </FlexDiv>
   )
 }
 
+const FlexDiv = styled.div`
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  word-wrap: break-word;
+  outline: 0;
+  position: relative;
+  justify-content: space-evenly;
+`
 
 
 
