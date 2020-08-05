@@ -14,6 +14,7 @@ export const Stool_Counts = () => {
 
   return (
     <FlexDiv>
+      <StoolCount count={-1} >-1</StoolCount>
       {[...numOfStoolCounts].map((_, index) => <StoolCount count={index} >{index}</StoolCount>)}
     </FlexDiv>
   )
