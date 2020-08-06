@@ -14,7 +14,7 @@ import SevenDayStoolCountTable from '../SevenDayStoolCountTable'
 export const NoRecords = () => <SevenDayStoolCountTable />
 export const MixRecords = () => {
   const createRandomRecord = () => {
-    const getRandomType = () => Math.ceil(Math.random() * 7);
+    const getRandomType = () => Math.floor(Math.random() * 8);
     const getRandomDay = () => moment().subtract(getRandomType(), 'days').format();
     const getRandomSize = () => {
       switch (

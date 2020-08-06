@@ -1,18 +1,18 @@
 import React from 'react'
 import { ListStoolRecords } from '../list/composites'
 import useStoolRecordsForPerson from '../firebase/hooks'
-import { SevenDayStoolCountTable } from '../table/composites';
+import { SevenDayStoolCountTable, MonthlyStoolCountTable } from '../table/composites';
+
 
 const ListStoolRecordsScreen = () => {
 
   const [stoolRecords] = useStoolRecordsForPerson();
 
-  const allRecordsSortedByLatestFirst = stoolRecords.slice().sort((a, b) => new Date(b.dateTime) - new Date(a.dateTime))
-
   return (
     <>
-      <SevenDayStoolCountTable recordedStools={allRecordsSortedByLatestFirst} />
-      <ListStoolRecords recordedStools={allRecordsSortedByLatestFirst} />
+      <SevenDayStoolCountTable recordedStools={stoolRecords} />
+      <MonthlyStoolCountTable recordedStools={stoolRecords} />
+      <ListStoolRecords recordedStools={stoolRecords} />
     </>
   )
 }

@@ -1,3 +1,4 @@
 import SevenDayStoolCountTable from './SevenDayStoolCountTable'
+import MonthlyStoolCountTable from './MonthlyStoolCountTable'
 
-export { SevenDayStoolCountTable }
+export { SevenDayStoolCountTable, MonthlyStoolCountTable }

@@ -24,10 +24,13 @@ tableData takes the following shape:
   ],
   rows: [
     {
-      display: item_to_display(incl_components),
+      display: jsx_or_value_to_display,
       value: base_value,
-      type: string_of_[numeric, date]
-      align: string_of_[center, left, right]
+      type: string_of_[numeric, date].
+      align: string_of_[center, left, right],
+      collapsedData: {
+        display: jsx_or_value_to_display
+      }
     }
   ]
 }
@@ -35,13 +38,11 @@ tableData takes the following shape:
 
 const CollapsibleTable = ({ tableData }) => {
 
-
-
   const { headers, rows } = tableData;
 
   // always start by ordering based off the first header 
   const [orderBy, setOrderBy] = useState(0);
-  const [isSortAsc, setIsSortAsc] = useState(true);
+  const [isSortAsc, setIsSortAsc] = useState(false);
 
   // TODO wrap in useMemo/useEffect ?
   rows.sort((a, b) => {
@@ -78,7 +79,7 @@ const CollapsibleTable = ({ tableData }) => {
         <MaterialTableRow>
           <MaterialTableCell /> {/* empty header cell for collapse toggle column */}
           {headers.map((header, index) => (
-            <MaterialTableCell align={header.align ? header.align : 'left'}>
+            <MaterialTableCell key={index} align={header.align ? header.align : 'left'}>
               <MaterialTableSortLabel
                 active={orderBy === header.display}
                 direction={isSortAsc ? 'asc' : 'desc'}
@@ -91,8 +92,8 @@ const CollapsibleTable = ({ tableData }) => {
         </MaterialTableRow>
       </MaterialTableHead>
       <MaterialTableBody>
-        {rows.map(row =>
-          <CollapsibleRow row={row} />
+        {rows.map((row, index) =>
+          <CollapsibleRow key={`${row}-${index}`} row={row} />
         )}
       </MaterialTableBody>
     </MaterialTable>
