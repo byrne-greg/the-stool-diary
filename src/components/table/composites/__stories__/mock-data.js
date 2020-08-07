@@ -3,7 +3,6 @@ import { STOOL_SIZES } from "../../../form/stool/state/stoolModelEnums"
 import { STOOL_DATESTRING_FORMAT } from "../../../form/stool/state/stoolModel"
 
 export const createRandomRecord = ({ defaultMonth = moment().format('YYYYMMDD'), range = 8 }) => {
-  console.log(defaultMonth)
   const getRandomType = () => Math.floor(Math.random() * 8);
   const getRandomDay = () => moment(defaultMonth && defaultMonth.length < 8 ? `${defaultMonth}30` : defaultMonth)
     .subtract(Math.floor(Math.random() * range), 'days').format();
