@@ -16,10 +16,13 @@ const IndexPage = () => (
     <WIP />
     <ul>
       <li>
-        <Link to="/test-list-stool/">Test List Stool Records Screen</Link>
+        <Link to="/test-login/">Test Login Page</Link>
       </li>
       <li>
-        <Link to="/test-record-stool/">Test Record Stool Form</Link>
+        <Link to="/test-list-stool/">Test List Stool Records Page</Link>
+      </li>
+      <li>
+        <Link to="/test-record-stool/">Test Record Stool Form Page</Link>
       </li>
       <li>
         <Link to="/test-stool-type-capture/">Test Form/Stool Type Capture Screen</Link>
