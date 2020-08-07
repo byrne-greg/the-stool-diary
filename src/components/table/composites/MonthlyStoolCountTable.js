@@ -1,21 +1,45 @@
-import React from 'react'
+import React, { useState } from 'react'
 import moment from 'moment'
 import { useTranslation } from 'react-i18next'
+import { makeStyles } from '@material-ui/core/styles';
+import IconButton from '@material-ui/core/IconButton';
+import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
+import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import BaseStoolDayCountTable from './BaseStoolDayCountTable';
 import { StoolCount } from '../../tag/composites'
 import momentFormatter from '../../../utils/moment-format'
 
-const MonthlyStoolCountTable = ({ month = moment().format('YYYYMM'), recordedStools = [] }) => {
+const useMonthlyStoolCountTableStyles = makeStyles({
+  header: {
 
-  const daysToAddSinceFirstDay = moment(month).daysInMonth() - 1;
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'end'
+  },
+});
+
+
+const MonthlyStoolCountTable = ({ month = moment().format('YYYYMM'), recordedStools = [] }) => {
+  const classes = useMonthlyStoolCountTableStyles();
+  const [displayMonth, setDisplayMonth] = useState(month);
+
+  const daysToAddSinceFirstDay = moment(displayMonth).daysInMonth() - 1;
 
   return (
     <>
-      <h2 style={{ textAlign: 'center' }}>{`${moment(month).format('MMMM')} - ${moment(month).format('YYYY')}`}</h2>
+      <div className={classes.header}>
+        <IconButton aria-label="select previous month" size="small" onClick={() => { setDisplayMonth(moment(displayMonth).subtract(1, 'months')) }}>
+          <KeyboardArrowLeftIcon />
+        </IconButton>
+        <h2>{`${moment(displayMonth).format('MMMM')} - ${moment(displayMonth).format('YYYY')}`}</h2>
+        <IconButton aria-label="select next month" size="small" onClick={() => { setDisplayMonth(moment(displayMonth).add(1, 'months')) }}>
+          <KeyboardArrowRightIcon />
+        </IconButton>
+      </div>
       <BaseStoolDayCountTable
         recordedStools={recordedStools}
-        startDate={moment(month).format(momentFormatter.YYYYMMDD)}
-        endDate={moment(month).add(daysToAddSinceFirstDay, 'days').format(momentFormatter.YYYYMMDD)}
+        startDate={moment(displayMonth).format(momentFormatter.YYYYMMDD)}
+        endDate={moment(displayMonth).add(daysToAddSinceFirstDay, 'days').format(momentFormatter.YYYYMMDD)}
         stoolDataTableDisplayFn={getStoolTableData}
       />
     </>
@@ -81,7 +105,8 @@ function getStoolTableData(stoolDayData) {
               display: <StoolCount count={dayDataForCell.count}>{dayDataForCell.count}</StoolCount>,
               value: dayDataForCell.count,
               type: 'numeric',
-              align: 'center'
+              align: 'center',
+              date: dayDataForCell.dateString
             })
               : defaultNoDataCell
 
@@ -92,10 +117,11 @@ function getStoolTableData(stoolDayData) {
         display: <StoolCount count={dayData.count}>{dayData.count}</StoolCount>,
         value: dayData.count,
         type: 'numeric',
-        align: 'center'
+        align: 'center',
+        date: dayData.dateString
       })))
     }
-
+    console.log(weekRecords)
     return weekRecords;
   })
 
