@@ -8,10 +8,15 @@ import MaterialTableHead from '@material-ui/core/TableHead';
 import MaterialTableRow from '@material-ui/core/TableRow';
 
 const useBasicTableStyles = makeStyles({
-  rowCell: {
+  table: {
+    tableLayout: 'fixed'
+  },
+  cell: {
     paddingBottom: '1rem',
     paddingTop: '1rem',
-  },
+    paddingLeft: 1,
+    paddingRight: 1,
+  }
 });
 
 const BasicTable = ({ tableData }) => {
@@ -20,11 +25,11 @@ const BasicTable = ({ tableData }) => {
   const { headers, rows } = tableData;
 
   return (
-    <MaterialTable aria-label="table">
+    <MaterialTable aria-label="table" className={classes.table}>
       <MaterialTableHead>
         <MaterialTableRow>
           {headers.map((header, index) => (
-            <MaterialTableCell key={index} align={header.align ? header.align : 'left'}>
+            <MaterialTableCell className={classes.cell} key={index} align={header.align ? header.align : 'left'}>
               {header.display}
             </MaterialTableCell>
           ))}
@@ -34,7 +39,7 @@ const BasicTable = ({ tableData }) => {
         {rows.map(row =>
           <MaterialTableRow>
             {row.data.map((item, index) =>
-              <MaterialTableCell className={classes.rowCell} key={index} align={item.align ? item.align : 'left'}>
+              <MaterialTableCell className={classes.cell} key={index} align={item.align ? item.align : 'left'}>
                 {item.display}
               </MaterialTableCell>
             )}

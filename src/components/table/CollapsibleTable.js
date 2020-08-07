@@ -102,19 +102,20 @@ const CollapsibleTable = ({ tableData }) => {
 export default CollapsibleTable;
 
 // ------
+const useCollapsibleRowStyles = makeStyles({
+  collapsedRow: {
+    '& > *': {
+      borderBottom: 'unset',
+    },
+  },
+});
 
 const CollapsibleRow = ({ row }) => {
+  const classes = useCollapsibleRowStyles();
   const [isCollapsed, setIsCollapsed] = useState(true);
   const collapse = () => setIsCollapsed(!isCollapsed);
   const isCollapsibleDataInRow = (row) => row.collapsedData ? true : false;
-  const useCollapsibleRowStyles = makeStyles({
-    collapsedRow: {
-      '& > *': {
-        borderBottom: 'unset',
-      },
-    },
-  });
-  const classes = useCollapsibleRowStyles();
+
   return (
     <>
       <MaterialTableRow
