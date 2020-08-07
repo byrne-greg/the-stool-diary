@@ -45,11 +45,11 @@ export default MonthlyStoolCountTable;
 function getStoolTableData(stoolDayData) {
   const { t } = useTranslation();
 
-  const getDayText = (dayNum) => moment().day(dayNum).format('ddd')
+  const getDayText = (dayNum) => moment().day(dayNum).format('dd')
 
   // Days in Moment are Sun - Sat (0  - 6)
   const stoolTableHeaders = [
-    { display: t('Week Num') },
+    { display: t('Wk #') },
     { display: t(getDayText(0)), align: 'center' },
     { display: t(getDayText(1)), align: 'center' },
     { display: t(getDayText(2)), align: 'center' },
