@@ -8,9 +8,6 @@ import MaterialTableHead from '@material-ui/core/TableHead';
 import MaterialTableRow from '@material-ui/core/TableRow';
 
 const useBasicTableStyles = makeStyles({
-  table: {
-    tableLayout: 'fixed'
-  },
   cell: {
     paddingBottom: '1rem',
     paddingTop: '1rem',
