@@ -3,8 +3,14 @@ import styled from 'styled-components'
 import COLORS from '../../../utils/colors'
 
 const StoolCount = styled.span`
-  text-align: center;
   padding: 1rem;
+  @media only screen and (max-width: 400px) { 
+    padding: 0.75rem;
+  }
+  @media only screen and (max-width: 300px) { 
+    padding: 0.5rem;
+  }
+  text-align: center;
   border-radius: 35%;
   font-weight: bolder;
   ${({ count = -1 }) => {
@@ -20,6 +26,9 @@ const StoolCount = styled.span`
       default: return `background-color: ${COLORS.VIRIDIS.SCALE10.BG}; color: ${COLORS.VIRIDIS.SCALE10.TEXT}`;
     }
   }}
+ 
+  
+  
 `
 
 export default StoolCount
