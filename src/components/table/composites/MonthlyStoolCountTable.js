@@ -121,7 +121,6 @@ function getStoolTableData(stoolDayData) {
         date: dayData.dateString
       })))
     }
-    console.log(weekRecords)
     return weekRecords;
   })
 
