@@ -11,7 +11,6 @@ import momentFormatter from '../../../utils/moment-format'
 
 const useMonthlyStoolCountTableStyles = makeStyles({
   header: {
-
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'end'
@@ -32,9 +31,12 @@ const MonthlyStoolCountTable = ({ month = moment().format('YYYYMM'), recordedSto
           <KeyboardArrowLeftIcon />
         </IconButton>
         <h2>{`${moment(displayMonth).format('MMMM')} - ${moment(displayMonth).format('YYYY')}`}</h2>
-        <IconButton aria-label="select next month" size="small" onClick={() => { setDisplayMonth(moment(displayMonth).add(1, 'months')) }}>
+       {isBeforeCurrentDate(moment(displayMonth).add(1, 'months')) ? 
+        (<IconButton aria-label="select next month" size="small" onClick={() => { setDisplayMonth(moment(displayMonth).add(1, 'months').format('YYYYMM')) }}>
           <KeyboardArrowRightIcon />
-        </IconButton>
+        </IconButton>) 
+        // we show blank div to keep the title in the middle of the flex arrangement
+        : <div/>}
       </div>
       <BaseStoolDayCountTable
         recordedStools={recordedStools}
@@ -48,6 +50,15 @@ const MonthlyStoolCountTable = ({ month = moment().format('YYYYMM'), recordedSto
 export default MonthlyStoolCountTable;
 
 // ---- utility functions
+
+const defaultNoDataCell = {
+  display: null,
+  value: 0,
+  type: 'numeric',
+  align: 'center'
+}
+const isBeforeCurrentDate = (dateString) => moment(dateString).isSameOrBefore(moment());
+
 
 //  stool day data: [
 //    {
@@ -70,7 +81,6 @@ function getStoolTableData(stoolDayData) {
   const { t } = useTranslation();
 
   const getDayText = (dayNum) => moment().day(dayNum).format('dd')
-
   // Days in Moment are Sun - Sat (0  - 6)
   const stoolTableHeaders = [
     { display: t('Wk #') },
@@ -91,17 +101,11 @@ function getStoolTableData(stoolDayData) {
     if (dayDataRecordsForWeek.length < 7) {
       // part week
       // set out a default value
-      const defaultNoDataCell = {
-        display: null,
-        value: 0,
-        type: 'numeric',
-        align: 'center'
-      }
       weekRecords.data.push(
         ...[...new Array(7).fill(null)]
           .map((dayData, i) => {
             const dayDataForCell = dayDataRecordsForWeek.find(dayData => moment(dayData.dateString).day() === i);
-            return dayDataForCell ? ({
+            return dayDataForCell && isBeforeCurrentDate(dayDataForCell.dateString) ? ({
               display: <StoolCount count={dayDataForCell.count}>{dayDataForCell.count}</StoolCount>,
               value: dayDataForCell.count,
               type: 'numeric',
@@ -113,13 +117,14 @@ function getStoolTableData(stoolDayData) {
           }))
     } else {
       // full week
-      weekRecords.data.push(...dayDataRecordsForWeek.map(dayData => ({
+      weekRecords.data.push(...dayDataRecordsForWeek.map(dayData => {
+        return isBeforeCurrentDate(dayData.dateString) ?  ({
         display: <StoolCount count={dayData.count}>{dayData.count}</StoolCount>,
         value: dayData.count,
         type: 'numeric',
         align: 'center',
         date: dayData.dateString
-      })))
+      }) : defaultNoDataCell }))
     }
     return weekRecords;
   })
