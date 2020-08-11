@@ -55,6 +55,7 @@
     "glob": "^7.1.6",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^26.0.1",
+    "node-json-minify": "^1.0.0",
     "prettier": "2.0.5",
     "react": "^16.13.1",
     "react-is": "^16.13.1",
