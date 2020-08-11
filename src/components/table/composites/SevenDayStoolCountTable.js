@@ -33,12 +33,12 @@ export default SevenDayStoolCountTable;
 //      stools: [
 //        {
 //          type: numeric,
-//          size: stool_model_enum
-//            dateTime: {
+//          size: stool_model_enum,
+//          dateTime: {
 //            timestamp: utc_timestamp
-//           dateString: yyyy-mm-dd
+//            dateString: yyyy-mm-dd
 //            dateOnly: boolean
-//          }
+//          },
 //        }
 //      ]
 //   }
