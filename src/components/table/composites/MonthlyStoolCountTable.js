@@ -9,6 +9,7 @@ import BaseStoolDayCountTable from './BaseStoolDayCountTable';
 import { StoolCount } from '../../tag/composites'
 import { Title } from '../../title'
 import momentFormatter from '../../../utils/moment-format'
+import { ListStoolRecords } from '../../list/composites'
 
 const useMonthlyStoolCountTableStyles = makeStyles({
   header: {
@@ -43,6 +44,7 @@ const MonthlyStoolCountTable = ({ month = moment().format('YYYYMM'), recordedSto
         startDate={moment(displayMonth).format(momentFormatter.YYYYMMDD)}
         endDate={moment(displayMonth).add(daysToAddSinceFirstDay, 'days').format(momentFormatter.YYYYMMDD)}
         stoolDataTableDisplayFn={getStoolTableData}
+        isShowingCollapsedData
       />
     </>
   )
@@ -67,11 +69,11 @@ const isBeforeCurrentDate = (dateString) => moment(dateString).isSameOrBefore(mo
 //        {
 //          type: numeric,
 //          size: stool_model_enum
-//            dateTime: {
+//          dateTime: {
 //            timestamp: utc_timestamp
-//           dateString: yyyy-mm-dd
+//            dateString: yyyy-mm-dd
 //            dateOnly: boolean
-//          }
+//          },
 //        }
 //      ]
 //   }
@@ -95,36 +97,51 @@ function getStoolTableData(stoolDayData, t) {
   const stoolTableRows = monthWeekNums.map(weekNum => {
 
     const dayDataRecordsForWeek = stoolDayData.filter(dayData => moment(dayData.dateString).week() === weekNum)
-    let weekRecords = { data: [{ display: weekNum, value: weekNum, type: 'numeric' }] };
+    
+    // tableRow will contain a week of records
+    let tableRow = { data: [{ display: weekNum, value: weekNum, type: 'numeric' }] };
     if (dayDataRecordsForWeek.length < 7) {
       // part week
       // set out a default value
-      weekRecords.data.push(
+      tableRow.data.push(
         ...[...new Array(7).fill(null)]
-          .map((dayData, i) => {
+          .map((_, i) => {
             const dayDataForCell = dayDataRecordsForWeek.find(dayData => moment(dayData.dateString).day() === i);
             return dayDataForCell && isBeforeCurrentDate(dayDataForCell.dateString) ? ({
               display: <StoolCount count={dayDataForCell.count}>{dayDataForCell.count}</StoolCount>,
               value: dayDataForCell.count,
               type: 'numeric',
               align: 'center',
-              date: dayDataForCell.dateString
+              date: dayDataForCell.dateString,
+              stools: dayDataForCell.stools,
             })
               : defaultNoDataCell
 
           }))
     } else {
       // full week
-      weekRecords.data.push(...dayDataRecordsForWeek.map(dayData => {
+      tableRow.data.push(...dayDataRecordsForWeek.map(dayData => {
         return isBeforeCurrentDate(dayData.dateString) ?  ({
         display: <StoolCount count={dayData.count}>{dayData.count}</StoolCount>,
         value: dayData.count,
         type: 'numeric',
         align: 'center',
-        date: dayData.dateString
+        date: dayData.dateString,
+        stools: dayData.stools,
       }) : defaultNoDataCell }))
     }
-    return weekRecords;
+
+    // if we have a week where there are records
+    const daysWithRecords = tableRow.data.filter(dayData => dayData.stools && dayData.stools.length > 0)
+    if(daysWithRecords.length > 0) {
+      const weekStoolRecords = daysWithRecords.map(dayData => dayData.stools).flat()
+      // don't show collapse rows that have no records in the week
+      if(weekStoolRecords.length > 0) {
+        tableRow.collapsedData = { display: <ListStoolRecords recordedStools={weekStoolRecords} /> }
+      }
+    }
+    
+    return tableRow;
   })
 
   const stoolTableData = {
