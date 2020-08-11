@@ -10,9 +10,9 @@ const ListStoolRecordsScreen = () => {
 
   return (
     <>
-      <SevenDayStoolCountTable recordedStools={stoolRecords} />
-      <MonthlyStoolCountTable recordedStools={stoolRecords} />
-      <ListStoolRecords recordedStools={stoolRecords} />
+    <h2>Your Stool Records</h2>
+      <SevenDayStoolCountTable recordedStools={stoolRecords} titleLevel='h3'/>
+      <MonthlyStoolCountTable recordedStools={stoolRecords} titleLevel='h3'/>
     </>
   )
 }
