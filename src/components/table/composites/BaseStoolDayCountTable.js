@@ -52,7 +52,8 @@ const BaseStoolDayCountTable = ({
     return dayDataForPeriod;
   }, [startDate, endDate, recordedStools])
 
-  const stoolTableData = useMemo(() => stoolDataTableDisplayFn(dayDataForDisplay), [dayDataForDisplay]);
+  
+  const stoolTableData = useMemo(() => stoolDataTableDisplayFn(dayDataForDisplay, t),  [dayDataForDisplay]);
 
   return (
     <>

@@ -7,6 +7,7 @@ import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import BaseStoolDayCountTable from './BaseStoolDayCountTable';
 import { StoolCount } from '../../tag/composites'
+import { Title } from '../../title'
 import momentFormatter from '../../../utils/moment-format'
 
 const useMonthlyStoolCountTableStyles = makeStyles({
@@ -17,11 +18,10 @@ const useMonthlyStoolCountTableStyles = makeStyles({
   },
 });
 
-
-const MonthlyStoolCountTable = ({ month = moment().format('YYYYMM'), recordedStools = [] }) => {
+const MonthlyStoolCountTable = ({ month = moment().format('YYYYMM'), recordedStools = [], titleLevel='h2' }) => {
+  const { t } = useTranslation();
   const classes = useMonthlyStoolCountTableStyles();
   const [displayMonth, setDisplayMonth] = useState(month);
-
   const daysToAddSinceFirstDay = moment(displayMonth).daysInMonth() - 1;
 
   return (
@@ -30,7 +30,7 @@ const MonthlyStoolCountTable = ({ month = moment().format('YYYYMM'), recordedSto
         <IconButton aria-label="select previous month" size="small" onClick={() => { setDisplayMonth(moment(displayMonth).subtract(1, 'months')) }}>
           <KeyboardArrowLeftIcon />
         </IconButton>
-        <h2>{`${moment(displayMonth).format('MMMM')} - ${moment(displayMonth).format('YYYY')}`}</h2>
+        <Title as={titleLevel}>{`${t(moment(displayMonth).format('MMMM'))} - ${moment(displayMonth).format('YYYY')}`}</Title>
        {isBeforeCurrentDate(moment(displayMonth).add(1, 'months')) ? 
         (<IconButton aria-label="select next month" size="small" onClick={() => { setDisplayMonth(moment(displayMonth).add(1, 'months').format('YYYYMM')) }}>
           <KeyboardArrowRightIcon />
@@ -59,7 +59,6 @@ const defaultNoDataCell = {
 }
 const isBeforeCurrentDate = (dateString) => moment(dateString).isSameOrBefore(moment());
 
-
 //  stool day data: [
 //    {
 //      count: num,
@@ -77,9 +76,8 @@ const isBeforeCurrentDate = (dateString) => moment(dateString).isSameOrBefore(mo
 //      ]
 //   }
 // ]
-function getStoolTableData(stoolDayData) {
-  const { t } = useTranslation();
-
+function getStoolTableData(stoolDayData, t) {
+  
   const getDayText = (dayNum) => moment().day(dayNum).format('dd')
   // Days in Moment are Sun - Sat (0  - 6)
   const stoolTableHeaders = [

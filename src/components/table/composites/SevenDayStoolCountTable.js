@@ -5,10 +5,13 @@ import BaseStoolDayCountTable from './BaseStoolDayCountTable';
 import { ListStoolRecords } from '../../list/composites'
 import { StoolCount } from '../../tag/composites'
 import momentFormatter from '../../../utils/moment-format'
+import { Title } from '../../title';
 
-const SevenDayStoolCountTable = ({ recordedStools = [] }) => {
-
+const SevenDayStoolCountTable = ({ recordedStools = [], titleLevel='h2' }) => {
+  const { t } = useTranslation();
   return (
+    <>
+    <Title as={titleLevel}>{t('Most Recent Stools')}</Title>
     <BaseStoolDayCountTable
       recordedStools={recordedStools}
       startDate={moment().subtract(6, 'days').format(momentFormatter.YYYYMMDD)}
@@ -16,6 +19,7 @@ const SevenDayStoolCountTable = ({ recordedStools = [] }) => {
       stoolDataTableDisplayFn={getStoolTableData}
       isShowingCollapsedData
     />
+    </>
   )
 };
 export default SevenDayStoolCountTable;
@@ -39,18 +43,23 @@ export default SevenDayStoolCountTable;
 //      ]
 //   }
 // ]
-function getStoolTableData(stoolDayData) {
-  const { t } = useTranslation();
-
+function getStoolTableData(stoolDayData, t) {
+  
   const stoolTableHeaders = [
     { display: t('Day') },
     { display: t('Stool Count'), align: 'center' }
   ]
+
   const stoolTableRows =
     stoolDayData.map(dayData => {
+      const dateStringMoment = moment(dayData.dateString);
       const stoolTableRow = {
         data: [
-          { display: moment(dayData.dateString).format('dddd, Do MMMM'), value: moment(dayData.dateString).format(), type: 'date' },
+          { 
+          display: `${t(dateStringMoment.format('dddd'))}, ${dateStringMoment.format('Do')} ${t(dateStringMoment.format('MMMM'))}`,
+          value: dateStringMoment.format(), 
+          type: 'date' 
+        },
           { display: <StoolCount count={dayData.count}>{dayData.count}</StoolCount>, value: dayData.count, type: 'numeric', align: 'center' }
         ],
       }
