@@ -33,8 +33,8 @@ const BasicTable = ({ tableData }) => {
         </MaterialTableRow>
       </MaterialTableHead>
       <MaterialTableBody>
-        {rows.map(row =>
-          <MaterialTableRow>
+        {rows.map((row, index) =>
+          <MaterialTableRow key={index}>
             {row.data.map((item, index) =>
               <MaterialTableCell className={classes.cell} key={index} align={item.align ? item.align : 'left'}>
                 {item.display}
