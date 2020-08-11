@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components'
 import moment from 'moment'
@@ -35,7 +35,6 @@ tableData takes the following shape:
   ]
 }
 */
-
 const CollapsibleTable = ({ tableData }) => {
 
   const { headers, rows } = tableData;
@@ -77,7 +76,7 @@ const CollapsibleTable = ({ tableData }) => {
     <MaterialTable aria-label="collapsible table">
       <MaterialTableHead>
         <MaterialTableRow>
-          <MaterialTableCell /> {/* empty header cell for collapse toggle column */}
+          <MaterialTableCell/> {/* empty header cell for collapse toggle column */}
           {headers.map((header, index) => (
             <MaterialTableCell key={index} align={header.align ? header.align : 'left'}>
               <MaterialTableSortLabel
@@ -121,7 +120,8 @@ const CollapsibleRow = ({ row }) => {
       <MaterialTableRow
         onClick={isCollapsibleDataInRow(row) ? collapse : () => { }}
         className={isCollapsibleDataInRow(row) ? classes.collapsedRow : null}>
-        <MaterialTableCell> {/* only show a collapse toggle if there is data to collapse */}
+        <MaterialTableCell> 
+          {/* only show a collapse toggle if there is data to collapse */}
           {isCollapsibleDataInRow(row) ?
             <IconButton aria-label="expand row" size="small" onClick={collapse}>
               {isCollapsed ? <KeyboardArrowRightIcon /> : <KeyboardArrowDownIcon />}
@@ -130,8 +130,8 @@ const CollapsibleRow = ({ row }) => {
               <RemoveIcon />
             </NonButtonMaterialIconHolder>}
         </MaterialTableCell>
-        {row.data.map(item =>
-          <MaterialTableCell align={item.align ? item.align : 'left'}>
+        {row.data.map((item, index) =>
+          <MaterialTableCell key={`${item.display}-${index}`} align={item.align ? item.align : 'left'}>
             {item.display}
           </MaterialTableCell>
         )}
