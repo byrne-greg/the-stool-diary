@@ -17,7 +17,7 @@ const SevenDayStoolCountTable = ({ recordedStools = [], titleLevel='h2' }) => {
       startDate={moment().subtract(6, 'days').format(momentFormatter.YYYYMMDD)}
       endDate={moment().format(momentFormatter.YYYYMMDD)}
       stoolDataTableDisplayFn={getStoolTableData}
-      isShowingCollapsedData
+      hasCollapsedData
     />
     </>
   )

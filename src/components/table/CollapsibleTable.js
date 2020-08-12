@@ -11,7 +11,8 @@ import MaterialTableCell from '@material-ui/core/TableCell';
 import MaterialTableHead from '@material-ui/core/TableHead';
 import MaterialTableSortLabel from '@material-ui/core/TableSortLabel';
 import MaterialTableRow from '@material-ui/core/TableRow';
-import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
+import Container from '@material-ui/core/Container';
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import RemoveIcon from '@material-ui/icons/Remove';
 
@@ -35,7 +36,7 @@ tableData takes the following shape:
   ]
 }
 */
-const CollapsibleTable = ({ tableData }) => {
+const CollapsibleTable = ({ tableData , showCollapsibleColumn=true}) => {
 
   const { headers, rows } = tableData;
 
@@ -76,7 +77,8 @@ const CollapsibleTable = ({ tableData }) => {
     <MaterialTable aria-label="collapsible table">
       <MaterialTableHead>
         <MaterialTableRow>
-          <MaterialTableCell/> {/* empty header cell for collapse toggle column */}
+          {/* empty header cell for collapse toggle column */}
+          {showCollapsibleColumn ? <MaterialTableCell/> : null}
           {headers.map((header, index) => (
             <MaterialTableCell key={index} align={header.align ? header.align : 'left'}>
               <MaterialTableSortLabel
@@ -92,7 +94,7 @@ const CollapsibleTable = ({ tableData }) => {
       </MaterialTableHead>
       <MaterialTableBody>
         {rows.map((row, index) =>
-          <CollapsibleRow key={`${row}-${index}`} row={row} />
+          <CollapsibleRow key={`${row}-${index}`} row={row} showCollapsibleColumn={showCollapsibleColumn}/>
         )}
       </MaterialTableBody>
     </MaterialTable>
@@ -109,7 +111,7 @@ const useCollapsibleRowStyles = makeStyles({
   },
 });
 
-const CollapsibleRow = ({ row }) => {
+const CollapsibleRow = ({ row , showCollapsibleColumn=true}) => {
   const classes = useCollapsibleRowStyles();
   const [isCollapsed, setIsCollapsed] = useState(true);
   const collapse = () => setIsCollapsed(!isCollapsed);
@@ -120,16 +122,21 @@ const CollapsibleRow = ({ row }) => {
       <MaterialTableRow
         onClick={isCollapsibleDataInRow(row) ? collapse : () => { }}
         className={isCollapsibleDataInRow(row) ? classes.collapsedRow : null}>
-        <MaterialTableCell> 
-          {/* only show a collapse toggle if there is data to collapse */}
-          {isCollapsibleDataInRow(row) ?
-            <IconButton aria-label="expand row" size="small" onClick={collapse}>
-              {isCollapsed ? <KeyboardArrowRightIcon /> : <KeyboardArrowDownIcon />}
-            </IconButton>
-            : <NonButtonMaterialIconHolder>
-              <RemoveIcon />
-            </NonButtonMaterialIconHolder>}
-        </MaterialTableCell>
+        
+        {/* only show the collapse column if configured to do so*/}
+        {showCollapsibleColumn ? (
+          <MaterialTableCell> 
+            {/* only show the collapse down icon if there is data to show*/}
+            {isCollapsibleDataInRow(row) ?
+              <IconButton aria-label="expand row" size="small" onClick={collapse}>
+                {isCollapsed ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}
+              </IconButton>
+              : <NonButtonMaterialIconHolder>
+                <RemoveIcon />
+              </NonButtonMaterialIconHolder>}
+          </MaterialTableCell>
+        ) : null}
+
         {row.data.map((item, index) =>
           <MaterialTableCell key={`${item.display}-${index}`} align={item.align ? item.align : 'left'}>
             {item.display}
@@ -157,7 +164,9 @@ const CollapsedRow = ({ collapsedData = { display: null }, isShowing, colSpan })
     <MaterialTableRow>
       <MaterialTableCell className={classes.collapsedRow} colSpan={colSpan}>
         <Collapse in={isShowing} timeout="auto" unmountOnExit>
-          {collapsedData.display}
+          <Container>
+            {collapsedData.display}
+          </Container>
         </Collapse>
       </MaterialTableCell>
     </MaterialTableRow>

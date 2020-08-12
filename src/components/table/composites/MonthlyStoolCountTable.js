@@ -17,6 +17,11 @@ const useMonthlyStoolCountTableStyles = makeStyles({
     justifyContent: 'space-between',
     alignItems: 'end'
   },
+  table: {
+    '& > table': {
+      tableLayout: 'fixed',
+    },
+  }
 });
 
 const MonthlyStoolCountTable = ({ month = moment().format('YYYYMM'), recordedStools = [], titleLevel='h2' }) => {
@@ -39,13 +44,17 @@ const MonthlyStoolCountTable = ({ month = moment().format('YYYYMM'), recordedSto
         // we show blank div to keep the title in the middle of the flex arrangement
         : <div/>}
       </div>
-      <BaseStoolDayCountTable
-        recordedStools={recordedStools}
-        startDate={moment(displayMonth).format(momentFormatter.YYYYMMDD)}
-        endDate={moment(displayMonth).add(daysToAddSinceFirstDay, 'days').format(momentFormatter.YYYYMMDD)}
-        stoolDataTableDisplayFn={getStoolTableData}
-        isShowingCollapsedData
-      />
+      <div className={classes.table}>
+        <BaseStoolDayCountTable
+          className={classes.table}
+          recordedStools={recordedStools}
+          startDate={moment(displayMonth).format(momentFormatter.YYYYMMDD)}
+          endDate={moment(displayMonth).add(daysToAddSinceFirstDay, 'days').format(momentFormatter.YYYYMMDD)}
+          stoolDataTableDisplayFn={getStoolTableData}
+          hasCollapsedData
+          showCollapsibleColumn={false}
+        />
+      </div>
     </>
   )
 };
