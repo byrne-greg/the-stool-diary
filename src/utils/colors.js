@@ -1,9 +1,13 @@
 export default {
+  BLACK: '#000000',
   BLUE: '#18819D',
   GREEN: '#2B882F',
   PURPLE: '#624983',
   PINK: '#E70572',
   GREY: '#636E72',
+  MATERIAL: {
+    GREY: 'rgba(0, 0, 0, 0.54)'
+  },
   VIRIDIS: {
     SCALE1: { BG: '#430154', TEXT: '#FFFFFF' },
     SCALE2: { BG: '#482878', TEXT: '#FFFFFF' },

@@ -1,14 +1,8 @@
 import React from 'react'
 import moment from 'moment'
 import ListStoolItem from '../ListStoolItem'
-import List from '../../List'
 import { STOOL_SIZES } from '../../../form/stool/state/stoolModelEnums'
-
-const getRandomHistoricalMoment = () => moment()
-.subtract(      Math.round(Math.random()*100), 'days')
-.subtract(Math.round(Math.random()*24), 'hours')
-.subtract(Math.round(Math.random()*60), 'minutes')
-.subtract(Math.round(Math.random()*60), 'seconds')
+import { getRandomHistoricalMoment } from './mock-data'
 
 export default {
   title: "List/List Item/Composites/List Stool Item"
@@ -48,7 +42,6 @@ export const Size_Prop_Only_NonStringValue = () => {
     <ListStoolItem stoolSize={0} />
   )
 }
-
 
 export const Type1 = () => {
   return (

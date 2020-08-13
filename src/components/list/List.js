@@ -1,22 +1,26 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import MaterialList from '@material-ui/core/List';
+import { useTranslation } from 'react-i18next';
 
-const List = styled.ul`
- * > {
-   display: flex;
-   flex-direction: column;
- }
-`
+const useStyles = makeStyles({
+  noRecordsFound: {
+    margin: 0
+  }
+})
 
-export const NoRecordsFoundStyle = styled.p`
- margin: 0;
-`
 export const NoRecordsFound = () => {
+  const { t } = useTranslation();
+  const classes = useStyles()
   return (
     <div>
-      <NoRecordsFoundStyle>No records found</NoRecordsFoundStyle>
+      <p className={classes.noRecordsFound}>{t('No records found')}</p>
     </div>
   )
+}
+
+const List = ({children, ...props}) => {
+  return <MaterialList {...props}>{children}</MaterialList>
 }
 
 export default List;
