@@ -20,7 +20,13 @@ export const NoProps = () => {
   )
 }
 
-export const StoolTypesList = () => {
+export const EmptyStoolRecords = () => {
+  return (
+    <ListStoolRecords recordedStools={[]} />
+  )
+}
+
+export const MultipleStoolRecords = () => {
   const allRecordedStoolData = [
     { type: 1, dateTime: { timestamp: moment().format()}, size: STOOL_SIZES.SMALL },
     { type: 2, dateTime: { timestamp: moment().format()}, size: STOOL_SIZES.MEDIUM },
