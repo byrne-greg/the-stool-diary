@@ -12,6 +12,7 @@ Non-MVP:
   * Add a colour capture to record stool form (predefined colors, perhaps an "Other" leading to a color wheel)
   * Add a feature to record "soils"
   * Add a feature to add text notes to individual records
+  * List Stool Records should be segmented by day/date
 - Tasks
   * Arrange proper h-element layouts on page
   * CSS for hovers and selections
