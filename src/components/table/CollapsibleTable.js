@@ -17,9 +17,9 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import RemoveIcon from '@material-ui/icons/Remove';
 
 const useTableStyles=makeStyles({
-  row: {
-    paddingTop: '4px',
-    paddingBottom: '4px'
+  cell: {
+    paddingTop: '1.2rem',
+    paddingBottom: '1.2rem'
   },
   collapsedRow: {
     '& > *': {
@@ -143,7 +143,7 @@ const CollapsibleRow = ({ row , showCollapsibleColumn=true}) => {
         ) : null}
 
         {row.data.map((item, index) =>
-          <MaterialTableCell key={`${item.display}-${index}`} align={item.align ? item.align : 'left'}>
+          <MaterialTableCell key={`${item.display}-${index}`} align={item.align ? item.align : 'left'} className={classes.cell}>
             {item.display}
           </MaterialTableCell>
         )}
@@ -158,7 +158,7 @@ const CollapsibleRow = ({ row , showCollapsibleColumn=true}) => {
 const CollapsedRow = ({ collapsedData = { display: null }, isShowing, colSpan }) => {
 
   const useCollapsedRowStyles = makeStyles({
-    collapsedRow: {
+    collapsedCell: {
       paddingBottom: isShowing ? '1rem' : 0,
       paddingTop: isShowing ? '1rem' : 0,
     },
@@ -167,7 +167,7 @@ const CollapsedRow = ({ collapsedData = { display: null }, isShowing, colSpan })
 
   return (
     <MaterialTableRow>
-      <MaterialTableCell className={classes.collapsedRow} colSpan={colSpan}>
+      <MaterialTableCell className={classes.collapsedCell} colSpan={colSpan}>
         <Collapse in={isShowing} timeout="auto" unmountOnExit>
           <Container>
             {collapsedData.display}
