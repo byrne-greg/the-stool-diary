@@ -16,6 +16,18 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import RemoveIcon from '@material-ui/icons/Remove';
 
+const useTableStyles=makeStyles({
+  row: {
+    paddingTop: '4px',
+    paddingBottom: '4px'
+  },
+  collapsedRow: {
+    '& > *': {
+      borderBottom: 'unset',
+    },
+  },
+})
+
 /*
 tableData takes the following shape:
 {
@@ -36,7 +48,7 @@ tableData takes the following shape:
   ]
 }
 */
-const CollapsibleTable = ({ tableData , showCollapsibleColumn=true}) => {
+const CollapsibleTable = ({ tableData , showCollapsibleColumn=true, ariaLabel="collapsible table"}) => {
 
   const { headers, rows } = tableData;
 
@@ -74,9 +86,9 @@ const CollapsibleTable = ({ tableData , showCollapsibleColumn=true}) => {
   });
 
   return (
-    <MaterialTable aria-label="collapsible table">
+    <MaterialTable aria-label={ariaLabel}>
       <MaterialTableHead>
-        <MaterialTableRow>
+        <MaterialTableRow >
           {/* empty header cell for collapse toggle column */}
           {showCollapsibleColumn ? <MaterialTableCell/> : null}
           {headers.map((header, index) => (
@@ -103,16 +115,9 @@ const CollapsibleTable = ({ tableData , showCollapsibleColumn=true}) => {
 export default CollapsibleTable;
 
 // ------
-const useCollapsibleRowStyles = makeStyles({
-  collapsedRow: {
-    '& > *': {
-      borderBottom: 'unset',
-    },
-  },
-});
 
 const CollapsibleRow = ({ row , showCollapsibleColumn=true}) => {
-  const classes = useCollapsibleRowStyles();
+  const classes = useTableStyles();
   const [isCollapsed, setIsCollapsed] = useState(true);
   const collapse = () => setIsCollapsed(!isCollapsed);
   const isCollapsibleDataInRow = (row) => row.collapsedData ? true : false;
@@ -144,7 +149,7 @@ const CollapsibleRow = ({ row , showCollapsibleColumn=true}) => {
         )}
       </MaterialTableRow>
       {row.collapsedData ?
-        <CollapsedRow colSpan={row.data.length + 1} collapsedData={row.collapsedData} isShowing={!isCollapsed} />
+        <CollapsedRow colSpan={showCollapsibleColumn ? row.data.length + 1 : row.data.length} collapsedData={row.collapsedData} isShowing={!isCollapsed} />
         : null}
     </>
   )
