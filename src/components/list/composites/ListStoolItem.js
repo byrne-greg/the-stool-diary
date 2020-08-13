@@ -13,21 +13,24 @@ const TagContainer = styled.div`
   flex-direction: row;
 `
 
-const ListStoolItem = ({ stoolType = 0, stoolDateTime = "", stoolSize = null }) => {
+const ListStoolItem = ({ stoolType, stoolDateTime, stoolSize = null }) => {
 
   const { t } = useTranslation();
-
   const stoolClass = stoolClassifications.find(stoolClass => stoolClass.type === stoolType)
 
   return (
     <ListItem>
       {stoolClass && (<ListItemAvatar>{stoolClass.image}</ListItemAvatar>)}
       <ListItemTextContainer>
-        <ListItemTitle>{t('Type')} {stoolType}</ListItemTitle>
+        <ListItemTitle>{t('Type')} {stoolType ? stoolType : t('Invalid')}</ListItemTitle>
+        {stoolDateTime ? 
         <ListItemDescription>{moment(stoolDateTime).format("h:mm:ss a, dddd, MMMM Do YYYY")}</ListItemDescription>
-        {stoolSize && (<TagContainer>
+        : null}
+        {stoolSize ? (
+        <TagContainer>
           <Tag>{t(convertToProperCase(stoolSize))}</Tag>
-        </TagContainer>)}
+        </TagContainer>
+        ) : null}
       </ListItemTextContainer>
     </ListItem>
   )
