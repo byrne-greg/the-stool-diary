@@ -1,7 +1,14 @@
 import React from 'react'
-import ListStoolItemComp from '../ListStoolItem'
+import moment from 'moment'
+import ListStoolItem from '../ListStoolItem'
 import List from '../../List'
 import { STOOL_SIZES } from '../../../form/stool/state/stoolModelEnums'
+
+const getRandomHistoricalMoment = () => moment()
+.subtract(      Math.round(Math.random()*100), 'days')
+.subtract(Math.round(Math.random()*24), 'hours')
+.subtract(Math.round(Math.random()*60), 'minutes')
+.subtract(Math.round(Math.random()*60), 'seconds')
 
 export default {
   title: "List/List Item/Composites/List Stool Item"
@@ -15,25 +22,73 @@ export const Info = () => {
 
 export const NoProps = () => {
   return (
-    <ListStoolItemComp />
+    <ListStoolItem />
   )
 }
 
-export const StoolTypesList = () => {
-  const allRecordedStoolData = [
-    { type: 1, dateTime: Date.now(), size: STOOL_SIZES.SMALL },
-    { type: 2, dateTime: Date.now(), size: STOOL_SIZES.MEDIUM },
-    { type: 3, dateTime: Date.now(), size: STOOL_SIZES.LARGE },
-    { type: 4, dateTime: Date.now(), size: STOOL_SIZES.SMALL },
-    { type: 5, dateTime: Date.now(), size: STOOL_SIZES.MEDIUM },
-    { type: 6, dateTime: Date.now(), size: STOOL_SIZES.LARGE },
-    { type: 7, dateTime: Date.now(), size: STOOL_SIZES.SMALL },
-  ]
+export const Type_Prop_Only = () => {
   return (
-    <List>
-      {allRecordedStoolData.map((stoolRecord) =>
-        <ListStoolItemComp stoolType={stoolRecord.type} stoolDateTime={stoolRecord.dateTime} stoolSize={stoolRecord.size} />
-      )}
-    </List>
+    <ListStoolItem stoolType={1}  />
   )
 }
+
+export const DateTime_Prop_Only = () => {
+  return (
+    <ListStoolItem stoolDateTime={{timestamp: Date.now()}}  />
+  )
+}
+
+export const Size_Prop_Only = () => {
+  return (
+    <ListStoolItem stoolSize={'Stool Size Prop Value'} />
+  )
+}
+export const Size_Prop_Only_NonStringValue = () => {
+  return (
+    <ListStoolItem stoolSize={0} />
+  )
+}
+
+
+export const Type1 = () => {
+  return (
+    <ListStoolItem stoolType={1} stoolDateTime={moment().format()} stoolSize={STOOL_SIZES.SMALL} />
+  )
+}
+
+export const Type2 = () => {
+  return (
+    <ListStoolItem stoolType={2} stoolDateTime={getRandomHistoricalMoment().format()} stoolSize={STOOL_SIZES.MEDIUM} />
+  )
+}
+
+export const Type3 = () => {
+  return (
+    <ListStoolItem stoolType={3} stoolDateTime={getRandomHistoricalMoment().format()} stoolSize={STOOL_SIZES.LARGE} />
+  )
+}
+
+export const Type4 = () => {
+  return (
+    <ListStoolItem stoolType={4} stoolDateTime={ getRandomHistoricalMoment().format()} stoolSize={STOOL_SIZES.SMALL} />
+  )
+}
+
+export const Type5 = () => {
+  return (
+    <ListStoolItem stoolType={5} stoolDateTime={ getRandomHistoricalMoment().format()}stoolSize={STOOL_SIZES.MEDIUM} />
+  )
+}
+
+export const Type6 = () => {
+  return (
+    <ListStoolItem stoolType={6} stoolDateTime={getRandomHistoricalMoment().format()} stoolSize={STOOL_SIZES.LARGE} />
+  )
+}
+
+export const Type7 = () => {
+  return (
+    <ListStoolItem stoolType={7} stoolDateTime={getRandomHistoricalMoment().format()} stoolSize={STOOL_SIZES.SMALL} />
+  )
+}
+
