@@ -4,13 +4,14 @@ import firebase from 'gatsby-plugin-firebase'
 // https://firebase.google.com/docs/auth/web/start
 
 export const signUpUser = ({email=null, password=null}) => {
-  // TODO
+  
+  console.log('in signUpUser', email, password)
   if(email && password) {
     firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
       // Handle Errors here.
       var errorCode = error.code;
       var errorMessage = error.message;
-      // ...
+      console.log(errorCode, errorMessage)
     })
   }
 }
@@ -22,7 +23,7 @@ export const signInUser = ({email=null, password=null}) => {
       // Handle Errors here.
       var errorCode = error.code;
       var errorMessage = error.message;
-      // ...
+      console.log(errorCode, errorMessage)
     })
   }
 }
