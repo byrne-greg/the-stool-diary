@@ -80,9 +80,8 @@ const ListStoolRecords = ({ recordedStools = [], hasSort=true, sortAscending=fal
               ) : null}
                 {sortedRecords.filter(stoolRecord=>day === (moment(stoolRecord.dateTime.timestamp).format(momentFormatter.YYYYMMDD)))
                 .map((stoolRecord, index) => (
-                  <div>
+                  <div key={`${stoolRecord.type}-${stoolRecord.size}-${stoolRecord.dateTime.timestamp}-${index}`}>
                     <ListStoolItem
-                      key={`${stoolRecord.type}-${stoolRecord.size}-${stoolRecord.dateTime.timestamp}-${index}`}
                       stoolType={stoolRecord.type}
                       stoolDateTime={stoolRecord.dateTime.timestamp}
                       stoolSize={stoolRecord.size} />
