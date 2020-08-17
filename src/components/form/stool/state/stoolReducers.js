@@ -10,6 +10,6 @@ export const stoolReducer = (state, action) => {
     case UPDATE_TYPE: return { ...state, type: value }
     case UPDATE_DATETIME: return { ...state, dateTime: value }
     case UPDATE_SIZE: return { ...state, size: value }
-    default: throw new Error("Cannot execute form dispatch action")
+    default: throw new Error("Cannot execute stool dispatch action")
   }
 }
