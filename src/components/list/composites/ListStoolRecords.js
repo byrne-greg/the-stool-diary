@@ -33,10 +33,12 @@ const useStyles = makeStyles({
     color: colors.MATERIAL.BLACK,
     marginLeft: '1rem',
     paddingBottom: '4px',
-    borderBottom: `1px solid ${colors.MATERIAL.GREY}`
   },
   sorter: {
     backgroundColor: 'white'
+  },
+  titleContainer: {
+    paddingTop: '0.5rem'
   }
 })
 
@@ -50,7 +52,9 @@ const ListStoolRecords = ({ recordedStools = [], hasSort=true, sortAscending=fal
   
   return (
     <>
-      {titleComponent}
+      <div className={classes.titleContainer}>
+        {titleComponent}
+      </div>
       {uniqueDays.length > 0 ? (
       <List>
         {hasSort ? (
