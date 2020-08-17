@@ -146,7 +146,7 @@ function getStoolTableData(stoolDayData, t) {
       const weekStoolRecords = daysWithRecords.map(dayData => dayData.stools).flat()
       // don't show collapse rows that have no records in the week
       if(weekStoolRecords.length > 0) {
-        tableRow.collapsedData = { display: <ListStoolRecords recordedStools={weekStoolRecords} /> }
+      tableRow.collapsedData = { display: <ListStoolRecords recordedStools={weekStoolRecords} titleComponent={<Title as='h3'>{`${t('Recorded stools during week')} ${tableRow.data[0].value}`}</Title>}/> }
       }
     }
     

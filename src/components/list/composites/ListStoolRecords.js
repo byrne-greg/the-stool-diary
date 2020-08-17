@@ -34,6 +34,9 @@ const useStyles = makeStyles({
     marginLeft: '1rem',
     paddingBottom: '4px',
     borderBottom: `1px solid ${colors.MATERIAL.GREY}`
+  },
+  sorter: {
+    backgroundColor: 'white'
   }
 })
 
@@ -52,7 +55,7 @@ const ListStoolRecords = ({ recordedStools = [], hasSort=true, sortAscending=fal
       <List>
         {hasSort ? (
         <ListSubheader>
-          <div onClick={() => setIsSortAsc(!isSortAsc)}>
+          <div className={classes.sorter} onClick={() => setIsSortAsc(!isSortAsc)}>
             <IconButton aria-label="sort records" size="small" >
               {isSortAsc ? <ArrowUpward /> : <ArrowDownward />}
             </IconButton>
