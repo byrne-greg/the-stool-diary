@@ -1,5 +1,4 @@
 export const validateTextField = ({type = '', value='', customInvalidateFn=()=>({ isInvalid: false, reason: null }) }) => {
-  console.log('validateTextField value', value);
 
   // should not be empty
   if(value === '') return { isInvalid: true, reason: 'Must not be empty' };

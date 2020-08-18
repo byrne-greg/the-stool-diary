@@ -9,7 +9,8 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { signUpUser } from '../../firebase/utils'
+import { signUpUser, persistData } from '../../firebase/utils'
+import { USER_NAMESPACE } from '../../firebase/namespaces'
 import { validateTextField } from './validation'
 import { INITIAL_AUTH_STATE } from './state/authModel'
 import { authReducer } from './state/authReducers'
@@ -25,16 +26,13 @@ import {
 } from './state/authActions'
 
 
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -46,9 +44,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
+const SignUpForm = ({ setIsUserSignedUp = () => {} }) => {
+  const { t } = useTranslation();
 
-
-const SignUpForm = () => {
   const classes = useStyles();
 
   const [authState, authDispatch] = useReducer(authReducer, INITIAL_AUTH_STATE);
@@ -73,12 +71,11 @@ const SignUpForm = () => {
   const getLastName = () => authState.lastName.value
   const getIsLastNameInvalid = () => authState.lastName.error.isInvalid
   const getLastNameInvalidReason = () => authState.lastName.error.reason
-  
-  const [isSignedUp, setIsSignedUp] = useState(false);
 
+  const persistUserSignUp = () => persistData(USER_NAMESPACE, { email: getEmail(), firstName: getFirstName(), lastName: getLastName()})
+  
   const handleSubmit = async e => {
     e.preventDefault();
-
     const emailValidation = validateTextField({value: getEmail(), type: 'email'})
     setEmailError(emailValidation)
     const passwordValidation = validateTextField({value: getPassword(), type: 'password'})
@@ -87,116 +84,104 @@ const SignUpForm = () => {
     setFirstNameError(firstNameValidation)
     const lastNameValidation = validateTextField({value: getLastName()})
     setLastNameError(lastNameValidation)
-
     const isAllowedToSignUp = !(emailValidation.isInvalid || passwordValidation.isInvalid || firstNameValidation.isInvalid || lastNameValidation.isInvalid )
-
     if(isAllowedToSignUp) {
       await signUpUser({ email: getEmail(), password: getPassword() });
-      setIsSignedUp(true)
+      await persistUserSignUp()
+      setIsUserSignedUp(true)
     }
-    
   }
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-
-        {!isSignedUp ? (
-          <>
-            <Typography component="h1" variant="h5">
-              Sign up
-            </Typography>
-            <form className={classes.form} noValidate onSubmit={handleSubmit}>
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    autoComplete="fname"
-                    name="firstName"
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="firstName"
-                    label="First Name"
-                    autoFocus
-                    error={getIsFirstNameInvalid()}
-                    helperText={getFirstNameInvalidReason()}
-                    onChange={e => setFirstName(e.target.value)}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="lastName"
-                    label="Last Name"
-                    name="lastName"
-                    autoComplete="lname"
-                    error={getIsLastNameInvalid()}
-                    helperText={getLastNameInvalidReason()}
-                    onChange={e => setLastName(e.target.value)}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
-                    error={getIsEmailInvalid()}
-                    helperText={getEmailInvalidReason()}
-                    onChange={e => setEmail(e.target.value)}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    autoComplete="current-password"
-                    error={getIsPasswordInvalid()}
-                    helperText={getPasswordInvalidReason()}
-                    onChange={e => setPassword(e.target.value)}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <FormControlLabel
-                    control={<Checkbox value="allowExtraEmails" color="primary" />}
-                    label={`I agree to the terms and conditions`}
-                  />
-                </Grid>
-              </Grid>
-              <Button
-                type="submit"
+        <Typography component="h1" variant="h5">
+          {t('Sign up')}
+        </Typography>
+        <form className={classes.form} noValidate onSubmit={handleSubmit}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+            <TextField
+                variant="outlined"
+                required
                 fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-              >
-                Sign Up
-              </Button>
-              <Grid container justify="flex-end">
-                <Grid item>
-                  <Link href="#" variant="body2">
-                    Already have an account? Sign in
-                  </Link>
-                </Grid>
-              </Grid>
-            </form>
-          </>
-        ) : (
-          <div>
-            You have successfully signed-up
-          </div>
-        )}
+                id="firstName"
+                label={t("First Name")}
+                name="firstName"
+                autoComplete="fname"
+                error={getIsFirstNameInvalid()}
+                helperText={getFirstNameInvalidReason()}
+                onChange={e => setFirstName(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="lastName"
+                label={t("Last Name")}
+                name="lastName"
+                autoComplete="lname"
+                error={getIsLastNameInvalid()}
+                helperText={getLastNameInvalidReason()}
+                onChange={e => setLastName(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="email"
+                label={t("Email Address")}
+                name="email"
+                autoComplete="email"
+                error={getIsEmailInvalid()}
+                helperText={getEmailInvalidReason()}
+                onChange={e => setEmail(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="password"
+                label={t("Password")}
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                error={getIsPasswordInvalid()}
+                helperText={getPasswordInvalidReason()}
+                onChange={e => setPassword(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControlLabel
+                control={<Checkbox value="allowExtraEmails" color="primary" />}
+                label={t('I agree to the terms and conditions')}
+              />
+            </Grid>
+          </Grid>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+          >
+            {t('Sign Up')}
+          </Button>
+          <Grid container justify="flex-end">
+            <Grid item>
+              <Link href="#" variant="body2">
+                {t('Already have an account? Sign in')}
+              </Link>
+            </Grid>
+          </Grid>
+        </form>
       </div>
     </Container>
   );

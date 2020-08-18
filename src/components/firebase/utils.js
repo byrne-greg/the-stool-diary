@@ -5,7 +5,6 @@ import firebase from 'gatsby-plugin-firebase'
 
 export const signUpUser = ({email=null, password=null}) => {
   
-  console.log('in signUpUser', email, password)
   if(email && password) {
     firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
       // Handle Errors here.

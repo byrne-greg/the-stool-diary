@@ -11,7 +11,6 @@ import {
 
 export const authReducer = (state, action) => {
   const { type, value: newValue } = action;
-  console.log('newValue',newValue)
   let newState;
   switch (type) {
     case UPDATE_EMAIL: newState = { ...state, email: { ...state.email, value: newValue } }; break;
@@ -24,6 +23,5 @@ export const authReducer = (state, action) => {
     case UPDATE_LASTNAME_ERROR: newState = { ...state, lastName: { ...state.lastName,  error: newValue } }; break;
     default: throw new Error("Cannot execute auth dispatch action")
   }
-  console.log('newState', newState)
   return newState;
 }

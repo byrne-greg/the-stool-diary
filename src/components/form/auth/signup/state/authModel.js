@@ -4,3 +4,9 @@ export const INITIAL_AUTH_STATE = {
   firstName: { value: null, error: { isInvalid: null, reason: null } },
   lastName: { value: null, error: { isInvalid: null, reason: null } }
 }
+
+export const INITIAL_USER_STATE = {
+  email: null,
+  firstName: null,
+  lastName: null,
+}
