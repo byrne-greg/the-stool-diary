@@ -5,8 +5,8 @@ require("dotenv").config({
 
 module.exports = {
   siteMetadata: {
-    title: `Stool Diary Web App`,
-    description: `Record your stools.`,
+    title: `the Stool Diary`,
+    description: `An easy way to record your bowel movements`,
     author: `Greg Byrne`,
     // siteUrl: `inserturlhere.com`,
     inceptionYear: 2020,
