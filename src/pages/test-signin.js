@@ -1,11 +1,11 @@
 import React from "react"
 import { Link } from "gatsby"
 import { PageLayout } from "../components/layout"
-import LoginScreen from "../components/screens/LoginScreen"
+import SigninScreen from "../components/screens/SigninScreen"
 
-const LoginPage = () => (
-  <PageLayout title="Login">
-    <LoginScreen />
+const SigninPage = () => (
+  <PageLayout title="Sign In">
+    <SigninScreen />
     <div></div>
     <ul>
       <li>
@@ -15,4 +15,4 @@ const LoginPage = () => (
   </PageLayout>
 )
 
-export default LoginPage
+export default SigninPage

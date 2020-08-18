@@ -1,4 +1,5 @@
-import React, { useState, useReducer } from 'react';
+import React, { useReducer } from 'react';
+import { useTranslation } from 'react-i18next'
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -11,7 +12,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { signUpUser, persistData } from '../../../firebase/utils'
 import { USER_NAMESPACE } from '../../../firebase/namespaces'
-import { validateTextField } from './validation'
+import { validateTextField, VALIDATION_TYPE } from '../validation'
 import { INITIAL_AUTH_STATE } from '../state/authModel'
 import { authReducer } from '../state/authReducers'
 import { 
@@ -22,10 +23,9 @@ import {
   updateFirstName, 
   updateFirstNameError,
   updateLastName, 
-  updateLastNameError
+  updateLastNameError,
+  updateAuthError
 } from '../state/authActions'
-
-
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -41,6 +41,13 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  alert: { // TODO - abstract into component
+    padding: '0.5rem',
+    marginTop: '0.5rem',
+    marginBottom: '0.5rem',
+    color: 'red',
+    backgroundColor: '#FFEFEF'
+  }
 }));
 
 
@@ -58,6 +65,7 @@ const SignUpForm = ({ setIsUserSignedUp = () => {} }) => {
   const setPasswordError = (error) => updatePasswordError(authDispatch, error)
   const setFirstNameError = (error) => updateFirstNameError(authDispatch, error)
   const setLastNameError = (error) => updateLastNameError(authDispatch, error)
+  const setAuthError = (error) => updateAuthError(authDispatch, error)
   
   const getEmail = () => authState.email.value
   const getIsEmailInvalid = () => authState.email.error.isInvalid
@@ -71,14 +79,15 @@ const SignUpForm = ({ setIsUserSignedUp = () => {} }) => {
   const getLastName = () => authState.lastName.value
   const getIsLastNameInvalid = () => authState.lastName.error.isInvalid
   const getLastNameInvalidReason = () => authState.lastName.error.reason
+  const getAuthError = () => authState.authError
 
   const persistUserSignUp = () => persistData(USER_NAMESPACE, { email: getEmail(), firstName: getFirstName(), lastName: getLastName()})
   
   const handleSubmit = async e => {
     e.preventDefault();
-    const emailValidation = validateTextField({value: getEmail(), type: 'email'})
+    const emailValidation = validateTextField({value: getEmail(), type: VALIDATION_TYPE.EMAIL})
     setEmailError(emailValidation)
-    const passwordValidation = validateTextField({value: getPassword(), type: 'password'})
+    const passwordValidation = validateTextField({value: getPassword(), type: VALIDATION_TYPE.PASSWORD})
     setPasswordError(passwordValidation)
     const firstNameValidation = validateTextField({value: getFirstName()})
     setFirstNameError(firstNameValidation)
@@ -86,9 +95,13 @@ const SignUpForm = ({ setIsUserSignedUp = () => {} }) => {
     setLastNameError(lastNameValidation)
     const isAllowedToSignUp = !(emailValidation.isInvalid || passwordValidation.isInvalid || firstNameValidation.isInvalid || lastNameValidation.isInvalid )
     if(isAllowedToSignUp) {
-      await signUpUser({ email: getEmail(), password: getPassword() });
-      await persistUserSignUp()
-      setIsUserSignedUp(true)
+      const authError = await signUpUser({ email: getEmail(), password: getPassword() });
+      if(!authError.errorCode) {
+        await persistUserSignUp()
+        setIsUserSignedUp(true)
+      } else {
+        setAuthError({ ...authError })
+      }
     }
   }
 
@@ -157,6 +170,9 @@ const SignUpForm = ({ setIsUserSignedUp = () => {} }) => {
                 helperText={getPasswordInvalidReason()}
                 onChange={e => setPassword(e.target.value)}
               />
+              {getAuthError().errorCode ? ( 
+                <div className={classes.alert}>{getAuthError().errorMessage}</div>
+              ) : null}
             </Grid>
             <Grid item xs={12}>
               <FormControlLabel

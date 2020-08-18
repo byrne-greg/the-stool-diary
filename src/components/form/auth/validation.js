@@ -1,3 +1,8 @@
+export const VALIDATION_TYPE={
+  EMAIL: 'email',
+  PASSWORD: 'password'
+}
+
 export const validateTextField = ({type = '', value='', customInvalidateFn=()=>({ isInvalid: false, reason: null }) }) => {
 
   // should not be empty
@@ -9,24 +14,31 @@ export const validateTextField = ({type = '', value='', customInvalidateFn=()=>(
   // should not be null
   if(value === null) return { isInvalid: true, reason: 'Must not be empty' };
   
-  if(type === 'email') {
+  if(type === VALIDATION_TYPE.EMAIL) {
     // must only contain allowed characters (alphanumeric chars, dots, and @)
     if(value.match(/[^\w@\.]/g)) return { isInvalid: true, reason: 'Must not contain spaces or non-email characters'}
 
     // must contain one @ symbol
     const atSymMatches = [...value.matchAll(/\@/g)]
-    if(atSymMatches.length != 1) return { isInvalid: true, reason: 'Email must contain one @ symbol' };
+    if(atSymMatches.length != 1) return { isInvalid: true, reason: 'Must contain one @ symbol' };
+
+    // must contain alpha characters before the @
+    const atSymIndex = value.indexOf('@')
+    const betweenStartAndAtSymSubstring = value.substring(0, atSymIndex);
+    const alphaCharMatchesBetweenStartAndAtSymSubstring = [...betweenStartAndAtSymSubstring.matchAll(/[A-Za-z]/g)];
+    if(!alphaCharMatchesBetweenStartAndAtSymSubstring.length > 0) return { isInvalid: true, reason: 'Must contain text characters before the @ symbol' }
     
     // must contain at least one . symbol after the @
-    const atSymIndex = value.indexOf('@')
-    const subst = value.substring(atSymIndex);
-    if(subst.indexOf('.') === -1) return { isInvalid: true, reason: 'Must contain at least one period after @ symbol' }
-    
-    // must contain alpha characters before the @
-    const alphaCharMatches = [...value.matchAll(/[A-Za-z]/g)];
-    if(!alphaCharMatches.length > 0) return { isInvalid: true, reason: 'Must contain text characters' }
+    const atSymSubstring = value.substring(atSymIndex);
+    const periodAfterAtSymIndex = atSymSubstring.indexOf('.')
+    if(periodAfterAtSymIndex === -1) return { isInvalid: true, reason: 'Must contain at least one period after @ symbol' }
 
-  } else if(type === 'password') {
+    // TODO - must contain alpha characters between the @ and the first period
+    // const betweenAtSymAndPeriodSubstring = value.substring(atSymIndex, periodAfterAtSymIndex);
+    // const alphaCharMatchesBetweenAtSymAndPeriodSubstring = [ ...betweenAtSymAndPeriodSubstring.matchAll(/[A-za-z]/g) ]
+    // if(!alphaCharMatchesBetweenAtSymAndPeriodSubstring.length > 0) return { isInvalid: true, reason: 'Must contain text characters between the @ symbol and the first period' }
+
+  } else if(type === VALIDATION_TYPE.PASSWORD) {
 
     const commonPasswordValidationReason = 'Passwords must have 1 uppercase character, 1 lowercase character, 1 special character, and be more than 8 characters long' 
 

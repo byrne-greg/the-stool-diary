@@ -3,28 +3,39 @@ import firebase from 'gatsby-plugin-firebase'
 // ----- AUTH -----
 // https://firebase.google.com/docs/auth/web/start
 
-export const signUpUser = ({email=null, password=null}) => {
+export const signUpUser = async ({email = null, password = null}) => {
+
+  const authError = { errorCode: null, errorMessage: null}
   
   if(email && password) {
-    firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+    await firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
       // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.log(errorCode, errorMessage)
+      authError.errorCode = error.errorCode;
+      authError.errorMessage = error.errorMessage
+      console.error(authError)
     })
+  } else {
+    console.error("Attempt to sign up user with null credentials")
   }
+
+  return authError;
 }
 
-export const signInUser = ({email=null, password=null}) => {
-  // TODO
+export const signInUser = async ({ email = null, password = null }) => {
+  
+  const authError = { errorCode: null, errorMessage: null}
+
   if(email && password) {
-    firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.log(errorCode, errorMessage)
+    await firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+       // Handle Errors here.
+      authError.errorCode = error.code;
+      authError.errorMessage = error.message
+      console.error(authError.errorCode, ":", authError.errorMessage)
     })
+  } else {
+    console.error("Attempt to sign in user with null credentials")
   }
+  return authError;
 }
 
 export const isUserSignedIn = () => {

@@ -6,8 +6,8 @@ export default {
 
 export const Info = () => <p>The following components are test screens for the login page</p>
 
-import LoginPage from '../../../pages/test-login'
-export const Login = () => <LoginPage />
+import SigninPage from '../../../pages/test-signin'
+export const Sign_In = () => <SigninPage />
 
 
 

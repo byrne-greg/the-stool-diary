@@ -1,7 +1,7 @@
 import RecordStoolForm from "./RecordStoolForm"
 import ListStoolRecordsScreen from "./ListStoolRecordsScreen"
-import LoginScreen from "./LoginScreen"
+import SigninScreen from "./SigninScreen"
 import SignupScreen from "./SignupScreen"
 
 
-export { RecordStoolForm, ListStoolRecordsScreen, LoginScreen, SignupScreen }
+export { RecordStoolForm, ListStoolRecordsScreen, SigninScreen, SignupScreen }

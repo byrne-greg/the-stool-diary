@@ -6,7 +6,8 @@ import {
   UPDATE_FIRSTNAME,
   UPDATE_FIRSTNAME_ERROR,
   UPDATE_LASTNAME,
-  UPDATE_LASTNAME_ERROR
+  UPDATE_LASTNAME_ERROR,
+  UPDATE_AUTH_ERROR
 } from "./authActionTypes"
 
 export const authReducer = (state, action) => {
@@ -21,6 +22,7 @@ export const authReducer = (state, action) => {
     case UPDATE_FIRSTNAME_ERROR: newState = { ...state, firstName: { ...state.firstName, error: newValue } }; break;
     case UPDATE_LASTNAME: newState = { ...state, lastName: { ...state.lastName, value: newValue } }; break;
     case UPDATE_LASTNAME_ERROR: newState = { ...state, lastName: { ...state.lastName,  error: newValue } }; break;
+    case UPDATE_AUTH_ERROR: newState = { ...state, authError: newValue }; break;
     default: throw new Error("Cannot execute auth dispatch action")
   }
   return newState;

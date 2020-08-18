@@ -16,10 +16,10 @@ const IndexPage = () => (
     <WIP />
     <ul>
       <li>
-        <Link to="/test-login/">Test Login Page</Link>
+        <Link to="/test-signin/">Test Sign-in Page</Link>
       </li>
       <li>
-        <Link to="/test-signup/">Test Signup Page</Link>
+        <Link to="/test-signup/">Test Sign-up Page</Link>
       </li>
       <li>
         <Link to="/test-list-stool/">Test List Stool Records Page</Link>
