@@ -10,6 +10,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Alert from '@material-ui/lab/Alert';
 import { signUpUser, persistData } from '../../../firebase/utils'
 import { USER_NAMESPACE } from '../../../firebase/namespaces'
 import { validateTextField, VALIDATION_TYPE } from '../validation'
@@ -41,12 +42,9 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-  alert: { // TODO - abstract into component
-    padding: '0.5rem',
-    marginTop: '0.5rem',
-    marginBottom: '0.5rem',
-    color: 'red',
-    backgroundColor: '#FFEFEF'
+  alert: { 
+    paddingTop: '0.5rem',
+    paddingBottom: '0.5rem',
   }
 }));
 
@@ -171,7 +169,11 @@ const SignUpForm = ({ setIsUserSignedUp = () => {} }) => {
                 onChange={e => setPassword(e.target.value)}
               />
               {getAuthError().errorCode ? ( 
-                <div className={classes.alert}>{getAuthError().errorMessage}</div>
+                <div className={classes.alert}>
+                  <Alert variant="outlined" severity="error">
+                    {getAuthError().errorMessage}
+                  </Alert>
+                </div>
               ) : null}
             </Grid>
             <Grid item xs={12}>

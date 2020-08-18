@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from 'react';
+import React, { useReducer } from 'react';
 import { useTranslation } from 'react-i18next'
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -10,6 +10,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Alert from '@material-ui/lab/Alert';
 import { signInUser, persistData } from '../../../firebase/utils'
 import { validateTextField, VALIDATION_TYPE } from '../validation'
 import { INITIAL_AUTH_STATE } from '../state/authModel'
@@ -35,12 +36,9 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-  alert: { // TODO - abstract into component
-    padding: '0.5rem',
-    marginTop: '0.5rem',
-    marginBottom: '0.5rem',
-    color: 'red',
-    backgroundColor: '#FFEFEF'
+  alert: { 
+    paddingTop: '0.5rem',
+    paddingBottom: '0.5rem',
   }
 }));
 
@@ -87,41 +85,44 @@ const SignInForm = ({ setIsSignInSuccessful = () => {} }) => {
       </Typography>
       <form className={classes.form} noValidate onSubmit={handleSubmit}>
       <Grid container spacing={2}>
-            
-      <Grid item xs={12}>
-       <TextField
-          variant="outlined"
-          required
-          fullWidth
-          id="email"
-          label="Email Address"
-          name="email"
-          autoComplete="email"
-          error={getIsEmailInvalid()}
-          helperText={getEmailInvalidReason()}
-          onChange={e => setEmail(e.target.value)}
-        />
-        </Grid>    
         <Grid item xs={12}>
         <TextField
-          variant="outlined"
-          required
-          fullWidth
-          name="password"
-          label="Password"
-          type="password"
-          id="password"
-          autoComplete="current-password"
-          onChange={e => setPassword(e.target.value)}
-        />
-        {getAuthError().errorCode ? ( 
-          <div className={classes.alert}>{getAuthError().errorMessage}</div>
-        ) : null}
+            variant="outlined"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            error={getIsEmailInvalid()}
+            helperText={getEmailInvalidReason()}
+            onChange={e => setEmail(e.target.value)}
+          />
+          </Grid>    
+          <Grid item xs={12}>
+          <TextField
+            variant="outlined"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            onChange={e => setPassword(e.target.value)}
+          />
+          {getAuthError().errorCode ? ( 
+            <div className={classes.alert}>
+              <Alert variant="outlined" severity="error">
+                {getAuthError().errorMessage}
+              </Alert>
+            </div>
+          ) : null}
         </Grid>  
-        <FormControlLabel
+        {/* <FormControlLabel
           control={<Checkbox value="remember" color="primary" />}
           label="Remember me"
-        />
+        /> */}
         <Button
           type="submit"
           fullWidth
