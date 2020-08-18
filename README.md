@@ -6,13 +6,18 @@
 MVP:
 - Features
   - Login / Signup
+  - Sitemap and structured links
+  - Layout
 
 Non-MVP:
 - Features:
   * Add a colour capture to record stool form (predefined colors, perhaps an "Other" leading to a color wheel)
   * Add a feature to record "soils"
   * Add a feature to add text notes to individual records
-  * List Stool Records should be segmented by day/date
+  * Profile page
+  * Add terms and conditions for recording data
+  * Remember Me sign in
+  * Auth verification
 - Tasks
   * Arrange proper h-element layouts on page
   * CSS for hovers and selections
