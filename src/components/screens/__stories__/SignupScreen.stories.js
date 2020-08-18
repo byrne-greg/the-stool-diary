@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default {
-  title: "Screens/Signup"
+  title: "Screens/Auth/Sign-Up"
 }
 
 export const Info = () => <p>The following components are test screens for the signup page</p>
