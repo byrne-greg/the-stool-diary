@@ -71,7 +71,6 @@ const SignInForm = ({ setIsSignInSuccessful = () => {} }) => {
     if(!emailValidation.isInvalid) {
       const authError = await signInUser({ email: getEmail(), password: getPassword() });
       if(!authError.errorCode) {
-        await persistUserSignUp()
         setIsSignInSuccessful(true)
       } else {
         setAuthError({ ...authError })
