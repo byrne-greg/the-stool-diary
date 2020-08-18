@@ -9,4 +9,9 @@ export const INITIAL_USER_STATE = {
   email: null,
   firstName: null,
   lastName: null,
+  signIn: []
+}
+
+const INITIAL_USER_STATE_SIGNIN = {
+  date: null
 }

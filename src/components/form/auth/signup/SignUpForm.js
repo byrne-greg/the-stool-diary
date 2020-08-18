@@ -9,11 +9,11 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { signUpUser, persistData } from '../../firebase/utils'
-import { USER_NAMESPACE } from '../../firebase/namespaces'
+import { signUpUser, persistData } from '../../../firebase/utils'
+import { USER_NAMESPACE } from '../../../firebase/namespaces'
 import { validateTextField } from './validation'
-import { INITIAL_AUTH_STATE } from './state/authModel'
-import { authReducer } from './state/authReducers'
+import { INITIAL_AUTH_STATE } from '../state/authModel'
+import { authReducer } from '../state/authReducers'
 import { 
   updateEmail, 
   updateEmailError,
@@ -23,7 +23,7 @@ import {
   updateFirstNameError,
   updateLastName, 
   updateLastNameError
-} from './state/authActions'
+} from '../state/authActions'
 
 
 
