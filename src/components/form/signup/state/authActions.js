@@ -1,9 +1,22 @@
 import {
-  SIGN_UP,
-  SIGN_IN,
+  UPDATE_EMAIL,
+  UPDATE_PASSWORD,
+  UPDATE_FIRSTNAME,
+  UPDATE_LASTNAME,
+  UPDATE_EMAIL_ERROR,
+  UPDATE_PASSWORD_ERROR,
+  UPDATE_FIRSTNAME_ERROR,
+  UPDATE_LASTNAME_ERROR
 } from "./authActionTypes"
 
-export const signup = (dispatch, value) => updateState(dispatch, SIGN_UP, value)
-export const signin = (dispatch, value) => updateState(dispatch, SIGN_IN, value)
+export const updateFirstName = (dispatch, value) => updateState(dispatch, UPDATE_FIRSTNAME, value)
+export const updateFirstNameError = (dispatch, value) => updateState(dispatch, UPDATE_FIRSTNAME_ERROR, value)
+export const updateLastName = (dispatch, value) => updateState(dispatch, UPDATE_LASTNAME, value)
+export const updateLastNameError = (dispatch, value) => updateState(dispatch, UPDATE_LASTNAME_ERROR, value)
+export const updateEmail = (dispatch, value) => updateState(dispatch, UPDATE_EMAIL, value)
+export const updateEmailError = (dispatch, value) => updateState(dispatch, UPDATE_EMAIL_ERROR, value)
+export const updatePassword = (dispatch, value) => updateState(dispatch, UPDATE_PASSWORD, value)
+export const updatePasswordError = (dispatch, value) => updateState(dispatch, UPDATE_PASSWORD_ERROR, value)
+
 
 const updateState = (dispatch, actionType, newValue ) => dispatch({ type: actionType, value: newValue })
