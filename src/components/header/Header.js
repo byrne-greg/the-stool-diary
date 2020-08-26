@@ -12,7 +12,7 @@ import { PageCenter } from "../layout";
 import { HeaderLink } from '.';
 import COLORS from '../../utils/colors'
 import ROUTES from '../../utils/routes'
-// import { LanguageSelector } from "../i18n"
+import { LanguageSelector } from "../i18n"
 
 const useStyles = makeStyles({
   banner: {
@@ -32,7 +32,7 @@ const useStyles = makeStyles({
   },
   drawer: {
     width: '100vw'
-  }
+  },
 })
 
 const Header = () => {
@@ -59,7 +59,6 @@ const Header = () => {
             <HeaderLink>{siteTitle}</HeaderLink>
           </h1>
           <div>
-            {/* <LanguageSelector/> */}
             <DrawerMenu/>
           </div>
         </div>
@@ -107,10 +106,13 @@ const DrawerMenu = () => {
         </IconButton>
         <List>
           {MenuRoutes.map(item => (
-          <ListItem key={item.text}>
-            <Link to={item.route}>{item.text}</Link>
-          </ListItem>)
+            <ListItem key={item.text}>
+              <Link to={item.route}>{item.text}</Link>
+            </ListItem>)
           )}
+          <ListItem>
+            <LanguageSelector/>
+          </ListItem>
         </List>
       </Drawer>
     </>

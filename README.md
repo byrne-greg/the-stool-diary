@@ -24,6 +24,8 @@ Non-MVP:
   * Accessibility labels
   * Remove styled components and transition to Material fully
   * Optimize rendering
+  * Change Stool Form to use Contexts instead of passing each get/set function down to each component
+  * Utilize the static page generation to create pages on build rather than dynamically through Firebase API
 
 ----
 
@@ -46,7 +48,9 @@ Directory conventions:
 * `src/pages`: a folder for the page components (defines the routes of the web app)
 * `src/utils`: a folder for utility functions and web-app-used resources
 
-## How i18n translations are generated:
+## Languages
+
+### How i18n translations are generated:
 
 StoolDiaryWeb uses `react-i18next` to provide text translations. This involves wrapping text with a hook provided by the i18n library.
 ```javascript
@@ -62,6 +66,13 @@ const Component = () => {
 ```
 Translations are defined in JSON files with the format of `<component-name>.locale.{language-code}.json`. These are co-located near the components that use the translations (mostly).
 
-During the build process, all translation files are gathered and merged into a single `translation.json` and minified. This file is what is sent to the client through a network request when loading the page.
+During the build process, all translation files are gathered and merged into a single `translation.json` (per language) and minified. This file is what is sent to the client through a network request when loading the page. Each language `translation.json` is copied to `/public/locales/{language code}/` for each defined language.
 
 The build process that gathers and merges these translation files is defined in `gatsby-node.js`
+
+### How we change the App language
+
+StoolDiaryWeb uses a global React context object to store the web app state including the displayed language. Using the `LanguageSelector` component, it uses the `GlobalContextProvider` (specifically it's State and Dispatch contexts) to update the language currently in use. When this change is made by the selector component, two changes are performed:
+1. `i18n.changeLanguage(languageCode)` is called so that `i18n` uses the `translation.json` for the given language
+2. The display language is stored in the `GlobalStateContext`. 
+The `GlobalContextProvider` wraps all pages in Gatsby (via `gatsby-browser.js`) so that each navigable page retains the global state so that the selector component shows the correct selected language.

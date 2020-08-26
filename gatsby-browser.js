@@ -21,3 +21,11 @@ import "./src/components/i18n/i18n"
 //     </MuiPickersUtilsProvider>
 //   );
 // }
+
+// This API allows wrapping of the root Component in Gatsby
+// Use: Wrapping a GlobalContextProvider
+import React from 'react';
+import GlobalContextProvider from './src/context/GlobalContextProvider'
+export const wrapRootElement = ({ element }) => {
+  return <GlobalContextProvider>{element}</GlobalContextProvider>;
+};
