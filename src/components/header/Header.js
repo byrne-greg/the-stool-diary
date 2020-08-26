@@ -1,20 +1,18 @@
 import React, { useState } from "react";
+import { Link, useStaticQuery, graphql} from "gatsby";
+import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
+import { List, ListItem } from "@material-ui/core";
 import { PageCenter } from "../layout";
 import { HeaderLink } from '.';
-import { List, ListItem } from "@material-ui/core";
-import { Link, useStaticQuery, graphql} from "gatsby";
-import { useTranslation } from "react-i18next";
 import COLORS from '../../utils/colors'
 import ROUTES from '../../utils/routes'
-
-
-
+// import { LanguageSelector } from "../i18n"
 
 const useStyles = makeStyles({
   banner: {
@@ -23,10 +21,11 @@ const useStyles = makeStyles({
   },
   container: {
     display: 'flex',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    alignItems: 'center'
   },
   title: {
-    margin: 0
+    margin: 0,
   },
   menuButton: {
     color: 'white'
@@ -59,7 +58,10 @@ const Header = () => {
           <h1 className={classes.title}>
             <HeaderLink>{siteTitle}</HeaderLink>
           </h1>
-          <DrawerMenu/>
+          <div>
+            {/* <LanguageSelector/> */}
+            <DrawerMenu/>
+          </div>
         </div>
       </PageCenter>
     </header>
@@ -97,15 +99,15 @@ const DrawerMenu = () => {
   return (
     <>
       <IconButton onClick={toggleDrawer} className={classes.menuButton}>
-        <MenuIcon/>
+        <MenuIcon fontSize="large"/>
       </IconButton>
       <Drawer anchor="right" open={isDrawerOpen} onClose={toggleDrawer}>
         <IconButton onClick={toggleDrawer}>
-          <CloseIcon/>
+          <CloseIcon fontSize="large"/>
         </IconButton>
         <List>
           {MenuRoutes.map(item => (
-          <ListItem>
+          <ListItem key={item.text}>
             <Link to={item.route}>{item.text}</Link>
           </ListItem>)
           )}
@@ -114,3 +116,4 @@ const DrawerMenu = () => {
     </>
   )
 }
+
