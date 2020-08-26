@@ -6,6 +6,7 @@ import ImgStoolType4 from './stool-types/StoolType4'
 import ImgStoolType5 from './stool-types/StoolType5'
 import ImgStoolType6 from './stool-types/StoolType6'
 import ImgStoolType7 from './stool-types/StoolType7'
+import DiaryIcon from './DiaryIcon'
 
 
 export {
@@ -16,6 +17,7 @@ export {
   ImgStoolType5,
   ImgStoolType6,
   ImgStoolType7,
-  ImgGatsbyAstronaut
+  ImgGatsbyAstronaut,
+  DiaryIcon
 }
 

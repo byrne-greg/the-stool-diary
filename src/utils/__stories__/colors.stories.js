@@ -10,6 +10,7 @@ import COLORS from '../colors'
 export const Simple_Colors = () => (
   <ColorContainer>
     <ColorSquare color={COLORS.BLACK} text={'BLACK'}/>
+    <ColorSquare color={COLORS.WHITE} text={'WHITE'}/>
     <ColorSquare color={COLORS.BLUE} text={'BLUE'}/>
     <ColorSquare color={COLORS.GREEN} text={'GREEN'}/>
     <ColorSquare color={COLORS.PURPLE} text={'PURPLE'}/>

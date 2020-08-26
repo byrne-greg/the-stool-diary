@@ -7,16 +7,16 @@ import Drawer from '@material-ui/core/Drawer';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
-import { List, ListItem } from "@material-ui/core";
+import { List, ListItem, Typography } from "@material-ui/core";
 import { PageCenter } from "../layout";
-import { HeaderLink } from '.';
 import COLORS from '../../utils/colors'
 import ROUTES from '../../utils/routes'
 import { LanguageSelector } from "../i18n"
+import DiaryIcon from "../images/DiaryIcon"
 
 const useStyles = makeStyles({
   banner: {
-    background: COLORS.PURPLE,
+    // background: COLORS.PURPLE,
     marginBottom: '1.45rem',
   },
   container: {
@@ -26,9 +26,20 @@ const useStyles = makeStyles({
   },
   title: {
     margin: 0,
+    display: 'flex',
+    alignItems: 'center'
+  },
+  titletext: {
+    paddingLeft: '0.66rem',
+    color: COLORS.PURPLE,
+    fontSize: '1.6rem',
+    fontWeight: 'bold',
+  },
+  titlelink: {
+    textDecoration: 'none'
   },
   menuButton: {
-    color: 'white'
+    color: COLORS.PURPLE
   },
   drawer: {
     width: '100vw'
@@ -52,18 +63,23 @@ const Header = () => {
   const classes = useStyles();
 
   return (
-    <header className={classes.banner}>
-      <PageCenter>
-        <div className={classes.container}>
-          <h1 className={classes.title}>
-            <HeaderLink>{siteTitle}</HeaderLink>
-          </h1>
-          <div>
-            <DrawerMenu/>
+    <Typography>
+      <header className={classes.banner}>
+        <PageCenter>
+          <div className={classes.container}>
+            <Link to={ROUTES.HOME} className={classes.titlelink}>
+              <div className={classes.title}>
+                <DiaryIcon size={25}/>
+                <span className={classes.titletext}>{siteTitle}</span>  
+              </div>
+            </Link>
+            <div>
+              <DrawerMenu/>
+            </div>
           </div>
-        </div>
-      </PageCenter>
-    </header>
+        </PageCenter>
+      </header>
+    </Typography>
   )
 }
 
