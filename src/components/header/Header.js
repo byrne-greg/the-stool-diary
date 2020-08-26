@@ -63,14 +63,17 @@ const Header = () => {
   const classes = useStyles();
 
   return (
-    <Typography>
       <header className={classes.banner}>
         <PageCenter>
           <div className={classes.container}>
             <Link to={ROUTES.HOME} className={classes.titlelink}>
               <div className={classes.title}>
                 <DiaryIcon size={25}/>
-                <span className={classes.titletext}>{siteTitle}</span>  
+                <Typography>
+                  <span className={classes.titletext}>
+                    {siteTitle}
+                  </span>  
+                </Typography>
               </div>
             </Link>
             <div>
@@ -79,7 +82,6 @@ const Header = () => {
           </div>
         </PageCenter>
       </header>
-    </Typography>
   )
 }
 
