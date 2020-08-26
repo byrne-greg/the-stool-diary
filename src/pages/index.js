@@ -1,10 +1,12 @@
 import React from "react"
 import { Link } from "gatsby"
 import { PageLayout } from "../components/layout"
+import { Typography } from "@material-ui/core"
+import { HomeScreen } from "../components/screens"
 
 const IndexPage = () => (
   <PageLayout title="Home">
-    <h2>Let's start recording your stools...</h2>
+    <HomeScreen/>
     <hr/>
     <div>
       Header - small logo plus brand with opposite side having a drawer menu/page links
