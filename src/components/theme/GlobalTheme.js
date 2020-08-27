@@ -1,7 +1,14 @@
 import React from 'react';
 import { createMuiTheme, responsiveFontSizes, ThemeProvider } from '@material-ui/core/styles';
+import COLORS from '../../utils/colors';
 
-let theme = createMuiTheme();
+let theme = createMuiTheme({
+  palette: {
+    background: {
+      default: COLORS.WHITE
+    }
+  }
+});
 theme = responsiveFontSizes(theme);
 
 const GlobalTheme = ({ children }) => {
