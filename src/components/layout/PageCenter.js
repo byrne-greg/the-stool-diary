@@ -1,14 +1,19 @@
 import React from 'react'
-import styled from 'styled-components'
+import { makeStyles } from '@material-ui/core';
 
-const PageCenterStyle = styled.div`
-  margin: 0 auto;
-  max-width: 960px;
-  padding: 1.0875rem 1.45rem;
-`;
+const useStyles = makeStyles({
+  center:{
+    margin: '0 auto',
+    maxWidth: 960,
+    padding: '1.0875rem 1.45rem'
+  }
+})
 
-const PageCenter = ({ children }) => (
-  <PageCenterStyle>{children}</PageCenterStyle>
-);
+const PageCenter = ({ children }) => {
+  const classes = useStyles()
+  return (
+    <div className={classes.center}>{children}</div>
+  )
+}
 
 export default PageCenter;
