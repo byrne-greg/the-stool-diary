@@ -7,9 +7,11 @@ import ImgStoolType5 from './stool-types/StoolType5'
 import ImgStoolType6 from './stool-types/StoolType6'
 import ImgStoolType7 from './stool-types/StoolType7'
 import DiaryIcon from './DiaryIcon'
+import StoolDiaryLogo from './StoolDiaryLogo'
 
 
 export {
+  ImgGatsbyAstronaut,
   ImgStoolType1,
   ImgStoolType2,
   ImgStoolType3,
@@ -17,7 +19,7 @@ export {
   ImgStoolType5,
   ImgStoolType6,
   ImgStoolType7,
-  ImgGatsbyAstronaut,
-  DiaryIcon
+  DiaryIcon,
+  StoolDiaryLogo
 }
 

@@ -12,11 +12,10 @@ import { PageCenter } from "../layout";
 import COLORS from '../../utils/colors'
 import ROUTES from '../../utils/routes'
 import { LanguageSelector } from "../i18n"
-import DiaryIcon from "../images/DiaryIcon"
+import { StoolDiaryLogo } from "../images";
 
 const useStyles = makeStyles({
   banner: {
-    // background: COLORS.PURPLE,
     marginBottom: '1.45rem',
   },
   container: {
@@ -27,7 +26,10 @@ const useStyles = makeStyles({
   title: {
     margin: 0,
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+  },
+  titleimg: {
+    width: '15rem'
   },
   titletext: {
     paddingLeft: '0.66rem',
@@ -67,14 +69,17 @@ const Header = () => {
         <PageCenter>
           <div className={classes.container}>
             <Link to={ROUTES.HOME} className={classes.titlelink}>
-              <div className={classes.title}>
-                <DiaryIcon size={25}/>
+               <div className={classes.title}>
+                {/* <DiaryIcon size={25}/>
                 <Typography>
                   <span className={classes.titletext}>
                     {siteTitle}
                   </span>  
-                </Typography>
-              </div>
+                </Typography> */}
+                <div className={classes.titleimg}>
+                  <StoolDiaryLogo />
+                </div>
+              </div> 
             </Link>
             <div>
               <DrawerMenu/>
