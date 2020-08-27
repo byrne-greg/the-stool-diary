@@ -31,7 +31,7 @@ const Hero = () => {
   const classes = useStyles()
   return(
     <div className={classes.hero}>
-      <Typography variant="h1" component="h2" gutterBottom>
+      <Typography variant="h1" gutterBottom>
       {t("Welcome to the Stool Diary")}
       </Typography>
     </div>
