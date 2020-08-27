@@ -104,7 +104,7 @@ const SignUpForm = ({ setIsUserSignedUp = () => {} }) => {
   }
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="div" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h4">
