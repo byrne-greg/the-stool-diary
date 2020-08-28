@@ -1,23 +1,24 @@
 
 
-import React, { useRef } from 'react'
-import styled from 'styled-components'
+import React from 'react'
 import PropTypes from 'prop-types'
-import { useSpring, useTransition, animated } from 'react-spring'
+import { useSpring, animated } from 'react-spring'
+import { makeStyles } from '@material-ui/core'
 
-const AccordionItemSectionStyle = styled(animated.div)`
-  border-width: 0px 1px 1px 1px;
-  border-color: #DFDFDF;
-  border-style: solid;
-  background-color: white;
-
-  * > { 
-    padding: 1rem 0;
+const useStyles = makeStyles({
+  accordionItemSection: {
+    borderWidth: '0px 1px 1px 1px',
+    borderColor: '#DFDFDF',
+    borderStyle: 'solid',
+    backgroundColor: 'white', 
+    '* >': { 
+      padding: '1rem 0'
+    }
   }
-
-`
+})
 
 const AccordionItemSection = ({ isOpened = false, children }) => {
+  const classes = useStyles();
 
   const collapseAnimation = useSpring({
     from: {
@@ -42,11 +43,11 @@ const AccordionItemSection = ({ isOpened = false, children }) => {
 
 
   return (
-    <AccordionItemSectionStyle style={collapseAnimation}>
+    <animated.div className={classes.accordionItemSection} style={collapseAnimation}>
       <animated.div style={opacityAndDisplayAnimation}>
         {children}
       </animated.div>
-    </AccordionItemSectionStyle>
+    </animated.div >
   )
 
 
