@@ -12,6 +12,7 @@ import "./src/components/i18n/i18n"
 // This API allows wrapping of the root Component in Gatsby
 // Use: Wrapping a global Context for web app state management
 // Use: Wrapping a Theme for the web app
+// TODO: abstract into a component thats imported here and in gatsby-ssr
 import React from 'react';
 import GlobalContextProvider from './src/context/GlobalContextProvider'
 import GlobalTheme from './src/components/theme/GlobalTheme'
