@@ -3,7 +3,7 @@ import RadioButtonGroup from '../RadioButtonGroup'
 import COLORS from '../../../utils/colors'
 
 export default {
-  title: 'New Buttons/Radio Button Group',
+  title: 'Button-Mui/Radio Button Group',
 };
 
 export const DocInfo = () => <p>A showcase of the various types of custom buttons</p>

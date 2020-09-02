@@ -5,7 +5,7 @@ import ButtonContainer from '../ButtonContainer';
 
 
 export default {
-  title: 'New Buttons/Theme',
+  title: 'Button-Mui/Theme',
 };
 
 export const DocInfo = () => <p>A showcase of the various types of theme buttons</p>

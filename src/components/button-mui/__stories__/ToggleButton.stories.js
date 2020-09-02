@@ -2,7 +2,7 @@ import React from 'react';
 import ToggleButton from '../ToggleButton'
 
 export default {
-  title: 'New Buttons/Toggle',
+  title: 'Button-Mui/Toggle',
 };
 
 export const DocInfo = () => <p>A showcase of the various types of custom buttons</p>

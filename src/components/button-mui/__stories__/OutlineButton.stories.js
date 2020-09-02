@@ -5,7 +5,7 @@ import ButtonContainer from '../ButtonContainer';
 import COLORS from '../../../utils/colors'
 
 export default {
-  title: 'New Buttons/Outline',
+  title: 'Button-Mui/Outline',
 };
 
 export const DocInfo = () => <p>A showcase of the various types of custom buttons</p>
