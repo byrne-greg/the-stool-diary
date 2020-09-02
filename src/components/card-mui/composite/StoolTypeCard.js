@@ -10,9 +10,18 @@ import { PrimaryActionButton, SecondaryActionButton } from '../../button-mui'
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
+// TODO abstract styles into generic Cards
 const useStyles = makeStyles({
-  root: {
-    maxWidth: 440
+  card: {
+    maxWidth: 440,
+    borderRadius: '16px 16px 16px 16px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    boxShadow: '0px 2px 6px 2px rgba(100,100,100,0.75)'
+  },
+  actions: {
+    padding: '0.5rem 1rem 1rem 1rem'
   }
 })
 
@@ -25,9 +34,8 @@ const StoolTypeCard = ({ type, image, description, handleClick, isSelected, ...p
 
   return (
       <Card 
-        variant="outlined" 
         data-testid={`stool-type-card-type-${type}`} 
-        className={classes.root} 
+        className={classes.card} 
         {...props} 
         onClick={!isSelected ? selectCardFn : unselectCardFn}>
         <CardActionArea>
@@ -42,12 +50,12 @@ const StoolTypeCard = ({ type, image, description, handleClick, isSelected, ...p
             <Typography gutterBottom variant="h5" component="h2">
               {t("Type")} {type}
             </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
+            <Typography variant="body1" color="textSecondary" component="p">
               {t(description)}
             </Typography>
           </CardContent>
         </CardActionArea>
-        <CardActions>
+        <CardActions className={classes.actions}>
           {!isSelected 
               ? <PrimaryActionButton>{t("Select")}</PrimaryActionButton>
               : <SecondaryActionButton>{t("Click to reselect")}</SecondaryActionButton>}
