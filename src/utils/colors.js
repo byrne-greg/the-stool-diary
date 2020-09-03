@@ -4,11 +4,6 @@ import { blue, deepPurple, green, orange, red, grey } from '@material-ui/core/co
 const WHITE = '#FFFFFF'
 const BLACK = '#000000'
 
-const PRIMARY_PALETTE = { MAIN: { COL: blue[600], TEXT: BLACK }, LIGHT: { COL: blue[200], TEXT: BLACK  }, DARK: { COL: blue[800], TEXT: WHITE } }
-const SECONDARY_PALETTE = { MAIN: { COL: deepPurple[600], TEXT: WHITE }, LIGHT: { COL: deepPurple[200], TEXT: BLACK  }, DARK: { COL: deepPurple[800], TEXT: WHITE } }
-const ERROR_PALETTE = { MAIN: { COL: red[600], TEXT: BLACK }, LIGHT: { COL: red[200], TEXT: BLACK  }, DARK: { COL: red[800], TEXT: WHITE } }
-const WARNING_PALETTE = { MAIN: { COL: orange[600], TEXT: BLACK }, LIGHT: { COL: orange[200],TEXT: BLACK  }, DARK: { COL: orange[800], TEXT: WHITE } }
-const SUCCESS_PALETTE = { MAIN: { COL: green[600], TEXT: WHITE }, LIGHT: { COL: green[200],TEXT: BLACK  }, DARK: { COL: green[800], TEXT: WHITE } }
 
 export default {
   WHITE: WHITE,
@@ -34,12 +29,6 @@ export default {
     SCALE10: { BG: '#FDE725', TEXT: BLACK },
   },
   THEME: {
-    PRIMARY: { ...PRIMARY_PALETTE },
-    SECONDARY: { ...SECONDARY_PALETTE },
-    ERROR: { ...ERROR_PALETTE },
-    WARNING: { ...WARNING_PALETTE },
-    INFO: { ...PRIMARY_PALETTE },
-    SUCCESS: { ...SUCCESS_PALETTE },
     DISABLED: { COL: grey[700], TEXT: WHITE }
   }
 }

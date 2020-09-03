@@ -1,42 +1,42 @@
 import React from 'react';
 import { createMuiTheme, responsiveFontSizes, ThemeProvider } from '@material-ui/core/styles';
-import COLORS from '../../utils/colors';
+import { blue, deepPurple, green, orange, red, grey, teal, brown } from '@material-ui/core/colors';
 import { CssBaseline } from '@material-ui/core';
 
 const baseTheme = createMuiTheme({
   palette: {
     primary: { 
       // light: COLORS.THEME.SECONDARY.LIGHT.COL,
-      main: COLORS.THEME.PRIMARY.MAIN.COL,
+      main: teal[500],
       // dark: COLORS.THEME.SECONDARY.DARK.COL,
     },
     secondary: { 
       // light: COLORS.THEME.SECONDARY.LIGHT.COL,
-      main: COLORS.THEME.SECONDARY.MAIN.COL,
+      main: brown[500],
       // dark: COLORS.THEME.SECONDARY.DARK.COL,
     },
     warning: { 
       // light: COLORS.THEME.WARNING.LIGHT.COL,
-      main: COLORS.THEME.WARNING.MAIN.COL,
+      main: orange[600]
       // dark: COLORS.THEME.WARNING.DARK.COL,
     },
     error: { 
       // light: COLORS.THEME.ERROR.LIGHT.COL,
-      main: COLORS.THEME.ERROR.MAIN.COL,
+      main: red[600],
       // dark: COLORS.THEME.ERROR.DARK.COL,
     },
     success: { 
       // light: COLORS.THEME.SUCCESS.LIGHT.COL,
-      main: COLORS.THEME.SUCCESS.MAIN.COL,
+      main: green[600],
       // dark: COLORS.THEME.SUCCESS.DARK.COL,
     },
     info: { 
       // light: COLORS.THEME.INFO.LIGHT.COL,
-      main: COLORS.THEME.INFO.MAIN.COL,
+      main: blue[600],
       // dark: COLORS.THEME.INFO.DARK.COL,
     },
     background: {
-      default: COLORS.WHITE
+      default: grey[50]
     }
   }
 });
