@@ -1,5 +1,6 @@
 import React from 'react'
 import moment from 'moment'
+import { makeStyles } from '@material-ui/core/styles'
 import {
   DatePicker as MaterialDatePicker,
   TimePicker as MaterialTimePicker,
@@ -7,24 +8,24 @@ import {
   MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
-import styled from 'styled-components'
 
-
-const DateTimePickerStyle = styled.div`
-    padding: 1rem 0;
-    text-align: center;
-    input {
-      font-size: 1.5rem;
-      border-bottom: 0;
+const useStyles = makeStyles({
+  root: {
+    padding: '1rem 0',
+    textAlign: 'center',
+    "& > input": {
+      fontSize: '1.5rem',
+      borderBottom: 0
     }
-  `
+  }
+})
 
 export const DateTimePicker = ({ label, value = null, handleChange, readOnly = false }) => {
-
+  const classes = useStyles()
   return (
     <>
       <MuiPickersUtilsProvider utils={MomentUtils}>
-        <DateTimePickerStyle data-testid={'datetimepicker'}>
+        <div className={classes.root} data-testid={'datetimepicker'}>
           <MaterialDateTimePicker
             format={'DD/MM/YY - h:mm A'}
             label={label}
@@ -36,18 +37,18 @@ export const DateTimePicker = ({ label, value = null, handleChange, readOnly = f
             autoOk
             showTodayButton
           />
-        </DateTimePickerStyle>
+        </div>
       </MuiPickersUtilsProvider>
     </>
   )
 }
 
 export const DatePicker = ({ label, value = null, handleChange, readOnly = false }) => {
-
+  const classes = useStyles()
   return (
     <>
       <MuiPickersUtilsProvider utils={MomentUtils}>
-        <DateTimePickerStyle data-testid={'datepicker'}>
+        <div className={classes.root} data-testid={'datepicker'}>
           <MaterialDatePicker
             format={'Do MMMM YYYY'}
             label={label}
@@ -59,18 +60,18 @@ export const DatePicker = ({ label, value = null, handleChange, readOnly = false
             autoOk
             showTodayButton
           />
-        </DateTimePickerStyle>
+        </div>
       </MuiPickersUtilsProvider>
     </>
   )
 }
 
 export const TimePicker = ({ label, value = null, handleChange, readOnly = false }) => {
-
+  const classes = useStyles()
   return (
     <>
       <MuiPickersUtilsProvider utils={MomentUtils}>
-        <DateTimePickerStyle data-testid={'timepicker'}>
+        <div className={classes.root} data-testid={'timepicker'}>
           <MaterialTimePicker
             label={label}
             value={value === null ? moment() : value}
@@ -81,7 +82,7 @@ export const TimePicker = ({ label, value = null, handleChange, readOnly = false
             autoOk
             showTodayButton
           />
-        </DateTimePickerStyle>
+        </div>
       </MuiPickersUtilsProvider>
     </>
   )
