@@ -11,7 +11,7 @@ export default {
 export const Unselected = () => {
   return (
     <CardContainer cardWidth={440}>
-        {stoolClassifications.map(stoolClass => (
+        {stoolClassifications.map(stoolClass => ( 
           <StoolTypeCard
             key={stoolClass.type}
             type={stoolClass.type}
