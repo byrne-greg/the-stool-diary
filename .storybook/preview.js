@@ -1,4 +1,15 @@
 import { action } from "@storybook/addon-actions"
+import { addDecorator } from "@storybook/react"
+import React from 'react'
+
+// Provide App wrapper to all Stories
+import { AppWrapper } from "../src/components/app-wrapper"
+addDecorator(
+  (Story) => (
+    <AppWrapper>
+      <Story/>
+    </AppWrapper>)
+  )
 
 // Gatsby's Link overrides:
 // Gatsby Link calls the `enqueue` & `hovering` methods on the global variable ___loader.

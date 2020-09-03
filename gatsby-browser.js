@@ -9,19 +9,14 @@ import "firebase/firestore"
 import "firebase/functions"
 import "./src/components/i18n/i18n"
 
-// This API allows wrapping of the root Component in Gatsby
-// Use: Wrapping a global Context for web app state management
-// Use: Wrapping a Theme for the web app
-// TODO: abstract into a component thats imported here and in gatsby-ssr
+// This API allows wrapping of the root Component in Gatsby that will wrap every page with our global components.
 import React from 'react';
-import GlobalContextProvider from './src/context/GlobalContextProvider'
-import GlobalTheme from './src/components/theme/GlobalTheme'
+import { AppWrapper } from './src/components/app-wrapper'
 
 export const wrapRootElement = ({ element }) => {
   return (
-  <GlobalContextProvider>
-    <GlobalTheme>
+    <AppWrapper>
       {element}
-    </GlobalTheme>
-  </GlobalContextProvider>)
+    </AppWrapper>
+  )
 };
