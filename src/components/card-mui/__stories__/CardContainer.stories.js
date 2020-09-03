@@ -1,10 +1,8 @@
 import React from 'react';
 import CardContainer from "../CardContainer"
 import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
+
 
 export default {
   title: 'Card-Mui/Card Container'
@@ -28,7 +26,7 @@ export const Column = () => {
 
 export const SetWidth = () => {
   return (
-    <CardContainer direction="row" cardWidth={150}>
+    <CardContainer direction="row" cardWidth={'150px'}>
         <DummyCards num={5}/>
     </CardContainer>
   )
@@ -40,7 +38,7 @@ const DummyCards = ({ num=3 }) => {
       {new Array(num).fill(null).map((_, i) => (
         <Card>
           <CardContent>
-            This is Card {i + 1}
+            This is a Material-Card {i + 1}
           </CardContent>
         </Card>
      ))}
