@@ -1,15 +1,18 @@
 import React from 'react'
-import { CardContainer } from "../../card"
-import { StoolTypeCard } from '../../card/composite';
-import stoolClassifications from '../../../utils/stool-classifications'
 import { useTranslation } from 'react-i18next';
+import { Typography } from '@material-ui/core';
+import { CardContainer } from "../../card-mui"
+import { StoolTypeCard } from '../../card-mui/composite';
+import stoolClassifications from '../../../utils/stool-classifications'
 
 const StoolTypeCapture = ({ persistType = () => { }, formNavButtons }) => {
   const { t } = useTranslation();
   return (
-    <>
-      <h3>{t('Type')}</h3>
-      <CardContainer>
+    <div>
+      <Typography gutterBottom variant="h3" component="h2">
+        {t("Choose a stool type")}
+      </Typography>
+      <CardContainer cardWidth={320}>
         {stoolClassifications.map(stoolClass => (
           <StoolTypeCard
             key={stoolClass.type}
@@ -20,7 +23,7 @@ const StoolTypeCapture = ({ persistType = () => { }, formNavButtons }) => {
           />))}
       </CardContainer>
       {formNavButtons}
-    </>
+    </div>
   )
 }
 
