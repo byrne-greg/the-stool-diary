@@ -3,6 +3,7 @@ import { action } from '@storybook/addon-actions';
 import FilledButton from '../FilledButton'
 import ButtonContainer from '../ButtonContainer';
 import COLORS from '../../../utils/colors'
+import { useTheme } from '@material-ui/core';
 
 export default {
   title: 'Button-Mui/Filled',
@@ -10,27 +11,57 @@ export default {
 
 export const DocInfo = () => <p>A showcase of the various types of custom buttons</p>
 
-export const Primary = () => (
-  <ButtonContainer>
-    <FilledButton buttonColor={COLORS.THEME.PRIMARY} onClick={action('clicked')}>Primary</FilledButton>
-  </ButtonContainer>
-)
+export const Primary = () => {
+  const { palette } = useTheme()
+  return(
+    <ButtonContainer>
+      <FilledButton buttonPalette={palette.primary} onClick={action('clicked')}>Primary</FilledButton>
+    </ButtonContainer>
+  )
+}
 
-export const Secondary = () => (
-  <ButtonContainer>
-    <FilledButton buttonColor={COLORS.THEME.SECONDARY} onClick={action('clicked')}>Secondary</FilledButton>
-  </ButtonContainer>
-)
+export const Secondary = () => {
+  const { palette } = useTheme()
+  return(
+    <ButtonContainer>
+      <FilledButton buttonPalette={palette.secondary} onClick={action('clicked')}>Secondary</FilledButton>
+    </ButtonContainer>
+  )
+}
 
-export const Positive = () => (
-  <ButtonContainer>
-    <FilledButton buttonColor={COLORS.THEME.SUCCESS} onClick={action('clicked')}>Positive</FilledButton>
-  </ButtonContainer>
-)
+export const Success = () => {
+  const { palette } = useTheme()
+  return(
+    <ButtonContainer>
+      <FilledButton buttonPalette={palette.success} onClick={action('clicked')}>Success</FilledButton>
+    </ButtonContainer>
+  )
+}
 
-export const Danger = () => (
-  <ButtonContainer>
-    <FilledButton buttonColor={COLORS.THEME.ERROR} onClick={action('clicked')}>Danger</FilledButton>
-  </ButtonContainer>
-)
+export const Error = () => {
+  const { palette } = useTheme()
+  return(
+    <ButtonContainer>
+      <FilledButton buttonPalette={palette.error} onClick={action('clicked')}>Error</FilledButton>
+    </ButtonContainer>
+  )
+}
+
+export const Warning = () => {
+  const { palette } = useTheme()
+  return(
+    <ButtonContainer>
+      <FilledButton buttonPalette={palette.warning} onClick={action('clicked')}>Warning</FilledButton>
+    </ButtonContainer>
+  )
+}
+
+export const Info = () => {
+  const { palette } = useTheme()
+  return(
+    <ButtonContainer>
+      <FilledButton buttonPalette={palette.info} onClick={action('clicked')}>Info</FilledButton>
+    </ButtonContainer>
+  )
+}
 
