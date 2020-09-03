@@ -11,57 +11,31 @@ export default {
 
 export const DocInfo = () => <p>A showcase of the various types of custom buttons</p>
 
-export const Primary = () => {
+export const Palette = () => {
   const { palette } = useTheme()
   return(
-    <ButtonContainer>
-      <FilledButton buttonPalette={palette.primary} onClick={action('clicked')}>Primary</FilledButton>
-    </ButtonContainer>
+    <>
+        <FilledButton buttonPalette={palette.primary} onClick={action('clicked')}>Primary</FilledButton>
+        <FilledButton buttonPalette={palette.secondary} onClick={action('clicked')}>Secondary</FilledButton>
+        <FilledButton buttonPalette={palette.success} onClick={action('clicked')}>Success</FilledButton>
+        <FilledButton buttonPalette={palette.error} onClick={action('clicked')}>Error</FilledButton>
+        <FilledButton buttonPalette={palette.warning} onClick={action('clicked')}>Warning</FilledButton>
+        <FilledButton buttonPalette={palette.info} onClick={action('clicked')}>Info</FilledButton>
+    </>
   )
 }
 
-export const Secondary = () => {
+export const Block = () => {
   const { palette } = useTheme()
   return(
-    <ButtonContainer>
-      <FilledButton buttonPalette={palette.secondary} onClick={action('clicked')}>Secondary</FilledButton>
-    </ButtonContainer>
-  )
-}
-
-export const Success = () => {
-  const { palette } = useTheme()
-  return(
-    <ButtonContainer>
-      <FilledButton buttonPalette={palette.success} onClick={action('clicked')}>Success</FilledButton>
-    </ButtonContainer>
-  )
-}
-
-export const Error = () => {
-  const { palette } = useTheme()
-  return(
-    <ButtonContainer>
-      <FilledButton buttonPalette={palette.error} onClick={action('clicked')}>Error</FilledButton>
-    </ButtonContainer>
-  )
-}
-
-export const Warning = () => {
-  const { palette } = useTheme()
-  return(
-    <ButtonContainer>
-      <FilledButton buttonPalette={palette.warning} onClick={action('clicked')}>Warning</FilledButton>
-    </ButtonContainer>
-  )
-}
-
-export const Info = () => {
-  const { palette } = useTheme()
-  return(
-    <ButtonContainer>
-      <FilledButton buttonPalette={palette.info} onClick={action('clicked')}>Info</FilledButton>
-    </ButtonContainer>
+    <>
+        <FilledButton block buttonPalette={palette.primary} onClick={action('clicked')}>Primary</FilledButton>
+        <FilledButton block buttonPalette={palette.secondary} onClick={action('clicked')}>Secondary</FilledButton>
+        <FilledButton block buttonPalette={palette.success} onClick={action('clicked')}>Success</FilledButton>
+        <FilledButton block buttonPalette={palette.error} onClick={action('clicked')}>Error</FilledButton>
+        <FilledButton block buttonPalette={palette.warning} onClick={action('clicked')}>Warning</FilledButton>
+        <FilledButton block buttonPalette={palette.info} onClick={action('clicked')}>Info</FilledButton>
+    </>
   )
 }
 
