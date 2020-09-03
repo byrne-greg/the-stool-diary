@@ -8,8 +8,6 @@ import Card from '../Card'
 import CardActions from '../CardActions'
 import { PrimaryActionButton, SecondaryActionButton } from '../../button-mui'
 
-
-
 const StoolTypeCard = ({ type, image, description, handleClick, isSelected, ...props }) => {
 
   const { t } = useTranslation();
@@ -20,7 +18,8 @@ const StoolTypeCard = ({ type, image, description, handleClick, isSelected, ...p
       <Card 
         {...props} 
         data-testid={`stool-type-card-type-${type}`} 
-        onClick={!isSelected ? selectCardFn : unselectCardFn}>
+        onClick={!isSelected ? selectCardFn : unselectCardFn}
+        >
         <MaterialCardActionArea>
           <MaterialCardMedia
             component="div"
@@ -30,7 +29,7 @@ const StoolTypeCard = ({ type, image, description, handleClick, isSelected, ...p
             {image}
           </MaterialCardMedia>
           <MaterialCardContent>
-            <Typography gutterBottom variant="h5" component="h2">
+            <Typography gutterBottom variant="h5" component="h3">
               {t("Type")} {type}
             </Typography>
             <Typography variant="body1" color="textSecondary" component="p">
@@ -39,9 +38,15 @@ const StoolTypeCard = ({ type, image, description, handleClick, isSelected, ...p
           </MaterialCardContent>
         </MaterialCardActionArea>
         <CardActions>
-          {!isSelected 
-              ? <PrimaryActionButton>{t("Select")}</PrimaryActionButton>
-              : <SecondaryActionButton>{t("Click to reselect")}</SecondaryActionButton>}
+          {!isSelected ? (
+                <PrimaryActionButton block onClick={selectCardFn}>
+                  {t("Select")}
+                </PrimaryActionButton>
+              ) : (
+                <SecondaryActionButton block onClick={unselectCardFn} >
+                  {t("Click to reselect")}
+                </SecondaryActionButton>
+              )}
         </CardActions>
       </Card>
   )

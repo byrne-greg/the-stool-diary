@@ -8,7 +8,7 @@ export default {
   title: 'Card-Mui/Composite/Stool Type Card',
 };
 
-export const Unselected = () => {
+export const Selection = () => {
   return (
     <CardContainer cardWidth={440}>
         {stoolClassifications.map(stoolClass => ( 
@@ -20,5 +20,32 @@ export const Unselected = () => {
             handleClick={action("clicked")}
           />))}
     </CardContainer>
+  )
+}
+
+export const Unselected = () => {
+  return (
+      <StoolTypeCard
+        maxWidth={320}
+        key={stoolClassifications[0].type}
+        type={stoolClassifications[0].type}
+        image={stoolClassifications[0].image}
+        description={stoolClassifications[0].description}
+        handleClick={action("clicked")}
+      />
+  )
+}
+
+export const Selected = () => {
+  return (
+      <StoolTypeCard 
+        maxWidth={320}
+        key={stoolClassifications[0].type}
+        type={stoolClassifications[0].type}
+        image={stoolClassifications[0].image}
+        description={stoolClassifications[0].description}
+        isSelected={true}
+        handleClick={action("clicked")}
+      />
   )
 }
