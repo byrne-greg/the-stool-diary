@@ -4,7 +4,6 @@ import Box from "@material-ui/core/Box";
 
 const useStyles = makeStyles({
   root: ({ direction='row', cardWidth=null }) => { 
-    console.log(cardWidth ? true : false); 
     return({
     display: "flex",
     flexDirection: direction,
