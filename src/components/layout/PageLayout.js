@@ -11,7 +11,6 @@ import { Header } from "../header"
 import { Footer } from "../footer"
 import { PageCenter } from "."
 import { SEO } from "../meta"
-import "./layout.css"
 import { Container } from "@material-ui/core"
 
 const PageLayout = ({ title, children }) => {
@@ -21,7 +20,7 @@ const PageLayout = ({ title, children }) => {
       <Header/>
       <SEO title={title} />
       <PageCenter>
-        <Container component="main">
+        <Container disableGutters component="main">
           {children}
         </Container>
       </PageCenter>
