@@ -7,9 +7,6 @@ export default {
 
 export const Info = () => <p>The following components are test screens for the individual record stool form pages</p>
 
-import StoolTypeCaptureTestPage from '../../../pages/test-stool-type-capture'
-export const Record_Type = () => <ScreenWrapper><StoolTypeCaptureTestPage /></ScreenWrapper>
-
 import StoolSizeCaptureTestPage from '../../../pages/test-stool-size-capture'
 export const Record_Size = () => <ScreenWrapper><StoolSizeCaptureTestPage /></ScreenWrapper>
 
