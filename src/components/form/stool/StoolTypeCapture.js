@@ -5,14 +5,14 @@ import { CardContainer } from "../../card-mui"
 import { StoolTypeCard } from '../../card-mui/composite';
 import stoolClassifications from '../../../utils/stool-classifications'
 
-const StoolTypeCapture = ({ persistType = () => { }, formNavButtons }) => {
+const StoolTypeCapture = ({ persistType = () => { }, persistedType = null, formNavButtons = null }) => {
   const { t } = useTranslation();
   return (
     <div>
       <Typography gutterBottom variant="h3" component="h2">
         {t("Choose a stool type")}
       </Typography>
-      <CardContainer cardWidth={320}>
+      <CardContainer cardWidth={360}>
         {stoolClassifications.map(stoolClass => (
           <StoolTypeCard
             key={stoolClass.type}
@@ -20,6 +20,7 @@ const StoolTypeCapture = ({ persistType = () => { }, formNavButtons }) => {
             image={stoolClass.image}
             description={stoolClass.description}
             handleClick={(value) => persistType(value)}
+            isSelected={persistedType && persistedType === stoolClass.type}
           />))}
       </CardContainer>
       {formNavButtons}

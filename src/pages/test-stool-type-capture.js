@@ -1,57 +1,73 @@
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
 import { Link } from "gatsby"
-import styled from "styled-components"
+import { Container, useTheme } from "@material-ui/core"
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 import { PageLayout } from "../components/layout"
 import { StoolTypeCapture } from "../components/form/stool"
-import { FilledButton } from "../components/button"
-import { INITIAL_STOOL_STATE } from "../components/form/stool/state/stoolModel"
+import { FilledButton } from "../components/button-mui"
 import stoolClassifications from "../utils/stool-classifications"
-
-const PaddedDiv = styled.div`
-  padding: 1rem 0;
-`
+import RecordStoolContextProvider, { RecordStoolStateContext, RecordStoolDispatchContext } from "../components/form/stool/context/RecordStoolContext"
+import { updateStoolType } from "../components/form/stool/context/actions"
 
 const StoolTypeCaptureTestPage = () => {
-  const [display, setDisplay] = useState(false);
-  const [mockPersistedData, mockPersistData] = useState(INITIAL_STOOL_STATE.type);
+  return(
+    <RecordStoolContextProvider>
+      <StoolTypeCaptureTestHarness/>
+    </RecordStoolContextProvider>
+  )
+  
+}
+export default StoolTypeCaptureTestPage
 
-  const persistMockType = (e) => {
-    if (e.target.value === 'null') {
-      return { ...mockPersistedData, type: null }
-    } else {
-      return { ...mockPersistedData, type: parseInt(e.target.value) }
-    }
+const StoolTypeCaptureTestHarness = () => {
+  const theme = useTheme()
+  const [display, setDisplay] = useState(false);
+  const state = useContext(RecordStoolStateContext)
+  const dispatch = useContext(RecordStoolDispatchContext)
+
+  const persistTypeFn = (type) => { 
+    console.log('persisting type ', type); 
+    updateStoolType(dispatch, type);
   }
 
   return (
-    <PageLayout title="Stool Type Capture Test Page">
-      <PaddedDiv>
-        <p>Current persisted data: </p>
-        <code>{JSON.stringify(mockPersistedData, null, 2)}</code>
-      </PaddedDiv>
-      <PaddedDiv>
-        <p>Select stool type persisted value</p>
-        <select name="types" id="types" onChange={(e) => mockPersistData(persistMockType(e))}>
-          <option disabled>Select a stool type</option>
-          <option defaultValue={null}>null</option>
-          {stoolClassifications.map(stoolClass => <option key={stoolClass.type} value={stoolClass.type}>{stoolClass.type}</option>)}
-        </select>
-      </PaddedDiv>
-      <PaddedDiv>
-        <FilledButton onClick={() => setDisplay(!display)}>{display ? `Unmount` : `Mount`} the Stool Type Screen</FilledButton>
-      </PaddedDiv>
-      <PaddedDiv>
-        {display && (<StoolTypeCapture persistedType={mockPersistedData} persistType={(type) => { console.log('persisting type ', type); mockPersistData(type); setDisplay(false); }} />)}
-      </PaddedDiv>
-      <PaddedDiv>
-        <ul>
-          <li>
-            <Link to="/">Go home</Link>
-          </li>
-        </ul>
-      </PaddedDiv>
-    </PageLayout>
+      <PageLayout title="Stool Type Capture Test Page">
+        <Container component="div">
+          <p>Current persisted data: </p>
+          <code>{JSON.stringify(state, null, 2)}</code>
+        </Container>
+        <Container component="div">
+          <p>Select stool type persisted value</p>
+          <Select
+            labelId="type-label"
+            id="type-selector"
+            value={state.type === null ? 'null' : state.type}
+            onChange={(e) => { updateStoolType(dispatch, e.target.value === 'null' ? null : e.target.value) }}
+          > 
+            <MenuItem disabled>Select a stool type</MenuItem>
+            <MenuItem defaultValue={null}>null</MenuItem>
+            {stoolClassifications.map(stoolClass => 
+              <MenuItem key={stoolClass.type} value={stoolClass.type}>{stoolClass.type}</MenuItem>
+            )}
+          </Select>
+        </Container>
+        <Container component="div">
+          <FilledButton buttonPalette={theme.palette.info} onClick={() => setDisplay(!display)}>{display ? `Unmount` : `Mount`} the Stool Type Screen</FilledButton>
+        </Container>
+        <Container component="div">
+          {display ? (
+            <StoolTypeCapture persistedType={state.type} persistType={persistTypeFn} />
+            ) : null
+          }
+        </Container>
+        <Container component="div">
+          <ul>
+            <li>
+              <Link to="/">Go home</Link>
+            </li>
+          </ul>
+        </Container>
+      </PageLayout>
   )
 }
-
-export default StoolTypeCaptureTestPage
