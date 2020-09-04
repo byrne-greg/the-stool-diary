@@ -1,0 +1,3 @@
+export const UPDATE_TYPE = "UPDATE_TYPE";
+export const UPDATE_DATETIME = "UPDATE_DATETIME"
+export const UPDATE_SIZE = "UPDATE_SIZE"
