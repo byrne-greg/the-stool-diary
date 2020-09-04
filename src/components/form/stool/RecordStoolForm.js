@@ -140,13 +140,13 @@ const RecordStoolFormScreens = ({
   }, [stoolState, getFormHasReachedSummary()])
 
 
-
+  const classes = useStyles()
   return (
     <>
       <h2>Record a Stool</h2>
       <div className={classes.root}>
         {getCurrentScreen()}
-      </div className={classes.root}>
+      </div>
 
     </>
   )
