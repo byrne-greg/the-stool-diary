@@ -2,13 +2,13 @@
 import React from "react"
 import { Link } from "gatsby"
 import { PageLayout } from "../components/layout"
-import RecordStoolForm from "../components/screens/RecordStoolForm"
+import RecordStoolFormScreen from "../components/screens/RecordStoolFormScreen"
 
 
 
 const RecordStoolPage = () => (
   <PageLayout title="Record Stool Type">
-    <RecordStoolForm />
+    <RecordStoolFormScreen />
     <div></div>
     <ul>
       <li>

@@ -1,19 +1,22 @@
 import React, { useEffect, useReducer } from 'react';
-import styled from 'styled-components'
-import moment from 'moment'
-import { StoolTypeCapture, StoolDateTimeCapture, StoolSizeCapture, StoolCaptureSummary } from '../form/stool';
-import { PrimaryActionButton } from '../button';
-import buttonColor from '../button/ButtonColors'
-import { FormNavigationButtons } from '../button/composite'
-import { INITIAL_FORM_STATE } from '../form/state/formModel'
-import { loadFormScreens, updateFormCurrentScreen, updateFormHasReachedSummary, moveFormScreenForward, moveFormScreenBackward } from '../form/state/formActions'
-import { formReducer } from '../form/state/formReducers'
-import { INITIAL_STOOL_STATE } from '../form/stool/state/stoolModel'
-import { updateStoolType, updateStoolDateTime, updateStoolSize } from '../form/stool/state/stoolActions'
-import { stoolReducer } from '../form/stool/state/stoolReducers'
-import { persistData } from '../firebase/utils'
-import { STOOL_NAMESPACE } from '../firebase/namespaces'
+import { useTheme, makeStyles } from '@material-ui/core';
+import { StoolTypeCapture, StoolDateTimeCapture, StoolSizeCapture, StoolCaptureSummary } from '.';
+import { PrimaryActionButton } from '../../button-mui';
+import { FormNavigationButtons } from '../../button-mui/composite'
+import { INITIAL_FORM_STATE } from '../state/formModel'
+import { loadFormScreens, updateFormCurrentScreen, updateFormHasReachedSummary, moveFormScreenForward, moveFormScreenBackward } from '../state/formActions'
+import { formReducer } from '../state/formReducers'
+import { INITIAL_STOOL_STATE } from './state/stoolModel'
+import { updateStoolType, updateStoolDateTime, updateStoolSize } from './state/stoolActions'
+import { stoolReducer } from './state/stoolReducers'
+import { persistData } from '../../firebase/utils'
+import { STOOL_NAMESPACE } from '../../firebase/namespaces'
 
+const useStyles = makeStyles({
+  root: {
+    margin: '1rem auto'
+  }
+})
 
 const RecordStoolForm = () => {
 
@@ -64,9 +67,6 @@ const RecordStoolForm = () => {
   )
 }
 
-const FormScreenStyle = styled.div`
-  margin: 1rem auto;
-`
 const RecordStoolFormScreens = ({
   stoolState,
   getStoolType,
@@ -86,6 +86,7 @@ const RecordStoolFormScreens = ({
   getCurrentScreen,
   persistStoolData
 }) => {
+  const theme = useTheme()
   useEffect(() => {
     const stoolFormScreens = [
       <StoolTypeCapture
@@ -125,10 +126,13 @@ const RecordStoolFormScreens = ({
         setFormHasReachedSummary={setFormHasReachedSummary}
         formNavButtons={
           <FormNavigationButtons
-            primaryActionOverride={<PrimaryActionButton buttonColor={buttonColor.POSITIVE} onClick={() => {
+            primaryActionOverride={
+            <PrimaryActionButton buttonPalette={theme.palette.success} onClick={() => {
               persistStoolData(stoolState);
               goStartScreen();
-            }}> Save</PrimaryActionButton >}
+            }}>
+              Save
+            </PrimaryActionButton >}
             handleNavBackward={() => { goBackwardScreen() }}
           />}
       />]
@@ -140,9 +144,9 @@ const RecordStoolFormScreens = ({
   return (
     <>
       <h2>Record a Stool</h2>
-      <FormScreenStyle>
+      <div className={classes.root}>
         {getCurrentScreen()}
-      </FormScreenStyle>
+      </div className={classes.root}>
 
     </>
   )
