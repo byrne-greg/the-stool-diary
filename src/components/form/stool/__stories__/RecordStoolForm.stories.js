@@ -1,6 +1,6 @@
 import React from 'react'
 import RecordStoolContextProvider from "../context/RecordStoolContext"
-import StoolTypeCaptureTestHarness from "./StoolTypeCaptureTestHarness"
+import { StoolTypeCaptureStoryHarness, StoolSizeCaptureStoryHarness} from "./StoolCaptureStoryHarness"
 
 export default {
   title: "Screens/Form/Record Stool"
@@ -8,7 +8,13 @@ export default {
 
 export const Record_Type = () => (
   <RecordStoolContextProvider>
-    <StoolTypeCaptureTestHarness/>
+    <StoolTypeCaptureStoryHarness/>
+  </RecordStoolContextProvider>
+)
+
+export const Record_Size = () => (
+  <RecordStoolContextProvider>
+    <StoolSizeCaptureStoryHarness/>
   </RecordStoolContextProvider>
 )
 
