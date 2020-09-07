@@ -18,7 +18,7 @@ const useRadioButtonGroupStyles = makeStyles({
 const RadioButtonGroup = ({ 
   radioOptions=[], 
   defaultSelectedValue = null, 
-  defaultColor=COLORS.THEME.PRIMARY,
+  defaultColor=null,
   orientation='horizontal',
   onSelected=()=>{},
    ...props
@@ -27,6 +27,7 @@ const RadioButtonGroup = ({
   const classes = useRadioButtonGroupStyles()
   // if we are on a small screen or the consumer has set vertical, then we should use vertical display css
   const theme = useTheme();
+  const rbgColor = defaultColor === null ? theme.palette.primary : defaultColor
   const shouldUseVertical = orientation === 'vertical' || useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
@@ -36,7 +37,7 @@ const RadioButtonGroup = ({
             key={option.value}
             value={option.value}
             groupValue={selectedValue}
-            themeColor={defaultColor}
+            buttonPalette={rbgColor}
             isOrientationVertical={shouldUseVertical}
             onChange={() => { setSelectedValue(option.value); onSelected(option.value); }}
           >
@@ -48,49 +49,57 @@ const RadioButtonGroup = ({
 }
 export default RadioButtonGroup
 
-const useRadioButtonStyles = makeStyles({
+const useRadioButtonStyles = makeStyles((theme) => ({
   input: {
     display: 'none'
   },
-  label: ({ isOrientationVertical, isChecked, themeColor }) => {
-    const getBorder = (color = themeColor.MAIN.COL) => `2px solid ${color}`
+  label: ({ isOrientationVertical, isChecked, buttonPalette }) => {
+    const getBorder = (color = buttonPalette.main) => `2px solid ${color}`
     return {
       textAlign: 'center',
+      fontWeight: 'bold',
       padding: isOrientationVertical ? '1.2rem 0.8rem' : '0.8rem 1.2rem',
-      background:  isChecked ? themeColor.DARK.COL : COLORS.WHITE,
-      color:  isChecked ? themeColor.DARK.TEXT : themeColor.MAIN.COL,
-      borderLeft: isChecked ? getBorder(themeColor.DARK.COL) : getBorder(themeColor.MAIN.COL) ,
-      borderTop: isChecked ? getBorder(themeColor.DARK.COL) : getBorder(themeColor.MAIN.COL) ,
+      background:  isChecked ? buttonPalette.dark : theme.palette.background.default,
+      color:  isChecked ? theme.palette.getContrastText(buttonPalette.dark) : buttonPalette.main,
+      borderLeft: isChecked ? getBorder(buttonPalette.dark) : getBorder(buttonPalette.main) ,
+      borderTop: isChecked ? getBorder(buttonPalette.dark) : getBorder(buttonPalette.main) ,
       borderBottom: isOrientationVertical ? 0 : 
-                              isChecked ? getBorder(themeColor.DARK.COL) : getBorder(themeColor.MAIN.COL),
+                              isChecked ? getBorder(buttonPalette.dark) : getBorder(buttonPalette.main),
       borderRight:  isOrientationVertical ? 
-                              isChecked ? getBorder(themeColor.DARK.COL) : getBorder(themeColor.MAIN.COL) : 0,
+                              isChecked ? getBorder(buttonPalette.dark) : getBorder(buttonPalette.main) : 0,
       '&:first-of-type': {
         borderRadius:  isOrientationVertical ? 0 : '50% 0 0 50%',
         paddingLeft: isOrientationVertical ? '0.8rem' : '1.5rem'
       },
       '&:last-of-type': {
-        borderRight:  isChecked ? getBorder(themeColor.DARK.COL) : getBorder(themeColor.MAIN.COL) ,
-        borderBottom:  isChecked ? getBorder(themeColor.DARK.COL) : getBorder(themeColor.MAIN.COL) ,
+        borderRight:  isChecked ? getBorder(buttonPalette.dark) : getBorder(buttonPalette.main) ,
+        borderBottom:  isChecked ? getBorder(buttonPalette.dark) : getBorder(buttonPalette.main) ,
         borderRadius:  isOrientationVertical ? 0 : '0 50% 50% 0',
         paddingRight:  isOrientationVertical ? '0.8rem' : '1.5rem'
       },
-      '&:hover': {
-        background: themeColor.LIGHT.COL, 
-        color: themeColor.LIGHT.TEXT,
-        borderLeft:  getBorder(themeColor.DARK.COL),
-        borderTop:  getBorder(themeColor.DARK.COL),
-        borderBottom:  isOrientationVertical ? 0 : getBorder(themeColor.DARK.COL),
-        '&:last-of-type': {
-          borderRight: getBorder(themeColor.DARK.COL),
-          borderBottom:  getBorder(themeColor.DARK.COL),      
+      [theme.breakpoints.up('sm')]: {
+        '&:hover': {
+          background: buttonPalette.light, 
+          color: theme.palette.getContrastText(buttonPalette.light),
+          borderLeft:  getBorder(buttonPalette.dark),
+          borderTop:  getBorder(buttonPalette.dark),
+          borderBottom:  isOrientationVertical ? 0 : getBorder(buttonPalette.dark),
+          '&:last-of-type': {
+            borderRight: getBorder(buttonPalette.dark),
+            borderBottom:  getBorder(buttonPalette.dark),      
+          }
         }
       },
     }}
-  })
-const SelectableRadioButton = ({ children, groupValue, value, onChange, themeColor, isOrientationVertical}) => { 
+  }))
+const SelectableRadioButton = ({ children, groupValue, value, onChange, buttonPalette, isOrientationVertical}) => { 
   const isChecked = value === groupValue
-  const classes = useRadioButtonStyles({ themeColor: themeColor, isChecked: isChecked, isOrientationVertical: isOrientationVertical });
+  const classes = useRadioButtonStyles({ 
+    buttonPalette: buttonPalette, 
+    isChecked: isChecked, 
+    isOrientationVertical: isOrientationVertical 
+
+  });
   return(
     <label
       className={classes.label}

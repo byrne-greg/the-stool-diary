@@ -1,6 +1,7 @@
 import React from 'react';
 import RadioButtonGroup from '../RadioButtonGroup'
 import COLORS from '../../../utils/colors'
+import { useTheme } from '@material-ui/core';
 
 export default {
   title: 'Button-Mui/Radio Button Group',
@@ -31,6 +32,7 @@ export const Default_Selected = () => {
 }
 
 export const Different_Color_Four_Option = () => {
+  const theme = useTheme()
   const radioOptions = [
     { value: 7, text: 'Small'   },
     { value: 8, text: 'Medium' },
@@ -38,7 +40,7 @@ export const Different_Color_Four_Option = () => {
     { value: 10, text: 'X-Large'}
   ]
   return (
-    <RadioButtonGroup radioOptions={radioOptions} defaultColor={COLORS.THEME.SECONDARY}/>
+    <RadioButtonGroup radioOptions={radioOptions} defaultColor={theme.palette.info}/>
   )
 }
 
