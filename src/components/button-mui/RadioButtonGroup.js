@@ -103,7 +103,6 @@ const SelectableRadioButton = ({ children, groupValue, value, onChange, buttonPa
   return(
     <label
       className={classes.label}
-      isChecked={isChecked}
       htmlFor={`radio-${value}`}
       data-testid={`label-${value}`}
    >
