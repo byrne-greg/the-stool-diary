@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
@@ -23,7 +23,11 @@ const RadioButtonGroup = ({
   onSelected=()=>{},
    ...props
    }) => {
-  const [selectedValue, setSelectedValue] = useState(defaultSelectedValue ? defaultSelectedValue : false);
+
+  const [selectedValue, setSelectedValue] = useState(defaultSelectedValue);
+  useEffect(()=>{
+    setSelectedValue(defaultSelectedValue)
+  }, [defaultSelectedValue])
   const classes = useRadioButtonGroupStyles()
   // if we are on a small screen or the consumer has set vertical, then we should use vertical display css
   const theme = useTheme();
