@@ -7,7 +7,7 @@ import { useTheme } from '@material-ui/core'
 export const PrimaryActionButton = ({ children, ...props }) => {
   const theme = useTheme()
   return (
-    <FilledButton buttonPalette={theme.palette.primary} {...props} data-testid="primary-action-button">{children}</FilledButton>
+    <FilledButton color={theme.palette.primary} {...props} data-testid="primary-action-button">{children}</FilledButton>
   )
 }
 

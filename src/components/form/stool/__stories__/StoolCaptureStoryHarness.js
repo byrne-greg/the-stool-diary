@@ -40,7 +40,7 @@ const BaseStoryHarness = ({ controlComponent, stoolCaptureComponent }) => {
           {controlComponent}
         </Container>
         <Container className={classes.padded} component="div">
-          <FilledButton buttonPalette={theme.palette.info} onClick={() => setIsMounted(!isMounted)}>{isMounted ? `Unmount` : `Mount`} the Test Component</FilledButton>
+          <FilledButton color={theme.palette.info} onClick={() => setIsMounted(!isMounted)}>{isMounted ? `Unmount` : `Mount`} the Test Component</FilledButton>
         </Container>
       </Container>
       <Container className={classes.testComponent} component="div">
