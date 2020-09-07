@@ -14,12 +14,12 @@ export const Palette = () => {
   const { palette } = useTheme()
   return(
     <>
-        <OutlineButton buttonPalette={palette.primary} onClick={action('clicked')}>Primary</OutlineButton>
-        <OutlineButton buttonPalette={palette.secondary} onClick={action('clicked')}>Secondary</OutlineButton>
-        <OutlineButton buttonPalette={palette.success} onClick={action('clicked')}>Success</OutlineButton>
-        <OutlineButton buttonPalette={palette.error} onClick={action('clicked')}>Error</OutlineButton>
-        <OutlineButton buttonPalette={palette.warning} onClick={action('clicked')}>Warning</OutlineButton>
-        <OutlineButton buttonPalette={palette.info} onClick={action('clicked')}>Info</OutlineButton>
+        <OutlineButton onClick={action('clicked')}>Primary</OutlineButton>
+        <OutlineButton color={palette.secondary} onClick={action('clicked')}>Secondary</OutlineButton>
+        <OutlineButton color={palette.success} onClick={action('clicked')}>Success</OutlineButton>
+        <OutlineButton color={palette.error} onClick={action('clicked')}>Error</OutlineButton>
+        <OutlineButton color={palette.warning} onClick={action('clicked')}>Warning</OutlineButton>
+        <OutlineButton color={palette.info} onClick={action('clicked')}>Info</OutlineButton>
     </>
   )
 }
@@ -28,12 +28,12 @@ export const Block = () => {
   const { palette } = useTheme()
   return(
     <>
-      <OutlineButton block buttonPalette={palette.primary} onClick={action('clicked')}>Primary</OutlineButton>
-      <OutlineButton block buttonPalette={palette.secondary} onClick={action('clicked')}>Secondary</OutlineButton>
-      <OutlineButton block buttonPalette={palette.success} onClick={action('clicked')}>Success</OutlineButton>
-      <OutlineButton block buttonPalette={palette.error} onClick={action('clicked')}>Error</OutlineButton>
-      <OutlineButton block buttonPalette={palette.warning} onClick={action('clicked')}>Warning</OutlineButton>
-      <OutlineButton block buttonPalette={palette.info} onClick={action('clicked')}>Info</OutlineButton>
+      <OutlineButton onClick={action('clicked')}>Primary</OutlineButton>
+      <OutlineButton block color={palette.secondary} onClick={action('clicked')}>Secondary</OutlineButton>
+      <OutlineButton block color={palette.success} onClick={action('clicked')}>Success</OutlineButton>
+      <OutlineButton block color={palette.error} onClick={action('clicked')}>Error</OutlineButton>
+      <OutlineButton block color={palette.warning} onClick={action('clicked')}>Warning</OutlineButton>
+      <OutlineButton block color={palette.info} onClick={action('clicked')}>Info</OutlineButton>
     </>
   )
 }

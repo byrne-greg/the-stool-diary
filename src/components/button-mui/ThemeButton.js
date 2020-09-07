@@ -14,6 +14,6 @@ export const PrimaryActionButton = ({ children, ...props }) => {
 export const SecondaryActionButton = ({ children, ...props }) => {
   const theme = useTheme()
   return (
-    <OutlineButton buttonPalette={theme.palette.secondary} {...props} data-testid="secondary-action-button">{children}</OutlineButton>
+    <OutlineButton color={theme.palette.secondary} {...props} data-testid="secondary-action-button">{children}</OutlineButton>
   )
 }
