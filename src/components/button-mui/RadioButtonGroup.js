@@ -11,8 +11,6 @@ import COLORS from "../../utils/colors"
 const useRadioButtonGroupStyles = makeStyles({
   radioButtonGroup: {
     width: '100%',
-    display: 'flex',
-    justifyContent: 'center'
   },
 })
 const RadioButtonGroup = ({ 
