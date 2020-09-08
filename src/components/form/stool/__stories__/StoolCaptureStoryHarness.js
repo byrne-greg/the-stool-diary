@@ -2,12 +2,15 @@ import React, { useState, useContext } from "react"
 import { Container, useTheme, makeStyles, Typography } from "@material-ui/core"
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import { StoolTypeCapture, StoolSizeCapture, StoolDateTimeCapture } from ".."
+import { StoolTypeCapture, StoolSizeCapture, StoolDateTimeCapture, StoolCaptureSummary } from ".."
 import { FilledButton, RadioButtonGroup } from "../../../button-mui"
-import stoolClassifications from "../../../../utils/stool-classifications"
+import { DateTimePicker } from "../../../datetime-picker";
 import { RecordStoolStateContext, RecordStoolDispatchContext } from "../context/RecordStoolContext"
 import { updateStoolType, updateStoolSize, updateStoolDateTime } from "../context/actions"
-import { STOOL_SIZES } from "../context/model"
+import INITIAL_STATE, { STOOL_SIZES } from "../context/model"
+import { createStoolDateTimeObj } from "../context/utils"
+import stoolClassifications from "../../../../utils/stool-classifications"
+
 
 const useStyles = makeStyles({
   controls: {
@@ -49,18 +52,10 @@ const BaseStoryHarness = ({ controlComponent, stoolCaptureComponent }) => {
   )
 }
 
-export const StoolTypeCaptureStoryHarness = () => {
+const StoolTypeCaptureStoryHarnessControls = () => {
   const state = useContext(RecordStoolStateContext)
   const dispatch = useContext(RecordStoolDispatchContext)
-
-  const persistTypeFn = (value) => { 
-    console.log('persisting value ', value); 
-    updateStoolType(dispatch, value);
-  }
-
-  return (
-   <BaseStoryHarness
-    controlComponent={
+  return(
     <>
       <Typography variant="body1" component="p">Select stool type persisted value</Typography>
       <Select
@@ -76,24 +71,29 @@ export const StoolTypeCaptureStoryHarness = () => {
         )}
       </Select>
     </>
-    }
+  )
+}
+export const StoolTypeCaptureStoryHarness = () => {
+  const state = useContext(RecordStoolStateContext)
+  const dispatch = useContext(RecordStoolDispatchContext)
+
+  const persistTypeFn = (value) => { 
+    console.log('persisting value ', value); 
+    updateStoolType(dispatch, value);
+  }
+
+  return (
+   <BaseStoryHarness
+    controlComponent={<StoolTypeCaptureStoryHarnessControls/>}
     stoolCaptureComponent={<StoolTypeCapture persistedType={state.type} persistType={persistTypeFn}/>}
    />
   )
 }
 
-export const StoolSizeCaptureStoryHarness = () => {
+const StoolSizeCaptureStoryHarnessControls = () => {
   const state = useContext(RecordStoolStateContext)
   const dispatch = useContext(RecordStoolDispatchContext)
-
-  const persistTypeFn = (value) => { 
-    console.log('persisting value', value); 
-    updateStoolSize(dispatch, value);
-  }
-
-  return (
-   <BaseStoryHarness
-    controlComponent={
+  return(
     <>
       <Typography variant="body1" component="p">Select stool size persisted value</Typography>
       <Select
@@ -106,13 +106,47 @@ export const StoolSizeCaptureStoryHarness = () => {
         {Object.keys(STOOL_SIZES).map(stoolSizeKey => 
           <MenuItem key={stoolSizeKey} value={STOOL_SIZES[stoolSizeKey]}>{STOOL_SIZES[stoolSizeKey]}</MenuItem>)}
       </Select>
-    </>
-    }
+    </> 
+  )
+}
+export const StoolSizeCaptureStoryHarness = () => {
+  const state = useContext(RecordStoolStateContext)
+  const dispatch = useContext(RecordStoolDispatchContext)
+
+  const persistTypeFn = (value) => { 
+    console.log('persisting value', value); 
+    updateStoolSize(dispatch, value);
+  }
+
+  return (
+   <BaseStoryHarness
+    controlComponent={<StoolSizeCaptureStoryHarnessControls/>}
     stoolCaptureComponent={<StoolSizeCapture persistedSize={state.size} persistSize={persistTypeFn}/>}
    />
   )
 }
 
+const StoolDateTimeCaptureStoryHarnessControls = () => {
+  const state = useContext(RecordStoolStateContext)
+  const dispatch = useContext(RecordStoolDispatchContext)
+  return(
+    <>
+      <Typography variant="body1" component="p">Select stool datetime "Add Time?" persisted value</Typography>
+      <RadioButtonGroup
+          radioOptions={[
+            { value: false, text: 'On' },
+            { value: true, text: 'Off' },
+          ]}
+          defaultSelectedValue={state.dateTime.dateOnly === null ? false : state.dateTime.dateOnly}
+          onSelected={(value) => updateStoolDateTime(dispatch, {...state.dateTime, dateOnly: value })} 
+      />
+      <Typography variant="body1" component="p">Select stool datetime persisted value</Typography>
+      <DateTimePicker 
+        value={state.dateTime.timestamp} 
+        handleChange={(datetime) => updateStoolDateTime(dispatch, { ...createStoolDateTimeObj(datetime, state.dateTime.dateOnly) })} />
+    </>
+  )
+}
 export const StoolDateTimeCaptureStoryHarness = () => {
   const state = useContext(RecordStoolStateContext)
   const dispatch = useContext(RecordStoolDispatchContext)
@@ -124,20 +158,35 @@ export const StoolDateTimeCaptureStoryHarness = () => {
 
   return (
    <BaseStoryHarness
+    controlComponent={<StoolDateTimeCaptureStoryHarnessControls/>}
+    stoolCaptureComponent={<StoolDateTimeCapture persistedDateTime={state.dateTime} persistDateTime={persistTypeFn}/>}
+   />
+  )
+}
+
+export const StoolCaptureSummaryStoryHarness = () => {
+  const state = useContext(RecordStoolStateContext)
+  const dispatch = useContext(RecordStoolDispatchContext)
+
+  return (
+   <BaseStoryHarness
     controlComponent={
     <>
-      <Typography variant="body1" component="p">Select stool datetime "Add Time?" persisted value</Typography>
-      <RadioButtonGroup
-          radioOptions={[
-            { value: false, text: 'On' },
-            { value: true, text: 'Off' },
-          ]}
-          defaultSelectedValue={false}
-          onSelected={(value) => updateStoolDateTime(dispatch, {...state.dateTime, dateOnly: value })} 
-      />
+      <StoolTypeCaptureStoryHarnessControls/>
+      <StoolSizeCaptureStoryHarnessControls/>
+      <StoolDateTimeCaptureStoryHarnessControls/>
     </>
     }
-    stoolCaptureComponent={<StoolDateTimeCapture persistedDateTime={state.dateTime} persistDateTime={persistTypeFn}/>}
+    stoolCaptureComponent={
+      <StoolCaptureSummary 
+        selectedType={state.type} 
+        selectedSize={state.size} 
+        selectedDateTime={state.dateTime} 
+        handleTypeReselect={() => { console.log('handle type reselect'); updateStoolType(dispatch, null) }}
+        handleSizeReselect={() => { console.log('handle size reselect'); updateStoolSize(dispatch, null) }}
+        handleDateTimeReselect={() => { console.log('handle datetime reselect'); updateStoolDateTime(dispatch, INITIAL_STATE.dateTime) }}
+      />
+    }
    />
   )
 }

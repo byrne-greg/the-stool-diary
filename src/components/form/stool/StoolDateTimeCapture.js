@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import moment from 'moment'
 import { useTranslation } from 'react-i18next'
-import { INITIAL_STATE, STOOL_DATESTRING_FORMAT } from './context/model'
+import { INITIAL_STATE } from './context/model'
+import { createStoolDateTimeObj } from './context/utils'
 import { Typography } from '@material-ui/core'
 import { TimePicker, DatePicker } from '../../datetime-picker'
 import { ToggleButton, ButtonContainer } from '../../button-mui'
-
-const getTimestampDateStringObj = (datetime) => {
-  const momentInst = datetime ? datetime : moment();
-  return { timestamp: momentInst.format(), dateString: momentInst.format(STOOL_DATESTRING_FORMAT) }
-}
 
 const StoolDateTimeCapture = ({ persistedDateTime = INITIAL_STATE.dateTime, persistDateTime = () => { }, formNavButtons }) => {
 
@@ -18,7 +13,7 @@ const StoolDateTimeCapture = ({ persistedDateTime = INITIAL_STATE.dateTime, pers
   useEffect(() => {
     // if we don't have a time already, persist a default one for no-user-interaction scenarios
     if (!persistedDateTime.timestamp && !persistedDateTime.dateString) {
-      persistDateTime({ ...getTimestampDateStringObj(), dateOnly: true });
+      persistDateTime({ ...createStoolDateTimeObj() });
       setIsAddingTime(false);
     } else {
       setIsAddingTime(!persistedDateTime.dateOnly)
@@ -34,7 +29,7 @@ const StoolDateTimeCapture = ({ persistedDateTime = INITIAL_STATE.dateTime, pers
         <DatePicker
           label={t('Click to Select a Date')}
           value={persistedDateTime.dateString}
-          handleChange={(datetime) => persistDateTime({ ...getTimestampDateStringObj(datetime), dateOnly: true })} />
+          handleChange={(datetime) => persistDateTime({ ...createStoolDateTimeObj(datetime) })} />
       </ButtonContainer>
       <ButtonContainer>
         <ToggleButton
@@ -50,7 +45,7 @@ const StoolDateTimeCapture = ({ persistedDateTime = INITIAL_STATE.dateTime, pers
           <TimePicker
             label={t("Click to Select a Time")}
             value={persistedDateTime.timestamp}
-            handleChange={(datetime) => persistDateTime({ ...getTimestampDateStringObj(datetime), dateOnly: false })} />
+            handleChange={(datetime) => persistDateTime({ ...createStoolDateTimeObj(datetime, false) })} />
         </ButtonContainer>
         ) : null}
       {formNavButtons}

@@ -24,7 +24,7 @@ describe('StoolCaptureSummary', () => {
     })
 
     stoolClassifications.forEach(stoolClass => {
-      test(`when selected stool type ${stoolClass.type} was persisted, then it is visible to the user`, async () => {
+      test(`when selected stool type ${stoolClass.type} was passed, then it is visible to the user`, async () => {
         // ARRANGE
         const stoolType = stoolClass.type;
 
@@ -40,7 +40,7 @@ describe('StoolCaptureSummary', () => {
     })
 
     stoolSizeKeys.forEach(stoolSizeKey => {
-      test(`when selected stool size ${STOOL_SIZES[stoolSizeKey]} was persisted, then it is visible to the user and is checked`, async () => {
+      test(`when selected stool size ${STOOL_SIZES[stoolSizeKey]} was passed, then it is visible to the user and is checked`, async () => {
         // ARRANGE
 
 
@@ -55,13 +55,13 @@ describe('StoolCaptureSummary', () => {
       })
     })
 
-    test(`when selected stool date only was persisted, then the date persisted is visible to the user`, async () => {
+    test(`when selected stool date only was passed, then the date passed is visible to the user`, async () => {
       // ARRANGE
-      const persistedValue = { dateOnly: true, timestamp: '2020-06-17T18:40:53+01:00', dateString: '2020-06-17' };
+      const passedValue = { dateOnly: true, timestamp: '2020-06-17T18:40:53+01:00', dateString: '2020-06-17' };
 
       // ACT
       const { queryByTestId } = render(
-        <StoolCaptureSummary selectedDateTime={persistedValue} />
+        <StoolCaptureSummary selectedDateTime={passedValue} />
       )
       const datepicker = queryByTestId('datepicker')
 
@@ -72,13 +72,13 @@ describe('StoolCaptureSummary', () => {
     })
 
 
-    test(`when selected stool date and time was persisted, then the date and time persisted is visible to the user`, async () => {
+    test(`when selected stool date and time was passed, then the date and time passed is visible to the user`, async () => {
       // ARRANGE
-      const persistedValue = { dateOnly: false, timestamp: '2020-06-17T18:40:53+01:00', dateString: '2020-06-17' };
+      const passedValue = { dateOnly: false, timestamp: '2020-06-17T18:40:53+01:00', dateString: '2020-06-17' };
 
       // ACT
       const { queryByTestId } = render(
-        <StoolCaptureSummary selectedDateTime={persistedValue} />
+        <StoolCaptureSummary selectedDateTime={passedValue} />
       )
       const datetimepicker = queryByTestId('datetimepicker')
 
@@ -108,36 +108,36 @@ describe('StoolCaptureSummary', () => {
   describe('Functional', () => {
 
 
-    test(`when selected stool type was persisted, then the user can reselect the stool type`, async () => {
+    test(`when selected stool type was passed, then the user can reselect the stool type`, async () => {
 
       // ARRANGE
       const mockHandleReselect = jest.fn();
-      const dummyStoolType = stoolClassifications[0].type;
+      const stoolType = stoolClassifications[0].type;
 
 
       // ACT
       const { getByTestId } = render(
-        <StoolCaptureSummary selectedType={dummyStoolType} handleTypeReselect={mockHandleReselect} />
+        <StoolCaptureSummary selectedType={stoolType} handleTypeReselect={mockHandleReselect} />
       )
-      const reselectButton = getByTestId(`selected-stool-type-card-${dummyStoolType}`).querySelector('button');
+      const reselectButton = getByTestId(`selected-stool-type-card-${stoolType}`).querySelector('button');
       await fireEvent.click(reselectButton)
 
       // ASSERT
       expect(mockHandleReselect.mock.calls.length).toBe(1);
 
     })
-    test(`when selected stool size was persisted, then the user can reselect the stool size`, async () => {
+    test(`when selected stool size was passed, then the user can reselect the stool size`, async () => {
 
       // ARRANGE
       const mockHandleReselect = jest.fn();
-      const dummySizeValue = STOOL_SIZES.SMALL
+      const stoolSize = STOOL_SIZES.SMALL
 
 
       // ACT
       const { getByTestId } = render(
-        <StoolCaptureSummary selectedSize={dummySizeValue} handleSizeReselect={mockHandleReselect} />
+        <StoolCaptureSummary selectedSize={stoolSize} handleSizeReselect={mockHandleReselect} />
       )
-      const reselectButton = getByTestId(`selected-stool-size-card-${dummySizeValue}`).querySelector('button');
+      const reselectButton = getByTestId(`selected-stool-size-card-${stoolSize}`).querySelector('button');
 
       await fireEvent.click(reselectButton)
 
@@ -145,16 +145,16 @@ describe('StoolCaptureSummary', () => {
       expect(mockHandleReselect.mock.calls.length).toBe(1);
     })
 
-    test(`when selected stool datetime was persisted, then the user can reselect the stool datetime`, async () => {
+    test(`when selected stool datetime was passed, then the user can reselect the stool datetime`, async () => {
 
       // ARRANGE
       const mockHandleReselect = jest.fn();
-      const dummyDateTimeValue = { dateOnly: false, timestamp: '2020-06-17T18:40:53+01:00', dateString: '2020-06-17' };
+      const stoolDateTime = { dateOnly: false, timestamp: '2020-06-17T18:40:53+01:00', dateString: '2020-06-17' };
 
 
       // ACT
       const { getByTestId } = render(
-        <StoolCaptureSummary selectedDateTime={dummyDateTimeValue} handleDateTimeReselect={mockHandleReselect} />
+        <StoolCaptureSummary selectedDateTime={stoolDateTime} handleDateTimeReselect={mockHandleReselect} />
       )
       const reselectButton = getByTestId('selected-stool-date-time-card').querySelector('button');
 

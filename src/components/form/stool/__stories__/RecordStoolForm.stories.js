@@ -1,9 +1,9 @@
 import React from 'react'
 import RecordStoolContextProvider from "../context/RecordStoolContext"
-import { StoolTypeCaptureStoryHarness, StoolSizeCaptureStoryHarness, StoolDateTimeCaptureStoryHarness } from "./StoolCaptureStoryHarness"
+import { StoolTypeCaptureStoryHarness, StoolSizeCaptureStoryHarness, StoolDateTimeCaptureStoryHarness, StoolCaptureSummaryStoryHarness } from "./StoolCaptureStoryHarness"
 
 export default {
-  title: "Screens/Form/Record Stool"
+  title: "Screens/Record Stool"
 }
 
 export const Record_Type = () => (
@@ -24,4 +24,10 @@ export const Record_DateTime = () => (
   </RecordStoolContextProvider>
 )
 
+export const Summary = () => (
+  <RecordStoolContextProvider>
+    <StoolCaptureSummaryStoryHarness/>
+  </RecordStoolContextProvider>
+)
 
+ 
