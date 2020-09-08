@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react'
 import StoolSizeCapture from '../StoolSizeCapture';
-import { STOOL_SIZES } from '../state/stoolModelEnums';
+import { STOOL_SIZES } from '../../../../context/stool/model'
 
 
 const stoolSizeKeys = Object.keys(STOOL_SIZES);

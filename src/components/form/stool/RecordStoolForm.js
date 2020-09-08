@@ -1,16 +1,16 @@
-import React, { useEffect, useReducer } from 'react';
-import { useTheme, makeStyles } from '@material-ui/core';
+import React, { useEffect, useReducer, useContext } from 'react';
+import { useTheme, makeStyles, Typography } from '@material-ui/core';
 import { StoolTypeCapture, StoolDateTimeCapture, StoolSizeCapture, StoolCaptureSummary } from '.';
 import { PrimaryActionButton } from '../../button-mui';
 import { FormNavigationButtons } from '../../button-mui/composite'
 import { INITIAL_FORM_STATE } from '../state/formModel'
 import { loadFormScreens, updateFormCurrentScreen, updateFormHasReachedSummary, moveFormScreenForward, moveFormScreenBackward } from '../state/formActions'
 import { formReducer } from '../state/formReducers'
-import { INITIAL_STOOL_STATE } from './state/stoolModel'
-import { updateStoolType, updateStoolDateTime, updateStoolSize } from './state/stoolActions'
-import { stoolReducer } from './state/stoolReducers'
+import { updateStoolType, updateStoolDateTime, updateStoolSize } from '../../../context/stool/actions'
+import { RecordStoolStateContext, RecordStoolDispatchContext } from '../../../context/stool/RecordStoolContext';
 import { persistData } from '../../firebase/utils'
 import { STOOL_NAMESPACE } from '../../firebase/namespaces'
+
 
 const useStyles = makeStyles({
   root: {
@@ -20,7 +20,8 @@ const useStyles = makeStyles({
 
 const RecordStoolForm = () => {
 
-  const [stoolState, stoolDispatch] = useReducer(stoolReducer, INITIAL_STOOL_STATE);
+  const stoolState = useContext(RecordStoolStateContext)
+  const stoolDispatch = useContext(RecordStoolDispatchContext)
   const updateType = (stoolType) => updateStoolType(stoolDispatch, stoolType)
   const updateDatetime = (dateTime) => updateStoolDateTime(stoolDispatch, dateTime)
   const updateSize = (size) => updateStoolSize(stoolDispatch, size);
@@ -142,13 +143,17 @@ const RecordStoolFormScreens = ({
 
   const classes = useStyles()
   return (
-    <>
-      <h2>Record a Stool</h2>
-      <div className={classes.root}>
+    <div>
+      <Typography variant="h1" component="h2">
+        Record a Stool
+      </Typography>
+      <div 
+      // className={classes.root}
+      >
         {getCurrentScreen()}
       </div>
 
-    </>
+    </div>
   )
 }
 export default RecordStoolForm;

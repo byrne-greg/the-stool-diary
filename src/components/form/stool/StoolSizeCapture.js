@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Typography, useTheme, makeStyles } from '@material-ui/core';
 import Container from '@material-ui/core/Container';
 import { RadioButtonGroup } from '../../button-mui'
-import { STOOL_SIZES } from './context/model'
+import { STOOL_SIZES } from '../../../context/stool/model'
 
 const useStyles = makeStyles({
   sizeSelectorContainer: {

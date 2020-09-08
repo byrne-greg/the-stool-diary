@@ -1,7 +1,5 @@
 import moment from 'moment'
-import momentFormatter from '../../../../utils/moment-format'
-
-export const STOOL_DATESTRING_FORMAT = momentFormatter.YYYYMMDD
+import { STOOL_DATESTRING_FORMAT } from '../stool/model'
 
 export function createStoolDateTimeObj(datetime, dateOnly=true) {
   const momentInst = datetime ? datetime : moment();

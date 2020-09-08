@@ -5,10 +5,10 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { StoolTypeCapture, StoolSizeCapture, StoolDateTimeCapture, StoolCaptureSummary } from ".."
 import { FilledButton, RadioButtonGroup } from "../../../button-mui"
 import { DateTimePicker } from "../../../datetime-picker";
-import { RecordStoolStateContext, RecordStoolDispatchContext } from "../context/RecordStoolContext"
-import { updateStoolType, updateStoolSize, updateStoolDateTime } from "../context/actions"
-import INITIAL_STATE, { STOOL_SIZES } from "../context/model"
-import { createStoolDateTimeObj } from "../context/utils"
+import { RecordStoolStateContext, RecordStoolDispatchContext } from "../../../../context/stool/RecordStoolContext"
+import { updateStoolType, updateStoolSize, updateStoolDateTime } from "../../../../context/stool/actions"
+import INITIAL_STATE, { STOOL_SIZES } from "../../../../context/stool/model"
+import { createStoolDateTimeObj } from "../../../../context/stool/utils"
 import stoolClassifications from "../../../../utils/stool-classifications"
 
 

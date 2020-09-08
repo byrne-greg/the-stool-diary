@@ -3,7 +3,7 @@ import { render, fireEvent } from '@testing-library/react'
 import moment from 'moment';
 import StoolDateTimeCapture from '../StoolDateTimeCapture';
 import defaultLocale from '../locales/StoolDateTimeCapture.locale.en.json'
-import { INITIAL_STOOL_STATE } from "../state/stoolModel"
+import { INITIAL_STATE } from "../../../../context/stool/model"
 
 const TIMESTAMP_REGEX = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\+|-)\d{2}:\d{2}/gm
 const DATESTRING_REGEX = /\d{4}-\d{2}-\d{2}/gm
@@ -206,7 +206,7 @@ describe('StoolDateTimeCapture', () => {
       expect(persistDateTimeMockFn.mock.calls.length).toBe(2)
       const persistedResults = persistDateTimeMockFn.mock.results;
       expect(persistedResults[persistedResults.length - 1].value).toStrictEqual({
-        ...INITIAL_STOOL_STATE.dateTime,
+        ...INITIAL_STATE.dateTime,
         dateOnly: false
       })
     })

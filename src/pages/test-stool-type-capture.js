@@ -1,5 +1,5 @@
 import React from "react"
-import RecordStoolContextProvider from "../components/form/stool/context/RecordStoolContext"
+import RecordStoolContextProvider from "../context/stool/RecordStoolContext"
 import { StoolTypeCaptureStoryHarness } from "../components/form/stool/__stories__/StoolCaptureStoryHarness"
 
 

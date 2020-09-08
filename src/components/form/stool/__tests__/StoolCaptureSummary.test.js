@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react'
 import StoolCaptureSummary from '../StoolCaptureSummary';
-import { STOOL_SIZES } from '../state/stoolModelEnums';
+import { STOOL_SIZES } from '../../../../context/stool/model';
 import stoolClassifications from '../../../../utils/stool-classifications';
 import { convertToProperCase } from '../../../../utils/text';
 
