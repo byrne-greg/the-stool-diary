@@ -8,6 +8,7 @@ import { INITIAL_STOOL_STATE } from "../state/stoolModel"
 const TIMESTAMP_REGEX = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\+|-)\d{2}:\d{2}/gm
 const DATESTRING_REGEX = /\d{4}-\d{2}-\d{2}/gm
 
+// TODO: abstract user actions into functions and reuse throughout tests
 
 describe('StoolDateTimeCapture', () => {
   describe('UI', () => {
@@ -53,6 +54,44 @@ describe('StoolDateTimeCapture', () => {
       expect(timepicker).toBeNull()
       expect(toggle.checked).toBeFalsy()
     })
+
+    test(`when the add time toggle is turned on, then the time picker is displayed`, async () => {
+
+      // ARRANGE
+
+      // ACT
+      const { getByTestId } = render(
+        <StoolDateTimeCapture />
+      )
+      const toggle = getByTestId('toggle-button')
+      // reusing a var with the queried element actually stores its current state beyond the fireEvent call but as a function it dynamically gets state
+      const getToggleInput = () => toggle.querySelector('input')
+      expect(getToggleInput().checked).toBeFalsy()
+      await fireEvent.click(getToggleInput());
+
+      // ASSERT
+      expect(getToggleInput().checked).toBeTruthy()
+    });
+
+    test(`when the add time toggle is turned on and then off, then the time picker is not displayed`, async () => {
+
+      // ARRANGE
+
+      // ACT
+      const { getByTestId } = render(
+        <StoolDateTimeCapture />
+      )
+      const toggle = getByTestId('toggle-button')
+      // reusing a var with the queried element actually stores its current state beyond the fireEvent call but as a function it dynamically gets state
+      const getToggleInput = () => toggle.querySelector('input')
+      expect(getToggleInput().checked).toBeFalsy()
+      await fireEvent.click(getToggleInput());
+      expect(getToggleInput().checked).toBeTruthy()
+      await fireEvent.click(getToggleInput());
+
+      // ASSERT
+      expect(getToggleInput().checked).toBeFalsy()
+    });
 
     test(`when a date with no time is persisted and the user returns, then the persisted date is displayed and the add time toggle is off`, () => {
       // ARRANGE
@@ -107,28 +146,49 @@ describe('StoolDateTimeCapture', () => {
       // ASSERT
       expect(buttonLabel).toBeTruthy()
     })
+
+    test(`when the time is selected from the time picker and the date is reselected, then selected time show display and add time toggle should be on`, async () => {
+      // ARRANGE
+      const persistDateTimeMockFn = jest.fn(val => val);
+  
+      // ACT
+      const { getByTestId, findByText, queryByTestId} = render(
+        <StoolDateTimeCapture persistDateTime={persistDateTimeMockFn} />
+      )
+  
+      // user turns add time toggle on
+      const getAddTimeToggle = () => getByTestId('toggle-button').querySelector('input');
+      await fireEvent.click(getAddTimeToggle())
+  
+        // user adds today's time
+      const timepicker = getByTestId('timepicker')
+      const getTimeToggleInput = () => timepicker.querySelector('input')
+      await fireEvent.click(getTimeToggleInput());
+      const timeTodayButton = await findByText('Today');
+      await fireEvent.click(timeTodayButton);
+      const timeOkButton = await findByText('OK');
+      await fireEvent.click(timeOkButton);
+  
+      // user adds today's date
+      const datepicker = getByTestId('datepicker')
+      const getDateToggleInput = () => datepicker.querySelector('input')
+      await fireEvent.click(getDateToggleInput());
+      const dateTodayButton = await findByText('Today');
+      await fireEvent.click(dateTodayButton);
+      const dateOkButton = await findByText('OK');
+      await fireEvent.click(dateOkButton);
+  
+  
+      // ASSERT
+      expect(datepicker.querySelector('input').value).toBeTruthy()
+      expect(getByTestId('toggle-button').querySelector('input').checked).toBeTruthy()
+      expect(getTimeToggleInput()).not.toBeNull()
+    })
+
   });
 
 
   describe('Functional', () => {
-    test(`when the add time toggle is turned on, then the time picker is displayed`, async () => {
-
-      // ARRANGE
-
-      // ACT
-      const { getByTestId } = render(
-        <StoolDateTimeCapture />
-      )
-      const toggle = getByTestId('toggle-button')
-      // reusing a var with the queried element actually stores its current state beyond the fireEvent call but as a function it dynamically gets state
-      const getToggleInput = () => toggle.querySelector('input')
-      expect(getToggleInput().checked).toBeFalsy()
-      await fireEvent.click(getToggleInput());
-
-      // ASSERT
-      expect(getToggleInput().checked).toBeTruthy()
-    });
-
     test(`when the add time toggle is switched on, then it persists the date only mode turned off`, async () => {
       // ARRANGE
       const persistDateTimeMockFn = jest.fn(val => val);
@@ -187,7 +247,7 @@ describe('StoolDateTimeCapture', () => {
     })
 
 
-    test(`when the date is selected from the date picker, then it is persisted with date only`, async () => {
+    test(`when the date is selected from the date picker and add time toggle is off, then it is persisted with date only`, async () => {
       // ARRANGE
       const persistDateTimeMockFn = jest.fn(val => val);
 
@@ -209,6 +269,34 @@ describe('StoolDateTimeCapture', () => {
       expect(persistedTimestamp.timestamp).toMatch(TIMESTAMP_REGEX)
       expect(persistedTimestamp.dateString).toMatch(DATESTRING_REGEX)
       expect(persistedTimestamp.dateOnly).toBeTruthy()
+    })
+
+    test(`when the date is selected from the date picker and add time toggle is on, then it is persisted as not date only`, async () => {
+      // ARRANGE
+      const persistDateTimeMockFn = jest.fn(val => val);
+
+      // ACT
+      const { getByTestId, findByText, } = render(
+        <StoolDateTimeCapture persistDateTime={persistDateTimeMockFn} />
+      )
+
+      const addTimeToggle = getByTestId('toggle-button');
+      await fireEvent.click(addTimeToggle.querySelector('input'))
+
+      const datepicker = getByTestId('datepicker')
+      const getToggleInput = () => datepicker.querySelector('input')
+      await fireEvent.click(getToggleInput());
+      const todayButton = await findByText('Today');
+      await fireEvent.click(todayButton);
+      const okButton = await findByText('OK');
+      await fireEvent.click(okButton);
+
+      // ASSERT
+      expect(persistDateTimeMockFn.mock.calls.length).toBe(3)
+      const persistedTimestamp = persistDateTimeMockFn.mock.results[persistDateTimeMockFn.mock.results.length - 1].value
+      expect(persistedTimestamp.timestamp).toMatch(TIMESTAMP_REGEX)
+      expect(persistedTimestamp.dateString).toMatch(DATESTRING_REGEX)
+      expect(persistedTimestamp.dateOnly).toBeFalsy()
     })
   })
 
@@ -237,6 +325,8 @@ describe('StoolDateTimeCapture', () => {
     expect(persistedTimestamp.dateString).toMatch(DATESTRING_REGEX)
     expect(persistedTimestamp.dateOnly).toBeFalsy()
   })
+
+  
 })
 
 

@@ -29,7 +29,7 @@ const StoolDateTimeCapture = ({ persistedDateTime = INITIAL_STATE.dateTime, pers
         <DatePicker
           label={t('Click to Select a Date')}
           value={persistedDateTime.dateString}
-          handleChange={(datetime) => persistDateTime({ ...createStoolDateTimeObj(datetime) })} />
+          handleChange={(datetime) => persistDateTime({ ...createStoolDateTimeObj(datetime, !isAddingTime) })} />
       </ButtonContainer>
       <ButtonContainer>
         <ToggleButton
