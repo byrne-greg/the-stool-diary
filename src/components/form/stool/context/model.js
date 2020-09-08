@@ -1,6 +1,3 @@
-import momentFormatter from '../../../../utils/moment-format'
-export const STOOL_DATESTRING_FORMAT = momentFormatter.YYYYMMDD
-
 export const STOOL_SIZES = {
   SMALL: "SMALL",
   MEDIUM: "MEDIUM",
