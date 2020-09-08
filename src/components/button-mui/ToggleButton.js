@@ -1,30 +1,38 @@
 import React, { useState, useEffect } from 'react'
-import FormGroup from '@material-ui/core/FormGroup';
+
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
+import { makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles({
+  container: {
+    textAlign: 'center'
+  }
+})
 
 const ToggleButton = ({ text, defaultCheck = false, onSelected = () => { } }) => {
-  const [isChecked, setIsChecked] = useState(null)
+  const classes = useStyles()
+  const [isChecked, setIsChecked] = useState(defaultCheck)
   useEffect(() => {
     setIsChecked(defaultCheck);
-  }, [defaultCheck])
+  }, [defaultCheck])  
 
   return (
-    <FormGroup>
+    <div className={classes.container} data-testid={'toggle-button'}>
       <FormControlLabel
         control={
           <Switch
             checked={isChecked}
-            onChange={(e) => { setIsChecked(!isChecked); onSelected(!isChecked) }}
+            onChange={() => { setIsChecked(!isChecked); onSelected(!isChecked) }}
             name={text}
             color="primary"
-            data-testid={'toggle-button-input'}
+            data-testid={'toggle-button-switch'}
           />
         }
         label={text}
         data-testid={'toggle-button-label'}
       />
-    </FormGroup>
+    </div>
   )
 }
 export default ToggleButton
