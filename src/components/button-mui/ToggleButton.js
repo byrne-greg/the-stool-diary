@@ -10,20 +10,19 @@ const useStyles = makeStyles({
   }
 })
 
-const ToggleButton = ({ text, defaultCheck = false, onSelected = () => { } }) => {
+const ToggleButton = ({ text, defaultCheck=false, onSelected = () => { } }) => {
   const classes = useStyles()
   const [isChecked, setIsChecked] = useState(defaultCheck)
   useEffect(() => {
-    setIsChecked(defaultCheck);
-  }, [defaultCheck])  
-
+    setIsChecked(defaultCheck)
+  }, [defaultCheck])
   return (
     <div className={classes.container} data-testid={'toggle-button'}>
       <FormControlLabel
         control={
           <Switch
             checked={isChecked}
-            onChange={() => { setIsChecked(!isChecked); onSelected(!isChecked) }}
+            onChange={(e) => { setIsChecked(e.target.checked); onSelected(e.target.checked) }}
             name={text}
             color="primary"
             data-testid={'toggle-button-switch'}

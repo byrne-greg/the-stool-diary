@@ -15,6 +15,6 @@ export const Toggle = () => {
 
 export const Toggle_Checked_Default= () => {
   return (
-    <ToggleButton text="Toggle" defaultCheck={true} onSelected={(isChecked) => console.log(`Toggle Cheked Default button is checked: ${isChecked}`)} />
+    <ToggleButton text="Toggle" defaultCheck={true} onSelected={(isChecked) => console.log(`Toggle Checked Default button is checked: ${isChecked}`)} />
   )
 }
