@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import MaterialButtonGroup from '@material-ui/core/ButtonGroup'
-import COLORS from "../../utils/colors"
 
 // BUG NOTE:
 // having multiple of these on the same page with the same value will cause problems with the label IDs and selecting will not work as expected
