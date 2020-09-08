@@ -28,7 +28,7 @@ export const Block = () => {
   const { palette } = useTheme()
   return(
     <>
-      <OutlineButton onClick={action('clicked')}>Primary</OutlineButton>
+      <OutlineButton block onClick={action('clicked')}>Primary</OutlineButton>
       <OutlineButton block color={palette.secondary} onClick={action('clicked')}>Secondary</OutlineButton>
       <OutlineButton block color={palette.success} onClick={action('clicked')}>Success</OutlineButton>
       <OutlineButton block color={palette.error} onClick={action('clicked')}>Error</OutlineButton>
