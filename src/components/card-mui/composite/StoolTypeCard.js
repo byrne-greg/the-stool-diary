@@ -16,8 +16,8 @@ const StoolTypeCard = ({ type, image, description, handleClick, isSelected, ...p
 
   return (
       <Card 
-        {...props} 
         data-testid={`stool-type-card-type-${type}`} 
+        {...props} 
         onClick={!isSelected ? selectCardFn : unselectCardFn}
         >
         <MaterialCardActionArea>
