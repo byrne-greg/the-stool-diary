@@ -12,7 +12,6 @@ import MomentUtils from '@date-io/moment';
 const useStyles = makeStyles({
   root: {
     padding: '1rem 0',
-    textAlign: 'center',
     "& > input": {
       fontSize: '1.5rem',
       borderBottom: 0

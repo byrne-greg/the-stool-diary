@@ -6,6 +6,7 @@ const useStyles = makeStyles(theme => ({
   root: ({ direction }) => ({
     display: 'flex',
     padding: '1rem 0',
+    alignItems: 'center',
     [theme.breakpoints.up('sm')]: {
       flexDirection: direction,
       justifyContent: 'center'
