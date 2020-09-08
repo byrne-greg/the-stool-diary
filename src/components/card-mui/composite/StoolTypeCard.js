@@ -1,7 +1,6 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import Typography from '@material-ui/core/Typography';
-import MaterialCardActionArea from '@material-ui/core/CardActionArea';
 import MaterialCardContent from '@material-ui/core/CardContent';
 import MaterialCardMedia from '@material-ui/core/CardMedia';
 import Card from '../Card'
@@ -18,9 +17,7 @@ const StoolTypeCard = ({ type, image, description, handleClick, isSelected, ...p
       <Card 
         data-testid={`stool-type-card-type-${type}`} 
         {...props} 
-        onClick={!isSelected ? selectCardFn : unselectCardFn}
-        >
-        <MaterialCardActionArea>
+      >
           <MaterialCardMedia
             component="div"
             alt={`${t("Stool Type")} ${type}`}
@@ -36,7 +33,6 @@ const StoolTypeCard = ({ type, image, description, handleClick, isSelected, ...p
               {t(description)}
             </Typography>
           </MaterialCardContent>
-        </MaterialCardActionArea>
         <CardActions>
           {!isSelected ? (
                 <PrimaryActionButton block onClick={selectCardFn}>

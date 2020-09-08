@@ -1,3 +1,11 @@
 {
-  "Type": "Type"
+  "Type": "Type",
+  "Choose a type": "Choose a type",
+  "Separate hard lumps, like nuts (hard to pass)": "Separate hard lumps, like nuts (hard to pass)",
+  "Sausage shaped but lumpy": "Sausage shaped but lumpy",
+  "Like a sausage but with cracks on the surface": "Like a sausage but with cracks on the surface",
+  "Like a sausage or a snake. Smooth and soft": "Like a sausage or a snake. Smooth and soft",
+  "Soft blobs with clear-cut edges (passed easily)": "Soft blobs with clear-cut edges (passed easily)",
+  "Fluffy pieces with ragged edges. Mushy": "Fluffy pieces with ragged edges. Mushy",
+  "Watery. No solid pieces. Entirely liquid": "Watery. No solid pieces. Entirely liquid"
 }

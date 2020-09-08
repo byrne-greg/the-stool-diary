@@ -33,7 +33,7 @@ const StoolSizeCapture = ({ persistedSize = null, persistSize = () => { }, formN
   return (
     <div>
       <Typography gutterBottom variant="h3" component="h2">
-        {t("Choose a stool size")}
+        {t("Choose a size")}
       </Typography>
       <Container className={classes.sizeSelectorContainer}>
         <RadioButtonGroup

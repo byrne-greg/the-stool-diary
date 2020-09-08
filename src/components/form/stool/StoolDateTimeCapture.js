@@ -23,7 +23,7 @@ const StoolDateTimeCapture = ({ persistedDateTime = INITIAL_STATE.dateTime, pers
   return (
     <div>
       <Typography gutterBottom variant="h3" component="h2">
-        {t('Date & Time')}
+        {t('Choose a date and/or time')}
       </Typography>
       <ButtonContainer>
         <DatePicker

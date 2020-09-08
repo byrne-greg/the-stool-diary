@@ -1,5 +1,5 @@
 import React from 'react'
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import MaterialButton from '@material-ui/core/Button'
 
 const useStyles = makeStyles(theme => ({
@@ -29,7 +29,7 @@ const OutlineButton = ({ children, color, block = false, ...props }) => {
     block: block
   })
   return (
-    <MaterialButton variant="outlined" className={classes.root} {...props}>{children}</MaterialButton>
+    <MaterialButton variant="outlined" {...props} className={classes.root}>{children}</MaterialButton>
   )
 }
 export default OutlineButton

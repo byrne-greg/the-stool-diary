@@ -10,7 +10,7 @@ const StoolTypeCapture = ({ persistType = () => { }, persistedType = null, formN
   return (
     <div>
       <Typography gutterBottom variant="h3" component="h2">
-        {t("Choose a stool type")}
+        {t("Choose a type")}
       </Typography>
       <CardContainer cardWidth={360}>
         {stoolClassifications.map(stoolClass => (
