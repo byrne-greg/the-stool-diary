@@ -6,7 +6,7 @@ import IconButton from '@material-ui/core/IconButton';
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import BaseStoolDayCountTable from './BaseStoolDayCountTable';
-import { StoolCount } from '../../tag/composites'
+import { StoolCount } from '../../chip/composites'
 import { Title } from '../../title'
 import momentFormatter from '../../../utils/moment-format'
 import { ListStoolRecords } from '../../list/composites'
@@ -31,7 +31,7 @@ const MonthlyStoolCountTable = ({ month = moment().format('YYYYMM'), recordedSto
   const daysToAddSinceFirstDay = moment(displayMonth).daysInMonth() - 1;
 
   return (
-    <>
+    <div>
       <div className={classes.header}>
         <IconButton aria-label="select previous month" size="small" onClick={() => { setDisplayMonth(moment(displayMonth).subtract(1, 'months')) }}>
           <KeyboardArrowLeftIcon />
@@ -55,7 +55,7 @@ const MonthlyStoolCountTable = ({ month = moment().format('YYYYMM'), recordedSto
           showCollapsibleColumn={false}
         />
       </div>
-    </>
+    </div>
   )
 };
 export default MonthlyStoolCountTable;

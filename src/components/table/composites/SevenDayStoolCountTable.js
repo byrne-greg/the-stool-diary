@@ -3,23 +3,23 @@ import moment from 'moment'
 import { useTranslation } from 'react-i18next'
 import BaseStoolDayCountTable from './BaseStoolDayCountTable';
 import { ListStoolRecords } from '../../list/composites'
-import { StoolCount } from '../../tag/composites'
+import { StoolCount } from '../../chip/composites'
 import momentFormatter from '../../../utils/moment-format'
 import { Title } from '../../title';
 
 const SevenDayStoolCountTable = ({ recordedStools = [], titleLevel='h2' }) => {
   const { t } = useTranslation();
   return (
-    <>
-    <Title as={titleLevel}>{t('Most Recent Stools')}</Title>
-    <BaseStoolDayCountTable
-      recordedStools={recordedStools}
-      startDate={moment().subtract(6, 'days').format(momentFormatter.YYYYMMDD)}
-      endDate={moment().format(momentFormatter.YYYYMMDD)}
-      stoolDataTableDisplayFn={getStoolTableData}
-      hasCollapsedData
-    />
-    </>
+    <div>
+      <Title as={titleLevel}>{t('Most Recent Stools')}</Title>
+      <BaseStoolDayCountTable
+        recordedStools={recordedStools}
+        startDate={moment().subtract(6, 'days').format(momentFormatter.YYYYMMDD)}
+        endDate={moment().format(momentFormatter.YYYYMMDD)}
+        stoolDataTableDisplayFn={getStoolTableData}
+        hasCollapsedData
+      />
+    </div>
   )
 };
 export default SevenDayStoolCountTable;

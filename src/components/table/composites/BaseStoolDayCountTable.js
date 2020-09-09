@@ -2,7 +2,7 @@ import React, { useMemo } from 'react'
 import moment from 'moment'
 import { useTranslation } from 'react-i18next'
 import CollapsibleTable from '../CollapsibleTable';
-import { StoolCount } from '../../tag/composites'
+import { StoolCount } from '../../chip/composites'
 import BasicTable from '../BasicTable';
 import momentFormatter from '../../../utils/moment-format'
 
