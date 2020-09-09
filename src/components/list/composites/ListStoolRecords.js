@@ -51,7 +51,7 @@ const ListStoolRecords = ({ recordedStools = [], hasSort=true, sortAscending=fal
   const uniqueDays = useMemo(()=> [...new Set(recordedStools.map(stoolRecord => moment(stoolRecord.dateTime.timestamp).format(momentFormatter.YYYYMMDD)))], [sortedRecords])
   
   return (
-    <>
+    <div>
       <div className={classes.titleContainer}>
         {titleComponent}
       </div>
@@ -92,7 +92,7 @@ const ListStoolRecords = ({ recordedStools = [], hasSort=true, sortAscending=fal
         </List>) :
         <NoRecordsFound />
       }
-    </>
+    </div>
   )
 }
 

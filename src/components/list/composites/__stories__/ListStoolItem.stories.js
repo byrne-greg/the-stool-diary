@@ -5,7 +5,7 @@ import { STOOL_SIZES } from '../../../form/stool/state/stoolModelEnums'
 import { getRandomHistoricalMoment } from './mock-data'
 
 export default {
-  title: "List/List Item/Composites/List Stool Item"
+  title: "List Item/Composites/List Stool Item"
 }
 
 export const Info = () => {
