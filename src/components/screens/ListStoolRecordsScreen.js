@@ -1,7 +1,7 @@
 import React from 'react'
-import { ListStoolRecords } from '../list/composites'
 import useStoolRecordsForPerson from '../firebase/hooks'
 import { SevenDayStoolCountTable, MonthlyStoolCountTable } from '../table/composites';
+import { Typography } from '@material-ui/core';
 
 
 const ListStoolRecordsScreen = () => {
@@ -9,11 +9,11 @@ const ListStoolRecordsScreen = () => {
   const [stoolRecords] = useStoolRecordsForPerson();
 
   return (
-    <>
-    <h2>Your Stool Records</h2>
+    <div>
+      <Typography variant="h2">Your Stool Records</Typography>
       <SevenDayStoolCountTable recordedStools={stoolRecords} titleLevel='h3'/>
       <MonthlyStoolCountTable recordedStools={stoolRecords} titleLevel='h3'/>
-    </>
+    </div>
   )
 }
 
