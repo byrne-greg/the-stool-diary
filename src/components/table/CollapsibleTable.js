@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components'
 import moment from 'moment'
 import { makeStyles } from '@material-ui/core/styles';
 import Collapse from '@material-ui/core/Collapse';
@@ -16,7 +15,7 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import RemoveIcon from '@material-ui/icons/Remove';
 
-const useTableStyles=makeStyles({
+const useTableStyles = makeStyles({
   cell: {
     paddingTop: '1.2rem',
     paddingBottom: '1.2rem'
@@ -26,6 +25,11 @@ const useTableStyles=makeStyles({
       borderBottom: 'unset',
     },
   },
+  nonButtonMaterialIconHolder: {
+    flex: '0 0 auto',
+    padding: 3,
+    color: 'rgba(0, 0, 0, 0.54)'
+  }
 })
 
 /*
@@ -136,9 +140,10 @@ const CollapsibleRow = ({ row , showCollapsibleColumn=true}) => {
               <IconButton aria-label="expand row" size="small" onClick={collapse}>
                 {isCollapsed ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}
               </IconButton>
-              : <NonButtonMaterialIconHolder>
+              : <div className={classes.nonButtonMaterialIconHolder}>
                 <RemoveIcon />
-              </NonButtonMaterialIconHolder>}
+              </div>
+              }
           </MaterialTableCell>
         ) : null}
 
@@ -177,11 +182,3 @@ const CollapsedRow = ({ collapsedData = { display: null }, isShowing, colSpan })
     </MaterialTableRow>
   )
 }
-
-// --------
-
-const NonButtonMaterialIconHolder = styled.div`
-  flex: 0 0 auto;
-  padding: 3;
-  color: rgba(0, 0, 0, 0.54);
-`
