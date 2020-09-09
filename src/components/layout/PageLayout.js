@@ -11,7 +11,7 @@ import { Header } from "../header"
 import { Footer } from "../footer"
 import { PageCenter } from "."
 import { SEO } from "../meta"
-import { Container } from "@material-ui/core"
+import Container from "@material-ui/core/Container"
 
 const PageLayout = ({ title, children }) => {
   
