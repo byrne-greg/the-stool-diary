@@ -21,7 +21,6 @@ module.exports = {
         },
       },
     },
-    `gatsby-plugin-styled-components`,
     {
       resolve: "gatsby-plugin-firebase",
       options: {
