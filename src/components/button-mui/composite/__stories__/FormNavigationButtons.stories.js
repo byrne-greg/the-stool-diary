@@ -11,8 +11,6 @@ export const Form_Navigation = () => (
   <FormNavigationButtons
     handleNavForward={() => console.log('handle navigation forward')}
     handleNavBackward={() => console.log('handle navigation backward')}
-    disableNext={false}
-    disableBack={false}
     primaryActionOverride={null}
     secondaryActionOverride={null}
   />
