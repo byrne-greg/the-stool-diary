@@ -6,7 +6,7 @@ export default {
   title: "List/Base"
 }
 
-export const NoRecordsFound = () => {
+export const NoItemsFound = () => {
   return (
     <NoRecordsFound />
   )
