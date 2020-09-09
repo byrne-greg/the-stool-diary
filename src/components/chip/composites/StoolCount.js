@@ -7,7 +7,7 @@ import COLORS from '../../../utils/colors'
 const useStyles = makeStyles(theme => ({
   chip: {
     height: 'unset',
-    padding: '0.75rem',
+    padding: '0.75rem 0 0.75rem 0',
     // @media only screen and (max-width: 400px) { 
     //   padding: 0.75rem;
     // }
