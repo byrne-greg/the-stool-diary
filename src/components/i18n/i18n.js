@@ -1,12 +1,12 @@
 import i18n from "i18next"
-import Backend from "i18next-xhr-backend"
+// import Backend from "i18next-xhr-backend"
 import LanguageDetector from "i18next-browser-languagedetector"
 import { initReactI18next } from "react-i18next";
 
 i18n
   // load translation using http -> see /public/locales (i.e. https://github.com/i18next/react-i18next/tree/master/example/react/public/locales)
   // learn more: https://github.com/i18next/i18next-http-backend
-  .use(Backend)
+  // .use(Backend)
   // detect user language
   // learn more: https://github.com/i18next/i18next-browser-languageDetector
   .use(LanguageDetector)
@@ -21,8 +21,8 @@ i18n
     // have a common namespace used around the full app
     // ns: ["translation"],
     // defaultNS: "translation",
-
-    debug: true,
+    // returnObjects: true,
+    debug: process.env.NODE_ENV === 'development',
 
     interpolation: {
       escapeValue: false, // not needed for react!!
@@ -30,7 +30,7 @@ i18n
 
     react: {
       wait: true,
-      // useSuspense: false
+      useSuspense: false
     },
   })
 
