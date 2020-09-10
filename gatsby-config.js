@@ -12,8 +12,8 @@ module.exports = {
     inceptionYear: 2020,
   },
   plugins: [
-    `gatsby-plugin-react-helmet`,
     `gatsby-plugin-material-ui`,
+    // `gatsby-plugin-react-helmet`,
     {
       resolve: "gatsby-plugin-firebase",
       options: {
