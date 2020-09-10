@@ -10,6 +10,7 @@ const AppWrapper = ({ children }) => {
   const key = isClient ? "client" : "server";
   React.useEffect(() => {
     setClient(true);
+    console.log(`Rendering in ${key} mode`);
   }, []);
 
   return (
