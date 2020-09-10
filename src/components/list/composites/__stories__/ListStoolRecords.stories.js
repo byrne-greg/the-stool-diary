@@ -1,7 +1,6 @@
 import React from 'react'
-import moment from 'moment'
 import ListStoolRecords from '../ListStoolRecords'
-import { STOOL_SIZES } from '../../../form/stool/state/stoolModelEnums'
+import { STOOL_SIZES } from '../../../../context/stool/model'
 import { getRandomHistoricalMoment } from './mock-data'
 
 export default {

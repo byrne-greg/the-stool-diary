@@ -1,6 +1,5 @@
 import moment from 'moment'
-import { STOOL_SIZES } from "../../../form/stool/state/stoolModelEnums"
-import { STOOL_DATESTRING_FORMAT } from "../../../form/stool/state/stoolModel"
+import { STOOL_SIZES, STOOL_DATESTRING_FORMAT } from "../../../../context/stool/model"
 
 export const createRandomRecord = ({ defaultMonth = moment().format('YYYYMMDD'), range = 8 }) => {
   const getRandomType = () => Math.floor(Math.random() * 8);

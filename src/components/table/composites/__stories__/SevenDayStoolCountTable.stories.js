@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { BasicButton } from "../../../button"
+import { FilledButton } from "../../../button-mui"
 import * as mockData from "./mock-data"
 
 export default {
@@ -16,7 +16,7 @@ export const MixRecords = () => {
   return (
     <>
       <SevenDayStoolCountTable recordedStools={mockStoolRecords} />
-      <BasicButton onClick={() => setMockStoolRecords(mockData.createRandomMockStoolRecords({}))}>Randomize Stools</BasicButton>
+      <FilledButton onClick={() => setMockStoolRecords(mockData.createRandomMockStoolRecords({}))}>Randomize Stools</FilledButton>
     </>
   )
 }

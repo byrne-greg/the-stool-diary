@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { BasicButton } from "../../../button"
+import { FilledButton } from "../../../button-mui"
 import * as mockData from "./mock-data"
 
 export default {
@@ -15,7 +15,7 @@ export const MixRecordsInDefaultMonth = () => {
   return (
     <>
       <MonthlyStoolCountTable recordedStools={mockStoolRecords} />
-      <BasicButton onClick={() => setMockStoolRecords(mockData.createRandomMockStoolRecords({ numOfRecords: 450, range: 365 }))}>Randomize Stools</BasicButton>
+      <FilledButton onClick={() => setMockStoolRecords(mockData.createRandomMockStoolRecords({ numOfRecords: 450, range: 365 }))}>Randomize Stools</FilledButton>
     </>
   )
 }
@@ -25,7 +25,7 @@ export const MixRecordsInSpecificMonth = () => {
   return (
     <>
       <MonthlyStoolCountTable recordedStools={mockStoolRecords} month={defaultMonth} />
-      <BasicButton onClick={() => setMockStoolRecords(mockData.createRandomMockStoolRecords({ defaultMonth: defaultMonth, numOfRecords: 450, range: 365 }))}>Randomize Stools</BasicButton>
+      <FilledButton onClick={() => setMockStoolRecords(mockData.createRandomMockStoolRecords({ defaultMonth: defaultMonth, numOfRecords: 450, range: 365 }))}>Randomize Stools</FilledButton>
     </>
   )
 }
