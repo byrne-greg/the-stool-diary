@@ -29,7 +29,7 @@ const RadioButtonGroup = ({
   // if we are on a small screen or the consumer has set vertical, then we should use vertical display css
   const theme = useTheme();
   const rbgColor = defaultColor === null ? theme.palette.primary : defaultColor
-  const shouldUseVertical = orientation === 'vertical' || useMediaQuery(theme.breakpoints.down('sm'));
+  const shouldUseVertical = orientation === 'vertical' || useMediaQuery(theme.breakpoints.down('xs'));
 
   return (
     <MaterialButtonGroup orientation={shouldUseVertical ? 'vertical' : 'horizontal'} className={classes.radioButtonGroup} {...props}>

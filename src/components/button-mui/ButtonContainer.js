@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
       flexDirection: direction,
       justifyContent: 'center'
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       flexDirection: 'column'
     },
     '& > button': {
