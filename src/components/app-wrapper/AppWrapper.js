@@ -6,12 +6,20 @@ import GlobalTheme from '../theme/GlobalTheme'
 // Use: Wrapping a global Context for web app state management
 // Use: Wrapping a global Theme for the web app
 const AppWrapper = ({ children }) => {
+  const [isClient, setClient] = React.useState(false);
+  const key = isClient ? "client" : "server";
+  React.useEffect(() => {
+    setClient(true);
+  }, []);
+
   return (
-    <GlobalContextProvider>
-      <GlobalTheme>
-        {children}
-      </GlobalTheme>
-    </GlobalContextProvider>
+    <div key={key}>
+      <GlobalContextProvider>
+        <GlobalTheme>
+          {children}
+        </GlobalTheme>
+      </GlobalContextProvider>
+    </div>
   )
 }
 export default AppWrapper
