@@ -7,11 +7,20 @@ import Card from '../Card'
 import CardActions from '../CardActions'
 import { PrimaryActionButton, SecondaryActionButton } from '../../button-mui'
 
-const StoolTypeCard = ({ type, image, description, handleClick, isSelected, ...props }) => {
+const StoolTypeCard = ({ 
+    type, 
+    image, 
+    description, 
+    handleClick = ()=>{}, 
+    isSelected = false, 
+    selectButton = null,
+    deselectButton = null,
+    ...props 
+  }) => {
 
   const { t } = useTranslation();
   const selectCardFn = () => handleClick(type);
-  const unselectCardFn = () => handleClick(null);
+  const deselectCardFn = () => handleClick(null);
 
   return (
       <Card 
@@ -34,12 +43,16 @@ const StoolTypeCard = ({ type, image, description, handleClick, isSelected, ...p
             </Typography>
           </MaterialCardContent>
         <CardActions>
-          {!isSelected ? (
+          {!isSelected ? 
+            selectButton ? selectButton :
+              (
                 <PrimaryActionButton block onClick={selectCardFn}>
                   {t("Select")}
                 </PrimaryActionButton>
-              ) : (
-                <SecondaryActionButton block onClick={unselectCardFn} >
+              ) : 
+              deselectButton ? deselectButton :
+              (
+                <SecondaryActionButton block onClick={deselectCardFn} >
                   {t("Click to reselect")}
                 </SecondaryActionButton>
               )}

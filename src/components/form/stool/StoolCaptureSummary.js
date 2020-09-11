@@ -7,7 +7,7 @@ import { Chip } from '../../chip'
 import { Card, CardActions, CardContainer } from "../../card-mui"
 import { StoolTypeCard, ItemNotFoundCard } from "../../card-mui/composite"
 import stoolClassifications from '../../../utils/stool-classifications'
-import { SecondaryActionButton } from '../../button-mui'
+import { SecondaryActionButton, FilledButton } from '../../button-mui'
 import { DateTimePicker, DatePicker } from '../../datetime-picker'
 import { convertToProperCase } from '../../../utils/text'
 
@@ -58,7 +58,9 @@ const StoolCaptureSummary = ({
                 image={stoolClassificationOnSelectedType.image}
                 description={stoolClassificationOnSelectedType.description}
                 handleClick={handleTypeReselect}
-                isSelected />
+                isSelected 
+                deselectButton={<FilledButton color={theme.palette.secondary} block onClick={handleSizeReselect}>{t(`Click to reselect`)}</FilledButton>}
+                />
             ) : (
               <ItemNotFoundCard />
             )}
@@ -84,11 +86,12 @@ const StoolCaptureSummary = ({
                 />
               </CardContent>
               <CardActions>
-                <SecondaryActionButton 
+                <FilledButton
+                  color={theme.palette.secondary}
                   block 
                   onClick={handleSizeReselect}>
                     {t(`Click to reselect`)}
-                </SecondaryActionButton>
+                </FilledButton>
               </CardActions>
             </Card>
             ) : (
@@ -112,11 +115,12 @@ const StoolCaptureSummary = ({
                     )}
               </CardContent>
               <CardActions>
-                <SecondaryActionButton 
+                <FilledButton
+                  color={theme.palette.secondary}
                   block 
                   onClick={handleDateTimeReselect}>
                     {t(`Click to reselect`)}
-                </SecondaryActionButton>
+                </FilledButton>
               </CardActions>
             </Card>
           ) : (
