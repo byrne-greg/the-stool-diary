@@ -101,11 +101,22 @@ describe('StoolCaptureSummary', () => {
       expect(buttonLabel).toBeTruthy()
     })
 
-
-
-
   });
   describe('Functional', () => {
+
+    test(`when rendered the summary page, then should call passed hasReachedSummary function`, async () => {
+
+      // ARRANGE
+      const mockSetSummaryFn = jest.fn();
+
+      // ACT
+      render(
+        <StoolCaptureSummary setHasReachedSummary={mockSetSummaryFn}/>
+      )
+     
+      // ASSERT
+      expect(mockSetSummaryFn.mock.calls.length).toBe(1);
+    });
 
 
     test(`when selected stool type was passed, then the user can reselect the stool type`, async () => {
@@ -113,7 +124,6 @@ describe('StoolCaptureSummary', () => {
       // ARRANGE
       const mockHandleReselect = jest.fn();
       const stoolType = stoolClassifications[0].type;
-
 
       // ACT
       const { getByTestId } = render(

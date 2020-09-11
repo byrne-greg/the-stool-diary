@@ -63,7 +63,7 @@ const RecordStoolFormScreens = () => {
         handleTypeReselect={() => { moveFormToStart(formNavDispatch); updateStoolType(stoolDispatch, null) }}
         handleSizeReselect={() => updateFormCurrentScreen(formNavDispatch, 1) }
         handleDateTimeReselect={() => updateFormCurrentScreen(formNavDispatch, 2) }
-        setFormHasReachedSummary={() => updateFormHasReachedSummary(formNavDispatch, true) }
+        setHasReachedSummary={() => updateFormHasReachedSummary(formNavDispatch, true) }
         formNavButtons={
           <FormNavigationButtons
             primaryActionOverride={

@@ -32,11 +32,11 @@ const StoolCaptureSummary = ({
   handleDateTimeReselect = () => { },
   handleSizeReselect = () => { },
   formNavButtons = null,
-  setFormHasReachedSummary = () => { },
+  setHasReachedSummary = () => { },
 }) => {
 
   useEffect(()=>{
-    setFormHasReachedSummary();
+    setHasReachedSummary();
   }, [])
 
   const theme = useTheme();
