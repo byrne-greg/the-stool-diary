@@ -29,14 +29,10 @@ const RecordStoolFormScreens = ({ persistStoolData = () => {} }) => {
   const formNavDispatch = useContext(FormNavigationDispatchContext)
   const getCurrentScreen = () => formNavState.screens[formNavState.currentScreen]
   const goToSummaryScreen = () => updateFormCurrentScreen(formNavDispatch, formNavState.screens.length - 1)
+  const goToNextOrSummaryScreen = () => !formNavState.hasReachedSummary ? moveFormScreenForward(formNavDispatch) : goToSummaryScreen()
  
   // console.log(stoolState)
   // console.log(formNavState)
-
-  const goToNextOrSummaryScreen = () => { 
-    console.log("currentFormNavState", formNavState); 
-    !formNavState.hasReachedSummary ? moveFormScreenForward(formNavDispatch) : goToSummaryScreen() 
-  }
 
   // load the record stool form screens on render
   useEffect(() => {
