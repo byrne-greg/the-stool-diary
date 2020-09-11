@@ -23,16 +23,13 @@ const StoolSizeCapture = ({ persistedSize = null, persistSize = () => { }, formN
     { value: STOOL_SIZES.LARGE, text: t('Large') },
   ]
   const defaultValue = persistedSize ? persistedSize : buttonData[0].value;
-
   useEffect(() => {
-    if (!persistedSize) {
-      persistSize(defaultValue)
-    }
-  }, [persistedSize])
+    persistSize(defaultValue)
+  }, [])
 
   return (
     <div>
-      <Typography gutterBottom variant="h3" component="h2">
+      <Typography gutterBottom variant="h3" component="h2" data-testid="stool-form-capture-screen-title">
         {t("Choose a size")}
       </Typography>
       <Container className={classes.sizeSelectorContainer}>

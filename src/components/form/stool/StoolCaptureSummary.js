@@ -47,7 +47,7 @@ const StoolCaptureSummary = ({
 
   return (
     <div>
-      <Typography gutterBottom variant="h3" component="h2">
+      <Typography gutterBottom variant="h3" component="h2" data-testid="stool-form-capture-screen-title">
         {t('Summary')}
       </Typography>
       <section className={classes.captureSummarySection}>
@@ -58,7 +58,7 @@ const StoolCaptureSummary = ({
           {stoolClassificationOnSelectedType ?
             (
               <StoolTypeCard
-                data-testid={`selected-stool-type-card-${stoolClassificationOnSelectedType.type}`}
+                data-testid={`selected-stool-type-card-type-${stoolClassificationOnSelectedType.type}`}
                 type={stoolClassificationOnSelectedType.type}
                 image={stoolClassificationOnSelectedType.image}
                 description={stoolClassificationOnSelectedType.description}

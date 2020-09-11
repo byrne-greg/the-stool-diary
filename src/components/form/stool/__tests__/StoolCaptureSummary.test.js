@@ -32,7 +32,7 @@ describe('StoolCaptureSummary', () => {
         const { queryByTestId } = render(
           <StoolCaptureSummary selectedType={stoolType} />
         )
-        const stoolTypeCard = queryByTestId(`selected-stool-type-card-${stoolType}`)
+        const stoolTypeCard = queryByTestId(`selected-stool-type-card-type-${stoolType}`)
         // ASSERT
         expect(stoolTypeCard).toBeTruthy()
 
@@ -129,7 +129,7 @@ describe('StoolCaptureSummary', () => {
       const { getByTestId } = render(
         <StoolCaptureSummary selectedType={stoolType} handleTypeReselect={mockHandleReselect} />
       )
-      const reselectButton = getByTestId(`selected-stool-type-card-${stoolType}`).querySelector('button');
+      const reselectButton = getByTestId(`selected-stool-type-card-type-${stoolType}`).querySelector('button');
       await fireEvent.click(reselectButton)
 
       // ASSERT

@@ -5,23 +5,23 @@ import Typography from '@material-ui/core/Typography'
 import { StoolTypeCapture, StoolDateTimeCapture, StoolSizeCapture, StoolCaptureSummary } from '.';
 import { PrimaryActionButton } from '../../button-mui';
 import { FormNavigationButtons } from '../../button-mui/composite'
-import RecordStoolContextProvider, { RecordStoolStateContext, RecordStoolDispatchContext, persistStoolData } from '../../../context/stool/RecordStoolContext';
+import RecordStoolContextProvider, { RecordStoolStateContext, RecordStoolDispatchContext } from '../../../context/stool/RecordStoolContext';
 import { updateStoolType, updateStoolDateTime, updateStoolSize } from '../../../context/stool/actions'
 import FormNavigationContextProvider, { FormNavigationStateContext, FormNavigationDispatchContext } from '../../../context/form/FormNavigationContextProvider';
 import { moveFormScreenForward, moveFormScreenBackward, moveFormToStart, updateFormCurrentScreen, loadFormScreens, updateFormHasReachedSummary } from '../../../context/form/actions'
 
-const RecordStoolForm = () => {
+const RecordStoolForm = ({ persistStoolDataFn = ()=> {} }) => {
   return (
     <FormNavigationContextProvider>
       <RecordStoolContextProvider>
-        <RecordStoolFormScreens/>
+        <RecordStoolFormScreens persistStoolData={persistStoolDataFn}/>
       </RecordStoolContextProvider>
     </FormNavigationContextProvider>
   )
 }
 
-const RecordStoolFormScreens = () => {
-  
+const RecordStoolFormScreens = ({ persistStoolData = () => {} }) => {
+  const theme = useTheme()
   const { t } = useTranslation()
   const stoolState = useContext(RecordStoolStateContext)
   const stoolDispatch = useContext(RecordStoolDispatchContext)
@@ -29,21 +29,27 @@ const RecordStoolFormScreens = () => {
   const formNavDispatch = useContext(FormNavigationDispatchContext)
   const getCurrentScreen = () => formNavState.screens[formNavState.currentScreen]
   const goToSummaryScreen = () => updateFormCurrentScreen(formNavDispatch, formNavState.screens.length - 1)
-  const goToNextOrSummaryScreen = () => { !formNavState.hasReachedSummary ? moveFormScreenForward(formNavDispatch) : goToSummaryScreen() }
-  const theme = useTheme()
+ 
+  // console.log(stoolState)
+  // console.log(formNavState)
+
+  const goToNextOrSummaryScreen = () => { 
+    console.log("currentFormNavState", formNavState); 
+    !formNavState.hasReachedSummary ? moveFormScreenForward(formNavDispatch) : goToSummaryScreen() 
+  }
 
   // load the record stool form screens on render
   useEffect(() => {
     const stoolFormScreens = [
       <StoolTypeCapture
-        persistType={(stoolType) => { updateStoolType(stoolDispatch, stoolType); goToNextOrSummaryScreen(); }}
+        persistType={(stoolType) => { updateStoolType(stoolDispatch, stoolType); goToNextOrSummaryScreen(formNavState); }}
       />,
       <StoolSizeCapture
         persistedSize={stoolState.size}
         persistSize={(size) => updateStoolSize(stoolDispatch, size)}
         formNavButtons={
           <FormNavigationButtons
-            handleNavForward={() => goToNextOrSummaryScreen() }
+            handleNavForward={() =>  !formNavState.hasReachedSummary ? moveFormScreenForward(formNavDispatch) : goToSummaryScreen() }
             handleNavBackward={() => moveFormScreenBackward(formNavDispatch) }
           />}
       />,
@@ -52,7 +58,7 @@ const RecordStoolFormScreens = () => {
         persistDateTime={(dateTime) => updateStoolDateTime(stoolDispatch, dateTime)}
         formNavButtons={
           <FormNavigationButtons
-            handleNavForward={() => goToNextOrSummaryScreen() }
+            handleNavForward={() => goToNextOrSummaryScreen(formNavState) }
             handleNavBackward={() => moveFormScreenBackward(formNavDispatch) }
           />}
       />,
@@ -67,10 +73,14 @@ const RecordStoolFormScreens = () => {
         formNavButtons={
           <FormNavigationButtons
             primaryActionOverride={
-            <PrimaryActionButton buttonPalette={theme.palette.success} onClick={() => {
-              persistStoolData(stoolState);
-              moveFormToStart(formNavDispatch);
-            }}>
+            <PrimaryActionButton 
+              color={theme.palette.success} 
+              onClick={() => {
+                persistStoolData(stoolState);
+                moveFormToStart(formNavDispatch);
+              }}
+              data-testid={'formnavigationbuttons-button-save'}
+              >
               {t('Save')}
             </PrimaryActionButton >}
             handleNavBackward={() => moveFormScreenBackward(formNavDispatch) }

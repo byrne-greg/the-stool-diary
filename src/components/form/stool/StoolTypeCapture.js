@@ -9,7 +9,7 @@ const StoolTypeCapture = ({ persistType = () => { }, persistedType = null, formN
   const { t } = useTranslation();
   return (
     <div>
-      <Typography gutterBottom variant="h3" component="h2">
+      <Typography gutterBottom variant="h3" component="h2" data-testid="stool-form-capture-screen-title">
         {t("Choose a type")}
       </Typography>
       <CardContainer cardWidth={360}>
