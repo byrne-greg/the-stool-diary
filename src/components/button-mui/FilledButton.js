@@ -7,7 +7,7 @@ const useStyles = makeStyles(theme => ({
     const applyBorder = (color = buttonPalette.main) => `3px solid ${color}`
     return ({
     width: block ? '100%' : 'unset',
-    padding: '0.5rem 0.75rem',
+    padding: '0.5rem 1.5rem',
     fontWeight: 'bold',
     background: buttonPalette.main,
     color:  theme.palette.getContrastText(buttonPalette.main),

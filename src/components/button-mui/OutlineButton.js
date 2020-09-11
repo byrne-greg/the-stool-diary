@@ -7,7 +7,7 @@ const useStyles = makeStyles(theme => ({
     const applyBorder = (color=buttonPalette.main) => `3px solid ${color}`
     return({
       width: block ? '100%' : 'unset',
-      padding: '0.5rem 0.75rem',
+      padding: '0.5rem 1.5rem',
       background: theme.palette.background.default,
       fontWeight: 'bold',
       color:  buttonPalette.main,
