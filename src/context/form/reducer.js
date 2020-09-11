@@ -4,7 +4,7 @@ import {
   UPDATE_CURRENT_SCREEN,
   MOVE_SCREEN_FORWARD,
   MOVE_SCREEN_BACKWARD,
-} from "./formActionTypes"
+} from "./actionTypes"
 
 const moveScreenForwardIfPossible = (currentScreen, numOfScreens) => currentScreen + 1 > numOfScreens ? numOfScreens : currentScreen + 1
 export const formReducer = (state, action) => {
@@ -18,6 +18,7 @@ export const formReducer = (state, action) => {
     default: throw new Error("Cannot execute form dispatch action")
   }
 }
+export default formReducer
 
 
 

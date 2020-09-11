@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
@@ -7,7 +7,7 @@ import { Chip } from '../../chip'
 import { Card, CardActions, CardContainer } from "../../card-mui"
 import { StoolTypeCard, ItemNotFoundCard } from "../../card-mui/composite"
 import stoolClassifications from '../../../utils/stool-classifications'
-import { SecondaryActionButton, FilledButton } from '../../button-mui'
+import { FilledButton } from '../../button-mui'
 import { DateTimePicker, DatePicker } from '../../datetime-picker'
 import { convertToProperCase } from '../../../utils/text'
 
@@ -31,8 +31,13 @@ const StoolCaptureSummary = ({
   handleTypeReselect = () => { },
   handleDateTimeReselect = () => { },
   handleSizeReselect = () => { },
-  formNavButtons = null
+  formNavButtons = null,
+  setFormHasReachedSummary = () => { },
 }) => {
+
+  useEffect(()=>{
+    setFormHasReachedSummary();
+  }, [])
 
   const theme = useTheme();
   const classes = useStyles();
@@ -59,7 +64,9 @@ const StoolCaptureSummary = ({
                 description={stoolClassificationOnSelectedType.description}
                 handleClick={handleTypeReselect}
                 isSelected 
-                deselectButton={<FilledButton color={theme.palette.secondary} block onClick={handleSizeReselect}>{t(`Click to reselect`)}</FilledButton>}
+                deselectButton={
+                  <FilledButton color={theme.palette.secondary} block onClick={handleTypeReselect}>{t(`Click to reselect`)}</FilledButton>
+                }
                 />
             ) : (
               <ItemNotFoundCard />

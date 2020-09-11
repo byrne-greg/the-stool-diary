@@ -1,84 +1,50 @@
-import React, { useEffect, useReducer, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { useTranslation } from 'react-i18next'
 import { useTheme } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography'
 import { StoolTypeCapture, StoolDateTimeCapture, StoolSizeCapture, StoolCaptureSummary } from '.';
 import { PrimaryActionButton } from '../../button-mui';
 import { FormNavigationButtons } from '../../button-mui/composite'
-import { INITIAL_FORM_STATE } from '../state/formModel'
-import { loadFormScreens, updateFormCurrentScreen, updateFormHasReachedSummary, moveFormScreenForward, moveFormScreenBackward } from '../state/formActions'
-import { formReducer } from '../state/formReducers'
-import { updateStoolType, updateStoolDateTime, updateStoolSize } from '../../../context/stool/actions'
 import RecordStoolContextProvider, { RecordStoolStateContext, RecordStoolDispatchContext, persistStoolData } from '../../../context/stool/RecordStoolContext';
+import { updateStoolType, updateStoolDateTime, updateStoolSize } from '../../../context/stool/actions'
+import FormNavigationContextProvider, { FormNavigationStateContext, FormNavigationDispatchContext } from '../../../context/form/FormNavigationContextProvider';
+import { moveFormScreenForward, moveFormScreenBackward, moveFormToStart, updateFormCurrentScreen, loadFormScreens, updateFormHasReachedSummary } from '../../../context/form/actions'
 
 const RecordStoolForm = () => {
-
-  const [formState, formDispatch] = useReducer(formReducer, INITIAL_FORM_STATE);
-  const goForwardScreen = () =>  moveFormScreenForward(formDispatch);
-  const goBackwardScreen = () => moveFormScreenBackward(formDispatch);
-  const goStartScreen = () => updateFormCurrentScreen(formDispatch, 0)
-  const goEndScreen = () => updateFormCurrentScreen(formDispatch, formState.screens.length - 1)
-  const goSelectScreen = (index) => updateFormCurrentScreen(formDispatch, index)
-  const setFormHasReachedSummary = () => updateFormHasReachedSummary(formDispatch, true);
-  const loadScreens = (formScreens) => loadFormScreens(formDispatch, formScreens);
-  const getCurrentScreen = () => formState.screens[formState.currentScreen]
-  const getFormHasReachedSummary = () => formState.hasReachedSummary
-
-  console.log('formState', formState)
-
   return (
-    <RecordStoolContextProvider>
-      <RecordStoolFormScreens
-        goForwardScreen={goForwardScreen}
-        goBackwardScreen={goBackwardScreen}
-        goStartScreen={goStartScreen}
-        goEndScreen={goEndScreen}
-        goSelectScreen={goSelectScreen}
-        setFormHasReachedSummary={setFormHasReachedSummary}
-        getFormHasReachedSummary={getFormHasReachedSummary}
-        loadScreens={loadScreens}
-        getCurrentScreen={getCurrentScreen}
-      />
-    </RecordStoolContextProvider>
+    <FormNavigationContextProvider>
+      <RecordStoolContextProvider>
+        <RecordStoolFormScreens/>
+      </RecordStoolContextProvider>
+    </FormNavigationContextProvider>
   )
 }
 
-const RecordStoolFormScreens = ({
-  goForwardScreen,
-  goBackwardScreen,
-  goStartScreen,
-  goEndScreen,
-  goSelectScreen,
-  setFormHasReachedSummary,
-  getFormHasReachedSummary,
-  loadScreens,
-  getCurrentScreen,
-}) => {
+const RecordStoolFormScreens = () => {
   
-
   const { t } = useTranslation()
   const stoolState = useContext(RecordStoolStateContext)
   const stoolDispatch = useContext(RecordStoolDispatchContext)
+  const formNavState = useContext(FormNavigationStateContext)
+  const formNavDispatch = useContext(FormNavigationDispatchContext)
+  const getCurrentScreen = () => formNavState.screens[formNavState.currentScreen]
+  const goToSummaryScreen = () => updateFormCurrentScreen(formNavDispatch, formNavState.screens.length - 1)
+  const goToNextOrSummaryScreen = () => { !formNavState.hasReachedSummary ? moveFormScreenForward(formNavDispatch) : goToSummaryScreen() }
   const theme = useTheme()
-  
+
   // load the record stool form screens on render
   useEffect(() => {
     const stoolFormScreens = [
       <StoolTypeCapture
-        persistType={(stoolType) => {
-          updateStoolType(stoolDispatch, stoolType);
-          // TODO this is causing undefined errors when reaching summary, reselecting stool, and proceeding to end
-          // getFormHasReachedSummary() ? goEndScreen() : goForwardScreen();
-          goForwardScreen();
-        }}
+        persistType={(stoolType) => { updateStoolType(stoolDispatch, stoolType); goToNextOrSummaryScreen(); }}
       />,
       <StoolSizeCapture
         persistedSize={stoolState.size}
         persistSize={(size) => updateStoolSize(stoolDispatch, size)}
         formNavButtons={
           <FormNavigationButtons
-            handleNavForward={() => goForwardScreen() }
-            handleNavBackward={() => goBackwardScreen() }
+            handleNavForward={() => goToNextOrSummaryScreen() }
+            handleNavBackward={() => moveFormScreenBackward(formNavDispatch) }
           />}
       />,
       <StoolDateTimeCapture
@@ -86,38 +52,38 @@ const RecordStoolFormScreens = ({
         persistDateTime={(dateTime) => updateStoolDateTime(stoolDispatch, dateTime)}
         formNavButtons={
           <FormNavigationButtons
-            handleNavForward={() => { goForwardScreen(); }}
-            handleNavBackward={() => { goBackwardScreen(); }}
+            handleNavForward={() => goToNextOrSummaryScreen() }
+            handleNavBackward={() => moveFormScreenBackward(formNavDispatch) }
           />}
       />,
       <StoolCaptureSummary
         selectedType={stoolState.type}
         selectedSize={stoolState.size}
         selectedDateTime={stoolState.dateTime}
-        handleTypeReselect={() => { goStartScreen(); updateStoolType(stoolDispatch, null) }}
-        handleSizeReselect={() => { goSelectScreen(1) }}
-        handleDateTimeReselect={() => { goSelectScreen(2) }}
-        hasFormReachedSummary={getFormHasReachedSummary()}
-        setFormHasReachedSummary={setFormHasReachedSummary}
+        handleTypeReselect={() => { moveFormToStart(formNavDispatch); updateStoolType(stoolDispatch, null) }}
+        handleSizeReselect={() => updateFormCurrentScreen(formNavDispatch, 1) }
+        handleDateTimeReselect={() => updateFormCurrentScreen(formNavDispatch, 2) }
+        setFormHasReachedSummary={() => updateFormHasReachedSummary(formNavDispatch, true) }
         formNavButtons={
           <FormNavigationButtons
             primaryActionOverride={
             <PrimaryActionButton buttonPalette={theme.palette.success} onClick={() => {
               persistStoolData(stoolState);
-              goStartScreen();
+              moveFormToStart(formNavDispatch);
             }}>
               {t('Save')}
             </PrimaryActionButton >}
-            handleNavBackward={() => { goBackwardScreen() }}
+            handleNavBackward={() => moveFormScreenBackward(formNavDispatch) }
           />}
-      />]
-    loadScreens(stoolFormScreens)
-  }, [stoolState, getFormHasReachedSummary()])
+      />
+    ]
+    loadFormScreens(formNavDispatch, stoolFormScreens)
+  }, [stoolState])
 
   return (
     <div>
       <Typography gutterBottom variant="h2" component="h1">
-        {t('Record Stool')}
+        {t('Recording Stool')}
       </Typography>
       <div>
         {getCurrentScreen()}
