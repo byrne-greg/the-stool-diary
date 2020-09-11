@@ -2,13 +2,18 @@ import { action } from "@storybook/addon-actions"
 import { addDecorator } from "@storybook/react"
 import React from 'react'
 
-// Provide App wrapper to all Stories
-import { AppWrapper } from "../src/components/app-wrapper"
+// TODO
+// Cannot use AppWrapper as importing i18n causes problems because of the i18next-http-backend and storybook not finding core-js/modules/...
+// Manually importing and wrapping the story with global components
+import GlobalContextProvider from '../src/context/GlobalContextProvider'
+import GlobalTheme from '../src/components/theme/GlobalTheme'
 addDecorator(
   (Story) => (
-    <AppWrapper>
-      <Story/>
-    </AppWrapper>)
+    <GlobalContextProvider>
+      <GlobalTheme>
+        <Story/>
+      </GlobalTheme>
+    </GlobalContextProvider>)
   )
 
 // Gatsby's Link overrides:
