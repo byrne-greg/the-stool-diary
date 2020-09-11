@@ -1,12 +1,17 @@
 import React from 'react'
 import { PrimaryActionButton, SecondaryActionButton } from '../ThemeButton'
 import ButtonContainer from '../ButtonContainer'
+import { useTranslation } from 'react-i18next'
 
 const FormNavigationButtons = ({
   handleNavForward = () => { },
   handleNavBackward = () => { },
   primaryActionOverride = null,
-  secondaryActionOverride = null }) => {
+  secondaryActionOverride = null 
+}) => {
+
+  const { t } = useTranslation();
+
   return (
     <ButtonContainer>
       {!primaryActionOverride ?
@@ -14,7 +19,7 @@ const FormNavigationButtons = ({
           onClick={handleNavForward}
           data-testid={'formnavigationbuttons-button-forward'}
         >
-          Next
+          {t('Next')}
         </PrimaryActionButton>)
         : primaryActionOverride}
       {!secondaryActionOverride ?
@@ -22,7 +27,7 @@ const FormNavigationButtons = ({
           onClick={handleNavBackward}
           data-testid={'formnavigationbuttons-button-backward'}
         >
-          Back
+          {t('Back')}
         </SecondaryActionButton>)
         : secondaryActionOverride}
     </ButtonContainer>
