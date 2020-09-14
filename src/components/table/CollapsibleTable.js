@@ -92,15 +92,20 @@ const CollapsibleTable = ({ tableData , showCollapsibleColumn=true, ariaLabel="c
   return (
     <MaterialTable aria-label={ariaLabel}>
       <MaterialTableHead>
-        <MaterialTableRow >
+        <MaterialTableRow data-testid="collapsible-table-header-row" >
           {/* empty header cell for collapse toggle column */}
-          {showCollapsibleColumn ? <MaterialTableCell/> : null}
+          {showCollapsibleColumn ? <MaterialTableCell data-testid="collapsible-table-header-cell-collapsetoggle"/> : null}
           {headers.map((header, index) => (
-            <MaterialTableCell key={index} align={header.align ? header.align : 'left'}>
+            <MaterialTableCell 
+              key={index} 
+              align={header.align ? header.align : 'left'}
+              data-testid="collapsible-table-header-cell"
+            >
               <MaterialTableSortLabel
                 active={orderBy === header.display}
                 direction={isSortAsc ? 'asc' : 'desc'}
                 onClick={() => { setIsSortAsc(!isSortAsc); setOrderBy(index) }}
+                data-testid="collapsible-table-header-sortlabel"
               >
                 {header.display}
               </MaterialTableSortLabel>
@@ -130,11 +135,12 @@ const CollapsibleRow = ({ row , showCollapsibleColumn=true}) => {
     <>
       <MaterialTableRow
         onClick={isCollapsibleDataInRow(row) ? collapse : () => { }}
-        className={isCollapsibleDataInRow(row) ? classes.collapsedRow : null}>
-        
+        className={isCollapsibleDataInRow(row) ? classes.collapsedRow : null}
+        data-testid={'collapsible-table-body-row'}
+      >  
         {/* only show the collapse column if configured to do so*/}
         {showCollapsibleColumn ? (
-          <MaterialTableCell> 
+          <MaterialTableCell data-testid="collapsible-table-body-cell-collapsetoggle"> 
             {/* only show the collapse down icon if there is data to show*/}
             {isCollapsibleDataInRow(row) ?
               <IconButton aria-label="expand row" size="small" onClick={collapse}>
@@ -148,7 +154,12 @@ const CollapsibleRow = ({ row , showCollapsibleColumn=true}) => {
         ) : null}
 
         {row.data.map((item, index) =>
-          <MaterialTableCell key={`${item.display}-${index}`} align={item.align ? item.align : 'left'} className={classes.cell}>
+          <MaterialTableCell 
+            key={`${item.display}-${index}`} 
+            align={item.align ? item.align : 'left'} 
+            className={classes.cell}
+            data-testid="collapsible-table-body-cell"
+          >
             {item.display}
           </MaterialTableCell>
         )}
