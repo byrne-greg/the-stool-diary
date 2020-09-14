@@ -1,17 +1,21 @@
 import React from 'react'
+import { Typography } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
 import useStoolRecordsForPerson from '../firebase/hooks'
 import { SevenDayStoolCountTable, MonthlyStoolCountTable } from '../table/composites';
-import { Typography } from '@material-ui/core';
-
 
 const ListStoolRecordsScreen = () => {
 
   const [stoolRecords] = useStoolRecordsForPerson();
+  const { t } = useTranslation()
 
   return (
     <div>
-      <Typography variant="h2">Your Stool Records</Typography>
-      <SevenDayStoolCountTable recordedStools={stoolRecords} titleLevel='h3'/>
+      <Typography gutterBottom variant="h2" component="h1">Your Stool Records</Typography>
+      <SevenDayStoolCountTable 
+        recordedStools={stoolRecords} 
+        title={<Typography gutterBottom variant="h3" component="h2">{t('Most recent stools')}</Typography>}
+      />
       <MonthlyStoolCountTable recordedStools={stoolRecords} titleLevel='h3'/>
     </div>
   )

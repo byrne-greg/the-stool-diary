@@ -5,13 +5,12 @@ import BaseStoolDayCountTable from './BaseStoolDayCountTable';
 import { ListStoolRecords } from '../../list/composites'
 import { StoolCount } from '../../chip/composites'
 import momentFormatter from '../../../utils/moment-format'
-import { Title } from '../../title';
 
-const SevenDayStoolCountTable = ({ recordedStools = [], titleLevel='h2' }) => {
+const SevenDayStoolCountTable = ({ recordedStools = [], title = null}) => {
   const { t } = useTranslation();
   return (
     <div>
-      <Title as={titleLevel}>{t('Most Recent Stools')}</Title>
+      {title}
       <BaseStoolDayCountTable
         recordedStools={recordedStools}
         startDate={moment().subtract(6, 'days').format(momentFormatter.YYYYMMDD)}
@@ -56,11 +55,11 @@ function getStoolTableData(stoolDayData, t) {
       const stoolTableRow = {
         data: [
           { 
-          display: `${t(dateStringMoment.format('dddd'))}, ${dateStringMoment.format('Do')} ${t(dateStringMoment.format('MMMM'))}`,
-          value: dateStringMoment.format(), 
-          type: 'date' 
-        },
-          { display: <StoolCount count={dayData.count}>{dayData.count}</StoolCount>, value: dayData.count, type: 'numeric', align: 'center' }
+            display: `${t(dateStringMoment.format('dddd'))}, ${dateStringMoment.format('Do')} ${t(dateStringMoment.format('MMMM'))}`,
+            value: dateStringMoment.format(), 
+            type: 'date' 
+          },
+            { display: <StoolCount count={dayData.count}>{dayData.count}</StoolCount>, value: dayData.count, type: 'numeric', align: 'center' }
         ],
       }
       // if we don't have stool records, then there is no need for a collapsed row
