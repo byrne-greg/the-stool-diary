@@ -95,7 +95,9 @@ describe('SevenDayStoolCountTable', () => {
     });
     test.todo("when displayed with no stool data, then every row should have a zero stool count");
     test.todo("when displayed with some stool data, then some rows should a non-zero stool count");
-    test.todo("when showing the expanded row with stool data, then there should be an equivalent number of stool items");
+
+    // test the list stool items in the list stool items component
+    test.todo("when showing the expanded row with stool data, then there should be some content");
     
   })
   describe('Functional', () => {
@@ -105,8 +107,6 @@ describe('SevenDayStoolCountTable', () => {
     test.todo("when the day column header is clicked twice, then it changes the stool row order to descending by date")
     test.todo("when the stool count column header is clicked, then it changes the stool row order to ascending by stool count")
     test.todo("when the stool count column header is clicked twice, then it changes the stool row order to descending by stool count")
-    test.todo("when the sort label in the expanded row is clicked, then it sorts the stool record list items by earliest to latest")
-    test.todo("when the sort label in the expanded row is clicked twice, then it sorts the stool record list items by latest to earliest")
 
   })
 })
