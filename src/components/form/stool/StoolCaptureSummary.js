@@ -47,7 +47,7 @@ const StoolCaptureSummary = ({
 
   return (
     <div>
-      <Typography gutterBottom variant="h3" component="h2" data-testid="stool-form-capture-screen-title">
+      <Typography gutterBottom variant="h3" component="h2" data-testid="stool-form-summary-capture-screen-title">
         {t('Summary')}
       </Typography>
       <section className={classes.captureSummarySection}>

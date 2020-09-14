@@ -29,7 +29,7 @@ const StoolSizeCapture = ({ persistedSize = null, persistSize = () => { }, formN
 
   return (
     <div>
-      <Typography gutterBottom variant="h3" component="h2" data-testid="stool-form-capture-screen-title">
+      <Typography gutterBottom variant="h3" component="h2" data-testid="stool-form-size-capture-screen-title">
         {t("Choose a size")}
       </Typography>
       <Container className={classes.sizeSelectorContainer}>

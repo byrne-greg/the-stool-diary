@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next'
 import { useTheme } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography'
@@ -10,17 +10,33 @@ import { updateStoolType, updateStoolDateTime, updateStoolSize } from '../../../
 import FormNavigationContextProvider, { FormNavigationStateContext, FormNavigationDispatchContext } from '../../../context/form/FormNavigationContextProvider';
 import { moveFormScreenForward, moveFormScreenBackward, moveFormToStart, updateFormCurrentScreen, loadFormScreens, updateFormHasReachedSummary } from '../../../context/form/actions'
 
-const RecordStoolForm = ({ persistStoolDataFn = ()=> {} }) => {
+const RecordStoolForm = ({ persistStoolDataFn = ()=> {}, isFinished = false }) => {
+  const [isUserFinished, setIsUserFinished] = useState(isFinished);
+  const { t } = useTranslation()
   return (
     <FormNavigationContextProvider>
       <RecordStoolContextProvider>
-        <RecordStoolFormScreens persistStoolData={persistStoolDataFn}/>
+        {!isUserFinished ? (
+        < RecordStoolFormScreens persistStoolData={persistStoolDataFn} setFinished={() => setIsUserFinished(true)} />
+        ) : (
+          <div>
+            <Typography gutterBottom variant="h2" component="h1">
+              {t("Recording Stool")}
+            </Typography>
+            <Typography gutterBottom variant="h3" component="h2" data-testid="stool-form-submitted-screen-title">
+              {t("Submitted")}
+            </Typography>
+            <Typography gutterBottom variant="body1" component="p">
+              {t("Fantastic! You've just finished recording a stool. See your stool record on the My Stools page.")}
+            </Typography>
+          </div>
+        )}
       </RecordStoolContextProvider>
     </FormNavigationContextProvider>
   )
 }
 
-const RecordStoolFormScreens = ({ persistStoolData = () => {} }) => {
+const RecordStoolFormScreens = ({ persistStoolData = () => {}, setFinished = () => {} }) => {
   const theme = useTheme()
   const { t } = useTranslation()
   const stoolState = useContext(RecordStoolStateContext)
@@ -73,7 +89,7 @@ const RecordStoolFormScreens = ({ persistStoolData = () => {} }) => {
               color={theme.palette.success} 
               onClick={() => {
                 persistStoolData(stoolState);
-                moveFormToStart(formNavDispatch);
+                setFinished()
               }}
               data-testid={'formnavigationbuttons-button-save'}
               >

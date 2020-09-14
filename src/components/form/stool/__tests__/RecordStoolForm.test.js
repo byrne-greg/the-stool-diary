@@ -166,7 +166,28 @@ describe('RecordStoolForm', () => {
        
     });
     
-    test.todo("when submitted stool, then stool submission screen should display")
+    test("when submitted stool, then stool submission screen should display", async () => {
+        // ARRANGE
+        const persistStoolStubFn = jest.fn();
+       
+        // ACT
+        const { getByTestId, queryByTestId } = render(<RecordStoolForm persistStoolDataFn={persistStoolStubFn}/>)
+        
+        // select the stool type because we don't have a next button on the type capture screen
+        const selectButton = getByTestId(`stool-type-card-type-${stoolClassifications[0].type}`).querySelector('button');
+        await fireEvent.click(selectButton)
+        
+        // press next on every other capture screen until we reach the save button
+        while(queryByTestId('formnavigationbuttons-button-forward')) {
+          await fireEvent.click(getByTestId('formnavigationbuttons-button-forward'))
+        }
+ 
+        // save the stool record
+        await fireEvent.click(getByTestId('formnavigationbuttons-button-save'))
+ 
+        // ASSERT
+        expect(queryByTestId('stool-form-submitted-screen-title')).toBeTruthy()
+    });
   })
 })
 
