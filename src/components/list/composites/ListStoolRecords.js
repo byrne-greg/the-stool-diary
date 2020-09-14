@@ -20,7 +20,7 @@ function sortRecordsByTimestamp(records, orderAsc) {
   })]
 }
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   daySeparatorContainer: {
     borderTop: `3px solid ${colors.BLUE}`,
     marginTop: '1rem',
@@ -35,12 +35,12 @@ const useStyles = makeStyles({
     paddingBottom: '4px',
   },
   sorter: {
-    backgroundColor: 'white'
+    backgroundColor: theme.palette.background.default
   },
   titleContainer: {
     paddingTop: '0.5rem'
   }
-})
+}))
 
 const ListStoolRecords = ({ recordedStools = [], hasSort=true, sortAscending=false, displayDaySeparators=true, titleComponent=null}) => {
   const { t } = useTranslation();
