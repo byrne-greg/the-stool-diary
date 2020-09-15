@@ -8,7 +8,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import ListStoolItem from './ListStoolItem'
 import List, { NoRecordsFound } from '../List'
 import momentFormatter from '../../../utils/moment-format'
-import colors from '../../../utils/colors'
 
 function sortRecordsByTimestamp(records, orderAsc) {
   return [...records.sort((a, b) => { 
@@ -22,7 +21,7 @@ function sortRecordsByTimestamp(records, orderAsc) {
 
 const useStyles = makeStyles(theme => ({
   daySeparatorContainer: {
-    borderTop: `3px solid ${colors.BLUE}`,
+    borderTop: `3px solid ${theme.palette.info.main}`,
     marginTop: '1rem',
     marginBottom: '1.45rem',
     paddingTop: '0.88rem'
@@ -30,12 +29,8 @@ const useStyles = makeStyles(theme => ({
   },
   daySeparatorText: {
     fontSize: '1.11rem',
-    color: colors.MATERIAL.BLACK,
     marginLeft: '1rem',
     paddingBottom: '4px',
-  },
-  sorter: {
-    backgroundColor: theme.palette.background.default
   },
   titleContainer: {
     paddingTop: '0.5rem'
