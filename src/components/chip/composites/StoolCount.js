@@ -44,7 +44,7 @@ const useStyles = makeStyles(theme => ({
 const StoolCount = ({ count }) => {
   const classes = useStyles({ count: count})
   return (
-    <Chip label={count} className={`${classes.chip} ${classes.chipColor}`}/>
+    <Chip label={count} className={`${classes.chip} ${classes.chipColor}`} data-testid="stool-count"/>
   )
 }
 export default StoolCount
