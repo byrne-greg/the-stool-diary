@@ -1,13 +1,12 @@
 import React from 'react'
 import moment from 'moment'
-import { useTranslation } from 'react-i18next'
 import BaseStoolDayCountTable from './BaseStoolDayCountTable';
 import { ListStoolRecords } from '../../list/composites'
 import { StoolCount } from '../../chip/composites'
 import momentFormatter from '../../../utils/moment-format'
 
+// recorded stools = Array.of(instances of the stool model)
 const SevenDayStoolCountTable = ({ recordedStools = [], title = null}) => {
-  const { t } = useTranslation();
   return (
     <div>
       {title}
