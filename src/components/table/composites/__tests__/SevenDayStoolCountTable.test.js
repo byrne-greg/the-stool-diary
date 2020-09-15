@@ -7,6 +7,8 @@ import defaultLocale from '../locales/SevenDayStoolCountTable.locale.en.json'
 import INITIAL_STATE from '../../../../context/stool/model';
 import momentFormatter from '../../../../utils/moment-format';
 
+const getDisplayDateFormatForMoment = (moment) => `${moment.format('dddd')}, ${moment.format('Do')} ${moment.format('MMMM')}`
+
 beforeEach(() => {
   document.body.innerHTML = null
 })
@@ -75,29 +77,29 @@ describe('SevenDayStoolCountTable', () => {
         
     });
     test("when displayed, then it should show the last seven days (including today) in format in descending order", async () => {
-      // ARRANGE
-      const getExpectedDateFormatForMoment= (moment) => `${moment.format('dddd')}, ${moment.format('Do')} ${moment.format('MMMM')}`
 
+      // ARRANGE
+      const expectedDayOrder = [
+        getDisplayDateFormatForMoment(moment()),
+        getDisplayDateFormatForMoment(moment().subtract(1, 'day')),
+        getDisplayDateFormatForMoment(moment().subtract(2, 'day')),
+        getDisplayDateFormatForMoment(moment().subtract(3, 'day')),
+        getDisplayDateFormatForMoment(moment().subtract(4, 'day')),    
+        getDisplayDateFormatForMoment(moment().subtract(5, 'day')),
+        getDisplayDateFormatForMoment(moment().subtract(6, 'day')),
+      ] 
+      const result = [];
+  
       // ACT
-      const { getAllByTestId } = render(<SevenDayStoolCountTable/>)
+      const { getAllByTestId } = render(<SevenDayStoolCountTable />)
       const rows = getAllByTestId('collapsible-table-body-row');
       
-      const isTodayDisplayedOnRowOne = rows[0].outerHTML.includes(getExpectedDateFormatForMoment(moment()))
-      const isTodayMinusOneDisplayedOnRowTwo = rows[1].outerHTML.includes(getExpectedDateFormatForMoment(moment().subtract(1, 'day')))
-      const isTodayMinusTwoDisplayedOnRowThree = rows[2].outerHTML.includes(getExpectedDateFormatForMoment(moment().subtract(2, 'day')))
-      const isTodayMinusThreeDisplayedOnRowFour = rows[3].outerHTML.includes(getExpectedDateFormatForMoment(moment().subtract(3, 'day')))
-      const isTodayMinusFourDisplayedOnRowFive = rows[4].outerHTML.includes(getExpectedDateFormatForMoment(moment().subtract(4, 'day')))
-      const isTodayMinusFiveDisplayedOnRowSix = rows[5].outerHTML.includes(getExpectedDateFormatForMoment(moment().subtract(5, 'day')))
-      const isTodayMinusSixDisplayedOnRowSeven = rows[6].outerHTML.includes(getExpectedDateFormatForMoment(moment().subtract(6, 'day')))
-
       // ASSERT
-      expect(isTodayDisplayedOnRowOne).toBeTruthy()
-      expect(isTodayMinusOneDisplayedOnRowTwo).toBeTruthy()
-      expect(isTodayMinusTwoDisplayedOnRowThree).toBeTruthy()
-      expect(isTodayMinusThreeDisplayedOnRowFour).toBeTruthy()
-      expect(isTodayMinusFourDisplayedOnRowFive).toBeTruthy()
-      expect(isTodayMinusFiveDisplayedOnRowSix).toBeTruthy()
-      expect(isTodayMinusSixDisplayedOnRowSeven).toBeTruthy()
+      rows.forEach(row => {
+        const displayDate = row.querySelectorAll('td')[1].textContent
+        result.push(displayDate) 
+      })
+      expect(result).toStrictEqual(expectedDayOrder) 
     });
     test("when displayed with no stool data, then every row should have a zero stool count", async () => {
        // ARRANGE
@@ -193,8 +195,60 @@ describe('SevenDayStoolCountTable', () => {
       expect(collapsedFirstRowCell.hasChildNodes()).toBeTruthy()
 
     })
-    test.todo("when the day column header is clicked, then changes the stool row order to ascending date")
-    test.todo("when the day column header is clicked twice, then it changes the stool row order to descending by date")
+    test("when the day column header is clicked, then changes the stool row order to ascending date", async () => {
+      // ARRANGE
+      const expectedDayOrder = [
+        getDisplayDateFormatForMoment(moment().subtract(6, 'day')),
+        getDisplayDateFormatForMoment(moment().subtract(5, 'day')),
+        getDisplayDateFormatForMoment(moment().subtract(4, 'day')),
+        getDisplayDateFormatForMoment(moment().subtract(3, 'day')),
+        getDisplayDateFormatForMoment(moment().subtract(2, 'day')),
+        getDisplayDateFormatForMoment(moment().subtract(1, 'day')),
+        getDisplayDateFormatForMoment(moment()),
+      ] 
+      const result = [];
+ 
+      // ACT
+      const { getByText, getAllByTestId } = render(<SevenDayStoolCountTable />)
+      const rows = getAllByTestId('collapsible-table-body-row');
+      const stoolCountHeaderCell = getByText('Day')
+      await fireEvent.click(stoolCountHeaderCell)
+      
+      // ASSERT
+      rows.forEach(row => {
+        const displayDate = row.querySelectorAll('td')[1].textContent
+        result.push(displayDate) 
+      })
+      expect(result).toStrictEqual(expectedDayOrder)      
+    })
+
+    test("when the day column header is clicked twice, then it changes the stool row order to descending by date", async () => {
+      const expectedDayOrder = [
+        getDisplayDateFormatForMoment(moment()),
+        getDisplayDateFormatForMoment(moment().subtract(1, 'day')),
+        getDisplayDateFormatForMoment(moment().subtract(2, 'day')),
+        getDisplayDateFormatForMoment(moment().subtract(3, 'day')),
+        getDisplayDateFormatForMoment(moment().subtract(4, 'day')),    
+        getDisplayDateFormatForMoment(moment().subtract(5, 'day')),
+        getDisplayDateFormatForMoment(moment().subtract(6, 'day')),
+      ] 
+      const result = [];
+ 
+      // ACT
+      const { getByText, getAllByTestId } = render(<SevenDayStoolCountTable />)
+      const rows = getAllByTestId('collapsible-table-body-row');
+      const stoolCountHeaderCell = getByText('Day')
+      await fireEvent.click(stoolCountHeaderCell)
+      await fireEvent.click(stoolCountHeaderCell)
+      
+      // ASSERT
+      rows.forEach(row => {
+        const displayDate = row.querySelectorAll('td')[1].textContent
+        result.push(displayDate) 
+      })
+      expect(result).toStrictEqual(expectedDayOrder)   
+    })
+
     test("when the stool count column header is clicked, then it changes the stool row order to ascending by stool count", async () => {
       // ARRANGE
       const stoolData = [
