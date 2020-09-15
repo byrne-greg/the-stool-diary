@@ -1,9 +1,15 @@
 import React from 'react';
 import moment from 'moment'
-import { screen } from '@testing-library/dom'
+import { getAllByTestId, getByText, screen } from '@testing-library/dom'
 import { render, fireEvent } from '@testing-library/react'
 import SevenDayStoolCountTable from '../SevenDayStoolCountTable';
 import defaultLocale from '../locales/SevenDayStoolCountTable.locale.en.json'
+import INITIAL_STATE from '../../../../context/stool/model';
+import momentFormatter from '../../../../utils/moment-format';
+
+beforeEach(() => {
+  document.body.innerHTML = null
+})
 
 describe('SevenDayStoolCountTable', () => {
   describe('UI', () => {
@@ -68,7 +74,7 @@ describe('SevenDayStoolCountTable', () => {
 
         
     });
-    test("when displayed, then it should show the last seven days (including today) in format in descending order", () => {
+    test("when displayed, then it should show the last seven days (including today) in format in descending order", async () => {
       // ARRANGE
       const getExpectedDateFormatForMoment= (moment) => `${moment.format('dddd')}, ${moment.format('Do')} ${moment.format('MMMM')}`
 
@@ -93,20 +99,163 @@ describe('SevenDayStoolCountTable', () => {
       expect(isTodayMinusFiveDisplayedOnRowSix).toBeTruthy()
       expect(isTodayMinusSixDisplayedOnRowSeven).toBeTruthy()
     });
-    test.todo("when displayed with no stool data, then every row should have a zero stool count");
-    test.todo("when displayed with some stool data, then some rows should a non-zero stool count");
+    test("when displayed with no stool data, then every row should have a zero stool count", async () => {
+       // ARRANGE
+       const result = [];
 
-    // test the list stool items in the list stool items component
-    test.todo("when showing the expanded row with stool data, then there should be some content");
-    
-  })
+       // ACT
+       const { getAllByTestId } = render(<SevenDayStoolCountTable/>)
+       const stoolCounts = getAllByTestId('stool-count');
+       stoolCounts.forEach(stoolCount => {
+        result.push(Number.parseInt(stoolCount.textContent))
+      })
+      
+       // ASSERT
+        expect(result).toStrictEqual([0,0,0,0,0,0,0])
+    });
+    test("when displayed with some stool data, then some rows should a non-zero stool count", async () => {
+         // ARRANGE
+         const stoolData = [
+          { ...INITIAL_STATE, dateTime: { timestamp: moment(), dateString: moment().format(momentFormatter.YYYYMMDD), dateOnly: false }},
+          { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(1, 'day'), dateString: moment().subtract(1, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+          { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(1, 'day'), dateString: moment().subtract(1, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+          { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(2, 'day'), dateString: moment().subtract(2, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+          { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(2, 'day'), dateString: moment().subtract(2, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+          { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(2, 'day'), dateString: moment().subtract(2, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+          { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(3, 'day'), dateString: moment().subtract(3, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+          { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(3, 'day'), dateString: moment().subtract(3, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+          { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(3, 'day'), dateString: moment().subtract(3, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+          { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(3, 'day'), dateString: moment().subtract(3, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }}
+         ]
+         const result = [];
+
+         // ACT
+         const { getAllByTestId } = render(<SevenDayStoolCountTable recordedStools={stoolData}/>)
+         const stoolCounts = getAllByTestId('stool-count');
+        
+         // ASSERT
+         stoolCounts.forEach(stoolCount => {
+           result.push(Number.parseInt(stoolCount.textContent))
+         })
+         expect(result).toStrictEqual([1,2,3,4,0,0,0])
+    });
+
+    test("when displayed with some stool data outside the seven day range, then these are not included", async () => {
+      // ARRANGE
+      const stoolData = [
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(7, 'day'), dateString: moment().subtract(7, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(8, 'day'), dateString: moment().subtract(8, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(9, 'day'), dateString: moment().subtract(9, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(10, 'day'), dateString: moment().subtract(10, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }}
+      ]
+      const result = [];
+
+      // ACT
+      const { getAllByTestId } = render(<SevenDayStoolCountTable recordedStools={stoolData}/>)
+      const stoolCounts = getAllByTestId('stool-count');
+     
+      // ASSERT
+      stoolCounts.forEach(stoolCount => {
+        result.push(Number.parseInt(stoolCount.textContent))
+      })
+      expect(result).toStrictEqual([0,0,0,0,0,0,0])
+   });
+ })
   describe('Functional', () => {
-    test.todo("when a row has zero stool counts, then the row does not expand")
-    test.todo("when a row has some stool counts, then the row can expand")
+    test("when a row has zero stool counts, then the row does not expand", async () => {
+      // ARRANGE
+  
+       // ACT
+       const { getAllByTestId, queryAllByTestId } = render(<SevenDayStoolCountTable/>)
+       const firstRow = getAllByTestId('collapsible-table-body-row')[0]
+       await fireEvent.click(firstRow)
+
+       const collapsedRowCells = queryAllByTestId('collapsible-table-body-collapsedrow-cell');
+       
+      // ASSERT
+      expect(collapsedRowCells).toStrictEqual([]);
+
+    })
+    test("when a row has some stool counts, then the row can expand", async () => {
+      // ARRANGE
+      const stoolData = [
+        { ...INITIAL_STATE, dateTime: { timestamp: moment(), dateString: moment().format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       ]
+ 
+       // ACT
+       const { getAllByTestId } = render(<SevenDayStoolCountTable recordedStools={stoolData}/>)
+       const firstRow = getAllByTestId('collapsible-table-body-row')[0]
+       await fireEvent.click(firstRow)
+
+       const collapsedFirstRowCell = getAllByTestId('collapsible-table-body-collapsedrow-cell')[0];
+       
+      // ASSERT
+      expect(collapsedFirstRowCell.hasChildNodes()).toBeTruthy()
+
+    })
     test.todo("when the day column header is clicked, then changes the stool row order to ascending date")
     test.todo("when the day column header is clicked twice, then it changes the stool row order to descending by date")
-    test.todo("when the stool count column header is clicked, then it changes the stool row order to ascending by stool count")
-    test.todo("when the stool count column header is clicked twice, then it changes the stool row order to descending by stool count")
+    test("when the stool count column header is clicked, then it changes the stool row order to ascending by stool count", async () => {
+      // ARRANGE
+      const stoolData = [
+       { ...INITIAL_STATE, dateTime: { timestamp: moment(), dateString: moment().format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment(), dateString: moment().format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(1, 'day'), dateString: moment().subtract(1, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(2, 'day'), dateString: moment().subtract(2, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(2, 'day'), dateString: moment().subtract(2, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(4, 'day'), dateString: moment().subtract(4, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(4, 'day'), dateString: moment().subtract(4, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(4, 'day'), dateString: moment().subtract(4, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(3, 'day'), dateString: moment().subtract(3, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(3, 'day'), dateString: moment().subtract(3, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(3, 'day'), dateString: moment().subtract(3, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(3, 'day'), dateString: moment().subtract(3, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }}
+      ]
+      const result = [];
+
+      // ACT
+      const { getByText, getAllByTestId } = render(<SevenDayStoolCountTable recordedStools={stoolData}/>)
+      const stoolCounts = getAllByTestId('stool-count');
+      const stoolCountHeaderCell = getByText('Stool Count')
+      await fireEvent.click(stoolCountHeaderCell)
+      
+      // ASSERT
+      stoolCounts.forEach(stoolCount => {
+        result.push(Number.parseInt(stoolCount.textContent)) 
+      })
+      expect(result).toStrictEqual([4,3,2,2,1,0,0])
+    });
+    test("when the stool count column header is clicked twice, then it changes the stool row order to descending by stool count", async () => {
+      // ARRANGE
+      const stoolData = [
+       { ...INITIAL_STATE, dateTime: { timestamp: moment(), dateString: moment().format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment(), dateString: moment().format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(1, 'day'), dateString: moment().subtract(1, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(2, 'day'), dateString: moment().subtract(2, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(2, 'day'), dateString: moment().subtract(2, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(4, 'day'), dateString: moment().subtract(4, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(4, 'day'), dateString: moment().subtract(4, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(4, 'day'), dateString: moment().subtract(4, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(3, 'day'), dateString: moment().subtract(3, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(3, 'day'), dateString: moment().subtract(3, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(3, 'day'), dateString: moment().subtract(3, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(3, 'day'), dateString: moment().subtract(3, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }}
+      ]
+      const result = [];
+
+      // ACT
+      const { getByText, getAllByTestId } = render(<SevenDayStoolCountTable recordedStools={stoolData}/>)
+      const stoolCounts = getAllByTestId('stool-count');
+      const stoolCountHeaderCell = getByText('Stool Count')
+      await fireEvent.click(stoolCountHeaderCell)
+      await fireEvent.click(stoolCountHeaderCell)
+      
+      // ASSERT
+      stoolCounts.forEach(stoolCount => {
+        result.push(Number.parseInt(stoolCount.textContent)) 
+      })
+      expect(result).toStrictEqual([0,0,1,2,2,3,4])
+    });
 
   })
 })
