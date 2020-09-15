@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment'
-import { getAllByTestId, getByText, screen } from '@testing-library/dom'
+import { screen } from '@testing-library/dom'
 import { render, fireEvent } from '@testing-library/react'
 import SevenDayStoolCountTable from '../SevenDayStoolCountTable';
 import defaultLocale from '../locales/SevenDayStoolCountTable.locale.en.json'
@@ -14,14 +14,14 @@ beforeEach(() => {
 describe('SevenDayStoolCountTable', () => {
   describe('UI', () => {
     test("when mounted with no props, then it should render without error", async () => {
-        // ARRANGE
+      // ARRANGE
 
-        // ACT
-        const { container } = render(<SevenDayStoolCountTable/>)
+      // ACT
+      const { container } = render(<SevenDayStoolCountTable/>)
 
       // ASSERT
       expect(container).toBeDefined()
-        expect(container).not.toBeNull()  
+      expect(container).not.toBeNull()  
     });
 
     test("when mounted with a title, then it should render with the title", async () => {
@@ -29,20 +29,20 @@ describe('SevenDayStoolCountTable', () => {
       const titleText = "A Title"
 
       // ACT
-    const { queryByText } = render(<SevenDayStoolCountTable title={<h1>{titleText}</h1>}/>)
+      const { queryByText } = render(<SevenDayStoolCountTable title={<h1>{titleText}</h1>}/>)
 
-    // ASSERT
-    expect(queryByText(titleText)).not.toBeNull()
+      // ASSERT
+      expect(queryByText(titleText)).not.toBeNull()
       
   });
 
   test("when displayed, then it should show a header row and seven data rows", async () => {
     // ARRANGE
 
-      // ACT
-      const { queryAllByTestId } = render(<SevenDayStoolCountTable/>)
-      const headerRows = queryAllByTestId('collapsible-table-header-row')
-      const bodyRows = queryAllByTestId('collapsible-table-body-row')
+    // ACT
+    const { queryAllByTestId } = render(<SevenDayStoolCountTable/>)
+    const headerRows = queryAllByTestId('collapsible-table-header-row')
+    const bodyRows = queryAllByTestId('collapsible-table-body-row')
 
     // ASSERT
     expect(headerRows.length).toBe(1)
