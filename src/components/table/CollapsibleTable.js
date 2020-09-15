@@ -182,8 +182,8 @@ const CollapsedRow = ({ collapsedData = { display: null }, isShowing, colSpan })
   const classes = useCollapsedRowStyles();
 
   return (
-    <MaterialTableRow>
-      <MaterialTableCell className={classes.collapsedCell} colSpan={colSpan}>
+    <MaterialTableRow data-testid="collapsible-table-body-collapsedrow">
+      <MaterialTableCell className={classes.collapsedCell} colSpan={colSpan} data-testid="collapsible-table-body-collapsedrow-cell">
         <Collapse in={isShowing} timeout="auto" unmountOnExit>
           <Container>
             {collapsedData.display}
