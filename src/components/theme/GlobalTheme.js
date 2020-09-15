@@ -35,6 +35,10 @@ const baseTheme = createMuiTheme({
       main: blue[600],
       // dark: COLORS.THEME.INFO.DARK.COL,
     },
+    shade: {
+      black: grey[900],
+      white: grey[50]
+    },
     background: {
       default: grey[50]
     }
