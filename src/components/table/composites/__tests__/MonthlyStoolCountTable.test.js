@@ -53,6 +53,19 @@ describe('MonthlyDayStoolCountTable', () => {
 
     }); 
 
+    test("when mounted with a semantic title element, then it should render with the semantic title element", async () => {
+      // ARRANGE
+      const semanticTitle = "h6"
+      
+      // ACT
+      const { queryByTestId } = render(<MonthlyStoolCountTable semanticTitleElement={semanticTitle} />)
+      const displayMonthElementTagName = queryByTestId('monthly-stool-count-table-displaymonth').tagName
+
+      // ASSERT
+      expect(displayMonthElementTagName).toBe(semanticTitle.toUpperCase())
+
+    }); 
+
   });
 });
 

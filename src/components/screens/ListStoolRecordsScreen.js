@@ -16,7 +16,7 @@ const ListStoolRecordsScreen = () => {
         recordedStools={stoolRecords} 
         title={<Typography gutterBottom variant="h3" component="h2">{t('Most recent stools')}</Typography>}
       />
-      <MonthlyStoolCountTable recordedStools={stoolRecords} titleLevel='h3'/>
+      <MonthlyStoolCountTable recordedStools={stoolRecords} semanticTitleElement='h3'/>
     </div>
   )
 }

@@ -26,7 +26,7 @@ const useMonthlyStoolCountTableStyles = makeStyles({
   }
 });
 
-const MonthlyStoolCountTable = ({ month = moment().format('YYYYMM'), recordedStools = [], semanticTitleLevel='h4', titleElement='h4' }) => {
+const MonthlyStoolCountTable = ({ month = moment().format('YYYYMM'), recordedStools = [],  semanticTitleElement='h4', displayTitleElement=null }) => {
   const { t } = useTranslation();
   const classes = useMonthlyStoolCountTableStyles();
   const [displayMonth, setDisplayMonth] = useState(month);
@@ -41,7 +41,7 @@ const MonthlyStoolCountTable = ({ month = moment().format('YYYYMM'), recordedSto
           <KeyboardArrowLeftIcon />
         </IconButton>
 
-        <Typography variant={semanticTitleLevel} component={titleElement} data-testid="monthly-stool-count-table-displaymonth">
+        <Typography variant={displayTitleElement ? displayTitleElement : semanticTitleElement} component={semanticTitleElement} data-testid="monthly-stool-count-table-displaymonth">
           {`${t(moment(displayMonth).format('MMMM'))} - ${moment(displayMonth).format('YYYY')}`}
         </Typography>
 
