@@ -34,7 +34,7 @@ export const MixRecordsInDefaultMonth = () => {
 }
 export const MixRecordsInSpecificMonth = () => {
   const classes = useStyles()
-  const defaultMonth = "200201"
+  const defaultMonth = "201212"
   const [mockStoolRecords, setMockStoolRecords] = useState(mockData.createRandomMockStoolRecords({ defaultMonth: defaultMonth, numOfRecords: 450, range: 365 }));
   return (
     <>
