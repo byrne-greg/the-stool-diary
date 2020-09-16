@@ -1,8 +1,10 @@
 import React from 'react';
 import moment from 'moment'
-import { render, fireEvent } from '@testing-library/react'
+import { render, fireEvent, getByTestId } from '@testing-library/react'
 import defaultLocale from '../locales/MonthlyStoolCountTable.locale.en.json'
 import MonthlyStoolCountTable from '../MonthlyStoolCountTable';
+import INITIAL_STATE from '../../../../context/stool/model';
+import momentFormatter from '../../../../utils/moment-format';
 
 // const getDisplayDateFormatForMoment = (moment) => `${moment.format('dddd')}, ${moment.format('Do')} ${moment.format('MMMM')}`
 const getDisplayMonthFormatForMoment = (moment) => `${moment.format('MMMM')} - ${moment.format('YYYY')}`
@@ -121,7 +123,41 @@ describe('MonthlyDayStoolCountTable', () => {
       expect(actualWeekNums).toStrictEqual(expectedWeekNums)
     });
 
-    test("when displayed with no data, then all cells to current date will show a zero stool counts", async () => {
+    test("when displayed, the previous month selector is not shown", async () => {
+      // ARRANGE
+    
+      // ACT
+      const { queryByTestId } = render(<MonthlyStoolCountTable  />)
+      const previousMonthSelector = queryByTestId("monthly-stool-count-table-previousmonthselector")
+
+      // ASSERT
+      expect(previousMonthSelector).not.toBeNull()
+    });
+
+    test("when displayed in the current month, the next month selector is not shown", async () => {
+      // ARRANGE
+    
+      // ACT
+      const { queryByTestId } = render(<MonthlyStoolCountTable  />)
+      const nextMonthSelector = queryByTestId("monthly-stool-count-table-nextmonthselector")
+
+      // ASSERT
+      expect(nextMonthSelector).toBeNull()
+    });
+
+    test("when displayed in a previous month, the next month selector is shown", async () => {
+      // ARRANGE
+      const previousMonth = moment().subtract(1, 'month')
+    
+      // ACT
+      const { queryByTestId } = render(<MonthlyStoolCountTable month={previousMonth} />)
+      const nextMonthSelector = queryByTestId("monthly-stool-count-table-nextmonthselector")
+
+      // ASSERT
+      expect(nextMonthSelector).not.toBeNull()
+    });
+
+    test("when displayed with no data, then all cells to current date will show zero stool counts", async () => {
       // ARRANGE
       const actualStoolCounts = []
 
@@ -136,161 +172,94 @@ describe('MonthlyDayStoolCountTable', () => {
       expect(actualStoolCounts.filter(stoolCount => stoolCount != 0)).toStrictEqual([])
     });
 
+    test("when displayed with particular stool data, then those cells will show a non-zero stool count", async () => {
+      // ARRANGE
+      const actualStoolCounts = []
+      const stoolData = [
+        { ...INITIAL_STATE, dateTime: { timestamp: moment(), dateString: moment().format(momentFormatter.YYYYMMDD), dateOnly: false }},
+        { ...INITIAL_STATE, dateTime: { timestamp: moment(), dateString: moment().format(momentFormatter.YYYYMMDD), dateOnly: false }},
+      ]
+
+      // ACT
+      const { getAllByTestId } = render(<MonthlyStoolCountTable recordedStools={stoolData} />)
+      const stoolCountCells = getAllByTestId("stool-count")
+      stoolCountCells.forEach(stoolCountCell => {
+        actualStoolCounts.push(stoolCountCell.textContent)
+      });
+
+      // ASSERT
+      expect(actualStoolCounts.filter(stoolCount => stoolCount != 0)).toStrictEqual([ stoolData.length + "" ])
+    });
+  });
+
+  describe('Functional', () => {
+    test("when the previous month is selected, the previous month stool records are displayed", async () => {
+      // ARRANGE
+      const actualStoolCounts = []
+      const stoolData = [
+        { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(1, 'month'), dateString: moment().subtract(1, 'month').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+      ]
+
+      // ACT
+      const { getAllByTestId , getByTestId} = render(<MonthlyStoolCountTable recordedStools={stoolData} />)
+      fireEvent.click(getByTestId("monthly-stool-count-table-previousmonthselector"))
+
+      const stoolCountCells = getAllByTestId("stool-count")
+      stoolCountCells.forEach(stoolCountCell => {
+        actualStoolCounts.push(stoolCountCell.textContent)
+      });
+
+      // ASSERT
+      expect(actualStoolCounts.filter(stoolCount => stoolCount != 0)).toStrictEqual([ stoolData.length + "" ])
+    });
+
+    test("when the previous month is selected, the previous month is shown", async () => {
+      // ARRANGE
+      const previousMonthDisplayName = getDisplayMonthFormatForMoment(moment().subtract(1, 'month'))
     
+      // ACT
+      const { getByTestId} = render(<MonthlyStoolCountTable />)
+      fireEvent.click(getByTestId("monthly-stool-count-table-previousmonthselector"))
+      const monthOnDisplay = getByTestId('monthly-stool-count-table-displaymonth').textContent
+      
 
+      // ASSERT
+      expect(monthOnDisplay).toStrictEqual(previousMonthDisplayName)
+    });
 
+    test("when the next month is selected, the next month stool records are displayed", async () => {
+      // ARRANGE
+      const previousMonth = moment().subtract(1, 'month')
+      const actualStoolCounts = []
+      const stoolData = [
+        { ...INITIAL_STATE, dateTime: { timestamp: moment(), dateString: moment().format(momentFormatter.YYYYMMDD), dateOnly: false }},
+      ]
 
+      // ACT
+      const { getAllByTestId , getByTestId} = render(<MonthlyStoolCountTable month={previousMonth} recordedStools={stoolData} />)
+      fireEvent.click(getByTestId("monthly-stool-count-table-nextmonthselector"))
+
+      const stoolCountCells = getAllByTestId("stool-count")
+      stoolCountCells.forEach(stoolCountCell => {
+        actualStoolCounts.push(stoolCountCell.textContent)
+      });
+
+      // ASSERT
+      expect(actualStoolCounts.filter(stoolCount => stoolCount != 0)).toStrictEqual([ stoolData.length + "" ])
+    });
+
+    test("when the next month is selected, the next month is shown", async () => {
+      // ARRANGE
+      const nextMonthDisplayName = getDisplayMonthFormatForMoment(moment())
+    
+      // ACT
+      const { getByTestId} = render(<MonthlyStoolCountTable month={moment().subtract(1, 'month')}/>)
+      fireEvent.click(getByTestId("monthly-stool-count-table-nextmonthselector"))
+      const monthOnDisplay = getByTestId('monthly-stool-count-table-displaymonth').textContent
+      
+
+      // ASSERT
+      expect(monthOnDisplay).toStrictEqual(nextMonthDisplayName)
+    });
   });
 });
-
- 
-//   describe('Functional', () => {
-//     test("when a row has zero stool counts, then the row does not expand", async () => {
-//       // ARRANGE
-  
-//        // ACT
-//        const { getAllByTestId, queryAllByTestId } = render(<SevenDayStoolCountTable/>)
-//        const firstRow = getAllByTestId('collapsible-table-body-row')[0]
-//        await fireEvent.click(firstRow)
-
-//        const collapsedRowCells = queryAllByTestId('collapsible-table-body-collapsedrow-cell');
-       
-//       // ASSERT
-//       expect(collapsedRowCells).toStrictEqual([]);
-
-//     })
-//     test("when a row has some stool counts, then the row can expand", async () => {
-//       // ARRANGE
-//       const stoolData = [
-//         { ...INITIAL_STATE, dateTime: { timestamp: moment(), dateString: moment().format(momentFormatter.YYYYMMDD), dateOnly: false }},
-//        ]
- 
-//        // ACT
-//        const { getAllByTestId } = render(<SevenDayStoolCountTable recordedStools={stoolData}/>)
-//        const firstRow = getAllByTestId('collapsible-table-body-row')[0]
-//        await fireEvent.click(firstRow)
-
-//        const collapsedFirstRowCell = getAllByTestId('collapsible-table-body-collapsedrow-cell')[0];
-       
-//       // ASSERT
-//       expect(collapsedFirstRowCell.hasChildNodes()).toBeTruthy()
-
-//     })
-//     test("when the day column header is clicked, then changes the stool row order to ascending date", async () => {
-//       // ARRANGE
-//       const expectedDayOrder = [
-//         getDisplayDateFormatForMoment(moment().subtract(6, 'day')),
-//         getDisplayDateFormatForMoment(moment().subtract(5, 'day')),
-//         getDisplayDateFormatForMoment(moment().subtract(4, 'day')),
-//         getDisplayDateFormatForMoment(moment().subtract(3, 'day')),
-//         getDisplayDateFormatForMoment(moment().subtract(2, 'day')),
-//         getDisplayDateFormatForMoment(moment().subtract(1, 'day')),
-//         getDisplayDateFormatForMoment(moment()),
-//       ] 
-//       const result = [];
- 
-//       // ACT
-//       const { getByText, getAllByTestId } = render(<SevenDayStoolCountTable />)
-//       const rows = getAllByTestId('collapsible-table-body-row');
-//       const stoolCountHeaderCell = getByText('Day')
-//       await fireEvent.click(stoolCountHeaderCell)
-      
-//       // ASSERT
-//       rows.forEach(row => {
-//         const displayDate = row.querySelectorAll('td')[1].textContent
-//         result.push(displayDate) 
-//       })
-//       expect(result).toStrictEqual(expectedDayOrder)      
-//     })
-
-//     test("when the day column header is clicked twice, then it changes the stool row order to descending by date", async () => {
-//       const expectedDayOrder = [
-//         getDisplayDateFormatForMoment(moment()),
-//         getDisplayDateFormatForMoment(moment().subtract(1, 'day')),
-//         getDisplayDateFormatForMoment(moment().subtract(2, 'day')),
-//         getDisplayDateFormatForMoment(moment().subtract(3, 'day')),
-//         getDisplayDateFormatForMoment(moment().subtract(4, 'day')),    
-//         getDisplayDateFormatForMoment(moment().subtract(5, 'day')),
-//         getDisplayDateFormatForMoment(moment().subtract(6, 'day')),
-//       ] 
-//       const result = [];
- 
-//       // ACT
-//       const { getByText, getAllByTestId } = render(<SevenDayStoolCountTable />)
-//       const rows = getAllByTestId('collapsible-table-body-row');
-//       const stoolCountHeaderCell = getByText('Day')
-//       await fireEvent.click(stoolCountHeaderCell)
-//       await fireEvent.click(stoolCountHeaderCell)
-      
-//       // ASSERT
-//       rows.forEach(row => {
-//         const displayDate = row.querySelectorAll('td')[1].textContent
-//         result.push(displayDate) 
-//       })
-//       expect(result).toStrictEqual(expectedDayOrder)   
-//     })
-
-//     test("when the stool count column header is clicked, then it changes the stool row order to ascending by stool count", async () => {
-//       // ARRANGE
-//       const stoolData = [
-//        { ...INITIAL_STATE, dateTime: { timestamp: moment(), dateString: moment().format(momentFormatter.YYYYMMDD), dateOnly: false }},
-//        { ...INITIAL_STATE, dateTime: { timestamp: moment(), dateString: moment().format(momentFormatter.YYYYMMDD), dateOnly: false }},
-//        { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(1, 'day'), dateString: moment().subtract(1, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-//        { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(2, 'day'), dateString: moment().subtract(2, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-//        { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(2, 'day'), dateString: moment().subtract(2, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-//        { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(4, 'day'), dateString: moment().subtract(4, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-//        { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(4, 'day'), dateString: moment().subtract(4, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-//        { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(4, 'day'), dateString: moment().subtract(4, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-//        { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(3, 'day'), dateString: moment().subtract(3, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-//        { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(3, 'day'), dateString: moment().subtract(3, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-//        { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(3, 'day'), dateString: moment().subtract(3, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-//        { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(3, 'day'), dateString: moment().subtract(3, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }}
-//       ]
-//       const result = [];
-
-//       // ACT
-//       const { getByText, getAllByTestId } = render(<SevenDayStoolCountTable recordedStools={stoolData}/>)
-//       const stoolCounts = getAllByTestId('stool-count');
-//       const stoolCountHeaderCell = getByText('Stool Count')
-//       await fireEvent.click(stoolCountHeaderCell)
-      
-//       // ASSERT
-//       stoolCounts.forEach(stoolCount => {
-//         result.push(Number.parseInt(stoolCount.textContent)) 
-//       })
-//       expect(result).toStrictEqual([4,3,2,2,1,0,0])
-//     });
-//     test("when the stool count column header is clicked twice, then it changes the stool row order to descending by stool count", async () => {
-//       // ARRANGE
-//       const stoolData = [
-//        { ...INITIAL_STATE, dateTime: { timestamp: moment(), dateString: moment().format(momentFormatter.YYYYMMDD), dateOnly: false }},
-//        { ...INITIAL_STATE, dateTime: { timestamp: moment(), dateString: moment().format(momentFormatter.YYYYMMDD), dateOnly: false }},
-//        { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(1, 'day'), dateString: moment().subtract(1, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-//        { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(2, 'day'), dateString: moment().subtract(2, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-//        { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(2, 'day'), dateString: moment().subtract(2, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-//        { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(4, 'day'), dateString: moment().subtract(4, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-//        { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(4, 'day'), dateString: moment().subtract(4, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-//        { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(4, 'day'), dateString: moment().subtract(4, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-//        { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(3, 'day'), dateString: moment().subtract(3, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-//        { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(3, 'day'), dateString: moment().subtract(3, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-//        { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(3, 'day'), dateString: moment().subtract(3, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-//        { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(3, 'day'), dateString: moment().subtract(3, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }}
-//       ]
-//       const result = [];
-
-//       // ACT
-//       const { getByText, getAllByTestId } = render(<SevenDayStoolCountTable recordedStools={stoolData}/>)
-//       const stoolCounts = getAllByTestId('stool-count');
-//       const stoolCountHeaderCell = getByText('Stool Count')
-//       await fireEvent.click(stoolCountHeaderCell)
-//       await fireEvent.click(stoolCountHeaderCell)
-      
-//       // ASSERT
-//       stoolCounts.forEach(stoolCount => {
-//         result.push(Number.parseInt(stoolCount.textContent)) 
-//       })
-//       expect(result).toStrictEqual([0,0,1,2,2,3,4])
-//     });
-
-//   })
-// })

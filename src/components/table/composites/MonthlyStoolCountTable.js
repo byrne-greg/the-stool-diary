@@ -37,7 +37,11 @@ const MonthlyStoolCountTable = ({ month = moment().format('YYYYMM'), recordedSto
       <div className={classes.monthSelector}>
 
         {/* Left Button */}
-        <IconButton aria-label="select previous month" onClick={() => { setDisplayMonth(moment(displayMonth).subtract(1, 'months')) }}>
+        <IconButton 
+          aria-label="select previous month" 
+          onClick={() => { setDisplayMonth(moment(displayMonth).subtract(1, 'months')) }}
+          data-testid="monthly-stool-count-table-previousmonthselector"
+        >
           <KeyboardArrowLeftIcon />
         </IconButton>
 
@@ -47,7 +51,11 @@ const MonthlyStoolCountTable = ({ month = moment().format('YYYYMM'), recordedSto
 
         {/* Right Button */}
         {isBeforeCurrentDate(moment(displayMonth).add(1, 'months')) ? 
-          (<IconButton aria-label="select next month" onClick={() => { setDisplayMonth(moment(displayMonth).add(1, 'months').format('YYYYMM')) }}>
+          (<IconButton 
+            aria-label="select next month"
+            onClick={() => { setDisplayMonth(moment(displayMonth).add(1, 'months').format('YYYYMM')) }}
+            data-testid="monthly-stool-count-table-nextmonthselector"
+          >
             <KeyboardArrowRightIcon />
           </IconButton>) 
           // we show blank div to keep the title in the middle of the flex arrangement
