@@ -10,12 +10,14 @@ import { StoolCount } from '../../chip/composites'
 import { Title } from '../../title'
 import momentFormatter from '../../../utils/moment-format'
 import { ListStoolRecords } from '../../list/composites'
+import { Typography } from '@material-ui/core';
 
 const useMonthlyStoolCountTableStyles = makeStyles({
-  header: {
+  monthSelector: {
     display: 'flex',
     justifyContent: 'space-between',
-    alignItems: 'end'
+    alignItems: 'center',
+    padding: '1rem'
   },
   table: {
     '& > table': {
@@ -24,7 +26,7 @@ const useMonthlyStoolCountTableStyles = makeStyles({
   }
 });
 
-const MonthlyStoolCountTable = ({ month = moment().format('YYYYMM'), recordedStools = [], titleLevel='h2' }) => {
+const MonthlyStoolCountTable = ({ month = moment().format('YYYYMM'), recordedStools = [], semanticTitleLevel='h4', titleElement='h4' }) => {
   const { t } = useTranslation();
   const classes = useMonthlyStoolCountTableStyles();
   const [displayMonth, setDisplayMonth] = useState(month);
@@ -32,18 +34,26 @@ const MonthlyStoolCountTable = ({ month = moment().format('YYYYMM'), recordedSto
 
   return (
     <div>
-      <div className={classes.header}>
-        <IconButton aria-label="select previous month" size="small" onClick={() => { setDisplayMonth(moment(displayMonth).subtract(1, 'months')) }}>
+      <div className={classes.monthSelector}>
+
+        {/* Left Button */}
+        <IconButton aria-label="select previous month" onClick={() => { setDisplayMonth(moment(displayMonth).subtract(1, 'months')) }}>
           <KeyboardArrowLeftIcon />
         </IconButton>
-        <Title as={titleLevel}>{`${t(moment(displayMonth).format('MMMM'))} - ${moment(displayMonth).format('YYYY')}`}</Title>
-       {isBeforeCurrentDate(moment(displayMonth).add(1, 'months')) ? 
-        (<IconButton aria-label="select next month" size="small" onClick={() => { setDisplayMonth(moment(displayMonth).add(1, 'months').format('YYYYMM')) }}>
-          <KeyboardArrowRightIcon />
-        </IconButton>) 
-        // we show blank div to keep the title in the middle of the flex arrangement
-        : <div/>}
+
+        <Typography variant={semanticTitleLevel} component={titleElement} data-testid="monthly-stool-count-table-displaymonth">
+          {`${t(moment(displayMonth).format('MMMM'))} - ${moment(displayMonth).format('YYYY')}`}
+        </Typography>
+
+        {/* Right Button */}
+        {isBeforeCurrentDate(moment(displayMonth).add(1, 'months')) ? 
+          (<IconButton aria-label="select next month" onClick={() => { setDisplayMonth(moment(displayMonth).add(1, 'months').format('YYYYMM')) }}>
+            <KeyboardArrowRightIcon />
+          </IconButton>) 
+          // we show blank div to keep the title in the middle of the flex arrangement
+          : <div/>}
       </div>
+
       <div className={classes.table}>
         <BaseStoolDayCountTable
           className={classes.table}
