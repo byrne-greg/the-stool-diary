@@ -71,6 +71,7 @@ const MonthlyStoolCountTable = ({ month = moment().format('YYYYMM'), recordedSto
           stoolDataTableDisplayFn={getStoolTableData}
           hasCollapsedData
           showCollapsibleColumn={false}
+          isSortable={false}
         />
       </div>
     </div>
@@ -122,7 +123,7 @@ function getStoolTableData(stoolDayData, t) {
 
   const monthWeekNums = [...new Set(stoolDayData.map(dayData => moment(dayData.dateString).week()))]
   const stoolTableRows = monthWeekNums.map(weekNum => {
-
+   
     const dayDataRecordsForWeek = stoolDayData.filter(dayData => moment(dayData.dateString).week() === weekNum)
     
     // tableRow will contain a week of records
@@ -149,12 +150,12 @@ function getStoolTableData(stoolDayData, t) {
       // full week
       tableRow.data.push(...dayDataRecordsForWeek.map(dayData => {
         return isBeforeCurrentDate(dayData.dateString) ?  ({
-        display: <StoolCount count={dayData.count}>{dayData.count}</StoolCount>,
-        value: dayData.count,
-        type: 'numeric',
-        align: 'center',
-        date: dayData.dateString,
-        stools: dayData.stools,
+          display: <StoolCount count={dayData.count}>{dayData.count}</StoolCount>,
+          value: dayData.count,
+          type: 'numeric',
+          align: 'center',
+          date: dayData.dateString,
+          stools: dayData.stools,
       }) : defaultNoDataCell }))
     }
 

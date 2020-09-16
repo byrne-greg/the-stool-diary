@@ -13,7 +13,8 @@ const BaseStoolDayCountTable = ({
   endDate = moment().format(momentFormatter.YYYYMMDD),
   stoolDataTableDisplayFn = getDefaultStoolTableData,
   hasCollapsedData = false,
-  showCollapsibleColumn = true
+  showCollapsibleColumn = true,
+  isSortable = true
 }) => {
 
   const { t } = useTranslation();
@@ -59,7 +60,7 @@ const BaseStoolDayCountTable = ({
   return (
     <>
       {hasCollapsedData ?
-        <CollapsibleTable tableData={stoolTableData} showCollapsibleColumn={showCollapsibleColumn}/>
+        <CollapsibleTable tableData={stoolTableData} showCollapsibleColumn={showCollapsibleColumn} isSortable={isSortable}/>
         :
         <BasicTable tableData={stoolTableData} />}
     </>

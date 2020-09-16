@@ -52,7 +52,7 @@ tableData takes the following shape:
   ]
 }
 */
-const CollapsibleTable = ({ tableData , showCollapsibleColumn=true, ariaLabel="collapsible table"}) => {
+const CollapsibleTable = ({ tableData , isSortable = true, showCollapsibleColumn = true, ariaLabel="collapsible table"}) => {
 
   const { headers, rows } = tableData;
 
@@ -101,14 +101,18 @@ const CollapsibleTable = ({ tableData , showCollapsibleColumn=true, ariaLabel="c
               align={header.align ? header.align : 'left'}
               data-testid="collapsible-table-header-cell"
             >
-              <MaterialTableSortLabel
-                active={orderBy === header.display}
-                direction={isSortAsc ? 'asc' : 'desc'}
-                onClick={() => { setIsSortAsc(!isSortAsc); setOrderBy(index) }}
-                data-testid="collapsible-table-header-sortlabel"
-              >
-                {header.display}
-              </MaterialTableSortLabel>
+              {isSortable ? (
+                <MaterialTableSortLabel
+                  active={orderBy === header.display}
+                  direction={isSortAsc ? 'asc' : 'desc'}
+                  onClick={() => { setIsSortAsc(!isSortAsc); setOrderBy(index) }}
+                  data-testid="collapsible-table-header-sortlabel"
+                >
+                  {header.display}
+                </MaterialTableSortLabel>
+              ) : (
+                header.display
+              )}
             </MaterialTableCell>
           ))}
         </MaterialTableRow>
