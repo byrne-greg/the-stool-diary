@@ -1,15 +1,12 @@
 import React from 'react';
 import moment from 'moment'
-import { screen } from '@testing-library/dom'
 import { render, fireEvent } from '@testing-library/react'
-import SevenDayStoolCountTable from '../SevenDayStoolCountTable';
-import defaultLocale from '../locales/SevenDayStoolCountTable.locale.en.json'
-import INITIAL_STATE from '../../../../context/stool/model';
-import momentFormatter from '../../../../utils/moment-format';
+import defaultLocale from '../locales/MonthlyStoolCountTable.locale.en.json'
 import MonthlyStoolCountTable from '../MonthlyStoolCountTable';
 
 // const getDisplayDateFormatForMoment = (moment) => `${moment.format('dddd')}, ${moment.format('Do')} ${moment.format('MMMM')}`
 const getDisplayMonthFormatForMoment = (moment) => `${moment.format('MMMM')} - ${moment.format('YYYY')}`
+const getDayText = (dayNum) => moment().day(dayNum).format('dd')
 
 beforeEach(() => {
   document.body.innerHTML = null
@@ -63,8 +60,85 @@ describe('MonthlyDayStoolCountTable', () => {
 
       // ASSERT
       expect(displayMonthElementTagName).toBe(semanticTitle.toUpperCase())
-
     }); 
+
+    test("when displayed, then it should show eight headers representing the day and week num columns", async () => {
+      // ARRANGE
+      const actualHeaders = []
+      const expectedHeaders = [ 
+        defaultLocale["Wk #"], 
+        getDayText(0), 
+        getDayText(1), 
+        getDayText(2), 
+        getDayText(3), 
+        getDayText(4), 
+        getDayText(5), 
+        getDayText(6) 
+      ]
+
+      // ACT
+      const { getAllByTestId } = render(<MonthlyStoolCountTable/>)
+      const headerColumns = getAllByTestId("collapsible-table-header-cell")
+      headerColumns.forEach(header => {
+        actualHeaders.push(header.textContent)
+      });
+
+      // ASSERT
+      expect(actualHeaders).toStrictEqual(expectedHeaders)
+    });
+
+    test("when displayed with January, then the week number column will contain week numbers in order for January", async () => {
+      // ARRANGE
+      const mockMonth = '202001'
+      const actualWeekNums = []
+      const expectedWeekNums = ["1", "2", "3", "4", "5"]
+
+      // ACT
+      const { getAllByTestId } = render(<MonthlyStoolCountTable month={mockMonth}/>)
+      const rows = getAllByTestId("collapsible-table-body-row")
+      rows.forEach(row => {
+        actualWeekNums.push(row.querySelector('td').textContent)
+      });
+
+      // ASSERT
+      expect(actualWeekNums).toStrictEqual(expectedWeekNums)
+    });
+
+    xtest("when displayed with December, then the week number column will contain week numbers in order for December", async () => {
+      // ARRANGE
+      const mockMonth = '201912'
+      const actualWeekNums = []
+      const expectedWeekNums = ["49", "50", "51", "52", "1"]
+
+      // ACT
+      const { getAllByTestId } = render(<MonthlyStoolCountTable month={mockMonth}/>)
+      const rows = getAllByTestId("collapsible-table-body-row")
+      rows.forEach(row => {
+        actualWeekNums.push(row.querySelector('td').textContent)
+      });
+
+      // ASSERT
+      expect(actualWeekNums).toStrictEqual(expectedWeekNums)
+    });
+
+    test("when displayed with no data, then all cells to current date will show a zero stool counts", async () => {
+      // ARRANGE
+      const actualStoolCounts = []
+
+      // ACT
+      const { getAllByTestId } = render(<MonthlyStoolCountTable />)
+      const stoolCountCells = getAllByTestId("stool-count")
+      stoolCountCells.forEach(stoolCountCell => {
+        actualStoolCounts.push(stoolCountCell.textContent)
+      });
+
+      // ASSERT
+      expect(actualStoolCounts.filter(stoolCount => stoolCount != 0)).toStrictEqual([])
+    });
+
+    
+
+
 
   });
 });
