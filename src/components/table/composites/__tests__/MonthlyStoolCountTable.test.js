@@ -106,7 +106,7 @@ describe('MonthlyDayStoolCountTable', () => {
       expect(actualWeekNums).toStrictEqual(expectedWeekNums)
     });
 
-    xtest("when displayed with December, then the week number column will contain week numbers in order for December", async () => {
+    test("when displayed with December, then the week number column will contain week numbers in order for December", async () => {
       // ARRANGE
       const mockMonth = '201912'
       const actualWeekNums = []

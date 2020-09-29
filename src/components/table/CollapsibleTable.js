@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment'
 import { makeStyles } from '@material-ui/core/styles';
@@ -61,33 +61,38 @@ const CollapsibleTable = ({ tableData , isSortable = true, showCollapsibleColumn
   const [isSortAsc, setIsSortAsc] = useState(false);
 
   // TODO wrap in useMemo/useEffect ?
-  rows.sort((a, b) => {
-
-    const value1 = a.data[orderBy].value;
-    const type1 = a.data[orderBy].type;
-
-    const value2 = b.data[orderBy].value;
-    const type2 = b.data[orderBy].type;
-
-    // default value for non-recognised or mismatching types is not to sort
-    let placement = 0;
-    if (type1 === type2) {
-      if (type1 === 'numeric') {
-        placement = !isSortAsc ? value1 - value2 : value2 - value1;
-      } else if (type1 === 'date') {
-        const momentValue1 = moment(value1);
-        const momentValue2 = moment(value2);
-        if (momentValue1.isBefore(momentValue2)) {
-          placement = !isSortAsc ? 1 : -1;
-        } else if (momentValue1.isAfter(momentValue2)) {
-          placement = !isSortAsc ? -1 : 1;
-        } else return 0
-      }
+  // useEffect(() => {
+    if(isSortable) {
+      rows.sort((a, b) => {
+      
+        const value1 = a.data[orderBy].value;
+        const type1 = a.data[orderBy].type;
+      
+        const value2 = b.data[orderBy].value;
+        const type2 = b.data[orderBy].type;
+      
+        // default value for non-recognised or mismatching types is not to sort
+        let placement = 0;
+        if (type1 === type2) {
+          if (type1 === 'numeric') {
+            placement = !isSortAsc ? value1 - value2 : value2 - value1;
+          } else if (type1 === 'date') {
+            const momentValue1 = moment(value1);
+            const momentValue2 = moment(value2);
+            if (momentValue1.isBefore(momentValue2)) {
+              placement = !isSortAsc ? 1 : -1;
+            } else if (momentValue1.isAfter(momentValue2)) {
+              placement = !isSortAsc ? -1 : 1;
+            } else return 0
+          }
+        }
+      
+        return placement;
+      
+      });
     }
-
-    return placement;
-
-  });
+  // }, [isSortable, tableData])
+  
 
   return (
     <MaterialTable aria-label={ariaLabel}>
