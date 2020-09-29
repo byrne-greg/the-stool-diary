@@ -63,7 +63,10 @@ function getStoolTableData(stoolDayData, t) {
       }
       // if we don't have stool records, then there is no need for a collapsed row
       if (dayData.count > 0) {
-        stoolTableRow.collapsedData = { display: <ListStoolRecords recordedStools={dayData.stools} displayDaySeparators={false} /> }
+        stoolTableRow.collapsedData = { 
+          display: 
+            <ListStoolRecords recordedStools={dayData.stools} displayDaySeparators={false} /> 
+          }
       }
       return stoolTableRow;
     })
