@@ -118,16 +118,16 @@ describe('SevenDayStoolCountTable', () => {
     test("when displayed with some stool data, then some rows should a non-zero stool count", async () => {
          // ARRANGE
          const stoolData = [
-          { ...INITIAL_STATE, dateTime: { timestamp: moment(), dateString: moment().format(momentFormatter.YYYYMMDD), dateOnly: false }},
-          { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(1, 'day'), dateString: moment().subtract(1, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-          { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(1, 'day'), dateString: moment().subtract(1, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-          { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(2, 'day'), dateString: moment().subtract(2, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-          { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(2, 'day'), dateString: moment().subtract(2, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-          { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(2, 'day'), dateString: moment().subtract(2, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-          { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(3, 'day'), dateString: moment().subtract(3, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-          { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(3, 'day'), dateString: moment().subtract(3, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-          { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(3, 'day'), dateString: moment().subtract(3, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-          { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(3, 'day'), dateString: moment().subtract(3, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }}
+          { ...INITIAL_STATE, dateTime: { timestamp: moment().format(), dateString: moment().format(momentFormatter.YYYYMMDD), dateOnly: false }},
+          { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(1, 'day').format(), dateString: moment().subtract(1, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+          { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(1, 'day').format(), dateString: moment().subtract(1, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+          { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(2, 'day').format(), dateString: moment().subtract(2, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+          { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(2, 'day').format(), dateString: moment().subtract(2, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+          { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(2, 'day').format(), dateString: moment().subtract(2, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+          { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(3, 'day').format(), dateString: moment().subtract(3, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+          { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(3, 'day').format(), dateString: moment().subtract(3, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+          { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(3, 'day').format(), dateString: moment().subtract(3, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+          { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(3, 'day').format(), dateString: moment().subtract(3, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }}
          ]
          const result = [];
 
@@ -145,10 +145,10 @@ describe('SevenDayStoolCountTable', () => {
     test("when displayed with some stool data outside the seven day range, then these are not included", async () => {
       // ARRANGE
       const stoolData = [
-       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(7, 'day'), dateString: moment().subtract(7, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(8, 'day'), dateString: moment().subtract(8, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(9, 'day'), dateString: moment().subtract(9, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(10, 'day'), dateString: moment().subtract(10, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }}
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(7, 'day').format(), dateString: moment().subtract(7, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(8, 'day').format(), dateString: moment().subtract(8, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(9, 'day').format(), dateString: moment().subtract(9, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(10, 'day').format(), dateString: moment().subtract(10, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }}
       ]
       const result = [];
 
@@ -181,7 +181,7 @@ describe('SevenDayStoolCountTable', () => {
     test("when a row has some stool counts, then the row can expand", async () => {
       // ARRANGE
       const stoolData = [
-        { ...INITIAL_STATE, dateTime: { timestamp: moment(), dateString: moment().format(momentFormatter.YYYYMMDD), dateOnly: false }},
+        { ...INITIAL_STATE, dateTime: { timestamp: moment().format(), dateString: moment().format(momentFormatter.YYYYMMDD), dateOnly: false }},
        ]
  
        // ACT
@@ -252,18 +252,18 @@ describe('SevenDayStoolCountTable', () => {
     test("when the stool count column header is clicked, then it changes the stool row order to ascending by stool count", async () => {
       // ARRANGE
       const stoolData = [
-       { ...INITIAL_STATE, dateTime: { timestamp: moment(), dateString: moment().format(momentFormatter.YYYYMMDD), dateOnly: false }},
-       { ...INITIAL_STATE, dateTime: { timestamp: moment(), dateString: moment().format(momentFormatter.YYYYMMDD), dateOnly: false }},
-       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(1, 'day'), dateString: moment().subtract(1, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(2, 'day'), dateString: moment().subtract(2, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(2, 'day'), dateString: moment().subtract(2, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(4, 'day'), dateString: moment().subtract(4, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(4, 'day'), dateString: moment().subtract(4, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(4, 'day'), dateString: moment().subtract(4, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(3, 'day'), dateString: moment().subtract(3, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(3, 'day'), dateString: moment().subtract(3, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(3, 'day'), dateString: moment().subtract(3, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(3, 'day'), dateString: moment().subtract(3, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }}
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().format(), dateString: moment().format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().format(), dateString: moment().format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(1, 'day').format(), dateString: moment().subtract(1, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(2, 'day').format(), dateString: moment().subtract(2, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(2, 'day').format(), dateString: moment().subtract(2, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(4, 'day').format(), dateString: moment().subtract(4, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(4, 'day').format(), dateString: moment().subtract(4, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(4, 'day').format(), dateString: moment().subtract(4, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(3, 'day').format(), dateString: moment().subtract(3, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(3, 'day').format(), dateString: moment().subtract(3, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(3, 'day').format(), dateString: moment().subtract(3, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(3, 'day').format(), dateString: moment().subtract(3, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }}
       ]
       const result = [];
 
@@ -282,18 +282,18 @@ describe('SevenDayStoolCountTable', () => {
     test("when the stool count column header is clicked twice, then it changes the stool row order to descending by stool count", async () => {
       // ARRANGE
       const stoolData = [
-       { ...INITIAL_STATE, dateTime: { timestamp: moment(), dateString: moment().format(momentFormatter.YYYYMMDD), dateOnly: false }},
-       { ...INITIAL_STATE, dateTime: { timestamp: moment(), dateString: moment().format(momentFormatter.YYYYMMDD), dateOnly: false }},
-       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(1, 'day'), dateString: moment().subtract(1, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(2, 'day'), dateString: moment().subtract(2, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(2, 'day'), dateString: moment().subtract(2, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(4, 'day'), dateString: moment().subtract(4, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(4, 'day'), dateString: moment().subtract(4, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(4, 'day'), dateString: moment().subtract(4, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(3, 'day'), dateString: moment().subtract(3, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(3, 'day'), dateString: moment().subtract(3, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(3, 'day'), dateString: moment().subtract(3, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
-       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(3, 'day'), dateString: moment().subtract(3, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }}
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().format(), dateString: moment().format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().format(), dateString: moment().format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(1, 'day').format(), dateString: moment().subtract(1, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(2, 'day').format(), dateString: moment().subtract(2, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(2, 'day').format(), dateString: moment().subtract(2, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(4, 'day').format(), dateString: moment().subtract(4, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(4, 'day').format(), dateString: moment().subtract(4, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(4, 'day').format(), dateString: moment().subtract(4, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(3, 'day').format(), dateString: moment().subtract(3, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(3, 'day').format(), dateString: moment().subtract(3, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(3, 'day').format(), dateString: moment().subtract(3, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+       { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(3, 'day').format(), dateString: moment().subtract(3, 'day').format(momentFormatter.YYYYMMDD), dateOnly: false }}
       ]
       const result = [];
 

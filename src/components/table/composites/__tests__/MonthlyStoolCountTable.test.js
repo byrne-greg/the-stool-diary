@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment'
-import { render, fireEvent, getByTestId } from '@testing-library/react'
+import { render, fireEvent } from '@testing-library/react'
 import defaultLocale from '../locales/MonthlyStoolCountTable.locale.en.json'
 import MonthlyStoolCountTable from '../MonthlyStoolCountTable';
 import INITIAL_STATE from '../../../../context/stool/model';
@@ -176,8 +176,8 @@ describe('MonthlyDayStoolCountTable', () => {
       // ARRANGE
       const actualStoolCounts = []
       const stoolData = [
-        { ...INITIAL_STATE, dateTime: { timestamp: moment(), dateString: moment().format(momentFormatter.YYYYMMDD), dateOnly: false }},
-        { ...INITIAL_STATE, dateTime: { timestamp: moment(), dateString: moment().format(momentFormatter.YYYYMMDD), dateOnly: false }},
+        { ...INITIAL_STATE, dateTime: { timestamp: moment().format(), dateString: moment().format(momentFormatter.YYYYMMDD), dateOnly: false }},
+        { ...INITIAL_STATE, dateTime: { timestamp: moment().format(), dateString: moment().format(momentFormatter.YYYYMMDD), dateOnly: false }},
       ]
 
       // ACT
@@ -197,7 +197,7 @@ describe('MonthlyDayStoolCountTable', () => {
       // ARRANGE
       const actualStoolCounts = []
       const stoolData = [
-        { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(1, 'month'), dateString: moment().subtract(1, 'month').format(momentFormatter.YYYYMMDD), dateOnly: false }},
+        { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(1, 'month').format(), dateString: moment().subtract(1, 'month').format(momentFormatter.YYYYMMDD), dateOnly: false }},
       ]
 
       // ACT
@@ -232,7 +232,7 @@ describe('MonthlyDayStoolCountTable', () => {
       const previousMonth = moment().subtract(1, 'month')
       const actualStoolCounts = []
       const stoolData = [
-        { ...INITIAL_STATE, dateTime: { timestamp: moment(), dateString: moment().format(momentFormatter.YYYYMMDD), dateOnly: false }},
+        { ...INITIAL_STATE, dateTime: { timestamp: moment().format(), dateString: moment().format(momentFormatter.YYYYMMDD), dateOnly: false }},
       ]
 
       // ACT
