@@ -1,4 +1,5 @@
 import React, { useState, useMemo} from 'react'
+import PropTypes from "prop-types";
 import moment from 'moment'
 import { useTranslation } from 'react-i18next'
 import { ListSubheader , IconButton } from '@material-ui/core'
@@ -8,6 +9,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import ListStoolItem from './ListStoolItem'
 import List, { NoRecordsFound } from '../List'
 import momentFormatter from '../../../utils/moment-format'
+import { STOOL_SIZES } from '../../../context/stool/model';
 
 function sortRecordsByTimestamp(records, orderAsc) {
   return [...records.sort((a, b) => { 
@@ -37,7 +39,13 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const ListStoolRecords = ({ recordedStools = [], hasSort=true, sortAscending=false, displayDaySeparators=true, titleComponent=null}) => {
+const ListStoolRecords = ({ 
+  recordedStools = [], 
+  hasSort=true, 
+  sortAscending=false, 
+  displayDaySeparators=true, 
+  titleComponent=null
+}) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const [isSortAsc, setIsSortAsc] = useState(sortAscending);
@@ -47,7 +55,7 @@ const ListStoolRecords = ({ recordedStools = [], hasSort=true, sortAscending=fal
   
   return (
     <div>
-      <div className={classes.titleContainer}>
+      <div className={classes.titleContainer} data-testid="list-stool-records-title">
         {titleComponent}
       </div>
       {uniqueDays.length > 0 ? (
@@ -90,5 +98,15 @@ const ListStoolRecords = ({ recordedStools = [], hasSort=true, sortAscending=fal
     </div>
   )
 }
-
+ListStoolRecords.propTypes = {
+  recordedStools: PropTypes.arrayOf(PropTypes.shape({
+    type: PropTypes.number, 
+    dateTime: PropTypes.shape({ timestamp: PropTypes.string}), 
+    size: PropTypes.oneOf([STOOL_SIZES.SMALL, STOOL_SIZES.MEDIUM, STOOL_SIZES.LARGE])
+  })),
+  hasSort: PropTypes.bool,
+  sortAscending: PropTypes.bool,
+  displayDaySeparators: PropTypes.bool,
+  titleComponent: PropTypes.element
+}
 export default ListStoolRecords
