@@ -7,7 +7,6 @@ import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import BaseStoolDayCountTable from './BaseStoolDayCountTable';
 import { StoolCount } from '../../chip/composites'
-import { Title } from '../../title'
 import momentFormatter from '../../../utils/moment-format'
 import { ListStoolRecords } from '../../list/composites'
 import { Typography } from '@material-ui/core';
