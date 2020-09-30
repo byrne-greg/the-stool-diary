@@ -14,7 +14,7 @@ export const NoRecordsFound = () => {
   const { t } = useTranslation();
   const classes = useStyles()
   return (
-    <div className={classes.noRecordsFound}>
+    <div className={classes.noRecordsFound} data-testid="no-records-found">
       <Typography variant="body1" component="p">
         {t('No records found')}
       </Typography>
