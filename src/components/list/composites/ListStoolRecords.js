@@ -55,9 +55,11 @@ const ListStoolRecords = ({
   
   return (
     <div>
-      <div className={classes.titleContainer} data-testid="list-stool-records-title">
-        {titleComponent}
-      </div>
+      {titleComponent ? 
+        (<div className={classes.titleContainer} data-testid="list-stool-records-title">
+          {titleComponent}
+        </div>) 
+      : null}
       {uniqueDays.length > 0 ? (
       <List>
         {hasSort ? (
@@ -73,9 +75,9 @@ const ListStoolRecords = ({
           {uniqueDays.map(day => {
             const dayMoment = moment(day);
            return (
-            <div key={day}>
+            <div key={day} data-testid="list-stool-records-day">
               {displayDaySeparators ? (
-               <div className={classes.daySeparatorContainer}>
+               <div className={classes.daySeparatorContainer} data-testid="list-stool-records-day-separator">
                  <span className={classes.daySeparatorText}>
                    {`${t(dayMoment.format('dddd'))}, ${dayMoment.format('Do')} ${t(dayMoment.format('MMMM'))} ${dayMoment.format('YYYY')}`}
                    </span>
