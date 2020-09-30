@@ -48,7 +48,7 @@ const ListStoolItem = ({ stoolType, stoolDateTime, stoolSize = null }) => {
   const stoolClass = stoolClassifications.find(stoolClass => stoolClass.type === stoolType)
 
   return (
-    <li className={classes.listItem}>
+    <li className={classes.listItem} data-testid="list-stool-item">
       {stoolClass && (<div className={classes.listItemAvatar}>{stoolClass.image}</div>)}
       <div className={classes.listItemTextContainer}>
         <Typography variant="h4" className={classes.listItemTitle}>{t('Type')} {stoolType ? stoolType : t('Invalid')}</Typography>
