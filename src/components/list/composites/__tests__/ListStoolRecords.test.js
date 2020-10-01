@@ -105,7 +105,21 @@ describe('ListStoolRecords', () => {
           expect(daySeparatorComponent).toBeTruthy();
           expect(listStoolItems.length).toStrictEqual(3)
       })
-      xtest("when mounted with a multiple stool records on the different days, then it should display multiple stool cards under different day sections", () => {})
+      test("when mounted with a multiple stool records on the different days, then it should display multiple stool cards under different day sections", () => {
+        // ARRANGE
+       
+          // ACT
+          const { queryAllByTestId } = render(<ListStoolRecords recordedStools={[
+            { type: 1, dateTime: { timestamp: moment().subtract(2, 'days').format()}, size: STOOL_SIZES.SMALL },
+            { type: 2, dateTime: { timestamp: moment().subtract(1, 'days').format()}, size: STOOL_SIZES.MEDIUM },
+            { type: 3, dateTime: { timestamp: moment().format()}, size: STOOL_SIZES.LARGE },
+          ]}/>)
+          
+          const daySeparatorComponent = queryAllByTestId("list-stool-records-day-separator")
+          
+          // ASSERT 
+          expect(daySeparatorComponent.length).toStrictEqual(3)
+      })
       xtest("when mounted with a multiple stool records on the different days, then it should display multiple stool cards under different day sections", () => {})
     });
 
