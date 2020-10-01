@@ -161,7 +161,8 @@ function getStoolTableData(stoolDayData, t) {
     // if we have a week where there are records
     const daysWithRecords = tableRow.data.filter(dayData => dayData.stools && dayData.stools.length > 0)
     if(daysWithRecords.length > 0) {
-      const weekStoolRecords = daysWithRecords.map(dayData => dayData.stools).flat()
+      // .flat() is not supported in node 10 and older browsers
+      const weekStoolRecords = [].concat([ ...daysWithRecords.map(dayData => dayData.stools) ])
       // don't show collapse rows that have no records in the week
       if(weekStoolRecords.length > 0) {
       tableRow.collapsedData = { 
