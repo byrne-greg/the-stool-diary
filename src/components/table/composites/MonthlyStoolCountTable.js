@@ -1,15 +1,18 @@
 import React, { useState } from 'react'
+import PropTypes from "prop-types";
 import moment from 'moment'
 import { useTranslation } from 'react-i18next'
 import { makeStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
+import { Typography } from '@material-ui/core';
 import BaseStoolDayCountTable from './BaseStoolDayCountTable';
 import { StoolCount } from '../../chip/composites'
 import momentFormatter from '../../../utils/moment-format'
 import { ListStoolRecords } from '../../list/composites'
-import { Typography } from '@material-ui/core';
+import { STOOL_SIZES } from '../../../context/stool/model';
+
 
 const useMonthlyStoolCountTableStyles = makeStyles({
   monthSelector: {
@@ -76,6 +79,16 @@ const MonthlyStoolCountTable = ({ month = moment().format('YYYYMM'), recordedSto
     </div>
   )
 };
+MonthlyStoolCountTable.propTypes = {
+  month: PropTypes.string,
+  semanticTitleElement: PropTypes.string,
+  displayTitleElement: PropTypes.string,
+  recordedStools: PropTypes.arrayOf(PropTypes.shape({
+    type: PropTypes.number, 
+    dateTime: PropTypes.shape({ timestamp: PropTypes.string}), 
+    size: PropTypes.oneOf([STOOL_SIZES.SMALL, STOOL_SIZES.MEDIUM, STOOL_SIZES.LARGE])
+  })),
+}
 export default MonthlyStoolCountTable;
 
 // ---- utility functions
@@ -161,8 +174,9 @@ function getStoolTableData(stoolDayData, t) {
     // if we have a week where there are records
     const daysWithRecords = tableRow.data.filter(dayData => dayData.stools && dayData.stools.length > 0)
     if(daysWithRecords.length > 0) {
+      const mappedDaysWithRecords = daysWithRecords.map(dayData => dayData.stools)
       // .flat() is not supported in node 10 and older browsers
-      const weekStoolRecords = [].concat([ ...daysWithRecords.map(dayData => dayData.stools) ])
+      const weekStoolRecords = mappedDaysWithRecords.reduce((acc, val) => acc.concat(val), []);
       // don't show collapse rows that have no records in the week
       if(weekStoolRecords.length > 0) {
       tableRow.collapsedData = { 

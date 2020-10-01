@@ -6,7 +6,6 @@ import MonthlyStoolCountTable from '../MonthlyStoolCountTable';
 import INITIAL_STATE from '../../../../context/stool/model';
 import momentFormatter from '../../../../utils/moment-format';
 
-// const getDisplayDateFormatForMoment = (moment) => `${moment.format('dddd')}, ${moment.format('Do')} ${moment.format('MMMM')}`
 const getDisplayMonthFormatForMoment = (moment) => `${moment.format('MMMM')} - ${moment.format('YYYY')}`
 const getDayText = (dayNum) => moment().day(dayNum).format('dd')
 
@@ -147,7 +146,7 @@ describe('MonthlyDayStoolCountTable', () => {
 
     test("when displayed in a previous month, the next month selector is shown", async () => {
       // ARRANGE
-      const previousMonth = moment().subtract(1, 'month')
+      const previousMonth = moment().subtract(1, 'month').format('YYYYMMDD')
     
       // ACT
       const { queryByTestId } = render(<MonthlyStoolCountTable month={previousMonth} />)
@@ -199,6 +198,7 @@ describe('MonthlyDayStoolCountTable', () => {
       const stoolData = [
         { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(1, 'month').format(), dateString: moment().subtract(1, 'month').format(momentFormatter.YYYYMMDD), dateOnly: false }},
       ]
+      console.log(stoolData)
 
       // ACT
       const { getAllByTestId , getByTestId} = render(<MonthlyStoolCountTable recordedStools={stoolData} />)
@@ -229,7 +229,7 @@ describe('MonthlyDayStoolCountTable', () => {
 
     test("when the next month is selected, the next month stool records are displayed", async () => {
       // ARRANGE
-      const previousMonth = moment().subtract(1, 'month')
+      const previousMonth = moment().subtract(1, 'month').format('YYYYMMDD')
       const actualStoolCounts = []
       const stoolData = [
         { ...INITIAL_STATE, dateTime: { timestamp: moment().format(), dateString: moment().format(momentFormatter.YYYYMMDD), dateOnly: false }},
@@ -253,7 +253,7 @@ describe('MonthlyDayStoolCountTable', () => {
       const nextMonthDisplayName = getDisplayMonthFormatForMoment(moment())
     
       // ACT
-      const { getByTestId} = render(<MonthlyStoolCountTable month={moment().subtract(1, 'month')}/>)
+      const { getByTestId} = render(<MonthlyStoolCountTable month={moment().subtract(1, 'month').format('YYYYMMDD')}/>)
       fireEvent.click(getByTestId("monthly-stool-count-table-nextmonthselector"))
       const monthOnDisplay = getByTestId('monthly-stool-count-table-displaymonth').textContent
       
