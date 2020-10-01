@@ -198,7 +198,6 @@ describe('MonthlyDayStoolCountTable', () => {
       const stoolData = [
         { ...INITIAL_STATE, dateTime: { timestamp: moment().subtract(1, 'month').format(), dateString: moment().subtract(1, 'month').format(momentFormatter.YYYYMMDD), dateOnly: false }},
       ]
-      console.log(stoolData)
 
       // ACT
       const { getAllByTestId , getByTestId} = render(<MonthlyStoolCountTable recordedStools={stoolData} />)
