@@ -1,9 +1,9 @@
-import React, { useReducer } from 'react';
-import INITIAL_STATE from './model'
-import reducer from './reducer'
+import React, { useReducer } from "react"
+import INITIAL_STATE from "./model"
+import reducer from "./reducer"
 
-export const FormNavigationStateContext = React.createContext();
-export const FormNavigationDispatchContext = React.createContext();
+export const FormNavigationStateContext = React.createContext()
+export const FormNavigationDispatchContext = React.createContext()
 
 const FormNavigationContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE)

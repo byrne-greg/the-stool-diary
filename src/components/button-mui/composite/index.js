@@ -1,3 +1,3 @@
-import FormNavigationButtons from './FormNavigationButtons'
+import FormNavigationButtons from "./FormNavigationButtons"
 
 export { FormNavigationButtons }

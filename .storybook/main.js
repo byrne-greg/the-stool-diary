@@ -1,6 +1,10 @@
 module.exports = {
-  stories: ['../src/**/*.stories.js'],
-  addons: ['@storybook/addon-actions', '@storybook/addon-links', '@storybook/addon-docs'],
+  stories: ["../src/**/*.stories.js"],
+  addons: [
+    "@storybook/addon-actions",
+    "@storybook/addon-links",
+    "@storybook/addon-docs",
+  ],
   webpackFinal: async config => {
     // Transpile Gatsby module because Gatsby includes un-transpiled ES6 code.
     config.module.rules[0].exclude = [/node_modules\/(?!(gatsby)\/)/]
@@ -22,8 +26,8 @@ module.exports = {
     ]
 
     // Prefer Gatsby ES6 entrypoint (module) over commonjs (main) entrypoint
-    config.resolve.mainFields = ["browser", "module", "main"];
+    config.resolve.mainFields = ["browser", "module", "main"]
 
-    return config;
+    return config
   },
-};
+}

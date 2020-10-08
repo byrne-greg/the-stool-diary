@@ -1,18 +1,15 @@
-import React, { useState } from 'react';
-import { SignUpForm } from '../form/auth/signup';
+import React, { useState } from "react"
+import { SignUpForm } from "../form/auth/signup"
 
 const SignupScreen = () => {
-  const [isUserSignedUp, setIsUserSignedUp] = useState(false);
+  const [isUserSignedUp, setIsUserSignedUp] = useState(false)
 
   return (
     <>
-    {!isUserSignedUp ? 
-      (
-        <SignUpForm setIsUserSignedUp={setIsUserSignedUp}/>
+      {!isUserSignedUp ? (
+        <SignUpForm setIsUserSignedUp={setIsUserSignedUp} />
       ) : (
-        <div>
-          Congratulations, you have successfully signed up!
-        </div>
+        <div>Congratulations, you have successfully signed up!</div>
       )}
     </>
   )

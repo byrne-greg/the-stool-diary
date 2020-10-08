@@ -1,12 +1,8 @@
-import React from 'react';
-import { RecordStoolForm } from '../form/stool'
-import { persistStoolData } from '../../context/stool/persistence'
+import React from "react"
+import { RecordStoolForm } from "../form/stool"
+import { persistStoolData } from "../../context/stool/persistence"
 
 const RecordStoolFormScreen = () => {
-  return (
-    <RecordStoolForm persistStoolDataFn={persistStoolData} />
-  )
+  return <RecordStoolForm persistStoolDataFn={persistStoolData} />
 }
-export default RecordStoolFormScreen;
-
-
+export default RecordStoolFormScreen

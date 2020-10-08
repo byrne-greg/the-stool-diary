@@ -4,4 +4,10 @@ import StoolSizeCapture from "./StoolSizeCapture"
 import StoolCaptureSummary from "./StoolCaptureSummary"
 import RecordStoolForm from "./RecordStoolForm"
 
-export { StoolTypeCapture, StoolDateTimeCapture, StoolSizeCapture, StoolCaptureSummary, RecordStoolForm }
+export {
+  StoolTypeCapture,
+  StoolDateTimeCapture,
+  StoolSizeCapture,
+  StoolCaptureSummary,
+  RecordStoolForm,
+}

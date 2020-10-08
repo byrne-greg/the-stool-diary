@@ -6,17 +6,14 @@ import { HomeScreen } from "../components/screens"
 
 const IndexPage = () => (
   <PageLayout title="Home">
-    <HomeScreen/>
-    <hr/>
+    <HomeScreen />
+    <hr />
     <div>
-      Header - small logo plus brand with opposite side having a drawer menu/page links
+      Header - small logo plus brand with opposite side having a drawer
+      menu/page links
     </div>
-    <div>
-      Title ("Record with the Stool Diary")
-    </div>
-    <div>
-      Subtitle ("Track your bowel movements for your health")
-    </div>
+    <div>Title ("Record with the Stool Diary")</div>
+    <div>Subtitle ("Track your bowel movements for your health")</div>
     <div>
       <p>Hero</p>
       <p>Why do it - 3 cards with icon, title, and blurb why its important</p>
@@ -30,15 +27,19 @@ const IndexPage = () => (
     </div>
     <div>
       <p>Footer</p>
-      <p>Includes a sitemap, provider information, and anything else ancillary</p>
+      <p>
+        Includes a sitemap, provider information, and anything else ancillary
+      </p>
     </div>
     <div>
-      <p>See <a href="https://www.impactbnd.com/blog/landing-page-examples">Landing page examples for more information</a></p>
+      <p>
+        See{" "}
+        <a href="https://www.impactbnd.com/blog/landing-page-examples">
+          Landing page examples for more information
+        </a>
+      </p>
     </div>
-
-    
   </PageLayout>
-
 )
 
 export default IndexPage

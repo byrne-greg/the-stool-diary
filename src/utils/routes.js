@@ -11,5 +11,5 @@ export default {
   ...SIGN_UP,
   ...RECORD_STOOL,
   ...DASHBOARD,
-  ...MISSING
+  ...MISSING,
 }

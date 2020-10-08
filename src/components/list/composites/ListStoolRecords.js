@@ -1,117 +1,166 @@
-import React, { useState, useMemo} from 'react'
-import PropTypes from "prop-types";
-import moment from 'moment'
-import { useTranslation } from 'react-i18next'
-import { ListSubheader , IconButton } from '@material-ui/core'
-import ArrowUpward from '@material-ui/icons/ArrowUpward';
-import ArrowDownward from '@material-ui/icons/ArrowDownward';
-import { makeStyles } from '@material-ui/core/styles';
-import ListStoolItem from './ListStoolItem'
-import List, { NoRecordsFound } from '../List'
-import momentFormatter from '../../../utils/moment-format'
-import { STOOL_SIZES } from '../../../context/stool/model';
+import React, { useState, useMemo } from "react"
+import PropTypes from "prop-types"
+import moment from "moment"
+import { useTranslation } from "react-i18next"
+import { ListSubheader, IconButton } from "@material-ui/core"
+import ArrowUpward from "@material-ui/icons/ArrowUpward"
+import ArrowDownward from "@material-ui/icons/ArrowDownward"
+import { makeStyles } from "@material-ui/core/styles"
+import ListStoolItem from "./ListStoolItem"
+import List, { NoRecordsFound } from "../List"
+import momentFormatter from "../../../utils/moment-format"
+import { STOOL_SIZES } from "../../../context/stool/model"
 
 function sortRecordsByTimestamp(records, orderAsc) {
-  return [...records.sort((a, b) => { 
-    const moment1 = moment(a.dateTime.timestamp);
-    const moment2 = moment(b.dateTime.timestamp);
-    if(moment1.isBefore(moment2)) return orderAsc ? -1 : 1
-    if(moment1.isAfter(moment2)) return orderAsc ? 1 : -1
-    return 0
-  })]
+  return [
+    ...records.sort((a, b) => {
+      const moment1 = moment(a.dateTime.timestamp)
+      const moment2 = moment(b.dateTime.timestamp)
+      if (moment1.isBefore(moment2)) return orderAsc ? -1 : 1
+      if (moment1.isAfter(moment2)) return orderAsc ? 1 : -1
+      return 0
+    }),
+  ]
 }
 
 const useStyles = makeStyles(theme => ({
   daySeparatorContainer: {
     borderTop: `3px solid ${theme.palette.info.main}`,
-    marginTop: '1rem',
-    marginBottom: '1.45rem',
-    paddingTop: '0.88rem'
-    
+    marginTop: "1rem",
+    marginBottom: "1.45rem",
+    paddingTop: "0.88rem",
   },
   daySeparatorText: {
-    fontSize: '1.11rem',
-    marginLeft: '1rem',
-    paddingBottom: '4px',
+    fontSize: "1.11rem",
+    marginLeft: "1rem",
+    paddingBottom: "4px",
   },
   titleContainer: {
-    paddingTop: '0.5rem'
-  }
+    paddingTop: "0.5rem",
+  },
 }))
 
-const ListStoolRecords = ({ 
-  recordedStools = [], 
-  hasSort=true, 
-  sortAscending=false, 
-  displayDaySeparators=true, 
-  titleComponent=null
+const ListStoolRecords = ({
+  recordedStools = [],
+  hasSort = true,
+  sortAscending = false,
+  displayDaySeparators = true,
+  titleComponent = null,
 }) => {
-  const { t } = useTranslation();
-  const classes = useStyles();
-  const [isSortAsc, setIsSortAsc] = useState(sortAscending);
+  const { t } = useTranslation()
+  const classes = useStyles()
+  const [isSortAsc, setIsSortAsc] = useState(sortAscending)
   const isSortingNeeded = hasSort && recordedStools.length > 1
-  const isDaySeparatorsNeeded = displayDaySeparators && recordedStools.length > 1
+  const isDaySeparatorsNeeded =
+    displayDaySeparators && recordedStools.length > 1
 
-  
-  const sortedRecords = useMemo(() => sortRecordsByTimestamp(recordedStools, isSortAsc), [recordedStools, isSortAsc])
-  const uniqueDays = useMemo(()=> [...new Set(recordedStools.map(stoolRecord => moment(stoolRecord.dateTime.timestamp).format(momentFormatter.YYYYMMDD)))], [sortedRecords])
-  
+  const sortedRecords = useMemo(
+    () => sortRecordsByTimestamp(recordedStools, isSortAsc),
+    [recordedStools, isSortAsc]
+  )
+  const uniqueDays = useMemo(
+    () => [
+      ...new Set(
+        recordedStools.map(stoolRecord =>
+          moment(stoolRecord.dateTime.timestamp).format(
+            momentFormatter.YYYYMMDD
+          )
+        )
+      ),
+    ],
+    [sortedRecords]
+  )
+
   return (
     <div>
-      {titleComponent ? 
-        (<div className={classes.titleContainer} data-testid="list-stool-records-title">
+      {titleComponent ? (
+        <div
+          className={classes.titleContainer}
+          data-testid="list-stool-records-title"
+        >
           {titleComponent}
-        </div>) 
-      : null}
+        </div>
+      ) : null}
       {uniqueDays.length > 0 ? (
-      <List>
-        {isSortingNeeded ? (
-        <ListSubheader>
-          <div className={classes.sorter} onClick={() => setIsSortAsc(!isSortAsc)} data-testid="list-stool-records-sort-button">
-            <IconButton aria-label="sort records" size="small" >
-              {isSortAsc ? <ArrowUpward /> : <ArrowDownward />}
-            </IconButton>
-            {`${t('Sorted by')} ${t(isSortAsc ? 'Earliest to Latest' : 'Latest to Earliest')}`}
-          </div>
-        </ListSubheader>
-        ) : null}
+        <List>
+          {isSortingNeeded ? (
+            <ListSubheader>
+              <div
+                className={classes.sorter}
+                onClick={() => setIsSortAsc(!isSortAsc)}
+                data-testid="list-stool-records-sort-button"
+              >
+                <IconButton aria-label="sort records" size="small">
+                  {isSortAsc ? <ArrowUpward /> : <ArrowDownward />}
+                </IconButton>
+                {`${t("Sorted by")} ${t(
+                  isSortAsc ? "Earliest to Latest" : "Latest to Earliest"
+                )}`}
+              </div>
+            </ListSubheader>
+          ) : null}
           {uniqueDays.map(day => {
-            const dayMoment = moment(day);
-           return (
-            <div key={day} data-testid="list-stool-records-day">
-              {isDaySeparatorsNeeded ? (
-               <div className={classes.daySeparatorContainer} data-testid="list-stool-records-day-separator">
-                 <span className={classes.daySeparatorText}>
-                   {`${t(dayMoment.format('dddd'))}, ${dayMoment.format('Do')} ${t(dayMoment.format('MMMM'))} ${dayMoment.format('YYYY')}`}
-                   </span>
-                 </div>
-              ) : null}
-                {sortedRecords.filter(stoolRecord=>day === (moment(stoolRecord.dateTime.timestamp).format(momentFormatter.YYYYMMDD)))
-                .map((stoolRecord, index) => (
-                  <div key={`${stoolRecord.type}-${stoolRecord.size}-${stoolRecord.dateTime.timestamp}-${index}`}>
-                    <ListStoolItem
-                      stoolType={stoolRecord.type}
-                      stoolDateTime={stoolRecord.dateTime.timestamp}
-                      stoolSize={stoolRecord.size} />
+            const dayMoment = moment(day)
+            return (
+              <div key={day} data-testid="list-stool-records-day">
+                {isDaySeparatorsNeeded ? (
+                  <div
+                    className={classes.daySeparatorContainer}
+                    data-testid="list-stool-records-day-separator"
+                  >
+                    <span className={classes.daySeparatorText}>
+                      {`${t(dayMoment.format("dddd"))}, ${dayMoment.format(
+                        "Do"
+                      )} ${t(dayMoment.format("MMMM"))} ${dayMoment.format(
+                        "YYYY"
+                      )}`}
+                    </span>
                   </div>
-                ))}
-            </div>
-          )})}
-        </List>) :
+                ) : null}
+                {sortedRecords
+                  .filter(
+                    stoolRecord =>
+                      day ===
+                      moment(stoolRecord.dateTime.timestamp).format(
+                        momentFormatter.YYYYMMDD
+                      )
+                  )
+                  .map((stoolRecord, index) => (
+                    <div
+                      key={`${stoolRecord.type}-${stoolRecord.size}-${stoolRecord.dateTime.timestamp}-${index}`}
+                    >
+                      <ListStoolItem
+                        stoolType={stoolRecord.type}
+                        stoolDateTime={stoolRecord.dateTime.timestamp}
+                        stoolSize={stoolRecord.size}
+                      />
+                    </div>
+                  ))}
+              </div>
+            )
+          })}
+        </List>
+      ) : (
         <NoRecordsFound />
-      }
+      )}
     </div>
   )
 }
 ListStoolRecords.propTypes = {
-  recordedStools: PropTypes.arrayOf(PropTypes.shape({
-    type: PropTypes.number, 
-    dateTime: PropTypes.shape({ timestamp: PropTypes.string}), 
-    size: PropTypes.oneOf([STOOL_SIZES.SMALL, STOOL_SIZES.MEDIUM, STOOL_SIZES.LARGE])
-  })),
+  recordedStools: PropTypes.arrayOf(
+    PropTypes.shape({
+      type: PropTypes.number,
+      dateTime: PropTypes.shape({ timestamp: PropTypes.string }),
+      size: PropTypes.oneOf([
+        STOOL_SIZES.SMALL,
+        STOOL_SIZES.MEDIUM,
+        STOOL_SIZES.LARGE,
+      ]),
+    })
+  ),
   hasSort: PropTypes.bool,
   sortAscending: PropTypes.bool,
   displayDaySeparators: PropTypes.bool,
-  titleComponent: PropTypes.element
+  titleComponent: PropTypes.element,
 }
 export default ListStoolRecords

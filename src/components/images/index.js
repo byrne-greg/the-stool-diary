@@ -1,14 +1,13 @@
-import ImgGatsbyAstronaut from './ImgGatsbyAstronaut'
-import ImgStoolType1 from './stool-types/StoolType1'
-import ImgStoolType2 from './stool-types/StoolType2'
-import ImgStoolType3 from './stool-types/StoolType3'
-import ImgStoolType4 from './stool-types/StoolType4'
-import ImgStoolType5 from './stool-types/StoolType5'
-import ImgStoolType6 from './stool-types/StoolType6'
-import ImgStoolType7 from './stool-types/StoolType7'
-import DiaryIcon from './DiaryIcon'
-import StoolDiaryLogo from './StoolDiaryLogo'
-
+import ImgGatsbyAstronaut from "./ImgGatsbyAstronaut"
+import ImgStoolType1 from "./stool-types/StoolType1"
+import ImgStoolType2 from "./stool-types/StoolType2"
+import ImgStoolType3 from "./stool-types/StoolType3"
+import ImgStoolType4 from "./stool-types/StoolType4"
+import ImgStoolType5 from "./stool-types/StoolType5"
+import ImgStoolType6 from "./stool-types/StoolType6"
+import ImgStoolType7 from "./stool-types/StoolType7"
+import DiaryIcon from "./DiaryIcon"
+import StoolDiaryLogo from "./StoolDiaryLogo"
 
 export {
   ImgGatsbyAstronaut,
@@ -20,6 +19,5 @@ export {
   ImgStoolType6,
   ImgStoolType7,
   DiaryIcon,
-  StoolDiaryLogo
+  StoolDiaryLogo,
 }
-

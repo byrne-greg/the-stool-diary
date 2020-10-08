@@ -2,14 +2,11 @@ import React from "react"
 import RecordStoolContextProvider from "../context/stool/RecordStoolContext"
 import { StoolDateTimeCaptureStoryHarness } from "../components/form/stool/__stories__/StoolCaptureStoryHarness"
 
-
 const StoolDateTimeCaptureTestPage = () => {
-  return(
+  return (
     <RecordStoolContextProvider>
-      <StoolDateTimeCaptureStoryHarness/>
+      <StoolDateTimeCaptureStoryHarness />
     </RecordStoolContextProvider>
   )
-  
 }
 export default StoolDateTimeCaptureTestPage
-

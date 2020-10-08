@@ -2,14 +2,11 @@ import React from "react"
 import RecordStoolContextProvider from "../context/stool/RecordStoolContext"
 import { StoolCaptureSummaryStoryHarness } from "../components/form/stool/__stories__/StoolCaptureStoryHarness"
 
-
 const StoolSummaryCaptureTestPage = () => {
-  return(
+  return (
     <RecordStoolContextProvider>
-      <StoolCaptureSummaryStoryHarness/>
+      <StoolCaptureSummaryStoryHarness />
     </RecordStoolContextProvider>
   )
-  
 }
 export default StoolSummaryCaptureTestPage
-

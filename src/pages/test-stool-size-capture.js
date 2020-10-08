@@ -2,14 +2,11 @@ import React from "react"
 import RecordStoolContextProvider from "../context/stool/RecordStoolContext"
 import { StoolSizeCaptureStoryHarness } from "../components/form/stool/__stories__/StoolCaptureStoryHarness"
 
-
 const StoolSizeCaptureTestPage = () => {
-  return(
+  return (
     <RecordStoolContextProvider>
-      <StoolSizeCaptureStoryHarness/>
+      <StoolSizeCaptureStoryHarness />
     </RecordStoolContextProvider>
   )
-  
 }
 export default StoolSizeCaptureTestPage
-

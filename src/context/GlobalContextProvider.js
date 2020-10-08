@@ -1,18 +1,20 @@
-import React, { useReducer } from 'react';
+import React, { useReducer } from "react"
 import LANG_CODES from "../components/i18n/language-codes"
 
-export const GlobalStateContext = React.createContext();
-export const GlobalDispatchContext = React.createContext();
+export const GlobalStateContext = React.createContext()
+export const GlobalDispatchContext = React.createContext()
 
 const initialState = {
   theme: "light",
-  lang: LANG_CODES.ENGLISH
+  lang: LANG_CODES.ENGLISH,
 }
 
 function reducer(state, action) {
-  switch(action.type) {
-    case "CHANGE_LANGUAGE": return { ...state, lang: action.value }
-    default: throw new Error("Invalid Global Context Action Type")
+  switch (action.type) {
+    case "CHANGE_LANGUAGE":
+      return { ...state, lang: action.value }
+    default:
+      throw new Error("Invalid Global Context Action Type")
   }
 }
 

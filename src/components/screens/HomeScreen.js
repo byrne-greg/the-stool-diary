@@ -5,19 +5,19 @@ import { useTranslation } from "react-i18next"
 
 const useStyles = makeStyles({
   hero: {
-    textAlign: 'center',
-    padding: '5rem 0'
+    textAlign: "center",
+    padding: "5rem 0",
   },
   subhero: {
-    textAlign: 'center',
-  }
+    textAlign: "center",
+  },
 })
 
 const HomeScreen = () => {
   return (
     <>
-      <Hero/>
-      <SubHero/>
+      <Hero />
+      <SubHero />
     </>
   )
 }
@@ -29,10 +29,10 @@ export default HomeScreen
 const Hero = () => {
   const { t } = useTranslation()
   const classes = useStyles()
-  return(
+  return (
     <div className={classes.hero}>
       <Typography variant="h1" gutterBottom>
-      {t("Welcome to the Stool Diary")}
+        {t("Welcome to the Stool Diary")}
       </Typography>
     </div>
   )
@@ -41,12 +41,11 @@ const Hero = () => {
 const SubHero = () => {
   const { t } = useTranslation()
   const classes = useStyles()
-  return(
+  return (
     <div className={classes.subhero}>
       <Typography variant="h2" gutterBottom>
-      {t("Tracking your bowel movements for your health")}
+        {t("Tracking your bowel movements for your health")}
       </Typography>
     </div>
   )
- 
 }

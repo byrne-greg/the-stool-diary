@@ -1,4 +1,4 @@
-import ItemNotFoundCard from './ItemNotFoundCard'
-import StoolTypeCard from './StoolTypeCard'
+import ItemNotFoundCard from "./ItemNotFoundCard"
+import StoolTypeCard from "./StoolTypeCard"
 
-export { ItemNotFoundCard, StoolTypeCard } 
+export { ItemNotFoundCard, StoolTypeCard }

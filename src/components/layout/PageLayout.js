@@ -14,10 +14,9 @@ import { SEO } from "../meta"
 import Container from "@material-ui/core/Container"
 
 const PageLayout = ({ title, children }) => {
-  
   return (
     <>
-      <Header/>
+      <Header />
       <SEO title={title} />
       <PageCenter>
         <Container disableGutters component="main">

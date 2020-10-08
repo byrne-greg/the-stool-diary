@@ -1,10 +1,10 @@
-import React from 'react';
-import Card from '../Card';
-import CardContent from '@material-ui/core/CardContent';
+import React from "react"
+import Card from "../Card"
+import CardContent from "@material-ui/core/CardContent"
 
 export default {
-  title: 'Card-Mui/Card'
-};
+  title: "Card-Mui/Card",
+}
 
 export const Default = () => {
   return (
@@ -12,9 +12,7 @@ export const Default = () => {
       {new Array(3).fill(null).map((_, i) => (
         <Padding>
           <Card>
-            <CardContent>
-              This is custom Card {i + 1}
-            </CardContent>
+            <CardContent>This is custom Card {i + 1}</CardContent>
           </Card>
         </Padding>
       ))}
@@ -25,16 +23,14 @@ export const Default = () => {
 export const Max_Width = () => {
   return (
     <>
-    {new Array(3).fill(null).map((_, i) => (
-      <Padding>
-        <Card maxWidth={'150px'}>
-          <CardContent>
-            This is custom Card {i + 1}
-          </CardContent>
-        </Card>
-      </Padding>
-    ))}
-  </>
+      {new Array(3).fill(null).map((_, i) => (
+        <Padding>
+          <Card maxWidth={"150px"}>
+            <CardContent>This is custom Card {i + 1}</CardContent>
+          </Card>
+        </Padding>
+      ))}
+    </>
   )
 }
 

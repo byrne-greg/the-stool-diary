@@ -6,11 +6,18 @@ import {
   MOVE_SCREEN_BACKWARD,
 } from "./actionTypes"
 
-export const loadFormScreens = (dispatch, value) => updateState(dispatch, LOAD_SCREENS, value)
-export const updateFormHasReachedSummary = (dispatch, value) => updateState(dispatch, UPDATE_HAS_REACHED_SUMMARY, value)
-export const updateFormCurrentScreen = (dispatch, value) => updateState(dispatch, UPDATE_CURRENT_SCREEN, value)
-export const moveFormToStart = (dispatch) => updateState(dispatch, UPDATE_CURRENT_SCREEN, 0)
-export const moveFormScreenForward = (dispatch) => updateState(dispatch, MOVE_SCREEN_FORWARD)
-export const moveFormScreenBackward = (dispatch) => updateState(dispatch, MOVE_SCREEN_BACKWARD)
+export const loadFormScreens = (dispatch, value) =>
+  updateState(dispatch, LOAD_SCREENS, value)
+export const updateFormHasReachedSummary = (dispatch, value) =>
+  updateState(dispatch, UPDATE_HAS_REACHED_SUMMARY, value)
+export const updateFormCurrentScreen = (dispatch, value) =>
+  updateState(dispatch, UPDATE_CURRENT_SCREEN, value)
+export const moveFormToStart = dispatch =>
+  updateState(dispatch, UPDATE_CURRENT_SCREEN, 0)
+export const moveFormScreenForward = dispatch =>
+  updateState(dispatch, MOVE_SCREEN_FORWARD)
+export const moveFormScreenBackward = dispatch =>
+  updateState(dispatch, MOVE_SCREEN_BACKWARD)
 
-const updateState = (dispatch, actionType, newValue, ) => dispatch({ type: actionType, value: newValue })
+const updateState = (dispatch, actionType, newValue) =>
+  dispatch({ type: actionType, value: newValue })

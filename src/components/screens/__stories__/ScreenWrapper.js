@@ -1,15 +1,7 @@
-import React from 'react'
-import GlobalContextProvider from '../../../context/GlobalContextProvider'
+import React from "react"
+import GlobalContextProvider from "../../../context/GlobalContextProvider"
 
 const ScreenWrapper = ({ children }) => {
-  return(
-    <GlobalContextProvider>
-      {children}
-    </GlobalContextProvider>
-  )
+  return <GlobalContextProvider>{children}</GlobalContextProvider>
 }
 export default ScreenWrapper
-
-
-
-

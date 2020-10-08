@@ -1,3 +1,3 @@
-import StoolCount from './StoolCount'
+import StoolCount from "./StoolCount"
 
 export { StoolCount }

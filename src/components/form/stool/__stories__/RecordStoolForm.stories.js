@@ -1,33 +1,36 @@
-import React from 'react'
+import React from "react"
 import RecordStoolContextProvider from "../../../../context/stool/RecordStoolContext"
-import { StoolTypeCaptureStoryHarness, StoolSizeCaptureStoryHarness, StoolDateTimeCaptureStoryHarness, StoolCaptureSummaryStoryHarness } from "./StoolCaptureStoryHarness"
+import {
+  StoolTypeCaptureStoryHarness,
+  StoolSizeCaptureStoryHarness,
+  StoolDateTimeCaptureStoryHarness,
+  StoolCaptureSummaryStoryHarness,
+} from "./StoolCaptureStoryHarness"
 
 export default {
-  title: "Screens/Record Stool"
+  title: "Screens/Record Stool",
 }
 
 export const Record_Type = () => (
   <RecordStoolContextProvider>
-    <StoolTypeCaptureStoryHarness/>
+    <StoolTypeCaptureStoryHarness />
   </RecordStoolContextProvider>
 )
 
 export const Record_Size = () => (
   <RecordStoolContextProvider>
-    <StoolSizeCaptureStoryHarness/>
+    <StoolSizeCaptureStoryHarness />
   </RecordStoolContextProvider>
 )
 
 export const Record_DateTime = () => (
   <RecordStoolContextProvider>
-    <StoolDateTimeCaptureStoryHarness/>
+    <StoolDateTimeCaptureStoryHarness />
   </RecordStoolContextProvider>
 )
 
 export const Summary = () => (
   <RecordStoolContextProvider>
-    <StoolCaptureSummaryStoryHarness/>
+    <StoolCaptureSummaryStoryHarness />
   </RecordStoolContextProvider>
 )
-
- 

@@ -1,35 +1,38 @@
-import React from 'react'
-import { PrimaryActionButton, SecondaryActionButton } from '../ThemeButton'
-import ButtonContainer from '../ButtonContainer'
-import { useTranslation } from 'react-i18next'
+import React from "react"
+import { PrimaryActionButton, SecondaryActionButton } from "../ThemeButton"
+import ButtonContainer from "../ButtonContainer"
+import { useTranslation } from "react-i18next"
 
 const FormNavigationButtons = ({
-  handleNavForward = () => { },
-  handleNavBackward = () => { },
+  handleNavForward = () => {},
+  handleNavBackward = () => {},
   primaryActionOverride = null,
-  secondaryActionOverride = null 
+  secondaryActionOverride = null,
 }) => {
-
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
   return (
     <ButtonContainer>
-      {!primaryActionOverride ?
-        (<PrimaryActionButton
+      {!primaryActionOverride ? (
+        <PrimaryActionButton
           onClick={handleNavForward}
-          data-testid={'formnavigationbuttons-button-forward'}
+          data-testid={"formnavigationbuttons-button-forward"}
         >
-          {t('Next')}
-        </PrimaryActionButton>)
-        : primaryActionOverride}
-      {!secondaryActionOverride ?
-        (<SecondaryActionButton
+          {t("Next")}
+        </PrimaryActionButton>
+      ) : (
+        primaryActionOverride
+      )}
+      {!secondaryActionOverride ? (
+        <SecondaryActionButton
           onClick={handleNavBackward}
-          data-testid={'formnavigationbuttons-button-backward'}
+          data-testid={"formnavigationbuttons-button-backward"}
         >
-          {t('Back')}
-        </SecondaryActionButton>)
-        : secondaryActionOverride}
+          {t("Back")}
+        </SecondaryActionButton>
+      ) : (
+        secondaryActionOverride
+      )}
     </ButtonContainer>
   )
 }

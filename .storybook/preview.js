@@ -1,28 +1,27 @@
 import { action } from "@storybook/addon-actions"
 import { addDecorator } from "@storybook/react"
-import React from 'react'
+import React from "react"
 
 // TODO
 // Cannot use AppWrapper as importing i18n causes problems because of the i18next-http-backend and storybook not finding core-js/modules/...
 // Manually importing and wrapping the story with global components
-import GlobalContextProvider from '../src/context/GlobalContextProvider'
-import GlobalTheme from '../src/components/theme/GlobalTheme'
-addDecorator(
-  (Story) => (
-    <GlobalContextProvider>
-      <GlobalTheme>
-        <Story/>
-      </GlobalTheme>
-    </GlobalContextProvider>)
-  )
+import GlobalContextProvider from "../src/context/GlobalContextProvider"
+import GlobalTheme from "../src/components/theme/GlobalTheme"
+addDecorator(Story => (
+  <GlobalContextProvider>
+    <GlobalTheme>
+      <Story />
+    </GlobalTheme>
+  </GlobalContextProvider>
+))
 
 // Gatsby's Link overrides:
 // Gatsby Link calls the `enqueue` & `hovering` methods on the global variable ___loader.
 // This global object isn't set in storybook context, requiring you to override it to empty functions (no-op),
 // so Gatsby Link doesn't throw any errors.
 global.___loader = {
-  enqueue: () => { },
-  hovering: () => { },
+  enqueue: () => {},
+  hovering: () => {},
 }
 
 // __PATH_PREFIX__ is used inside gatsby-link an other various places. For storybook not to crash, you need to set it as well.

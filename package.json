@@ -72,6 +72,7 @@
     "clean": "gatsby clean",
     "test": "jest",
     "test:watch": "jest --watch",
+    "lint": "eslint .",
     "sb": "NODE_ENV=production start-storybook -p 8997 -s static",
     "build-storybook": "NODE_ENV=production build-storybook -s static"
   },
