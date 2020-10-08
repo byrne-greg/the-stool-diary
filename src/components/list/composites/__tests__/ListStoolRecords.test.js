@@ -1,10 +1,10 @@
 import React from 'react';
 import moment from 'moment'
-import { render } from '@testing-library/react'
+import { fireEvent, render } from '@testing-library/react'
 import ListStoolRecords from '../ListStoolRecords';
 import { STOOL_SIZES } from '../../../../context/stool/model'
 import { getRandomHistoricalMoment } from '../__stories__/mock-data'
-
+import defaultLocale from '../locales/ListStoolRecords.locale.en.json'
 
 
 beforeEach(() => {
@@ -86,12 +86,25 @@ describe('ListStoolRecords', () => {
     });
 
     describe('displayDaySeparators', () => {
-      xtest("when mounted with a single stool record, then it not should display stool card within a day section", () => {})
+      test("when mounted with a single stool record, then it not should display stool card within a day section", () => {
+        // ARRANGE
+       
+          // ACT
+          const { queryByTestId } = render(<ListStoolRecords displayDaySeparators
+            recordedStools={[
+            { type: 1, dateTime: { timestamp: moment().format()}, size: STOOL_SIZES.SMALL },
+          ]}/>)
+          const daySeparatorComponent = queryByTestId("list-stool-records-day-separator")
+         
+          // ASSERT
+          expect(daySeparatorComponent).toBeFalsy();
+      })
       test("when mounted with a multiple stool records on the same day, then it should display multiple stool cards within the same day section", () => {
          // ARRANGE
        
           // ACT
-          const { queryByTestId } = render(<ListStoolRecords recordedStools={[
+          const { queryByTestId } = render(<ListStoolRecords displayDaySeparators
+            recordedStools={[
             { type: 1, dateTime: { timestamp: moment().format()}, size: STOOL_SIZES.SMALL },
             { type: 2, dateTime: { timestamp: moment().format()}, size: STOOL_SIZES.MEDIUM },
             { type: 3, dateTime: { timestamp: moment().format()}, size: STOOL_SIZES.LARGE },
@@ -109,7 +122,10 @@ describe('ListStoolRecords', () => {
         // ARRANGE
        
           // ACT
-          const { queryAllByTestId } = render(<ListStoolRecords recordedStools={[
+          const { queryAllByTestId } = render(
+          <ListStoolRecords 
+            displayDaySeparators 
+            recordedStools={[
             { type: 1, dateTime: { timestamp: moment().subtract(2, 'days').format()}, size: STOOL_SIZES.SMALL },
             { type: 2, dateTime: { timestamp: moment().subtract(1, 'days').format()}, size: STOOL_SIZES.MEDIUM },
             { type: 3, dateTime: { timestamp: moment().format()}, size: STOOL_SIZES.LARGE },
@@ -120,22 +136,192 @@ describe('ListStoolRecords', () => {
           // ASSERT 
           expect(daySeparatorComponent.length).toStrictEqual(3)
       })
-      xtest("when mounted with a multiple stool records on the different days, then it should display multiple stool cards under different day sections", () => {})
+      test("when mounted with a displayDaySeparators off, then it shouldn't display any day separators", () => {
+        // ARRANGE
+      
+         // ACT
+         const { queryByTestId } = render(<ListStoolRecords displayDaySeparators={false}
+           recordedStools={[
+            { type: 1, dateTime: { timestamp: moment().subtract(2, 'days').format()}, size: STOOL_SIZES.SMALL },
+            { type: 2, dateTime: { timestamp: moment().subtract(1, 'days').format()}, size: STOOL_SIZES.MEDIUM },
+            { type: 3, dateTime: { timestamp: moment().format()}, size: STOOL_SIZES.LARGE },
+         ]}/>)
+     
+         const daySeparatorComponent = queryByTestId("list-stool-records-day-separator")
+       
+        
+         // ASSERT
+         expect(daySeparatorComponent).toBeFalsy();
+       
+     })
     });
 
     describe('hasSort', () => {
-      xtest("when sorting is enabled, then it should display a sort button", () => {})
-      xtest("when sorting is enabled but there is only one record, then it should not display a sort button", () => {})
-      xtest("when sorting is enabled and showAscending is false, then the sort button should show latest to earliest", () => {})
-      xtest("when sorting is enabled and showAscending is true, then the sort button should show earliest to latest", () => {})
-      xtest("when sorting is disabled, then no sort button is displayed", () => {})
+      test("when sorting is enabled, then it should display a sort button", () => {
+        // ARRANGE
+       
+          // ACT
+          const { queryByTestId } = render(
+          <ListStoolRecords 
+            hasSort
+          recordedStools={[
+            { type: 1, dateTime: { timestamp: moment().subtract(2, 'days').format()}, size: STOOL_SIZES.SMALL },
+            { type: 2, dateTime: { timestamp: moment().subtract(1, 'days').format()}, size: STOOL_SIZES.MEDIUM },
+            { type: 3, dateTime: { timestamp: moment().format()}, size: STOOL_SIZES.LARGE },
+          ]}/>)
+          
+          const sortButtonComponent = queryByTestId("list-stool-records-sort-button")
+          
+          // ASSERT 
+          expect(sortButtonComponent).toBeTruthy()
+      })
+      test("when sorting is enabled but there is only one record, then it should not display a sort button", () => {
+        // ARRANGE
+       
+          // ACT
+          const { queryByTestId } = render(
+            <ListStoolRecords 
+              hasSort
+            recordedStools={[
+              { type: 1, dateTime: { timestamp: moment().subtract(2, 'days').format()}, size: STOOL_SIZES.SMALL },
+            ]}/>)
+            
+            const sortButtonComponent = queryByTestId("list-stool-records-sort-button")
+            
+            // ASSERT 
+            expect(sortButtonComponent).toBeFalsy()
+      })
+      test("when sorting is enabled and sortAscending is false, then the sort button should show latest to earliest", () => {
+        // ARRANGE
+       
+          // ACT
+          const { queryByTestId } = render(
+          <ListStoolRecords 
+            hasSort
+            sortAscending={false}
+            recordedStools={[
+              { type: 1, dateTime: { timestamp: moment().subtract(2, 'days').format()}, size: STOOL_SIZES.SMALL },
+              { type: 2, dateTime: { timestamp: moment().subtract(1, 'days').format()}, size: STOOL_SIZES.MEDIUM },
+              { type: 3, dateTime: { timestamp: moment().format()}, size: STOOL_SIZES.LARGE },
+            ]}/>)
+            
+            const sortButtonComponent = queryByTestId("list-stool-records-sort-button").textContent
+            
+            // ASSERT 
+            expect(sortButtonComponent).toStrictEqual(`${defaultLocale["Sorted by"]} ${defaultLocale["Latest to Earliest"]}`)
+      })
+      test("when sorting is enabled and sortAscending is true, then the sort button should show earliest to latest", () => {
+         // ARRANGE
+       
+          // ACT
+          const { queryByTestId } = render(
+            <ListStoolRecords 
+              hasSort
+              sortAscending
+              recordedStools={[
+                { type: 1, dateTime: { timestamp: moment().subtract(2, 'days').format()}, size: STOOL_SIZES.SMALL },
+                { type: 2, dateTime: { timestamp: moment().subtract(1, 'days').format()}, size: STOOL_SIZES.MEDIUM },
+                { type: 3, dateTime: { timestamp: moment().format()}, size: STOOL_SIZES.LARGE },
+              ]}/>)
+              
+              const sortButtonComponent = queryByTestId("list-stool-records-sort-button").textContent
+              
+              // ASSERT 
+              expect(sortButtonComponent).toStrictEqual(`${defaultLocale["Sorted by"]} ${defaultLocale["Earliest to Latest"]}`)
+      })
+      test("when sorting is disabled, then no sort button is displayed", () => {
+        // ARRANGE
+       
+          // ACT
+          const { queryByTestId } = render(<ListStoolRecords hasSort={false}
+            recordedStools={[
+              { type: 1, dateTime: { timestamp: moment().subtract(2, 'days').format()}, size: STOOL_SIZES.SMALL },
+              { type: 2, dateTime: { timestamp: moment().subtract(1, 'days').format()}, size: STOOL_SIZES.MEDIUM },
+              { type: 3, dateTime: { timestamp: moment().format()}, size: STOOL_SIZES.LARGE },
+            ]}/>)
+            
+            const sortButtonComponent = queryByTestId("list-stool-records-sort-button")
+            
+            // ASSERT 
+            expect(sortButtonComponent).toBeFalsy()
+      })
     });
     
   });
 
   describe('Functional', () => {
-    xtest("when mounted, then stool records should be sorted by latest to earliest", () => {})
-    xtest("when the sort button is clicked once, then it should sort stool records by earliest to latest", () => {})
-    xtest("when the sort button is clicked twice, then it should sort stool records by latest to earliest", () => {}) 
+    test("when mounted, then stool records should be sorted by latest to earliest", () => {
+        // ARRANGE
+        const latestRecord = { type: 3, dateTime: { timestamp: moment().format()}, size: STOOL_SIZES.LARGE }
+        const medianRecord = { type: 2, dateTime: { timestamp: moment().subtract(1, 'days').format()}, size: STOOL_SIZES.MEDIUM }
+        const earliestRecord = { type: 1, dateTime: { timestamp: moment().subtract(2, 'days').format()}, size: STOOL_SIZES.SMALL }
+       
+          // ACT
+          const { queryAllByTestId } = render(
+          <ListStoolRecords
+            recordedStools={[
+              earliestRecord,
+              medianRecord,
+              latestRecord
+            ]}/>)
+            
+            const listStoolItemTypes = queryAllByTestId("list-stool-item-type")
+            
+            
+            // ASSERT 
+            expect(listStoolItemTypes[0].textContent).toStrictEqual(`Type ${latestRecord.type}`)
+            expect(listStoolItemTypes[1].textContent).toStrictEqual(`Type ${medianRecord.type}`)
+            expect(listStoolItemTypes[2].textContent).toStrictEqual(`Type ${earliestRecord.type}`)
+    })
+    test("when the sort button is clicked once, then it should sort stool records by earliest to latest", () => {
+        // ARRANGE
+        const latestRecord = { type: 3, dateTime: { timestamp: moment().format()}, size: STOOL_SIZES.LARGE }
+        const medianRecord = { type: 2, dateTime: { timestamp: moment().subtract(1, 'days').format()}, size: STOOL_SIZES.MEDIUM }
+        const earliestRecord = { type: 1, dateTime: { timestamp: moment().subtract(2, 'days').format()}, size: STOOL_SIZES.SMALL }
+       
+          // ACT
+          const { queryAllByTestId, getByTestId } = render(
+          <ListStoolRecords
+            recordedStools={[
+              earliestRecord,
+              medianRecord,
+              latestRecord
+            ]}/>)
+            const sortButton = getByTestId("list-stool-records-sort-button").querySelector("button")
+            fireEvent.click(sortButton);
+            
+            const listStoolItemTypes = queryAllByTestId("list-stool-item-type")
+                        
+            // ASSERT 
+            expect(listStoolItemTypes[0].textContent).toStrictEqual(`Type ${earliestRecord.type}`)
+            expect(listStoolItemTypes[1].textContent).toStrictEqual(`Type ${medianRecord.type}`)
+            expect(listStoolItemTypes[2].textContent).toStrictEqual(`Type ${latestRecord.type}`)
+            
+    })
+    test("when the sort button is clicked twice, then it should sort stool records by latest to earliest", () => {
+       // ARRANGE
+       const latestRecord = { type: 3, dateTime: { timestamp: moment().format()}, size: STOOL_SIZES.LARGE }
+       const medianRecord = { type: 2, dateTime: { timestamp: moment().subtract(1, 'days').format()}, size: STOOL_SIZES.MEDIUM }
+       const earliestRecord = { type: 1, dateTime: { timestamp: moment().subtract(2, 'days').format()}, size: STOOL_SIZES.SMALL }
+      
+         // ACT
+         const { queryAllByTestId, getByTestId } = render(
+         <ListStoolRecords
+           recordedStools={[
+             earliestRecord,
+             medianRecord,
+             latestRecord
+           ]}/>)
+           const sortButton = getByTestId("list-stool-records-sort-button").querySelector("button")
+           fireEvent.click(sortButton);
+           fireEvent.click(sortButton);
+           const listStoolItemTypes = queryAllByTestId("list-stool-item-type")
+           
+           
+           // ASSERT 
+           expect(listStoolItemTypes[0].textContent).toStrictEqual(`Type ${latestRecord.type}`)
+           expect(listStoolItemTypes[1].textContent).toStrictEqual(`Type ${medianRecord.type}`)
+           expect(listStoolItemTypes[2].textContent).toStrictEqual(`Type ${earliestRecord.type}`)
+    }) 
   });
 });

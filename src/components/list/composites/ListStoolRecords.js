@@ -49,6 +49,9 @@ const ListStoolRecords = ({
   const { t } = useTranslation();
   const classes = useStyles();
   const [isSortAsc, setIsSortAsc] = useState(sortAscending);
+  const isSortingNeeded = hasSort && recordedStools.length > 1
+  const isDaySeparatorsNeeded = displayDaySeparators && recordedStools.length > 1
+
   
   const sortedRecords = useMemo(() => sortRecordsByTimestamp(recordedStools, isSortAsc), [recordedStools, isSortAsc])
   const uniqueDays = useMemo(()=> [...new Set(recordedStools.map(stoolRecord => moment(stoolRecord.dateTime.timestamp).format(momentFormatter.YYYYMMDD)))], [sortedRecords])
@@ -62,9 +65,9 @@ const ListStoolRecords = ({
       : null}
       {uniqueDays.length > 0 ? (
       <List>
-        {hasSort ? (
+        {isSortingNeeded ? (
         <ListSubheader>
-          <div className={classes.sorter} onClick={() => setIsSortAsc(!isSortAsc)}>
+          <div className={classes.sorter} onClick={() => setIsSortAsc(!isSortAsc)} data-testid="list-stool-records-sort-button">
             <IconButton aria-label="sort records" size="small" >
               {isSortAsc ? <ArrowUpward /> : <ArrowDownward />}
             </IconButton>
@@ -76,7 +79,7 @@ const ListStoolRecords = ({
             const dayMoment = moment(day);
            return (
             <div key={day} data-testid="list-stool-records-day">
-              {displayDaySeparators ? (
+              {isDaySeparatorsNeeded ? (
                <div className={classes.daySeparatorContainer} data-testid="list-stool-records-day-separator">
                  <span className={classes.daySeparatorText}>
                    {`${t(dayMoment.format('dddd'))}, ${dayMoment.format('Do')} ${t(dayMoment.format('MMMM'))} ${dayMoment.format('YYYY')}`}
