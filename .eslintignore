@@ -1,0 +1,7 @@
+__mocks__
+.cahce
+.storybook
+node_modules
+public
+src/locales
+src/images
