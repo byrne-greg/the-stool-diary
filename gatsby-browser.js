@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /**
  * Implement Gatsby's Browser APIs in this file.
  *

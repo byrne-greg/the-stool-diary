@@ -12,6 +12,9 @@ const path = require("path")
 const glob = require("glob")
 const minify = require("node-json-minify")
 
+/**
+ * Generates compiled and minified translation files from {filename}.locale.{langCode}.json files
+ */
 function generateTranslationFiles() {
   const supportedLanguages = ["en", "fr"]
   supportedLanguages.forEach(language => {
