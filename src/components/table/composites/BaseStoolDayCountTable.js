@@ -32,7 +32,7 @@ const BaseStoolDayCountTable = ({
       moment(startDate),
       "days"
     )
-    for (var i = 1; i <= numberOfDaysBetweenStartAndEnd; i++) {
+    for (let i = 1; i <= numberOfDaysBetweenStartAndEnd; i++) {
       // moment variables are mutable so we need to recreate it
       dayDataForPeriod.unshift({
         dateString: formatToDateString(moment(endDate).subtract(i, "days")),

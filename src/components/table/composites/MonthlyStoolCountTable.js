@@ -169,7 +169,7 @@ function getStoolTableData(stoolDayData, t) {
     )
 
     // tableRow will contain a week of records
-    let tableRow = {
+    const tableRow = {
       data: [{ display: weekNum, value: weekNum, type: "numeric" }],
     }
     if (dayDataRecordsForWeek.length < 7) {
