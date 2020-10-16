@@ -1,4 +1,5 @@
-import React, { useReducer } from "react"
+import React, { useContext } from "react"
+import PropTypes from "prop-types"
 import { useTranslation } from "react-i18next"
 import Button from "@material-ui/core/Button"
 import CssBaseline from "@material-ui/core/CssBaseline"
@@ -14,19 +15,21 @@ import Alert from "@material-ui/lab/Alert"
 import { signUpUser, persistData } from "../../../firebase/utils"
 import { USER_NAMESPACE } from "../../../firebase/namespaces"
 import { validateTextField, VALIDATION_TYPE } from "../validation"
-import { INITIAL_AUTH_STATE } from "../state/authModel"
-import { authReducer } from "../state/authReducers"
 import {
   updateEmail,
   updateEmailError,
   updatePassword,
   updatePasswordError,
-  updateFirstName,
-  updateFirstNameError,
-  updateLastName,
-  updateLastNameError,
+  updateForename,
+  updateForenameError,
+  updateSurname,
+  updateSurnameError,
   updateAuthError,
-} from "../state/authActions"
+} from "../../../../context/auth/actions"
+import AuthContextProvider, {
+  AuthStateContext,
+  AuthDispatchContext,
+} from "../../../../context/auth/AuthContextProvider"
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -48,20 +51,22 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const SignUpForm = ({ setIsUserSignedUp = () => {} }) => {
+const SignUpFormComponent = ({ setIsUserSignedUp = () => {} }) => {
   const { t } = useTranslation()
-
   const classes = useStyles()
 
-  const [authState, authDispatch] = useReducer(authReducer, INITIAL_AUTH_STATE)
+  const authState = useContext(AuthStateContext)
+  console.log("authState", authState)
+  const authDispatch = useContext(AuthDispatchContext)
+
   const setEmail = email => updateEmail(authDispatch, email)
   const setPassword = password => updatePassword(authDispatch, password)
-  const setFirstName = firstName => updateFirstName(authDispatch, firstName)
-  const setLastName = lastName => updateLastName(authDispatch, lastName)
+  const setForename = forename => updateForename(authDispatch, forename)
+  const setSurname = surname => updateSurname(authDispatch, surname)
   const setEmailError = error => updateEmailError(authDispatch, error)
   const setPasswordError = error => updatePasswordError(authDispatch, error)
-  const setFirstNameError = error => updateFirstNameError(authDispatch, error)
-  const setLastNameError = error => updateLastNameError(authDispatch, error)
+  const setForenameError = error => updateForenameError(authDispatch, error)
+  const setSurnameError = error => updateSurnameError(authDispatch, error)
   const setAuthError = error => updateAuthError(authDispatch, error)
 
   const getEmail = () => authState.email.value
@@ -70,19 +75,19 @@ const SignUpForm = ({ setIsUserSignedUp = () => {} }) => {
   const getPassword = () => authState.password.value
   const getIsPasswordInvalid = () => authState.password.error.isInvalid
   const getPasswordInvalidReason = () => authState.password.error.reason
-  const getFirstName = () => authState.firstName.value
-  const getIsFirstNameInvalid = () => authState.firstName.error.isInvalid
-  const getFirstNameInvalidReason = () => authState.firstName.error.reason
-  const getLastName = () => authState.lastName.value
-  const getIsLastNameInvalid = () => authState.lastName.error.isInvalid
-  const getLastNameInvalidReason = () => authState.lastName.error.reason
+  const getForename = () => authState.forename.value
+  const getIsForenameInvalid = () => authState.forename.error.isInvalid
+  const getForenameInvalidReason = () => authState.forename.error.reason
+  const getSurname = () => authState.surname.value
+  const getIsSurnameInvalid = () => authState.surname.error.isInvalid
+  const getSurnameInvalidReason = () => authState.surname.error.reason
   const getAuthError = () => authState.authError
 
   const persistUserSignUp = () =>
     persistData(USER_NAMESPACE, {
       email: getEmail(),
-      firstName: getFirstName(),
-      lastName: getLastName(),
+      forename: getForename(),
+      surname: getSurname(),
     })
 
   const handleSubmit = async e => {
@@ -97,16 +102,21 @@ const SignUpForm = ({ setIsUserSignedUp = () => {} }) => {
       type: VALIDATION_TYPE.PASSWORD,
     })
     setPasswordError(passwordValidation)
-    const firstNameValidation = validateTextField({ value: getFirstName() })
-    setFirstNameError(firstNameValidation)
-    const lastNameValidation = validateTextField({ value: getLastName() })
-    setLastNameError(lastNameValidation)
+    const forenameValidation = validateTextField({ value: getForename() })
+    setForenameError(forenameValidation)
+    const surnameValidation = validateTextField({ value: getSurname() })
+    setSurnameError(surnameValidation)
+    console.log("emailValidation", emailValidation)
+    console.log("passwordValidation", passwordValidation)
+    console.log("forenameValidation", forenameValidation)
+    console.log("surnameValidation", surnameValidation)
     const isAllowedToSignUp = !(
       emailValidation.isInvalid ||
       passwordValidation.isInvalid ||
-      firstNameValidation.isInvalid ||
-      lastNameValidation.isInvalid
+      forenameValidation.isInvalid ||
+      surnameValidation.isInvalid
     )
+    console.log("isAllowedToSignUp", isAllowedToSignUp)
     if (isAllowedToSignUp) {
       const authError = await signUpUser({
         email: getEmail(),
@@ -135,13 +145,13 @@ const SignUpForm = ({ setIsUserSignedUp = () => {} }) => {
                 variant="outlined"
                 required
                 fullWidth
-                id="firstName"
+                id="forename"
                 label={t("First Name")}
-                name="firstName"
+                name="forename"
                 autoComplete="fname"
-                error={getIsFirstNameInvalid()}
-                helperText={getFirstNameInvalidReason()}
-                onChange={e => setFirstName(e.target.value)}
+                error={getIsForenameInvalid()}
+                helperText={getForenameInvalidReason()}
+                onChange={e => setForename(e.target.value)}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -149,13 +159,13 @@ const SignUpForm = ({ setIsUserSignedUp = () => {} }) => {
                 variant="outlined"
                 required
                 fullWidth
-                id="lastName"
+                id="surname"
                 label={t("Last Name")}
-                name="lastName"
+                name="surname"
                 autoComplete="lname"
-                error={getIsLastNameInvalid()}
-                helperText={getLastNameInvalidReason()}
-                onChange={e => setLastName(e.target.value)}
+                error={getIsSurnameInvalid()}
+                helperText={getSurnameInvalidReason()}
+                onChange={e => setSurname(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -220,6 +230,17 @@ const SignUpForm = ({ setIsUserSignedUp = () => {} }) => {
         </form>
       </div>
     </Container>
+  )
+}
+SignUpFormComponent.propTypes = {
+  setIsUserSignedUp: PropTypes.func,
+}
+
+const SignUpForm = props => {
+  return (
+    <AuthContextProvider>
+      <SignUpFormComponent {...props} />
+    </AuthContextProvider>
   )
 }
 export default SignUpForm
