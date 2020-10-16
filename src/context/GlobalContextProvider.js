@@ -1,4 +1,5 @@
 import React, { useReducer } from "react"
+import PropTypes from "prop-types"
 import LANG_CODES from "../components/i18n/language-codes"
 
 export const GlobalStateContext = React.createContext()
@@ -9,12 +10,18 @@ const initialState = {
   lang: LANG_CODES.ENGLISH,
 }
 
+/**
+ * Reducer to manage any global (app-level) state changes
+ * @param {Object} state the global state
+ * @param {string} action the action describing the state change
+ * @return {Object} new state object
+ */
 function reducer(state, action) {
   switch (action.type) {
     case "CHANGE_LANGUAGE":
       return { ...state, lang: action.value }
     default:
-      throw new Error("Invalid Global Context Action Type")
+      return { ...state }
   }
 }
 
@@ -27,5 +34,8 @@ const GlobalContextProvider = ({ children }) => {
       </GlobalDispatchContext.Provider>
     </GlobalStateContext.Provider>
   )
+}
+GlobalContextProvider.propTypes = {
+  children: PropTypes.node,
 }
 export default GlobalContextProvider
