@@ -1,4 +1,5 @@
 import React, { useEffect, useContext, useState } from "react"
+import PropTypes from "prop-types"
 import { useTranslation } from "react-i18next"
 import { useTheme } from "@material-ui/core"
 import Typography from "@material-ui/core/Typography"
@@ -70,6 +71,10 @@ const RecordStoolForm = ({
     </FormNavigationContextProvider>
   )
 }
+RecordStoolForm.propTypes = {
+  persistStoolDataFn: PropTypes.func,
+  isFinished: PropTypes.bool,
+}
 
 const RecordStoolFormScreens = ({
   persistStoolData = () => {},
@@ -97,12 +102,14 @@ const RecordStoolFormScreens = ({
   useEffect(() => {
     const stoolFormScreens = [
       <StoolTypeCapture
+        key="stool-type-capture"
         persistType={stoolType => {
           updateStoolType(stoolDispatch, stoolType)
           goToNextOrSummaryScreen(formNavState)
         }}
       />,
       <StoolSizeCapture
+        key="stool-size-capture"
         persistedSize={stoolState.size}
         persistSize={size => updateStoolSize(stoolDispatch, size)}
         formNavButtons={
@@ -117,6 +124,7 @@ const RecordStoolFormScreens = ({
         }
       />,
       <StoolDateTimeCapture
+        key="stool-datetime-capture"
         persistedDateTime={stoolState.dateTime}
         persistDateTime={dateTime =>
           updateStoolDateTime(stoolDispatch, dateTime)
@@ -129,6 +137,7 @@ const RecordStoolFormScreens = ({
         }
       />,
       <StoolCaptureSummary
+        key="stool-capture-summary"
         selectedType={stoolState.type}
         selectedSize={stoolState.size}
         selectedDateTime={stoolState.dateTime}
@@ -173,5 +182,9 @@ const RecordStoolFormScreens = ({
       <div>{getCurrentScreen()}</div>
     </div>
   )
+}
+RecordStoolFormScreens.propTypes = {
+  persistStoolData: PropTypes.func,
+  setFinished: PropTypes.func,
 }
 export default RecordStoolForm
