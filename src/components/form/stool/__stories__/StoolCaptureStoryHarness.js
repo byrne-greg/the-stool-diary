@@ -13,7 +13,7 @@ import { DateTimePicker } from "../../../datetime-picker"
 import {
   RecordStoolStateContext,
   RecordStoolDispatchContext,
-} from "../../../../context/stool/RecordStoolContext"
+} from "../../../../context/stool/RecordStoolContextProvider"
 import {
   updateStoolType,
   updateStoolSize,

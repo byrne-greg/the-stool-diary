@@ -13,7 +13,7 @@ import { FormNavigationButtons } from "../../button-mui/composite"
 import RecordStoolContextProvider, {
   RecordStoolStateContext,
   RecordStoolDispatchContext,
-} from "../../../context/stool/RecordStoolContext"
+} from "../../../context/stool/RecordStoolContextProvider"
 import {
   updateStoolType,
   updateStoolDateTime,
