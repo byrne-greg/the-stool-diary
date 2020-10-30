@@ -14,7 +14,7 @@ import Container from "@material-ui/core/Container"
 import Alert from "@material-ui/lab/Alert"
 import { signUpUser, persistData } from "../../../firebase/utils"
 import { USER_NAMESPACE } from "../../../firebase/namespaces"
-import { validateTextField, VALIDATION_TYPE } from "../validation"
+import { validateFormTextField, VALIDATION_TYPE } from "../utils/validation"
 import {
   updateEmail,
   updateEmailError,
@@ -92,19 +92,19 @@ const SignUpFormComponent = ({ setIsUserSignedUp = () => {} }) => {
 
   const handleSubmit = async e => {
     e.preventDefault()
-    const emailValidation = validateTextField({
+    const emailValidation = validateFormTextField({
       value: getEmail(),
       type: VALIDATION_TYPE.EMAIL,
     })
     setEmailError(emailValidation)
-    const passwordValidation = validateTextField({
+    const passwordValidation = validateFormTextField({
       value: getPassword(),
       type: VALIDATION_TYPE.PASSWORD,
     })
     setPasswordError(passwordValidation)
-    const forenameValidation = validateTextField({ value: getForename() })
+    const forenameValidation = validateFormTextField({ value: getForename() })
     setForenameError(forenameValidation)
-    const surnameValidation = validateTextField({ value: getSurname() })
+    const surnameValidation = validateFormTextField({ value: getSurname() })
     setSurnameError(surnameValidation)
     console.log("emailValidation", emailValidation)
     console.log("passwordValidation", passwordValidation)

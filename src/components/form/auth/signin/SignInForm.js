@@ -12,7 +12,7 @@ import { makeStyles } from "@material-ui/core/styles"
 import Container from "@material-ui/core/Container"
 import Alert from "@material-ui/lab/Alert"
 import { signInUser, persistData } from "../../../firebase/utils"
-import { validateTextField, VALIDATION_TYPE } from "../validation"
+import { validateFormTextField, VALIDATION_TYPE } from "../utils/validation"
 import { INITIAL_AUTH_STATE } from "../state/authModel"
 import { authReducer } from "../state/authReducers"
 import {
@@ -62,7 +62,7 @@ const SignInForm = ({ setIsSignInSuccessful = () => {} }) => {
   const handleSubmit = async e => {
     e.preventDefault()
 
-    const emailValidation = validateTextField({
+    const emailValidation = validateFormTextField({
       value: getEmail(),
       type: VALIDATION_TYPE.EMAIL,
     })
