@@ -146,7 +146,7 @@ describe("StoolDateTimeCapture", () => {
       const persistDateTimeMockFn = jest.fn(val => val)
 
       // ACT
-      const { getByTestId, findByText, queryByTestId } = render(
+      const { getByTestId, findByText } = render(
         <StoolDateTimeCapture persistDateTime={persistDateTimeMockFn} />
       )
 

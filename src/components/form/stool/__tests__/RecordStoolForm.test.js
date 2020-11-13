@@ -1,9 +1,7 @@
-import React, { useContext } from "react"
+import React from "react"
 import { render, fireEvent } from "@testing-library/react"
-import StoolCaptureSummary from "../StoolCaptureSummary"
 import { STOOL_SIZES } from "../../../../context/stool/model"
 import stoolClassifications from "../../../../utils/stool-classifications"
-import { convertToProperCase } from "../../../../utils/text"
 import RecordStoolForm from "../RecordStoolForm"
 
 describe("RecordStoolForm", () => {
