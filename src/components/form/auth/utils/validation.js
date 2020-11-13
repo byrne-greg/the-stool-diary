@@ -1,3 +1,5 @@
+import i18n from "../../../i18n/i18n"
+
 export const VALIDATION_TYPE = {
   EMAIL: "email",
   PASSWORD: "password",
@@ -12,35 +14,40 @@ export const validateFormTextField = ({
   customInvalidateFn = () => ({ isInvalid: false, reason: null }),
 }) => {
   // should not be empty
-  if (value === "") return { isInvalid: true, reason: "Must not be empty" }
+  if (value === "")
+    return { isInvalid: true, reason: i18n.t("Must not be empty") }
 
   // should not be undefined
   if (value === undefined) {
     return {
       isInvalid: true,
-      reason: "Something unexpected has occurred. Please try again",
+      reason: i18n.t("Something unexpected has occurred. Please try again"),
     }
   }
 
   // should not be null
-  if (value === null) return { isInvalid: true, reason: "Must not be empty" }
+  if (value === null)
+    return { isInvalid: true, reason: i18n.t("Must not be empty") }
 
   if (type === VALIDATION_TYPE.EMAIL) {
     const allowedEmailValidationRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/g
     if (!value.match(allowedEmailValidationRegex))
       return {
         isInvalid: true,
-        reason: 'Email must be in the format of "email@domain.name"',
+        reason: i18n.t('Email must be in the format of "email@domain.name"'),
       }
   } else if (type === VALIDATION_TYPE.PASSWORD) {
-    const commonPasswordValidationReason =
-      "Passwords must have 1 uppercase character, 1 lowercase character, 1 special character, and be more than 8 characters long"
+    // "Passwords must have 1 uppercase character, 1 lowercase character, 1 special character, and be more than 8 characters long"
 
     // must contain more than 8 chars
     if (value.length < PASSWORD_CHAR_MINIMUM)
       return {
         isInvalid: true,
-        reason: `Password must not be less than ${PASSWORD_CHAR_MINIMUM} characters`,
+        reason: i18n
+          .t(
+            `Password must not be less than {PASSWORD_CHAR_MINIMUM} characters`
+          )
+          .replace("{PASSWORD_CHAR_MINIMUM}", PASSWORD_CHAR_MINIMUM),
       }
 
     // must contain at least one special char
@@ -48,7 +55,7 @@ export const validateFormTextField = ({
     if (!specialChars.length > 0)
       return {
         isInvalid: true,
-        reason: "Password does not contain any special characters",
+        reason: i18n.t("Password does not contain any special characters"),
       }
 
     // must contain at least one uppercase char
@@ -56,7 +63,7 @@ export const validateFormTextField = ({
     if (!uppercaseChars.length > 0)
       return {
         isInvalid: true,
-        reason: "Password does not contain any uppercase characters",
+        reason: i18n.t("Password does not contain any uppercase characters"),
       }
 
     // must contain at least one lowercase char
@@ -64,7 +71,7 @@ export const validateFormTextField = ({
     if (!lowercaseChars.length > 0)
       return {
         isInvalid: true,
-        reason: "Password does not contain any lowercase characters",
+        reason: i18n.t("Password does not contain any lowercase characters"),
       }
 
     // must contain at least one number
@@ -72,7 +79,7 @@ export const validateFormTextField = ({
     if (!numberChars.length > 0)
       return {
         isInvalid: true,
-        reason: "Password does not contain any numeric characters",
+        reason: i18n.t("Password does not contain any numeric characters"),
       }
   } else {
     // // must not contain any special or numeric characters
@@ -86,7 +93,9 @@ export const validateFormTextField = ({
     if (value.length < GENERIC_CHAR_MINIMUM) {
       return {
         isInvalid: true,
-        reason: `Must contain more than ${GENERIC_CHAR_MINIMUM} characters`,
+        reason: i18n
+          .t(`Must contain more than {GENERIC_CHAR_MINIMUM} characters`)
+          .replace("{GENERIC_CHAR_MINIMUM}", GENERIC_CHAR_MINIMUM),
       }
     }
   }

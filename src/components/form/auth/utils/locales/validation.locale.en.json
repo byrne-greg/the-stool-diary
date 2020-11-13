@@ -1,0 +1,11 @@
+{
+  "Must not be empty": "Must not be empty",
+  "Something unexpected has occurred. Please try again": "Something unexpected has occurred. Please try again",
+  "Password must not be less than {PASSWORD_CHAR_MINIMUM} characters": "Password must not be less than {PASSWORD_CHAR_MINIMUM} characters",
+  "Password does not contain any special characters": "Password does not contain any special characters",
+  "Password does not contain any uppercase characters": "Password does not contain any uppercase characters",
+  "Password does not contain any lowercase characters": "Password does not contain any lowercase characters",
+  "Password does not contain any numeric characters": "Password does not contain any numeric characters",
+  "Must contain more than {GENERIC_CHAR_MINIMUM} characters": "Must contain more than {GENERIC_CHAR_MINIMUM} characters",
+  "Email must be in the format of \"email@domain.name\"": "Email must be in the format of \"email@domain.name\""
+}

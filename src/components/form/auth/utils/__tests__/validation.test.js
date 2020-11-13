@@ -4,6 +4,7 @@ import {
   GENERIC_CHAR_MINIMUM,
   VALIDATION_TYPE,
 } from "../validation"
+import textTranslation from "../locales/validation.locale.en.json"
 
 describe("Auth Text Field Validation Rules", () => {
   describe("validateFormTextField", () => {
@@ -16,7 +17,9 @@ describe("Auth Text Field Validation Rules", () => {
 
         // THEN
         expect(result.isInvalid).toBeTruthy()
-        expect(result.reason).toStrictEqual("Must not be empty")
+        expect(result.reason).toStrictEqual(
+          textTranslation["Must not be empty"]
+        )
       })
       it("validation fails when text field value is null", () => {
         // GIVEN
@@ -29,7 +32,9 @@ describe("Auth Text Field Validation Rules", () => {
 
         // THEN
         expect(result.isInvalid).toBeTruthy()
-        expect(result.reason).toStrictEqual("Must not be empty")
+        expect(result.reason).toStrictEqual(
+          textTranslation["Must not be empty"]
+        )
       })
       it("validation fails when text field value is undefined", () => {
         // GIVEN
@@ -42,7 +47,9 @@ describe("Auth Text Field Validation Rules", () => {
 
         // THEN
         expect(result.isInvalid).toBeTruthy()
-        expect(result.reason).toStrictEqual("Must not be empty")
+        expect(result.reason).toStrictEqual(
+          textTranslation["Must not be empty"]
+        )
       })
       // array of 1 to (1 minus PASSWORD_CHAR_MINIMUM)
       const genericCharLengths = new Array(GENERIC_CHAR_MINIMUM - 1)
@@ -65,7 +72,9 @@ describe("Auth Text Field Validation Rules", () => {
           // THEN
           expect(result.isInvalid).toBeTruthy()
           expect(result.reason).toStrictEqual(
-            `Must contain more than ${GENERIC_CHAR_MINIMUM} characters`
+            textTranslation[
+              `Must contain more than {GENERIC_CHAR_MINIMUM} characters`
+            ].replace("{GENERIC_CHAR_MINIMUM}", GENERIC_CHAR_MINIMUM)
           )
         })
       })
@@ -85,7 +94,7 @@ describe("Auth Text Field Validation Rules", () => {
         // THEN
         expect(result.isInvalid).toBeTruthy()
         expect(result.reason).toStrictEqual(
-          'Email must be in the format of "email@domain.name"'
+          textTranslation['Email must be in the format of "email@domain.name"']
         )
       })
       const sampleIncorrectEmails = [
@@ -113,7 +122,9 @@ describe("Auth Text Field Validation Rules", () => {
           // THEN
           expect(result.isInvalid).toBeTruthy()
           expect(result.reason).toStrictEqual(
-            'Email must be in the format of "email@domain.name"'
+            textTranslation[
+              'Email must be in the format of "email@domain.name"'
+            ]
           )
         })
       })
@@ -165,7 +176,9 @@ describe("Auth Text Field Validation Rules", () => {
           // THEN
           expect(result.isInvalid).toBeTruthy()
           expect(result.reason).toStrictEqual(
-            `Password must not be less than ${PASSWORD_CHAR_MINIMUM} characters`
+            textTranslation[
+              `Password must not be less than {PASSWORD_CHAR_MINIMUM} characters`
+            ].replace("{PASSWORD_CHAR_MINIMUM}", PASSWORD_CHAR_MINIMUM)
           )
         })
       })
@@ -183,7 +196,7 @@ describe("Auth Text Field Validation Rules", () => {
         // THEN
         expect(result.isInvalid).toBeTruthy()
         expect(result.reason).toStrictEqual(
-          "Password does not contain any special characters"
+          textTranslation["Password does not contain any special characters"]
         )
       })
       it("validation fails when password text field input does not contain any uppercase characters", () => {
@@ -199,7 +212,7 @@ describe("Auth Text Field Validation Rules", () => {
         // THEN
         expect(result.isInvalid).toBeTruthy()
         expect(result.reason).toStrictEqual(
-          "Password does not contain any uppercase characters"
+          textTranslation["Password does not contain any uppercase characters"]
         )
       })
       it("validation fails when password text field input does not contain any lowercase characters", () => {
@@ -215,7 +228,7 @@ describe("Auth Text Field Validation Rules", () => {
         // THEN
         expect(result.isInvalid).toBeTruthy()
         expect(result.reason).toStrictEqual(
-          "Password does not contain any lowercase characters"
+          textTranslation["Password does not contain any lowercase characters"]
         )
       })
       it("validation fails when password text field input does not contain any numbers", () => {
@@ -231,7 +244,7 @@ describe("Auth Text Field Validation Rules", () => {
         // THEN
         expect(result.isInvalid).toBeTruthy()
         expect(result.reason).toStrictEqual(
-          "Password does not contain any numeric characters"
+          textTranslation["Password does not contain any numeric characters"]
         )
       })
     })
