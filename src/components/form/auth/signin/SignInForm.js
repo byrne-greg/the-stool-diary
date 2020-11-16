@@ -1,4 +1,4 @@
-import React, { useReducer } from "react"
+import React, { useContext } from "react"
 import PropTypes from "prop-types"
 import { useTranslation } from "react-i18next"
 import Button from "@material-ui/core/Button"
@@ -12,14 +12,17 @@ import Container from "@material-ui/core/Container"
 import Alert from "@material-ui/lab/Alert"
 import { signInUser } from "../../../firebase/utils"
 import { validateFormTextField, VALIDATION_TYPE } from "../utils/validation"
-import { INITIAL_AUTH_STATE } from "../state/authModel"
-import { authReducer } from "../state/authReducers"
 import {
   updateEmail,
   updateEmailError,
   updatePassword,
+  updatePasswordError,
   updateAuthError,
-} from "../state/authActions"
+} from "../../../../context/auth/actions"
+import AuthContextProvider, {
+  AuthStateContext,
+  AuthDispatchContext,
+} from "../../../../context/auth/AuthContextProvider"
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -41,12 +44,14 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const SignInForm = ({ setIsSignInSuccessful = () => {} }) => {
+const SignInFormComponent = ({ setIsSignInSuccessful = () => {} }) => {
   const { t } = useTranslation()
 
   const classes = useStyles()
 
-  const [authState, authDispatch] = useReducer(authReducer, INITIAL_AUTH_STATE)
+  const authState = useContext(AuthStateContext)
+  const authDispatch = useContext(AuthDispatchContext)
+
   const setEmail = email => updateEmail(authDispatch, email)
   const setPassword = password => updatePassword(authDispatch, password)
   const setEmailError = error => updateEmailError(authDispatch, error)
@@ -165,7 +170,15 @@ const SignInForm = ({ setIsSignInSuccessful = () => {} }) => {
     </Container>
   )
 }
-export default SignInForm
-SignInForm.propTypes = {
+SignInFormComponent.propTypes = {
   setIsSignInSuccessful: PropTypes.func,
 }
+
+const SignInForm = props => {
+  return (
+    <AuthContextProvider>
+      <SignInFormComponent {...props} />
+    </AuthContextProvider>
+  )
+}
+export default SignInForm

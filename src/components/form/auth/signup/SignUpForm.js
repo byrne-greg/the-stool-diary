@@ -56,7 +56,6 @@ const SignUpFormComponent = ({ setIsUserSignedUp = () => {} }) => {
   const classes = useStyles()
 
   const authState = useContext(AuthStateContext)
-  console.log("authState", authState)
   const authDispatch = useContext(AuthDispatchContext)
 
   const setEmail = email => updateEmail(authDispatch, email)
