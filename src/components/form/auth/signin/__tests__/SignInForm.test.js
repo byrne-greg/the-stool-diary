@@ -3,6 +3,7 @@ import { render, fireEvent } from "@testing-library/react"
 import SignInForm from "../SignInForm"
 
 jest.mock("../../../../firebase/utils")
+jest.mock("../../../../i18n")
 
 describe("SignInForm", () => {
   describe("UI", () => {
