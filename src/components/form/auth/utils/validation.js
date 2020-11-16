@@ -51,32 +51,32 @@ export const validateFormTextField = ({
       }
 
     // must contain at least one special char
-    const specialChars = [...value.matchAll(/[^\w]/g)]
-    if (!specialChars.length > 0)
+    const specialCharMatches = value.match(/[^\w]/g)
+    if (specialCharMatches === null)
       return {
         isInvalid: true,
         reason: i18n.t("Password does not contain any special characters"),
       }
 
     // must contain at least one uppercase char
-    const uppercaseChars = [...value.matchAll(/[A-Z]/g)]
-    if (!uppercaseChars.length > 0)
+    const uppercaseCharMatches = value.match(/[A-Z]/g)
+    if (uppercaseCharMatches === null)
       return {
         isInvalid: true,
         reason: i18n.t("Password does not contain any uppercase characters"),
       }
 
     // must contain at least one lowercase char
-    const lowercaseChars = [...value.matchAll(/[a-z]/g)]
-    if (!lowercaseChars.length > 0)
+    const lowercaseCharMatches = value.match(/[a-z]/g)
+    if (lowercaseCharMatches === null)
       return {
         isInvalid: true,
         reason: i18n.t("Password does not contain any lowercase characters"),
       }
 
     // must contain at least one number
-    const numberChars = [...value.matchAll(/[0-9]/g)]
-    if (!numberChars.length > 0)
+    const numberChars = value.match(/[0-9]/g)
+    if (numberChars === null)
       return {
         isInvalid: true,
         reason: i18n.t("Password does not contain any numeric characters"),
