@@ -8,11 +8,16 @@ export const VALIDATION_TYPE = {
 export const PASSWORD_CHAR_MINIMUM = 8
 export const GENERIC_CHAR_MINIMUM = 3
 
-export const validateFormTextField = ({
+/**
+ * Validates a form text fied using rules for what text is and isn't allowed based on the semantic field type.
+ * @param {*} Object type, value, customInvalidateFn
+ * @return {*} Object { isInvalid: [Boolean], reason: [String] }
+ */
+export function validateFormTextField({
   type = "",
   value = "",
   customInvalidateFn = () => ({ isInvalid: false, reason: null }),
-}) => {
+}) {
   // should not be empty
   if (value === "")
     return { isInvalid: true, reason: i18n.t("Must not be empty") }
