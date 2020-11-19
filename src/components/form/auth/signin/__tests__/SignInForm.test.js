@@ -1,9 +1,18 @@
 import React from "react"
 import { render, fireEvent } from "@testing-library/react"
 import SignInForm from "../SignInForm"
+import * as firebase from "../../../../firebase/utils"
+import * as validation from "../../utils/validation"
 
+// import firebase from "gatsby-plugin-firebase" causes error
 jest.mock("../../../../firebase/utils")
+
+// mocks the outbound backend connector used in validation.js
 jest.mock("../../../../i18n/i18n")
+
+beforeEach(() => {
+  document.body.innerHTML = null
+})
 
 describe("SignInForm", () => {
   describe("UI", () => {
@@ -45,7 +54,7 @@ describe("SignInForm", () => {
 
       // ACT
       const { queryByTestId } = render(<SignInForm />)
-      const signInButton = queryByTestId("sign-in-sign-in-button")
+      const signInButton = queryByTestId("sign-in-submit-button")
 
       // ASSERT
       expect(signInButton).toBeTruthy()
@@ -82,20 +91,61 @@ describe("SignInForm", () => {
     })
   })
   describe("Functional", () => {
-    xtest(`when the email address and password are genuine and the user signs in, then sign in status should be set`, async () => {
+    test(`when the email address and password are genuine and the user signs in, then sign in status should be set`, async () => {
       // ARRANGE
+      firebase.signInUser = jest.fn(() => ({
+        errorCode: null,
+        errorMessage: null,
+      }))
+
       // ACT
+      const { getByTestId } = render(<SignInForm />)
+      await fireEvent.change(
+        getByTestId("sign-in-email-input").querySelector("input"),
+        {
+          target: { value: "johnny@test.com" },
+        }
+      )
+      await fireEvent.change(
+        getByTestId("sign-in-password-input").querySelector("input"),
+        {
+          target: { value: "Super_Secret_Password1" },
+        }
+      )
+      const submitButton = getByTestId("sign-in-submit-button")
+      await fireEvent.click(submitButton)
+
       // ASSERT
+      expect(firebase.signInUser.mock.calls.length).toBe(1)
     })
-    xtest(`when the user email address has not been registered and the user signs in, then a no account error should display`, async () => {
-      // ARRANGE
-      // ACT
-      // ASSERT
-    })
+    xtest(`when the user email address has not been registered and the user signs in, then a no account error should display`, async () => {})
     xtest(`when the user password is not genuine and the user signs in, then a password error should display`, async () => {
       // ARRANGE
       // ACT
       // ASSERT
+    })
+    test(`when the user email address field is invalid and the user signs in, then no sign on takes place and a validation displays`, async () => {
+      // ARRANGE
+      firebase.signInUser = jest.fn(() => ({
+        errorCode: null,
+        errorMessage: null,
+      }))
+      const emailInvalidationText = "Test Email Invalidation"
+      validation.validateFormTextField = jest.fn(() => ({
+        isInvalid: true,
+        reason: emailInvalidationText,
+      }))
+
+      // ACT
+      const { getByTestId, queryByText } = render(<SignInForm />)
+      const submitButton = getByTestId("sign-in-submit-button")
+      await fireEvent.click(submitButton)
+      const validationText = queryByText(emailInvalidationText)
+
+      // ASSERT
+      expect(validation.validateFormTextField.mock.calls.length).toBe(1)
+      expect(validationText).toBeTruthy()
+      expect(firebase.signInUser.mock.calls.length).toBe(0)
     })
   })
 })

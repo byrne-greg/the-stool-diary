@@ -135,7 +135,7 @@ const SignInFormComponent = ({ setIsSignInSuccessful = () => {} }) => {
           label="Remember me"
         /> */}
             <Button
-              data-testid="sign-in-sign-in-button"
+              data-testid="sign-in-submit-button"
               type="submit"
               fullWidth
               variant="contained"
