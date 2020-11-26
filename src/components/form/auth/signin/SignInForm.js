@@ -16,7 +16,6 @@ import {
   updateEmail,
   updateEmailError,
   updatePassword,
-  updatePasswordError,
   updateAuthError,
 } from "../../../../context/auth/actions"
 import AuthContextProvider, {

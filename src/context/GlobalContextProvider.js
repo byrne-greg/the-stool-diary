@@ -8,6 +8,7 @@ export const GlobalDispatchContext = React.createContext()
 const initialState = {
   theme: "light",
   lang: LANG_CODES.ENGLISH,
+  user: null,
 }
 
 /**
@@ -20,6 +21,8 @@ function reducer(state, action) {
   switch (action.type) {
     case "CHANGE_LANGUAGE":
       return { ...state, lang: action.value }
+    case "UPDATE_USER":
+      return { ...state, user: action.value }
     default:
       return { ...state }
   }
