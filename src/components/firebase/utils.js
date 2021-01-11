@@ -42,9 +42,33 @@ export const signInUser = async ({ email = null, password = null }) => {
   return authError
 }
 
-export const isUserSignedIn = () => {
-  // TODO is this the right usage?
-  firebase.auth().onAuthStateChanged(function (user) {
+export const signOutUser = async () => {
+  await firebase
+    .auth()
+    .signOut()
+    .then(() => {
+      // Sign-out successful.
+      console.log("signout successful")
+    })
+    .catch(error => {
+      // An error happened.
+      console.log("signout error", error)
+    })
+}
+
+export const isUserSignedIn = async () => {
+  let isSignedIn = false
+  await firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+      // User is signed in.
+      isSignedIn = true
+    }
+  })
+  return isSignedIn
+}
+export const getCurrentUser = async () => {
+  let currentUser = null
+  await firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
       // User is signed in.
       const displayName = user.displayName
@@ -55,14 +79,10 @@ export const isUserSignedIn = () => {
       const uid = user.uid
       const providerData = user.providerData
       // ...
-      // return user;
-      return true
-    } else {
-      // User is signed out.
-      // ...
-      return false
+      currentUser = user
     }
   })
+  return currentUser
 }
 
 // ----- DATA -----
@@ -89,11 +109,11 @@ export const retrieveData = namespace => {
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
-          console.log(`${doc.id} => ${doc.data()}`)
+          // console.log(`${doc.id} => ${doc.data()}`)
           data.push({ ...doc.data(), id: doc.id })
         })
       })
-    console.log(data)
+    // console.log(data)
     return data
   }
 

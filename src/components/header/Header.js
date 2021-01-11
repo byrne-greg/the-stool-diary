@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { Link, useStaticQuery, graphql } from "gatsby"
 import { useTranslation } from "react-i18next"
 import PropTypes from "prop-types"
@@ -7,12 +7,16 @@ import Drawer from "@material-ui/core/Drawer"
 import IconButton from "@material-ui/core/IconButton"
 import MenuIcon from "@material-ui/icons/Menu"
 import CloseIcon from "@material-ui/icons/Close"
-import { List, ListItem, Typography } from "@material-ui/core"
+import { List, ListItem } from "@material-ui/core"
 import { PageCenter } from "../layout"
 import COLORS from "../../utils/colors"
 import ROUTES from "../../utils/routes"
 import { LanguageSelector } from "../i18n"
 import { StoolDiaryLogo } from "../images"
+import { getCurrentUser } from "../firebase/utils"
+import { SignOutForm } from "../form/auth/signout"
+import { GlobalStateContext } from "../../context/global/GlobalContextProvider"
+import useUserAuthenticated from "../hooks/useUserAuthenticated"
 
 const useStyles = makeStyles({
   banner: {
@@ -58,10 +62,11 @@ const Header = () => {
       }
     }
   `)
-  const { t } = useTranslation()
-  const siteTitle = t(data.site.siteMetadata.title)
-
   const classes = useStyles()
+  const { t } = useTranslation()
+  const { user } = useContext(GlobalStateContext)
+
+  const siteTitle = t(data.site.siteMetadata.title)
 
   return (
     <header className={classes.banner}>
@@ -69,17 +74,12 @@ const Header = () => {
         <div className={classes.container}>
           <Link to={ROUTES.HOME} className={classes.titlelink}>
             <div className={classes.title}>
-              {/* <DiaryIcon size={25}/>
-                <Typography>
-                  <span className={classes.titletext}>
-                    {siteTitle}
-                  </span>  
-                </Typography> */}
               <div className={classes.titleimg}>
                 <StoolDiaryLogo />
               </div>
             </div>
           </Link>
+          {user ? <p>{`Welcome ${user.email}`}</p> : null}
           <div>
             <DrawerMenu />
           </div>
@@ -104,17 +104,24 @@ export default Header
 const DrawerMenu = () => {
   const classes = useStyles()
 
+  const { user } = useContext(GlobalStateContext)
+  // const currentUser = useUserAuthenticated()
+  const currentUser = user
+
   const [isDrawerOpen, setDrawerState] = useState(false)
   const toggleDrawer = () => setDrawerState(!isDrawerOpen)
 
   const { t } = useTranslation()
-  const MenuRoutes = [
+  const menuRoutes = [
     { text: t("Home"), route: ROUTES.HOME },
-    { text: t("Sign In"), route: ROUTES.SIGN_IN },
-    { text: t("Sign Up"), route: ROUTES.SIGN_UP },
     { text: t("Record a Stool"), route: ROUTES.RECORD_STOOL },
     { text: t("My Stools"), route: ROUTES.DASHBOARD },
+    { text: t("Sign Up"), route: ROUTES.SIGN_UP },
   ]
+
+  if (!currentUser) {
+    menuRoutes.push({ text: t("Sign In"), route: ROUTES.SIGN_IN })
+  }
 
   return (
     <>
@@ -126,11 +133,16 @@ const DrawerMenu = () => {
           <CloseIcon fontSize="large" />
         </IconButton>
         <List>
-          {MenuRoutes.map(item => (
+          {menuRoutes.map(item => (
             <ListItem key={item.text}>
               <Link to={item.route}>{item.text}</Link>
             </ListItem>
           ))}
+          {currentUser ? (
+            <ListItem key={`signout`}>
+              <SignOutForm />
+            </ListItem>
+          ) : null}
           <ListItem>
             <LanguageSelector />
           </ListItem>

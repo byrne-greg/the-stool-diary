@@ -1,4 +1,5 @@
 import React, { useReducer } from "react"
+import PropTypes from "prop-types"
 import INITIAL_STATE from "./model"
 import reducer from "./reducer"
 
@@ -16,3 +17,6 @@ const FormNavigationContextProvider = ({ children }) => {
   )
 }
 export default FormNavigationContextProvider
+FormNavigationContextProvider.propTypes = {
+  children: PropTypes.node,
+}

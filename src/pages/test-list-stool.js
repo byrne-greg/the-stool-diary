@@ -6,9 +6,8 @@ import { ListStoolRecordsScreen } from "../components/screens"
 import useUserAuthenticated from "../components/hooks/useUserAuthenticated"
 
 const ListStoolRecordsPage = () => {
-  const isAuthenticated =
-    // useUserAuthenticated()
-    true
+  const isAuthenticated = useUserAuthenticated()
+  // true
 
   return (
     <>

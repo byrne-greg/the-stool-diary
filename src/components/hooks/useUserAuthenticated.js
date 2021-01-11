@@ -1,19 +1,30 @@
-import { useEffect, useContext } from "react"
+import { useEffect, useState, useContext } from "react"
 import { navigate } from "gatsby"
-import { GlobalStateContext } from "../../context/GlobalContextProvider"
+import { GlobalDispatchContext } from "../../context/global/GlobalContextProvider"
 import routes from "../../utils/routes"
+import { getCurrentUser } from "../firebase/utils"
+import { updateUser } from "../../context/global/actions"
 
 const useUserAuthenticated = () => {
-  const { user } = useContext(GlobalStateContext)
-  // firebase check user signed in -> need to store in global state?
+  const globalContextDispatch = useContext(GlobalDispatchContext)
+
+  const [authUser, setAuthUser] = useState(false)
 
   useEffect(() => {
-    if (!user) {
-      navigate(routes.SIGN_IN)
-    }
-  })
+    const updateGlobalUser = async () => {
+      const user = await getCurrentUser()
+      setAuthUser(user)
 
-  // return is user authenticated
-  return !!user
+      if (!user) {
+        navigate(routes.SIGN_IN)
+        updateUser(globalContextDispatch, null)
+      } else {
+        updateUser(globalContextDispatch, authUser)
+      }
+    }
+    updateGlobalUser()
+  }, [authUser])
+
+  return authUser
 }
 export default useUserAuthenticated

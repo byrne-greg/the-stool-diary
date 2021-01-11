@@ -1,0 +1,2 @@
+export const CHANGE_LANGUAGE = "CHANGE_LANGUAGE"
+export const UPDATE_USER = "UPDATE_USER"

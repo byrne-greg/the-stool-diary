@@ -1,5 +1,4 @@
 import React, { useContext } from "react"
-import PropTypes from "prop-types"
 import Select from "@material-ui/core/Select"
 import MenuItem from "@material-ui/core/MenuItem"
 import { useTranslation } from "react-i18next"
@@ -7,7 +6,8 @@ import LANG_CODES from "./language-codes"
 import {
   GlobalStateContext,
   GlobalDispatchContext,
-} from "../../context/GlobalContextProvider"
+} from "../../context/global/GlobalContextProvider"
+import { changeLanguage } from "../../context/global/actions"
 
 const LanguageSelector = () => {
   const { lang } = useContext(GlobalStateContext)
@@ -21,7 +21,7 @@ const LanguageSelector = () => {
       id="language-selector"
       value={lang}
       onChange={e => {
-        dispatch({ type: "CHANGE_LANGUAGE", value: e.target.value })
+        changeLanguage(dispatch, e.target.value)
         i18n.changeLanguage(e.target.value)
       }}
     >

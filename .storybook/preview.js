@@ -5,7 +5,7 @@ import React from "react"
 // TODO
 // Cannot use AppWrapper as importing i18n causes problems because of the i18next-http-backend and storybook not finding core-js/modules/...
 // Manually importing and wrapping the story with global components
-import GlobalContextProvider from "../src/context/GlobalContextProvider"
+import GlobalContextProvider from "../src/context/global/GlobalContextProvider"
 import GlobalTheme from "../src/components/theme/GlobalTheme"
 addDecorator(Story => (
   <GlobalContextProvider>
