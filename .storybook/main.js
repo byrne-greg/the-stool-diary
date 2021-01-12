@@ -28,6 +28,14 @@ module.exports = {
     // Prefer Gatsby ES6 entrypoint (module) over commonjs (main) entrypoint
     config.resolve.mainFields = ["browser", "module", "main"]
 
+    // Use i18n mock
+    config.resolve.alias['i18next'] = require.resolve('../src/components/i18n/__mocks__/i18n')
+    config.resolve.alias['i18next-http-backend'] = require.resolve('../src/components/i18n/__mocks__/i18n')
+    config.resolve.alias['i18next-browser-languagedetector'] = require.resolve('../src/components/i18n/__mocks__/i18n')
+    config.resolve.alias['react-i18next'] = require.resolve('../src/components/i18n/__mocks__/react-i18next')
+
+
+    
     return config
   },
 }
