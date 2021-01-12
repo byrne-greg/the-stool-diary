@@ -3,6 +3,7 @@ import { render, fireEvent } from "@testing-library/react"
 import SignInForm from "../SignInForm"
 import * as firebase from "../../../../firebase/utils"
 import * as validation from "../../utils/validation"
+import * as globalActions from "../../../../../context/global/actions"
 
 // import firebase from "gatsby-plugin-firebase" causes error
 jest.mock("../../../../firebase/utils")
@@ -97,6 +98,8 @@ describe("SignInForm", () => {
         errorCode: null,
         errorMessage: null,
       }))
+      firebase.getCurrentUser = jest.fn()
+      globalActions.updateUser = jest.fn()
 
       // ACT
       const { getByTestId } = render(<SignInForm />)
@@ -117,6 +120,7 @@ describe("SignInForm", () => {
 
       // ASSERT
       expect(firebase.signInUser.mock.calls.length).toBe(1)
+      // expect(globalActions.updateUser.mock.calls.length).toBe(1)
     })
     xtest(`when the user email address has not been registered and the user signs in, then a no account error should display`, async () => {})
     xtest(`when the user password is not genuine and the user signs in, then a password error should display`, async () => {

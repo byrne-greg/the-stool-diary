@@ -5,6 +5,8 @@ export const signInUser = ({returnVal = { errorCode: null, errorMessage: null }}
 
 export const isUserSignedIn = ({ returnVal = false}) => returnVal
 
+export const getCurrentUser = ({ returnVal = {} }) => returnVal
+
 
 // ----- DATA -----
 
