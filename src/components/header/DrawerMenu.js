@@ -10,8 +10,8 @@ import { List, ListItem } from "@material-ui/core"
 import COLORS from "../../utils/colors"
 import ROUTES from "../../utils/routes"
 import { LanguageSelector } from "../i18n"
-import { SignOutForm } from "../form/auth/signout"
 import { GlobalStateContext } from "../../context/global/GlobalContextProvider"
+import useAuth from "../form/auth/utils/hooks"
 
 const useStyles = makeStyles({
   menuButton: {
@@ -22,8 +22,8 @@ const useStyles = makeStyles({
 const DrawerMenu = () => {
   const classes = useStyles()
 
+  const { signOut } = useAuth()
   const { user } = useContext(GlobalStateContext)
-  const currentUser = user
 
   const [isDrawerOpen, setDrawerState] = useState(false)
   const toggleDrawer = () => setDrawerState(!isDrawerOpen)
@@ -36,8 +36,15 @@ const DrawerMenu = () => {
     { text: t("Sign Up"), route: ROUTES.SIGN_UP },
   ]
 
-  if (!currentUser) {
+  if (!user) {
     menuRoutes.push({ text: t("Sign In"), route: ROUTES.SIGN_IN })
+  }
+  if (user) {
+    menuRoutes.push({
+      text: t("Sign Out"),
+      route: ROUTES.HOME,
+      action: () => signOut(),
+    })
   }
 
   return (
@@ -50,16 +57,17 @@ const DrawerMenu = () => {
           <CloseIcon fontSize="large" />
         </IconButton>
         <List>
-          {menuRoutes.map(item => (
-            <ListItem key={item.text}>
-              <Link to={item.route}>{item.text}</Link>
-            </ListItem>
-          ))}
-          {currentUser ? (
-            <ListItem key={`signout`}>
-              <SignOutForm />
-            </ListItem>
-          ) : null}
+          {menuRoutes.map(item =>
+            item.action ? (
+              <ListItem key={item.text} onClick={item.action}>
+                <Link to={item.route}>{item.text}</Link>
+              </ListItem>
+            ) : (
+              <ListItem key={item.text}>
+                <Link to={item.route}>{item.text}</Link>
+              </ListItem>
+            )
+          )}
           <ListItem>
             <LanguageSelector />
           </ListItem>

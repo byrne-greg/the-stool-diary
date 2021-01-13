@@ -12,8 +12,6 @@ import Typography from "@material-ui/core/Typography"
 import { makeStyles } from "@material-ui/core/styles"
 import Container from "@material-ui/core/Container"
 import Alert from "@material-ui/lab/Alert"
-import { signUpUser, persistData } from "../../../firebase/utils"
-import { USER_NAMESPACE } from "../../../firebase/namespaces"
 import { validateFormTextField, VALIDATION_TYPE } from "../utils/validation"
 import {
   updateEmail,
@@ -30,6 +28,7 @@ import AuthContextProvider, {
   AuthStateContext,
   AuthDispatchContext,
 } from "../../../../context/auth/AuthContextProvider"
+import useAuth from "../utils/hooks"
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -57,6 +56,7 @@ const SignUpFormComponent = ({ setIsUserSignedUp = () => {} }) => {
 
   const authState = useContext(AuthStateContext)
   const authDispatch = useContext(AuthDispatchContext)
+  const { signIn, signUp } = useAuth()
 
   const setEmail = email => updateEmail(authDispatch, email)
   const setPassword = password => updatePassword(authDispatch, password)
@@ -81,13 +81,6 @@ const SignUpFormComponent = ({ setIsUserSignedUp = () => {} }) => {
   const getIsSurnameInvalid = () => authState.surname.error.isInvalid
   const getSurnameInvalidReason = () => authState.surname.error.reason
   const getAuthError = () => authState.authError
-
-  const persistUserSignUp = () =>
-    persistData(USER_NAMESPACE, {
-      email: getEmail(),
-      forename: getForename(),
-      surname: getSurname(),
-    })
 
   const handleSubmit = async e => {
     e.preventDefault()
@@ -117,13 +110,21 @@ const SignUpFormComponent = ({ setIsUserSignedUp = () => {} }) => {
     )
     console.log("isAllowedToSignUp", isAllowedToSignUp)
     if (isAllowedToSignUp) {
-      const authError = await signUpUser({
+      const emailPasswordCredentials = {
         email: getEmail(),
         password: getPassword(),
+      }
+      const userProfileDetails = {
+        forename: getForename(),
+        surname: getSurname(),
+      }
+      const authError = await signUp({
+        ...emailPasswordCredentials,
+        ...userProfileDetails,
       })
       if (!authError.errorCode) {
-        await persistUserSignUp()
         setIsUserSignedUp(true)
+        signIn(emailPasswordCredentials)
       } else {
         setAuthError({ ...authError })
       }

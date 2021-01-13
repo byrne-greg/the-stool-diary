@@ -1,15 +1,12 @@
-import React, { useContext } from "react"
-import { signOutUser } from "../../../firebase/utils"
-import { updateUser } from "../../../../context/global/actions"
-import { GlobalDispatchContext } from "../../../../context/global/GlobalContextProvider"
+import React from "react"
+import useAuth from "../utils/hooks"
 
 const SignOut = () => {
-  const globalDispatch = useContext(GlobalDispatchContext)
+  const { signOut } = useAuth()
   return (
     <button
       onClick={() => {
-        signOutUser()
-        updateUser(globalDispatch, null)
+        signOut()
       }}
     >
       Sign Out

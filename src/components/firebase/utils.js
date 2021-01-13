@@ -31,29 +31,33 @@ export const signInUser = async ({ email = null, password = null }) => {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .catch(function (error) {
-        // Handle Errors here.
+        // Handle errors here.
         authError.errorCode = error.code
         authError.errorMessage = error.message
         console.error(authError.errorCode, ":", authError.errorMessage)
       })
   } else {
-    console.error("Attempt to sign in user with null credentials")
+    console.error("Attempt to sign in user with invalid credentials")
   }
   return authError
 }
 
 export const signOutUser = async () => {
+  const authError = { errorCode: null, errorMessage: null }
   await firebase
     .auth()
     .signOut()
-    .then(() => {
-      // Sign-out successful.
-      console.log("signout successful")
-    })
+    // .then(() => {
+    //   // Sign-out successful.
+    //   console.log("signout successful")
+    // })
     .catch(error => {
-      // An error happened.
-      console.log("signout error", error)
+      // Handle errors here.
+      authError.errorCode = error.code
+      authError.errorMessage = error.message
+      console.error(authError.errorCode, ":", authError.errorMessage)
     })
+  return authError
 }
 
 export const isUserSignedIn = async () => {

@@ -10,9 +10,6 @@ import Typography from "@material-ui/core/Typography"
 import { makeStyles } from "@material-ui/core/styles"
 import Container from "@material-ui/core/Container"
 import Alert from "@material-ui/lab/Alert"
-import { GlobalDispatchContext } from "../../../../context/global/GlobalContextProvider"
-import { updateUser } from "../../../../context/global/actions"
-import { getCurrentUser, signInUser } from "../../../firebase/utils"
 import { validateFormTextField, VALIDATION_TYPE } from "../utils/validation"
 import {
   updateEmail,
@@ -25,6 +22,7 @@ import AuthContextProvider, {
   AuthDispatchContext,
 } from "../../../../context/auth/AuthContextProvider"
 import routes from "../../../../utils/routes"
+import useAuth from "../utils/hooks"
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -53,8 +51,7 @@ const SignInFormComponent = ({ setIsSignInSuccessful = () => {} }) => {
 
   const authState = useContext(AuthStateContext)
   const authDispatch = useContext(AuthDispatchContext)
-
-  const globalDispatch = useContext(GlobalDispatchContext)
+  const { signIn } = useAuth()
 
   const setEmail = email => updateEmail(authDispatch, email)
   const setPassword = password => updatePassword(authDispatch, password)
@@ -77,13 +74,12 @@ const SignInFormComponent = ({ setIsSignInSuccessful = () => {} }) => {
     setEmailError(emailValidation)
 
     if (!emailValidation.isInvalid) {
-      const authError = await signInUser({
+      const authError = await signIn({
         email: getEmail(),
         password: getPassword(),
       })
       if (!authError.errorCode) {
         setIsSignInSuccessful(true)
-        updateUser(globalDispatch, await getCurrentUser())
       } else {
         setAuthError({ ...authError })
       }
