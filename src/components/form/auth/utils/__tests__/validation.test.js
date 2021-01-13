@@ -6,6 +6,9 @@ import {
 } from "../validation"
 import textTranslation from "../locales/validation.locale.en.json"
 
+// mocks the outbound backend connector used in validation.js
+jest.mock("../../../../i18n/i18n")
+
 describe("Auth Text Field Validation Rules", () => {
   describe("validateFormTextField", () => {
     describe("All", () => {
