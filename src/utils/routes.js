@@ -1,14 +1,16 @@
 const HOME = { HOME: "/" }
-const SIGN_IN = { SIGN_IN: "/test-signin" }
-const SIGN_UP = { SIGN_UP: "/test-signup" }
+const AUTH = {
+  SIGN_IN: "/test-signin",
+  SIGN_UP: "/test-signup",
+  FORGOT_PASSWORD: "/test-forgotpassword",
+}
 const RECORD_STOOL = { RECORD_STOOL: "/test-record-stool" }
 const DASHBOARD = { DASHBOARD: "/test-list-stool" }
 const MISSING = { MISSING: "/404" }
 
 export default {
   ...HOME,
-  ...SIGN_IN,
-  ...SIGN_UP,
+  ...AUTH,
   ...RECORD_STOOL,
   ...DASHBOARD,
   ...MISSING,

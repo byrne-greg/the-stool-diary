@@ -17,10 +17,10 @@ export const signUpUser = async ({ email = null, password = null }) => {
         console.error(authError)
       })
   } else {
-    console.error("Attempt to sign up user with null credentials")
-  }
+    console.error(authError.errorCode, ":", authError.errorMessage)
 
-  return authError
+    return authError
+  }
 }
 
 export const signInUser = async ({ email = null, password = null }) => {
@@ -37,7 +37,7 @@ export const signInUser = async ({ email = null, password = null }) => {
         console.error(authError.errorCode, ":", authError.errorMessage)
       })
   } else {
-    console.error("Attempt to sign in user with invalid credentials")
+    console.error(authError.errorCode, ":", authError.errorMessage)
   }
   return authError
 }
@@ -60,16 +60,6 @@ export const signOutUser = async () => {
   return authError
 }
 
-export const isUserSignedIn = async () => {
-  let isSignedIn = false
-  await firebase.auth().onAuthStateChanged(function (user) {
-    if (user) {
-      // User is signed in.
-      isSignedIn = true
-    }
-  })
-  return isSignedIn
-}
 export const getCurrentUser = async () => {
   let currentUser = null
   await firebase.auth().onAuthStateChanged(function (user) {
@@ -87,6 +77,26 @@ export const getCurrentUser = async () => {
     }
   })
   return currentUser
+}
+
+export const sendPasswordResetEmail = async ({ email = null }) => {
+  const authError = { errorCode: null, errorMessage: null }
+
+  if (email) {
+    await firebase
+      .auth()
+      .sendPasswordResetEmail(email)
+      .catch(function (error) {
+        // Handle Errors here.
+        authError.errorCode = error.errorCode
+        authError.errorMessage = error.errorMessage
+        console.error(authError)
+      })
+  } else {
+    console.error(authError.errorCode, ":", authError.errorMessage)
+  }
+
+  return authError
 }
 
 // ----- DATA -----

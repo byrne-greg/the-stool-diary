@@ -4,6 +4,7 @@ import {
   signInUser,
   signOutUser,
   signUpUser,
+  sendPasswordResetEmail,
 } from "../../../firebase/utils"
 import { updateUser } from "../../../../context/global/actions"
 import { GlobalDispatchContext } from "../../../../context/global/GlobalContextProvider"
@@ -42,6 +43,18 @@ const useAuth = () => {
     return error
   }
 
-  return { signOut: setSignOut, signIn: setSignIn, signUp: setSignUp }
+  const doPasswordReset = async ({ email }) => {
+    const error = await sendPasswordResetEmail({
+      email: email,
+    })
+    return error
+  }
+
+  return {
+    signOut: setSignOut,
+    signIn: setSignIn,
+    signUp: setSignUp,
+    doPasswordReset: doPasswordReset,
+  }
 }
 export default useAuth

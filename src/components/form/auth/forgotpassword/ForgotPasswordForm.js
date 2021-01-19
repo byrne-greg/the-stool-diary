@@ -44,7 +44,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const SignInFormComponent = ({ setIsFormComplete = () => {} }) => {
+const ForgotPasswordFormComponent = ({ setIsFormComplete = () => {} }) => {
   // manage content display
   const { t } = useTranslation()
   const classes = useStyles()
@@ -52,15 +52,13 @@ const SignInFormComponent = ({ setIsFormComplete = () => {} }) => {
   // manage the auth data for sign-in
   const authState = useContext(AuthStateContext)
   const authDispatch = useContext(AuthDispatchContext)
-  const { signIn } = useAuth()
+  const { doPasswordReset } = useAuth()
   const setEmail = email => updateEmail(authDispatch, email)
-  const setPassword = password => updatePassword(authDispatch, password)
   const setEmailError = error => updateEmailError(authDispatch, error)
   const setAuthError = error => updateAuthError(authDispatch, error)
   const getEmail = () => authState.email.value
   const getIsEmailInvalid = () => authState.email.error.isInvalid
   const getEmailInvalidReason = () => authState.email.error.reason
-  const getPassword = () => authState.password.value
   const getAuthError = () => authState.authError
 
   // submit handler
@@ -74,9 +72,8 @@ const SignInFormComponent = ({ setIsFormComplete = () => {} }) => {
     setEmailError(emailValidation)
 
     if (!emailValidation.isInvalid) {
-      const authError = await signIn({
+      const authError = await doPasswordReset({
         email: getEmail(),
-        password: getPassword(),
       })
       if (!authError.errorCode) {
         setIsFormComplete(true)
@@ -90,14 +87,18 @@ const SignInFormComponent = ({ setIsFormComplete = () => {} }) => {
     <Container component="div" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Typography data-testid="sign-in-heading" component="h1" variant="h4">
-          {t("Sign In")}
+        <Typography
+          data-testid="forgot-password-heading"
+          component="h1"
+          variant="h4"
+        >
+          {t("Forgot Password")}
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
-                data-testid="sign-in-email-input"
+                data-testid="forgot-password-email-input"
                 variant="outlined"
                 required
                 fullWidth
@@ -110,21 +111,12 @@ const SignInFormComponent = ({ setIsFormComplete = () => {} }) => {
                 onChange={e => setEmail(e.target.value)}
               />
             </Grid>
-            <Grid item xs={12}>
-              <TextField
-                data-testid="sign-in-password-input"
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
-                label={t("Password")}
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                onChange={e => setPassword(e.target.value)}
-              />
+            <Grid>
               {getAuthError().errorCode ? (
-                <div className={classes.alert} data-testid="sign-in-auth-error">
+                <div
+                  className={classes.alert}
+                  data-testid="forgot-password-auth-error"
+                >
                   <Alert variant="outlined" severity="error">
                     {getAuthError().errorMessage}
                   </Alert>
@@ -138,23 +130,23 @@ const SignInFormComponent = ({ setIsFormComplete = () => {} }) => {
               /> 
             */}
             <Button
-              data-testid="sign-in-submit-button"
+              data-testid="forgot-password-submit-button"
               type="submit"
               fullWidth
               variant="contained"
               color="primary"
               className={classes.submit}
             >
-              {t("Sign in")}
+              {t("Send Reset Email")}
             </Button>
             <Grid container>
               <Grid item xs>
                 <Link
-                  data-testid="sign-in-forgot-password-link"
-                  href={ROUTES.FORGOT_PASSWORD}
+                  data-testid="forgot-password-sign-in-link"
+                  href={ROUTES.SIGN_IN}
                   variant="body2"
                 >
-                  <Typography>{t("Forgot password?")}</Typography>
+                  <Typography>{t("Know your password? Sign In")}</Typography>
                 </Link>
               </Grid>
               <Grid item>
@@ -173,15 +165,15 @@ const SignInFormComponent = ({ setIsFormComplete = () => {} }) => {
     </Container>
   )
 }
-SignInFormComponent.propTypes = {
+ForgotPasswordFormComponent.propTypes = {
   setIsFormComplete: PropTypes.func,
 }
 
-const SignInForm = props => {
+const ForgotPasswordForm = props => {
   return (
     <AuthContextProvider>
-      <SignInFormComponent {...props} />
+      <ForgotPasswordFormComponent {...props} />
     </AuthContextProvider>
   )
 }
-export default SignInForm
+export default ForgotPasswordForm

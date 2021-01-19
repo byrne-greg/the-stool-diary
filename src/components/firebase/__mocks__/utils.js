@@ -3,7 +3,7 @@ export const signUpUser = ({returnVal = { errorCode: null, errorMessage: null }}
 
 export const signInUser = ({returnVal = { errorCode: null, errorMessage: null }}) => returnVal
 
-export const isUserSignedIn = ({ returnVal = false}) => returnVal
+export const sendPasswordResetEmail = ({ returnVal = { errorCode: null, errorMessage: null }}) => returnVal
 
 export const getCurrentUser = ({ returnVal = {} }) => returnVal
 
