@@ -127,7 +127,7 @@ describe("SignInForm", () => {
       expect(mockSetIsFormComplete.mock.calls.length).toBe(1)
       expect(mockSetIsFormComplete.mock.calls[0][0]).toBe(true)
     })
-    test(`when the email address and password are genuine and the user signs in, then sign in status should be set`, async () => {
+    test(`when the email address and password are genuine and the user signs in, then firebase sign in API should be called and internally update user`, async () => {
       // ARRANGE
       firebase.signInUser = jest.fn(() => ({
         errorCode: null,
