@@ -21,7 +21,7 @@ import AuthContextProvider, {
   AuthStateContext,
   AuthDispatchContext,
 } from "../../../../context/auth/AuthContextProvider"
-import routes from "../../../../utils/routes"
+import ROUTES from "../../../../utils/routes"
 import useAuth from "../utils/hooks"
 
 const useStyles = makeStyles(theme => ({
@@ -44,26 +44,26 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const SignInFormComponent = ({ setIsSignInSuccessful = () => {} }) => {
+const SignInFormComponent = ({ setIsFormComplete = () => {} }) => {
+  // manage content display
   const { t } = useTranslation()
-
   const classes = useStyles()
 
+  // manage the auth data for sign-in
   const authState = useContext(AuthStateContext)
   const authDispatch = useContext(AuthDispatchContext)
   const { signIn } = useAuth()
-
   const setEmail = email => updateEmail(authDispatch, email)
   const setPassword = password => updatePassword(authDispatch, password)
   const setEmailError = error => updateEmailError(authDispatch, error)
   const setAuthError = error => updateAuthError(authDispatch, error)
-
   const getEmail = () => authState.email.value
   const getIsEmailInvalid = () => authState.email.error.isInvalid
   const getEmailInvalidReason = () => authState.email.error.reason
   const getPassword = () => authState.password.value
   const getAuthError = () => authState.authError
 
+  // submit handler
   const handleSubmit = async e => {
     e.preventDefault()
 
@@ -79,7 +79,7 @@ const SignInFormComponent = ({ setIsSignInSuccessful = () => {} }) => {
         password: getPassword(),
       })
       if (!authError.errorCode) {
-        setIsSignInSuccessful(true)
+        setIsFormComplete(true)
       } else {
         setAuthError({ ...authError })
       }
@@ -91,7 +91,7 @@ const SignInFormComponent = ({ setIsSignInSuccessful = () => {} }) => {
       <CssBaseline />
       <div className={classes.paper}>
         <Typography data-testid="sign-in-heading" component="h1" variant="h4">
-          Sign in
+          {t("Sign In")}
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <Grid container spacing={2}>
@@ -102,7 +102,7 @@ const SignInFormComponent = ({ setIsSignInSuccessful = () => {} }) => {
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
+                label={t("Email Address")}
                 name="email"
                 autoComplete="email"
                 error={getIsEmailInvalid()}
@@ -117,24 +117,26 @@ const SignInFormComponent = ({ setIsSignInSuccessful = () => {} }) => {
                 required
                 fullWidth
                 name="password"
-                label="Password"
+                label={t("Password")}
                 type="password"
                 id="password"
                 autoComplete="current-password"
                 onChange={e => setPassword(e.target.value)}
               />
               {getAuthError().errorCode ? (
-                <div className={classes.alert}>
+                <div className={classes.alert} data-testid="sign-in-auth-error">
                   <Alert variant="outlined" severity="error">
                     {getAuthError().errorMessage}
                   </Alert>
                 </div>
               ) : null}
             </Grid>
-            {/* <FormControlLabel
-          control={<Checkbox value="remember" color="primary" />}
-          label="Remember me"
-        /> */}
+            {/* 
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="Remember me"
+              /> 
+            */}
             <Button
               data-testid="sign-in-submit-button"
               type="submit"
@@ -149,19 +151,19 @@ const SignInFormComponent = ({ setIsSignInSuccessful = () => {} }) => {
               <Grid item xs>
                 <Link
                   data-testid="sign-in-forgot-password-link"
-                  href="#"
+                  // href={ROUTES.FORGOT_PASSWORD}
                   variant="body2"
                 >
-                  Forgot password?
+                  <Typography>{t("Forgot password?")}</Typography>
                 </Link>
               </Grid>
               <Grid item>
                 <Link
                   data-testid="sign-in-sign-up-link"
-                  href={routes.SIGN_UP}
+                  href={ROUTES.SIGN_UP}
                   variant="body2"
                 >
-                  Don't have an account? Sign Up
+                  <Typography>{t("Don't have an account? Sign Up")}</Typography>
                 </Link>
               </Grid>
             </Grid>
@@ -172,7 +174,7 @@ const SignInFormComponent = ({ setIsSignInSuccessful = () => {} }) => {
   )
 }
 SignInFormComponent.propTypes = {
-  setIsSignInSuccessful: PropTypes.func,
+  setIsFormComplete: PropTypes.func,
 }
 
 const SignInForm = props => {

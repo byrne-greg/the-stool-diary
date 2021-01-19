@@ -2,12 +2,12 @@ import React, { useState } from "react"
 import { SignInForm } from "../form/auth/signin"
 
 const SignInScreen = () => {
-  const [isSignInSuccessful, setIsSignInSuccessful] = useState(false)
+  const [isFormComplete, setIsFormComplete] = useState(false)
 
   return (
     <>
-      {!isSignInSuccessful ? (
-        <SignInForm setIsSignInSuccessful={setIsSignInSuccessful} />
+      {!isFormComplete ? (
+        <SignInForm setIsFormComplete={setIsFormComplete} />
       ) : (
         <div>Congratulations, you have successfully signed in!</div>
       )}

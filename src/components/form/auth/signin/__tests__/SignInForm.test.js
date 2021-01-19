@@ -1,5 +1,5 @@
 import React from "react"
-import { render, fireEvent } from "@testing-library/react"
+import { render, fireEvent, act } from "@testing-library/react"
 import SignInForm from "../SignInForm"
 import * as firebase from "../../../../firebase/utils"
 import * as validation from "../../utils/validation"
@@ -92,6 +92,41 @@ describe("SignInForm", () => {
     })
   })
   describe("Functional", () => {
+    test(`when the sign in is successful, then the passed setIsFormComplete function should be true `, async () => {
+      // ARRANGE
+      firebase.signInUser = jest.fn(() => ({
+        errorCode: null,
+        errorMessage: null,
+      }))
+      firebase.getCurrentUser = jest.fn()
+      globalActions.updateUser = jest.fn()
+      const mockSetIsFormComplete = jest.fn()
+
+      // ACT
+      const { getByTestId } = render(
+        <SignInForm setIsFormComplete={mockSetIsFormComplete} />
+      )
+      await act(async () => {
+        await fireEvent.change(
+          getByTestId("sign-in-email-input").querySelector("input"),
+          {
+            target: { value: "johnny@test.com" },
+          }
+        )
+        await fireEvent.change(
+          getByTestId("sign-in-password-input").querySelector("input"),
+          {
+            target: { value: "Super_Secret_Password1" },
+          }
+        )
+        const submitButton = getByTestId("sign-in-submit-button")
+        await fireEvent.click(submitButton)
+      })
+
+      // ASSERT
+      expect(mockSetIsFormComplete.mock.calls.length).toBe(1)
+      expect(mockSetIsFormComplete.mock.calls[0][0]).toBe(true)
+    })
     test(`when the email address and password are genuine and the user signs in, then sign in status should be set`, async () => {
       // ARRANGE
       firebase.signInUser = jest.fn(() => ({
@@ -103,30 +138,56 @@ describe("SignInForm", () => {
 
       // ACT
       const { getByTestId } = render(<SignInForm />)
-      await fireEvent.change(
-        getByTestId("sign-in-email-input").querySelector("input"),
-        {
-          target: { value: "johnny@test.com" },
-        }
-      )
-      await fireEvent.change(
-        getByTestId("sign-in-password-input").querySelector("input"),
-        {
-          target: { value: "Super_Secret_Password1" },
-        }
-      )
-      const submitButton = getByTestId("sign-in-submit-button")
-      await fireEvent.click(submitButton)
+      await act(async () => {
+        await fireEvent.change(
+          getByTestId("sign-in-email-input").querySelector("input"),
+          {
+            target: { value: "johnny@test.com" },
+          }
+        )
+        await fireEvent.change(
+          getByTestId("sign-in-password-input").querySelector("input"),
+          {
+            target: { value: "Super_Secret_Password1" },
+          }
+        )
+        const submitButton = getByTestId("sign-in-submit-button")
+        await fireEvent.click(submitButton)
+      })
 
       // ASSERT
       expect(firebase.signInUser.mock.calls.length).toBe(1)
-      // expect(globalActions.updateUser.mock.calls.length).toBe(1)
+      expect(globalActions.updateUser.mock.calls.length).toBe(1)
     })
-    xtest(`when the user email address has not been registered and the user signs in, then a no account error should display`, async () => {})
-    xtest(`when the user password is not genuine and the user signs in, then a password error should display`, async () => {
+    test(`when the an error occurs in sign in from firebase, the message is displayed to the user`, async () => {
       // ARRANGE
+      const mockErrorMessage = "Mock: User does not exist"
+      firebase.signInUser = jest.fn(() => ({
+        errorCode: 101,
+        errorMessage: mockErrorMessage,
+      }))
       // ACT
+      const { getByTestId, queryByTestId } = render(<SignInForm />)
+      await act(async () => {
+        await fireEvent.change(
+          getByTestId("sign-in-email-input").querySelector("input"),
+          {
+            target: { value: "johnny@test.com" },
+          }
+        )
+        await fireEvent.change(
+          getByTestId("sign-in-password-input").querySelector("input"),
+          {
+            target: { value: "Super_Secret_Password1" },
+          }
+        )
+        const submitButton = getByTestId("sign-in-submit-button")
+        await fireEvent.click(submitButton)
+      })
+      const authDisplayError = queryByTestId("sign-in-auth-error")
+
       // ASSERT
+      expect(authDisplayError).toBeTruthy()
     })
     test(`when the user email address field is invalid and the user signs in, then no sign on takes place and a validation displays`, async () => {
       // ARRANGE
