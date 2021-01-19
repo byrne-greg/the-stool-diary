@@ -18,9 +18,8 @@ export const signUpUser = async ({ email = null, password = null }) => {
       })
   } else {
     console.error(authError.errorCode, ":", authError.errorMessage)
-
-    return authError
   }
+  return authError
 }
 
 export const signInUser = async ({ email = null, password = null }) => {
