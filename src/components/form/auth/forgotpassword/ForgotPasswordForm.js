@@ -151,7 +151,7 @@ const ForgotPasswordFormComponent = ({ setIsFormComplete = () => {} }) => {
               </Grid>
               <Grid item>
                 <Link
-                  data-testid="sign-in-sign-up-link"
+                  data-testid="forgot-password-sign-up-link"
                   href={ROUTES.SIGN_UP}
                   variant="body2"
                 >
