@@ -123,12 +123,6 @@ const ForgotPasswordFormComponent = ({ setIsFormComplete = () => {} }) => {
                 </div>
               ) : null}
             </Grid>
-            {/* 
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              /> 
-            */}
             <Button
               data-testid="forgot-password-submit-button"
               type="submit"
