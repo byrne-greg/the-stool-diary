@@ -127,13 +127,18 @@ export const retrieveData = namespace => {
   return getData()
 }
 
-export const retrieveUserRecordByEmail = (namespace, email) => {
+export const retrieveRecordsByQuery = (namespace, queryString) => {
+  const query = queryString.split(" ")
+  const fieldPath = query[0]
+  const opString = query[1]
+  const value = query[2]
+
   const getData = async () => {
     const data = []
     await firebase
       .firestore()
       .collection(namespace)
-      .where("email", "==", email)
+      .where(fieldPath, opString, value)
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {

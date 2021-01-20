@@ -100,6 +100,7 @@ describe("SignInForm", () => {
       }))
       firebase.getCurrentUser = jest.fn(() => ({ email: "email" }))
       globalActions.updateUser = jest.fn()
+      globalActions.updateAuthUser = jest.fn()
       const mockSetIsFormComplete = jest.fn()
 
       // ACT
@@ -127,7 +128,7 @@ describe("SignInForm", () => {
       expect(mockSetIsFormComplete.mock.calls.length).toBe(1)
       expect(mockSetIsFormComplete.mock.calls[0][0]).toBe(true)
     })
-    test(`when the email address and password are genuine and the user signs in, then firebase sign in API should be called and internally update user`, async () => {
+    test(`when the email address and password are genuine and the user signs in, then firebase sign in API should be called`, async () => {
       // ARRANGE
       firebase.signInUser = jest.fn(() => ({
         errorCode: null,
@@ -157,7 +158,39 @@ describe("SignInForm", () => {
 
       // ASSERT
       expect(firebase.signInUser.mock.calls.length).toBe(1)
+    })
+    test(`when the email address and password are genuine and the user signs in, then the global authUser and user states should update`, async () => {
+      // ARRANGE
+      firebase.signInUser = jest.fn(() => ({
+        errorCode: null,
+        errorMessage: null,
+      }))
+      firebase.getCurrentUser = jest.fn(() => ({ email: "email" }))
+      globalActions.updateUser = jest.fn()
+      globalActions.updateAuthUser = jest.fn()
+
+      // ACT
+      const { getByTestId } = render(<SignInForm />)
+      await act(async () => {
+        await fireEvent.change(
+          getByTestId("sign-in-email-input").querySelector("input"),
+          {
+            target: { value: "johnny@test.com" },
+          }
+        )
+        await fireEvent.change(
+          getByTestId("sign-in-password-input").querySelector("input"),
+          {
+            target: { value: "Super_Secret_Password1" },
+          }
+        )
+        const submitButton = getByTestId("sign-in-submit-button")
+        await fireEvent.click(submitButton)
+      })
+
+      // ASSERT
       expect(globalActions.updateUser.mock.calls.length).toBe(1)
+      expect(globalActions.updateAuthUser.mock.calls.length).toBe(1)
     })
     test(`when the an error occurs in sign in from firebase, the message is displayed to the user`, async () => {
       // ARRANGE

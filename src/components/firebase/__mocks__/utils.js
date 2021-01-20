@@ -14,4 +14,4 @@ export const persistData = () => {}
 
 export const retrieveData = () => []
 
-export const retrieveUserRecordByEmail = () => []
+export const retrieveRecordsByQuery = () => []

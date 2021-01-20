@@ -11,7 +11,6 @@ export const INITIAL_USER_STATE = {
   email: null,
   forename: null,
   surname: null,
-  signIn: [],
 }
 
 export const INITIAL_USER_STATE_SIGNIN = {

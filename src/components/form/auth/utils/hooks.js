@@ -5,12 +5,13 @@ import {
   signOutUser,
   signUpUser,
   sendPasswordResetEmail,
-  retrieveUserRecordByEmail,
 } from "../../../firebase/utils"
-import { updateUser } from "../../../../context/global/actions"
+import { updateAuthUser, updateUser } from "../../../../context/global/actions"
 import { GlobalDispatchContext } from "../../../../context/global/GlobalContextProvider"
-import { persistUserData } from "../../../../context/auth/persistence"
-import { USER_NAMESPACE } from "../../../firebase/namespaces"
+import {
+  getUserRecordByEmail,
+  persistUserData,
+} from "../../../../context/auth/persistence"
 
 const useAuth = () => {
   const globalDispatch = useContext(GlobalDispatchContext)
@@ -30,11 +31,9 @@ const useAuth = () => {
     })
     if (!error.errorCode) {
       const authUser = await getCurrentUser()
-      const userData = await retrieveUserRecordByEmail(
-        USER_NAMESPACE,
-        authUser.email
-      )
-      updateUser(globalDispatch, userData[0])
+      updateAuthUser(globalDispatch, authUser)
+      const userRecord = await getUserRecordByEmail(authUser.email)
+      updateUser(globalDispatch, userRecord)
     }
     return error
   }

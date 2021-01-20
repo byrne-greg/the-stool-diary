@@ -1,7 +1,9 @@
-import { CHANGE_LANGUAGE, UPDATE_USER } from "./actionTypes"
+import { CHANGE_LANGUAGE, UPDATE_AUTH_USER, UPDATE_USER } from "./actionTypes"
 
 export const updateUser = (dispatch, value) =>
   updateState(dispatch, UPDATE_USER, value)
+export const updateAuthUser = (dispatch, value) =>
+  updateState(dispatch, UPDATE_AUTH_USER, value)
 export const changeLanguage = (dispatch, value) =>
   updateState(dispatch, CHANGE_LANGUAGE, value)
 

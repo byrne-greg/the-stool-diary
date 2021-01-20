@@ -1,4 +1,4 @@
-import { CHANGE_LANGUAGE, UPDATE_USER } from "./actionTypes"
+import { CHANGE_LANGUAGE, UPDATE_AUTH_USER, UPDATE_USER } from "./actionTypes"
 
 /**
  * Reducer to manage any global (app-level) state changes
@@ -12,6 +12,8 @@ function globalReducer(state, action) {
       return { ...state, lang: action.value }
     case UPDATE_USER:
       return { ...state, user: action.value }
+    case UPDATE_AUTH_USER:
+      return { ...state, authUser: action.value }
     default:
       return { ...state }
   }
