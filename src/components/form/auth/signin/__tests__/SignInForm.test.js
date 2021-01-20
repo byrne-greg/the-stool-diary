@@ -98,7 +98,7 @@ describe("SignInForm", () => {
         errorCode: null,
         errorMessage: null,
       }))
-      firebase.getCurrentUser = jest.fn()
+      firebase.getCurrentUser = jest.fn(() => ({ email: "email" }))
       globalActions.updateUser = jest.fn()
       const mockSetIsFormComplete = jest.fn()
 
@@ -133,7 +133,7 @@ describe("SignInForm", () => {
         errorCode: null,
         errorMessage: null,
       }))
-      firebase.getCurrentUser = jest.fn()
+      firebase.getCurrentUser = jest.fn(() => ({ email: "email" }))
       globalActions.updateUser = jest.fn()
 
       // ACT

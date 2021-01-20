@@ -12,4 +12,6 @@ export const getCurrentUser = ({ returnVal = {} }) => returnVal
 
 export const persistData = () => {}
 
-export const retrieveData = namespace => []
+export const retrieveData = () => []
+
+export const retrieveUserRecordByEmail = () => []
