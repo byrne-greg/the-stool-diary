@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { retrieveData } from "./utils"
 import { STOOL_NAMESPACE } from "./namespaces"
 
-const useStoolRecordsForPerson = () => {
+export const useStoolRecordsForPerson = () => {
   const [stoolRecords, setStoolRecords] = useState([])
   useEffect(() => {
     const retrieveStoolRecords = async () => {
