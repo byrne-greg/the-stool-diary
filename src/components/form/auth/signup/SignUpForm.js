@@ -99,17 +99,12 @@ const SignUpFormComponent = ({ setIsUserSignedUp = () => {} }) => {
     setForenameError(forenameValidation)
     const surnameValidation = validateFormTextField({ value: getSurname() })
     setSurnameError(surnameValidation)
-    console.log("emailValidation", emailValidation)
-    console.log("passwordValidation", passwordValidation)
-    console.log("forenameValidation", forenameValidation)
-    console.log("surnameValidation", surnameValidation)
     const isAllowedToSignUp = !(
       emailValidation.isInvalid ||
       passwordValidation.isInvalid ||
       forenameValidation.isInvalid ||
       surnameValidation.isInvalid
     )
-    console.log("isAllowedToSignUp", isAllowedToSignUp)
     if (isAllowedToSignUp) {
       const emailPasswordCredentials = {
         email: getEmail(),
