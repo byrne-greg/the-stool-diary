@@ -9,7 +9,6 @@ import ROUTES from "../../utils/routes"
 import { StoolDiaryLogo } from "../images"
 import { GlobalStateContext } from "../../context/global/GlobalContextProvider"
 import { DrawerMenu } from "."
-import { GolfCourseRounded } from "@material-ui/icons"
 
 const useStyles = makeStyles({
   banner: {
@@ -74,7 +73,7 @@ const Header = () => {
           </Link>
           {user ? (
             <Typography variant="h6" component="p">
-              {`${t(`Welcome`)}, ${user.email}`}
+              {`${t(`Welcome`)}, ${user.forename} ${user.surname}`}
             </Typography>
           ) : null}
           <div>
