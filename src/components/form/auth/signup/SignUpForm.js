@@ -28,6 +28,7 @@ import AuthContextProvider, {
   AuthStateContext,
   AuthDispatchContext,
 } from "../../../../context/auth/AuthContextProvider"
+import ROUTES from "../../../../utils/routes"
 import useAuth from "../utils/hooks"
 
 const useStyles = makeStyles(theme => ({
@@ -207,7 +208,16 @@ const SignUpFormComponent = ({ setIsUserSignedUp = () => {} }) => {
             <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label={t("I agree to the terms and conditions")}
+                label={
+                  <div>
+                    <span>
+                      {`${t(`I agree to the`)} `}
+                      <Link href={ROUTES.PRIVACY_POLICY}>
+                        {t("terms and conditions")}
+                      </Link>
+                    </span>
+                  </div>
+                }
               />
             </Grid>
           </Grid>
@@ -223,7 +233,7 @@ const SignUpFormComponent = ({ setIsUserSignedUp = () => {} }) => {
           <Grid container justify="flex-end">
             <Grid item>
               <Link href="#" variant="body2">
-                {t("Already have an account? Sign in")}
+                <Typography>{t("Already have an account? Sign in")}</Typography>
               </Link>
             </Grid>
           </Grid>
