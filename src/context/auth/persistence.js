@@ -13,8 +13,8 @@ export function persistUserData(data) {
   persistData(USER_NAMESPACE, userObject)
 }
 
-export function getUserRecordByEmail(email) {
-  const userRecordsByEmail = retrieveRecordsByQuery(
+export async function getUserRecordByEmail(email) {
+  const userRecordsByEmail = await retrieveRecordsByQuery(
     USER_NAMESPACE,
     `email == ${email}`
   )

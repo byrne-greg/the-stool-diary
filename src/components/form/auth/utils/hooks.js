@@ -19,6 +19,7 @@ const useAuth = () => {
   const setSignOut = async () => {
     const error = await signOutUser()
     if (!error.errorCode) {
+      updateAuthUser(globalDispatch, null)
       updateUser(globalDispatch, null)
     }
     return error
@@ -44,7 +45,7 @@ const useAuth = () => {
       password: password,
     })
     if (!error.errorCode) {
-      persistUserData({ email, ...userDetails })
+      await persistUserData({ email, ...userDetails })
     }
     return error
   }
