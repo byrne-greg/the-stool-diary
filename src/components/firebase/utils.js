@@ -12,12 +12,10 @@ export const signUpUser = async ({ email = null, password = null }) => {
       .createUserWithEmailAndPassword(email, password)
       .catch(function (error) {
         // Handle Errors here.
-        authError.errorCode = error.errorCode
-        authError.errorMessage = error.errorMessage
-        console.error(authError)
+        authError.errorCode = error.code
+        authError.errorMessage = error.message
+        console.error(authError.errorCode, ":", authError.errorMessage)
       })
-  } else {
-    console.error(authError.errorCode, ":", authError.errorMessage)
   }
   return authError
 }
@@ -35,8 +33,6 @@ export const signInUser = async ({ email = null, password = null }) => {
         authError.errorMessage = error.message
         console.error(authError.errorCode, ":", authError.errorMessage)
       })
-  } else {
-    console.error(authError.errorCode, ":", authError.errorMessage)
   }
   return authError
 }
@@ -64,13 +60,13 @@ export const getCurrentUser = async () => {
   await firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
       // User is signed in.
-      const displayName = user.displayName
-      const email = user.email
-      const emailVerified = user.emailVerified
-      const photoURL = user.photoURL
-      const isAnonymous = user.isAnonymous
-      const uid = user.uid
-      const providerData = user.providerData
+      // const displayName = user.displayName
+      // const email = user.email
+      // const emailVerified = user.emailVerified
+      // const photoURL = user.photoURL
+      // const isAnonymous = user.isAnonymous
+      // const uid = user.uid
+      // const providerData = user.providerData
       // ...
       currentUser = user
     }
@@ -114,7 +110,7 @@ export const persistData = (namespace, obj) => {
 }
 
 export const retrieveData = namespace => {
-  async function getData(namespace) {
+  const getData = async () => {
     const data = []
     await firebase
       .firestore()
@@ -122,13 +118,30 @@ export const retrieveData = namespace => {
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
-          // console.log(`${doc.id} => ${doc.data()}`)
           data.push({ ...doc.data(), id: doc.id })
         })
       })
-    // console.log(data)
     return data
   }
 
-  return getData(namespace)
+  return getData()
+}
+
+export const retrieveUserRecordByEmail = (namespace, email) => {
+  const getData = async () => {
+    const data = []
+    await firebase
+      .firestore()
+      .collection(namespace)
+      .where("email", "==", email)
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          data.push({ ...doc.data(), id: doc.id })
+        })
+      })
+    return data
+  }
+
+  return getData()
 }
