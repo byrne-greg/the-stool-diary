@@ -33,10 +33,10 @@ const DrawerMenu = () => {
     { text: t("Home"), route: ROUTES.HOME },
     { text: t("Record a Stool"), route: ROUTES.RECORD_STOOL },
     { text: t("My Stools"), route: ROUTES.DASHBOARD },
-    { text: t("Sign Up"), route: ROUTES.SIGN_UP },
   ]
 
   if (!user) {
+    menuRoutes.push({ text: t("Sign Up"), route: ROUTES.SIGN_UP })
     menuRoutes.push({ text: t("Sign In"), route: ROUTES.SIGN_IN })
   }
   if (user) {
