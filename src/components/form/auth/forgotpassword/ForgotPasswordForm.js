@@ -14,7 +14,6 @@ import { validateFormTextField, VALIDATION_TYPE } from "../utils/validation"
 import {
   updateEmail,
   updateEmailError,
-  updatePassword,
   updateAuthError,
 } from "../../../../context/auth/actions"
 import AuthContextProvider, {

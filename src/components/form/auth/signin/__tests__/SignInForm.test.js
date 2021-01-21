@@ -7,6 +7,7 @@ import * as globalActions from "../../../../../context/global/actions"
 
 // import firebase from "gatsby-plugin-firebase" causes error
 jest.mock("../../../../firebase/utils")
+jest.mock("../../../../firebase/firebase")
 
 // mocks the outbound backend connector used in validation.js
 jest.mock("../../../../i18n/i18n")

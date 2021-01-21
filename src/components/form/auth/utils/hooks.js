@@ -3,9 +3,9 @@ import {
   getCurrentUser,
   signInUser,
   signOutUser,
-  signUpUser,
   sendPasswordResetEmail,
 } from "../../../firebase/utils"
+import { signUpUser } from "../../../firebase/auth"
 import { updateAuthUser, updateUser } from "../../../../context/global/actions"
 import { GlobalDispatchContext } from "../../../../context/global/GlobalContextProvider"
 import {

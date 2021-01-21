@@ -1,8 +1,9 @@
 import firebase from "gatsby-plugin-firebase"
 
-// ----- AUTH -----
-// https://firebase.google.com/docs/auth/web/start
+// TODO MIGRATING AUTH METHODS TO auth.js
+// TODO MIGRATING DATA METHODS to collection.js
 
+// TODO replaced with auth.signUpUser
 export const signUpUser = async ({ email = null, password = null }) => {
   const authError = { errorCode: null, errorMessage: null }
 

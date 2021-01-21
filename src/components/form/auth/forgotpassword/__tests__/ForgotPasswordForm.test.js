@@ -1,11 +1,11 @@
 import React from "react"
 import { render, fireEvent, act } from "@testing-library/react"
-import * as firebase from "../../../../firebase/utils"
 import * as validation from "../../utils/validation"
-import * as globalActions from "../../../../../context/global/actions"
+import * as firebase from "../../../../firebase/utils"
 import ForgotPasswordForm from "../ForgotPasswordForm"
 
 // import firebase from "gatsby-plugin-firebase" causes error
+jest.mock("../../../../firebase/firebase")
 jest.mock("../../../../firebase/utils")
 
 // mocks the outbound backend connector used in validation.js
