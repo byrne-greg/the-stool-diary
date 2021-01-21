@@ -9,6 +9,8 @@ import { firebaseAuth } from "./firebase"
  * @param {Object} credentials
  * @param {Object} credentials.email email address of user
  * @param {Object} credentials.password desired password of user
+ *
+ * @return {Object} response
  */
 export async function signUpUser(credentials) {
   const response = {
@@ -38,44 +40,78 @@ export async function signUpUser(credentials) {
   } else {
     response.error = {
       code: "custom-auth/missing-param",
-      message: "parameters is not an object containing an email and password",
+      message: "parameter is not an object containing an email and password",
     }
   }
 
   return response
 }
 
-export const signInUser = async ({ email = null, password = null }) => {
-  const authError = { errorCode: null, errorMessage: null }
-
-  if (email && password) {
-    await firebaseAuth
-      .signInWithEmailAndPassword(email, password)
-      .catch(function (error) {
-        // Handle errors here.
-        authError.errorCode = error.code
-        authError.errorMessage = error.message
-        console.error(authError.errorCode, ":", authError.errorMessage)
-      })
+/**
+ * Signs in a user using the Firebase Auth API
+ *
+ * @param {Object} credentials
+ * @param {Object} credentials.email email address of user
+ * @param {Object} credentials.password password of user
+ *
+ * @return {Object} response
+ */
+export async function signInUser(credentials) {
+  const response = {
+    error: null,
+    success: false,
   }
-  return authError
+
+  if (typeof credentials === "object") {
+    const { email = null, password = null } = credentials
+    if (email && password) {
+      await firebaseAuth
+        .signInWithEmailAndPassword(email, password)
+        .then(() => {
+          response.success = true
+        })
+        .catch(error => {
+          response.error = { ...error }
+        })
+    } else {
+      response.error = {
+        code: "custom-auth/missing-param",
+        message: `missing required parameters - ${email ? "" : "email"} ${
+          password ? "" : "password"
+        }`,
+      }
+    }
+  } else {
+    response.error = {
+      code: "custom-auth/missing-param",
+      message: "parameter is not an object containing an email and password",
+    }
+  }
+
+  return response
 }
 
-export const signOutUser = async () => {
-  const authError = { errorCode: null, errorMessage: null }
+/**
+ * Signs out the current user using the Firebase Auth API
+ *
+ * @return {Object} response
+ */
+export async function signOutUser() {
+  const response = {
+    error: null,
+    success: false,
+  }
+
   await firebaseAuth
     .signOut()
-    // .then(() => {
-    //   // Sign-out successful.
-    //   console.log("signout successful")
-    // })
-    .catch(error => {
-      // Handle errors here.
-      authError.errorCode = error.code
-      authError.errorMessage = error.message
-      console.error(authError.errorCode, ":", authError.errorMessage)
+    .then(() => {
+      response.success = true
     })
-  return authError
+    .catch(error => {
+      response.error = { ...error }
+    })
+
+  return response
 }
 
 export const getCurrentUser = async () => {

@@ -1,1 +1,5 @@
-export const firebaseAuth = { createUserWithEmailAndPassword: () => {}, sendPasswordResetEmail: () => {} } 
+export const firebaseAuth = { 
+  createUserWithEmailAndPassword: () => {},
+  sendPasswordResetEmail: () => {}, 
+  signOut: () => {}
+} 
