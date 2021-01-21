@@ -1,13 +1,12 @@
 // Gatsby supports TypeScript natively!
-import React, { useContext, useEffect } from "react"
+import React from "react"
 import { Link } from "gatsby"
 import { PageLayout } from "../components/layout"
 import { ListStoolRecordsScreen } from "../components/screens"
-import useUserAuthenticated from "../components/hooks/useUserAuthenticated"
+import { useAuthUserOnlyRoute } from "../components/hooks/route-hooks"
 
 const ListStoolRecordsPage = () => {
-  const isAuthenticated = useUserAuthenticated()
-  // true
+  const isAuthenticated = useAuthUserOnlyRoute()
 
   return (
     <>
