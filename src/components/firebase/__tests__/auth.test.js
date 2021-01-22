@@ -1,4 +1,10 @@
-import { signInUser, signOutUser, signUpUser } from "../auth"
+import {
+  signInUser,
+  signOutUser,
+  signUpUser,
+  getCurrentAuthUser,
+  sendPasswordResetEmail,
+} from "../auth"
 import { firebaseAuth } from "../firebase"
 
 // import firebase from "gatsby-plugin-firebase" causes error
@@ -83,6 +89,7 @@ describe("Firebase Auth", () => {
       // ASSERT
       expect(firebaseAuth.createUserWithEmailAndPassword).toHaveBeenCalled()
       expect(response.success).toBeTruthy()
+      expect(response.error).toBeNull()
     })
     test(`when email and password is provided and sign up fails, return failure response`, async () => {
       // ARRANGE
@@ -175,6 +182,7 @@ describe("Firebase Auth", () => {
       // ASSERT
       expect(firebaseAuth.signInWithEmailAndPassword).toHaveBeenCalled()
       expect(response.success).toBeTruthy()
+      expect(response.error).toBeNull()
     })
     test(`when email and password is provided and sign in fails, return failure response`, async () => {
       // ARRANGE
@@ -201,30 +209,108 @@ describe("Firebase Auth", () => {
       firebaseAuth.signOut = jest.fn(() => Promise.resolve())
 
       // ACT
-      const response = await signOutUser({
-        email: mockEmail,
-        password: mockPassword,
-      })
+      const response = await signOutUser()
 
       // ASSERT
       expect(firebaseAuth.signOut).toHaveBeenCalled()
       expect(response.success).toBeTruthy()
+      expect(response.error).toBeNull()
     })
     test(`when sign out call fails, return failure response`, async () => {
       // ARRANGE
       firebaseAuth.signOut = jest.fn(() => Promise.reject(mockServerError))
 
       // ACT
-      const response = await signOutUser({
-        email: mockEmail,
-        password: mockPassword,
-      })
+      const response = await signOutUser()
 
       // ASSERT
       expect(firebaseAuth.signOut).toHaveBeenCalled()
       expect(response.error.code).toBe(mockServerError.code)
       expect(response.error.message).toBe(mockServerError.message)
       expect(response.success).toBeFalsy()
+    })
+  })
+  describe("Get Current Auth User", () => {
+    test(`when getCurrentAuthUser call is success and an auth user is found, return success response with auth user`, async () => {
+      // ARRANGE
+      firebaseAuth.onAuthStateChanged = jest.fn(callback =>
+        callback({ fakeUser: "fakeUser" })
+      )
+
+      // ACT
+      const response = await getCurrentAuthUser()
+
+      // ASSERT
+      expect(firebaseAuth.onAuthStateChanged).toHaveBeenCalled()
+      expect(response.success).toBeTruthy()
+      expect(response.authUser).toBeTruthy()
+    })
+    test(`when getCurrentAuthUser call is success and an auth user is not found, return success response with null as auth user`, async () => {
+      // ARRANGE
+      firebaseAuth.onAuthStateChanged = jest.fn(callback => callback())
+
+      // ACT
+      const response = await getCurrentAuthUser()
+
+      // ASSERT
+      expect(firebaseAuth.onAuthStateChanged).toHaveBeenCalled()
+      expect(response.success).toBeTruthy()
+      expect(response.authUser).toBeNull()
+    })
+  })
+  describe("Send Password Reset Email", () => {
+    test(`when sendPasswordResetEmail has no email parameter, then return error`, async () => {
+      // ARRANGE
+      firebaseAuth.sendPasswordResetEmail = jest.fn()
+
+      // ACT
+      const response = await sendPasswordResetEmail({})
+
+      // ASSERT
+      expect(firebaseAuth.sendPasswordResetEmail).not.toHaveBeenCalled()
+      expect(response.success).toBeFalsy()
+      expect(response.error.code).toMatch("custom-auth/missing-param")
+      expect(response.error.message).toMatch("email")
+    })
+    test(`when sendPasswordResetEmail has no parameter, then return error`, async () => {
+      // ARRANGE
+      firebaseAuth.sendPasswordResetEmail = jest.fn()
+
+      // ACT
+      const response = await sendPasswordResetEmail()
+
+      // ASSERT
+      expect(firebaseAuth.sendPasswordResetEmail).not.toHaveBeenCalled()
+      expect(response.error.code).toMatch("custom-auth/missing-param")
+      expect(response.error.message).toMatch("email")
+      expect(response.success).toBeFalsy()
+    })
+    test(`when sendPasswordResetEmail has email but Firebase call fails, then return failure response`, async () => {
+      // ARRANGE
+      firebaseAuth.sendPasswordResetEmail = jest.fn(() =>
+        Promise.reject(mockServerError)
+      )
+
+      // ACT
+      const response = await sendPasswordResetEmail({ email: mockEmail })
+
+      // ASSERT
+      expect(firebaseAuth.sendPasswordResetEmail).toHaveBeenCalled()
+      expect(response.success).toBeFalsy()
+      expect(response.error.code).toBe(mockServerError.code)
+      expect(response.error.message).toBe(mockServerError.message)
+    })
+    test(`when sendPasswordResetEmail has email and Firebase call succeeds, then return success response`, async () => {
+      // ARRANGE
+      firebaseAuth.sendPasswordResetEmail = jest.fn(() => Promise.resolve())
+
+      // ACT
+      const response = await sendPasswordResetEmail({ email: mockEmail })
+
+      // ASSERT
+      expect(firebaseAuth.sendPasswordResetEmail).toHaveBeenCalled()
+      expect(response.success).toBeTruthy()
+      expect(response.error).toBeNull()
     })
   })
 })

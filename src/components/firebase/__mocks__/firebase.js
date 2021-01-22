@@ -1,5 +1,6 @@
 export const firebaseAuth = { 
   createUserWithEmailAndPassword: () => {},
   sendPasswordResetEmail: () => {}, 
-  signOut: () => {}
+  signOut: () => {},
+  onAuthStateChanged: () => {}
 } 

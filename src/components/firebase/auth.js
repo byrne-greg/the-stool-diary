@@ -114,10 +114,23 @@ export async function signOutUser() {
   return response
 }
 
-export const getCurrentUser = async () => {
-  let currentUser = null
-  await firebaseAuth.onAuthStateChanged(function (user) {
-    if (user) {
+/**
+ 
+ */
+/**
+ * Retrieves the current authenticated user using the Firebase API.
+ * If there is no authenticated user, then the response will include null as the authUser
+ *
+ * @return {Object} response
+ */
+export async function getCurrentAuthUser() {
+  const response = {
+    success: false,
+    authUser: null,
+  }
+  await firebaseAuth.onAuthStateChanged(authUser => {
+    response.success = true
+    if (authUser) {
       // User is signed in.
       // const displayName = user.displayName
       // const email = user.email
@@ -127,25 +140,48 @@ export const getCurrentUser = async () => {
       // const uid = user.uid
       // const providerData = user.providerData
       // ...
-      currentUser = user
+      response.authUser = authUser
     }
   })
-  return currentUser
+  return response
 }
 
-export const sendPasswordResetEmail = async ({ email = null }) => {
-  const authError = { errorCode: null, errorMessage: null }
-
-  if (email) {
-    await firebaseAuth.sendPasswordResetEmail(email).catch(function (error) {
-      // Handle Errors here.
-      authError.errorCode = error.errorCode
-      authError.errorMessage = error.errorMessage
-      console.error(authError)
-    })
-  } else {
-    console.error(authError.errorCode, ":", authError.errorMessage)
+/**
+ * Sends a user a password reset email using the Firebase Auth API
+ * @param {Object} credentials
+ * @param {Object} credentials.email the user email
+ *
+ * @return {Object} response
+ */
+export async function sendPasswordResetEmail(credentials) {
+  const response = {
+    error: null,
+    success: false,
   }
 
-  return authError
+  if (credentials) {
+    const { email } = credentials
+    if (email) {
+      await firebaseAuth
+        .sendPasswordResetEmail(email)
+        .then(() => {
+          response.success = true
+        })
+        .catch(error => {
+          response.error = { ...error }
+        })
+    } else {
+      response.error = {
+        code: "custom-auth/missing-param",
+        message: "missing required parameters - email",
+      }
+    }
+  } else {
+    response.error = {
+      code: "custom-auth/missing-param",
+      message: "parameter is not an object containing an email",
+    }
+  }
+
+  return response
 }
