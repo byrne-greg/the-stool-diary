@@ -1,4 +1,5 @@
 import React, { useContext } from "react"
+import { navigate } from "gatsby"
 import PropTypes from "prop-types"
 import { useTranslation } from "react-i18next"
 import Button from "@material-ui/core/Button"
@@ -29,7 +30,7 @@ import AuthContextProvider, {
   AuthDispatchContext,
 } from "../../../../context/auth/AuthContextProvider"
 import ROUTES from "../../../../utils/routes"
-import useAuth from "../utils/hooks"
+import { useAuth } from "../../../hooks"
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -114,15 +115,18 @@ const SignUpFormComponent = ({ setIsUserSignedUp = () => {} }) => {
         forename: getForename(),
         surname: getSurname(),
       }
-      const authError = await signUp({
+      const signUpResponse = await signUp({
         ...emailPasswordCredentials,
         ...userProfileDetails,
       })
-      if (!authError.errorCode) {
+      if (signUpResponse.success) {
         setIsUserSignedUp(true)
-        signIn(emailPasswordCredentials)
+        const signInResponse = await signIn(emailPasswordCredentials)
+        if (signInResponse.error) {
+          navigate(ROUTES.SIGN_IN)
+        }
       } else {
-        setAuthError({ ...authError })
+        setAuthError({ ...signUpResponse.error })
       }
     }
   }

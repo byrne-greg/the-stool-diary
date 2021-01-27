@@ -1,11 +1,11 @@
 import React from "react"
 import { render, fireEvent, act } from "@testing-library/react"
 import * as validation from "../../utils/validation"
-import * as firebase from "../../../../firebase/utils"
+import * as auth from "../../../../firebase/auth"
 import ForgotPasswordForm from "../ForgotPasswordForm"
 
 // import firebase from "gatsby-plugin-firebase" causes error
-jest.mock("../../../../firebase/firebase")
+jest.mock("../../../../firebase/auth")
 jest.mock("../../../../firebase/utils")
 
 // mocks the outbound backend connector used in validation.js
@@ -84,10 +84,7 @@ describe("Forgot Password", () => {
   describe("Functional", () => {
     test(`when the forgot password is successful, then the passed setIsFormComplete function should be true `, async () => {
       // ARRANGE
-      firebase.sendPasswordResetEmail = jest.fn(() => ({
-        errorCode: null,
-        errorMessage: null,
-      }))
+      auth.sendPasswordResetEmail = jest.fn(() => ({ success: true }))
       const mockSetIsFormComplete = jest.fn()
 
       // ACT
@@ -111,10 +108,7 @@ describe("Forgot Password", () => {
     })
     test(`when the email address is of a genuine user, then the firebase send password reset email API should be called`, async () => {
       // ARRANGE
-      firebase.sendPasswordResetEmail = jest.fn(() => ({
-        errorCode: null,
-        errorMessage: null,
-      }))
+      auth.sendPasswordResetEmail = jest.fn(() => ({ success: true }))
 
       // ACT
       const { getByTestId } = render(<ForgotPasswordForm />)
@@ -130,15 +124,13 @@ describe("Forgot Password", () => {
       })
 
       // ASSERT
-      expect(firebase.sendPasswordResetEmail.mock.calls.length).toBe(1)
+      expect(auth.sendPasswordResetEmail.mock.calls.length).toBe(1)
     })
-    test(`when the an error occurs in forgot password from firebase, the message is displayed to the user`, async () => {
+    test.only(`when an error occurs in forgot password from firebase, the message is displayed to the user`, async () => {
       // ARRANGE
-      const mockErrorMessage = "Mock: User does not exist"
-      firebase.sendPasswordResetEmail = jest.fn(() => ({
-        errorCode: 101,
-        errorMessage: mockErrorMessage,
-      }))
+      const mockServerError = { code: 101, message: "Cyberdyne Systems Model" }
+      auth.sendPasswordResetEmail = jest.fn(() => ({ error: mockServerError }))
+
       // ACT
       const { getByTestId, queryByTestId } = render(<ForgotPasswordForm />)
       await act(async () => {
@@ -155,13 +147,11 @@ describe("Forgot Password", () => {
 
       // ASSERT
       expect(authDisplayError).toBeTruthy()
+      expect(authDisplayError.textContent).toBe(mockServerError.message)
     })
     test(`when the user email address field is invalid and the user signs in, then no sign on takes place and a validation displays`, async () => {
       // ARRANGE
-      firebase.sendPasswordResetEmail = jest.fn(() => ({
-        errorCode: null,
-        errorMessage: null,
-      }))
+      auth.sendPasswordResetEmail = jest.fn(() => ({ success: true }))
       const emailInvalidationText = "Test Email Invalidation"
       validation.validateFormTextField = jest.fn(() => ({
         isInvalid: true,
@@ -177,7 +167,7 @@ describe("Forgot Password", () => {
       // ASSERT
       expect(validation.validateFormTextField.mock.calls.length).toBe(1)
       expect(validationText).toBeTruthy()
-      expect(firebase.sendPasswordResetEmail.mock.calls.length).toBe(0)
+      expect(auth.sendPasswordResetEmail.mock.calls.length).toBe(0)
     })
   })
 })

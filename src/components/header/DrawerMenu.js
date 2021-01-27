@@ -11,7 +11,7 @@ import COLORS from "../../utils/colors"
 import ROUTES from "../../utils/routes"
 import { LanguageSelector } from "../i18n"
 import { GlobalStateContext } from "../../context/global/GlobalContextProvider"
-import useAuth from "../form/auth/utils/hooks"
+import { useAuth } from "../hooks"
 
 const useStyles = makeStyles({
   menuButton: {

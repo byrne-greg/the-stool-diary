@@ -1,5 +1,5 @@
 import React from "react"
-import useAuth from "../utils/hooks"
+import { useAuth } from "../../../hooks"
 
 const SignOut = () => {
   const { signOut } = useAuth()

@@ -1,13 +1,13 @@
 import React from "react"
 import { render, fireEvent, act } from "@testing-library/react"
 import SignInForm from "../SignInForm"
-import * as firebase from "../../../../firebase/utils"
+import * as auth from "../../../../firebase/auth"
 import * as validation from "../../utils/validation"
 import * as globalActions from "../../../../../context/global/actions"
 
 // import firebase from "gatsby-plugin-firebase" causes error
+jest.mock("../../../../firebase/auth")
 jest.mock("../../../../firebase/utils")
-jest.mock("../../../../firebase/firebase")
 
 // mocks the outbound backend connector used in validation.js
 jest.mock("../../../../i18n/i18n")
@@ -95,11 +95,11 @@ describe("SignInForm", () => {
   describe("Functional", () => {
     test(`when the sign in is successful, then the passed setIsFormComplete function should be true `, async () => {
       // ARRANGE
-      firebase.signInUser = jest.fn(() => ({
-        errorCode: null,
-        errorMessage: null,
+      auth.signInUser = jest.fn(() => ({ success: true }))
+      auth.getCurrentAuthUser = jest.fn(() => ({
+        success: true,
+        authUser: { email: "email" },
       }))
-      firebase.getCurrentUser = jest.fn(() => ({ email: "email" }))
       globalActions.updateUser = jest.fn()
       globalActions.updateAuthUser = jest.fn()
       const mockSetIsFormComplete = jest.fn()
@@ -131,11 +131,11 @@ describe("SignInForm", () => {
     })
     test(`when the email address and password are genuine and the user signs in, then firebase sign in API should be called`, async () => {
       // ARRANGE
-      firebase.signInUser = jest.fn(() => ({
-        errorCode: null,
-        errorMessage: null,
+      auth.signInUser = jest.fn(() => ({ success: true }))
+      auth.getCurrentAuthUser = jest.fn(() => ({
+        success: true,
+        authUser: { email: "email" },
       }))
-      firebase.getCurrentUser = jest.fn(() => ({ email: "email" }))
       globalActions.updateUser = jest.fn()
 
       // ACT
@@ -158,15 +158,15 @@ describe("SignInForm", () => {
       })
 
       // ASSERT
-      expect(firebase.signInUser.mock.calls.length).toBe(1)
+      expect(auth.signInUser.mock.calls.length).toBe(1)
     })
     test(`when the email address and password are genuine and the user signs in, then the global authUser and user states should update`, async () => {
       // ARRANGE
-      firebase.signInUser = jest.fn(() => ({
-        errorCode: null,
-        errorMessage: null,
+      auth.signInUser = jest.fn(() => ({ success: true }))
+      auth.getCurrentAuthUser = jest.fn(() => ({
+        success: true,
+        authUser: { email: "email" },
       }))
-      firebase.getCurrentUser = jest.fn(() => ({ email: "email" }))
       globalActions.updateUser = jest.fn()
       globalActions.updateAuthUser = jest.fn()
 
@@ -193,13 +193,13 @@ describe("SignInForm", () => {
       expect(globalActions.updateUser.mock.calls.length).toBe(1)
       expect(globalActions.updateAuthUser.mock.calls.length).toBe(1)
     })
-    test(`when the an error occurs in sign in from firebase, the message is displayed to the user`, async () => {
+    test(`when an error occurs in sign in from firebase, the message is displayed to the user`, async () => {
       // ARRANGE
-      const mockErrorMessage = "Mock: User does not exist"
-      firebase.signInUser = jest.fn(() => ({
-        errorCode: 101,
-        errorMessage: mockErrorMessage,
-      }))
+      const mockServerError = {
+        code: 101,
+        message: "Mock: User does not exist",
+      }
+      auth.signInUser = jest.fn(() => ({ error: mockServerError }))
       // ACT
       const { getByTestId, queryByTestId } = render(<SignInForm />)
       await act(async () => {
@@ -225,10 +225,7 @@ describe("SignInForm", () => {
     })
     test(`when the user email address field is invalid and the user signs in, then no sign on takes place and a validation displays`, async () => {
       // ARRANGE
-      firebase.signInUser = jest.fn(() => ({
-        errorCode: null,
-        errorMessage: null,
-      }))
+      auth.signInUser = jest.fn(() => ({ success: true }))
       const emailInvalidationText = "Test Email Invalidation"
       validation.validateFormTextField = jest.fn(() => ({
         isInvalid: true,
@@ -244,7 +241,7 @@ describe("SignInForm", () => {
       // ASSERT
       expect(validation.validateFormTextField.mock.calls.length).toBe(1)
       expect(validationText).toBeTruthy()
-      expect(firebase.signInUser.mock.calls.length).toBe(0)
+      expect(auth.signInUser.mock.calls.length).toBe(0)
     })
   })
 })

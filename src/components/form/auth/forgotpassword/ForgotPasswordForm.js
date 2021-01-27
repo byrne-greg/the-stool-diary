@@ -21,7 +21,7 @@ import AuthContextProvider, {
   AuthDispatchContext,
 } from "../../../../context/auth/AuthContextProvider"
 import ROUTES from "../../../../utils/routes"
-import useAuth from "../utils/hooks"
+import { useAuth } from "../../../hooks"
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -71,13 +71,14 @@ const ForgotPasswordFormComponent = ({ setIsFormComplete = () => {} }) => {
     setEmailError(emailValidation)
 
     if (!emailValidation.isInvalid) {
-      const authError = await doPasswordReset({
+      const isReset = await doPasswordReset({
         email: getEmail(),
       })
-      if (!authError.errorCode) {
+      if (isReset.success) {
         setIsFormComplete(true)
-      } else {
-        setAuthError({ ...authError })
+      }
+      if (isReset.error) {
+        setAuthError({ ...isReset.error })
       }
     }
   }
@@ -111,13 +112,13 @@ const ForgotPasswordFormComponent = ({ setIsFormComplete = () => {} }) => {
               />
             </Grid>
             <Grid>
-              {getAuthError().errorCode ? (
+              {getAuthError().code ? (
                 <div
                   className={classes.alert}
                   data-testid="forgot-password-auth-error"
                 >
                   <Alert variant="outlined" severity="error">
-                    {getAuthError().errorMessage}
+                    {getAuthError().message}
                   </Alert>
                 </div>
               ) : null}

@@ -22,7 +22,7 @@ import AuthContextProvider, {
   AuthDispatchContext,
 } from "../../../../context/auth/AuthContextProvider"
 import ROUTES from "../../../../utils/routes"
-import useAuth from "../utils/hooks"
+import { useAuth } from "../../../hooks"
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -74,14 +74,15 @@ const SignInFormComponent = ({ setIsFormComplete = () => {} }) => {
     setEmailError(emailValidation)
 
     if (!emailValidation.isInvalid) {
-      const authError = await signIn({
+      const isSignIn = await signIn({
         email: getEmail(),
         password: getPassword(),
       })
-      if (!authError.errorCode) {
+      if (isSignIn.success) {
         setIsFormComplete(true)
-      } else {
-        setAuthError({ ...authError })
+      }
+      if (isSignIn.error) {
+        setAuthError({ ...isSignIn.error })
       }
     }
   }
@@ -123,10 +124,10 @@ const SignInFormComponent = ({ setIsFormComplete = () => {} }) => {
                 autoComplete="current-password"
                 onChange={e => setPassword(e.target.value)}
               />
-              {getAuthError().errorCode ? (
+              {getAuthError().code ? (
                 <div className={classes.alert} data-testid="sign-in-auth-error">
                   <Alert variant="outlined" severity="error">
-                    {getAuthError().errorMessage}
+                    {getAuthError().message}
                   </Alert>
                 </div>
               ) : null}
