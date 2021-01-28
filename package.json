@@ -36,6 +36,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.10.1",
+    "@netlify/plugin-lighthouse": "^1.4.2",
     "@storybook/addon-actions": "^6.1.14",
     "@storybook/addon-docs": "^6.1.14",
     "@storybook/addon-links": "^6.1.14",
