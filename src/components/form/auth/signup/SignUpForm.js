@@ -52,7 +52,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const SignUpFormComponent = ({ setIsUserSignedUp = () => {} }) => {
+const SignUpFormComponent = ({ setIsFormComplete = () => {} }) => {
   const { t } = useTranslation()
   const classes = useStyles()
 
@@ -120,7 +120,7 @@ const SignUpFormComponent = ({ setIsUserSignedUp = () => {} }) => {
         ...userProfileDetails,
       })
       if (signUpResponse.success) {
-        setIsUserSignedUp(true)
+        setIsFormComplete(true)
         const signInResponse = await signIn(emailPasswordCredentials)
         if (signInResponse.error) {
           navigate(ROUTES.SIGN_IN)
@@ -234,7 +234,7 @@ const SignUpFormComponent = ({ setIsUserSignedUp = () => {} }) => {
             </Grid>
           </Grid>
           <Button
-            data-testid="sign-up-button"
+            data-testid="sign-up-submit-button"
             type="submit"
             fullWidth
             variant="contained"
@@ -256,7 +256,7 @@ const SignUpFormComponent = ({ setIsUserSignedUp = () => {} }) => {
   )
 }
 SignUpFormComponent.propTypes = {
-  setIsUserSignedUp: PropTypes.func,
+  setIsFormComplete: PropTypes.func,
 }
 
 const SignUpForm = props => {

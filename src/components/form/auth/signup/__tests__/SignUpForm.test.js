@@ -4,6 +4,7 @@ import SignUpForm from "../SignUpForm"
 import * as auth from "../../../../firebase/auth"
 import * as validation from "../../utils/validation"
 import * as globalActions from "../../../../../context/global/actions"
+import * as persistence from "../../../../../context/auth/persistence"
 
 // import firebase from "gatsby-plugin-firebase" causes error
 jest.mock("../../../../firebase/auth")
@@ -106,6 +107,70 @@ describe("SignInForm", () => {
 
       // ASSERT
       expect(signInLink).toBeTruthy()
+    })
+    test(`when rendered, then the sign-up submit button should be visible`, async () => {
+      // ARRANGE
+
+      // ACT
+      const { queryByTestId } = render(<SignUpForm />)
+      const submitButton = queryByTestId("sign-up-submit-button")
+
+      // ASSERT
+      expect(submitButton).toBeTruthy()
+    })
+  })
+  describe("Functional", () => {
+    test.only(`when the sign up is successful, then the passed setIsFormComplete function should be true `, async () => {
+      // ARRANGE
+      const mockSetIsFormComplete = jest.fn()
+      auth.signUpUser = jest.fn(() => ({ success: true }))
+      persistence.persistUserData = jest.fn()
+      auth.signInUser = jest.fn(() => ({
+        success: true,
+      }))
+      auth.getCurrentAuthUser = jest.fn(() => ({
+        success: true,
+        authUser: { email: "email" },
+      }))
+      globalActions.updateUser = jest.fn()
+      globalActions.updateAuthUser = jest.fn()
+
+      // ACT
+      const { getByTestId } = render(
+        <SignUpForm setIsFormComplete={mockSetIsFormComplete} />
+      )
+      await act(async () => {
+        await fireEvent.change(
+          getByTestId("sign-up-forename-input").querySelector("input"),
+          {
+            target: { value: "Johnny" },
+          }
+        )
+        await fireEvent.change(
+          getByTestId("sign-up-surname-input").querySelector("input"),
+          {
+            target: { value: "Test" },
+          }
+        )
+        await fireEvent.change(
+          getByTestId("sign-up-email-input").querySelector("input"),
+          {
+            target: { value: "johnny@test.com" },
+          }
+        )
+        await fireEvent.change(
+          getByTestId("sign-up-password-input").querySelector("input"),
+          {
+            target: { value: "Super_Secret_Password1" },
+          }
+        )
+        const submitButton = getByTestId("sign-up-submit-button")
+        await fireEvent.click(submitButton)
+      })
+
+      // ASSERT
+      expect(mockSetIsFormComplete.mock.calls.length).toBe(1)
+      expect(mockSetIsFormComplete.mock.calls[0][0]).toBe(true)
     })
   })
 })
