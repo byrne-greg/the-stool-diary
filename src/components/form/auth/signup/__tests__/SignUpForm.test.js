@@ -120,7 +120,7 @@ describe("SignInForm", () => {
     })
   })
   describe("Functional", () => {
-    test.only(`when the sign up is successful, then the passed setIsFormComplete function should be true `, async () => {
+    test(`when the sign up is successful, then the passed setIsFormComplete function should be true `, async () => {
       // ARRANGE
       const mockSetIsFormComplete = jest.fn()
       auth.signUpUser = jest.fn(() => ({ success: true }))
