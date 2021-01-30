@@ -50,7 +50,7 @@ export const useAuth = () => {
     if (response.success) {
       await persistUserData({ email, ...userDetails })
     }
-    return error
+    return response
   }
 
   const doPasswordReset = async ({ email }) => {
