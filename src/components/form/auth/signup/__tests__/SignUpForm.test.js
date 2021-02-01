@@ -1,10 +1,12 @@
 import React from "react"
+import * as gatsby from "gatsby"
 import { render, fireEvent, act } from "@testing-library/react"
 import SignUpForm from "../SignUpForm"
 import * as auth from "../../../../firebase/auth"
 import * as validation from "../../utils/validation"
 import * as globalActions from "../../../../../context/global/actions"
 import * as persistence from "../../../../../context/auth/persistence"
+import ROUTES from "../../../../../utils/ROUTES"
 
 // import firebase from "gatsby-plugin-firebase" causes error
 jest.mock("../../../../firebase/auth")
@@ -12,6 +14,16 @@ jest.mock("../../../../firebase/utils")
 
 // mocks the outbound backend connector used in validation.js
 jest.mock("../../../../i18n/i18n")
+
+// mocks the gatsby api
+jest.mock("gatsby", () => {
+  const gatsby = jest.requireActual("gatsby")
+
+  return {
+    ...gatsby,
+    navigate: jest.fn(),
+  }
+})
 
 beforeEach(() => {
   document.body.innerHTML = null
@@ -169,8 +181,105 @@ describe("SignInForm", () => {
       })
 
       // ASSERT
-      expect(mockSetIsFormComplete.mock.calls.length).toBe(1)
-      expect(mockSetIsFormComplete.mock.calls[0][0]).toBe(true)
+      expect(mockSetIsFormComplete).toHaveBeenCalledWith(true)
+    })
+    test(`when the sign up is successful, then an attempt is made to sign in the user `, async () => {
+      // ARRANGE
+      auth.signUpUser = jest.fn(() => ({ success: true }))
+      persistence.persistUserData = jest.fn()
+      auth.signInUser = jest.fn(() => ({
+        success: true,
+      }))
+      auth.getCurrentAuthUser = jest.fn(() => ({
+        success: true,
+        authUser: { email: "email" },
+      }))
+      globalActions.updateUser = jest.fn()
+      globalActions.updateAuthUser = jest.fn()
+
+      // ACT
+      const { getByTestId } = render(<SignUpForm />)
+      await act(async () => {
+        await fireEvent.change(
+          getByTestId("sign-up-forename-input").querySelector("input"),
+          {
+            target: { value: "Johnny" },
+          }
+        )
+        await fireEvent.change(
+          getByTestId("sign-up-surname-input").querySelector("input"),
+          {
+            target: { value: "Test" },
+          }
+        )
+        await fireEvent.change(
+          getByTestId("sign-up-email-input").querySelector("input"),
+          {
+            target: { value: "johnny@test.com" },
+          }
+        )
+        await fireEvent.change(
+          getByTestId("sign-up-password-input").querySelector("input"),
+          {
+            target: { value: "Super_Secret_Password1" },
+          }
+        )
+        const submitButton = getByTestId("sign-up-submit-button")
+        await fireEvent.click(submitButton)
+      })
+
+      // ASSERT
+      expect(auth.signUpUser).toHaveBeenCalled()
+    })
+    test(`when the sign up is successful, then an attempt is made to sign in the user fails, then the user is navigated home `, async () => {
+      // ARRANGE
+      gatsby.navigate = jest.fn()
+      auth.signUpUser = jest.fn(() => ({ success: true }))
+      persistence.persistUserData = jest.fn()
+      auth.signInUser = jest.fn(() => ({
+        success: true,
+        error: { code: 101, message: "Mock Error" },
+      }))
+      auth.getCurrentAuthUser = jest.fn(() => ({
+        success: true,
+        authUser: { email: "email" },
+      }))
+      globalActions.updateUser = jest.fn()
+      globalActions.updateAuthUser = jest.fn()
+
+      // ACT
+      const { getByTestId } = render(<SignUpForm />)
+      await act(async () => {
+        await fireEvent.change(
+          getByTestId("sign-up-forename-input").querySelector("input"),
+          {
+            target: { value: "Johnny" },
+          }
+        )
+        await fireEvent.change(
+          getByTestId("sign-up-surname-input").querySelector("input"),
+          {
+            target: { value: "Test" },
+          }
+        )
+        await fireEvent.change(
+          getByTestId("sign-up-email-input").querySelector("input"),
+          {
+            target: { value: "johnny@test.com" },
+          }
+        )
+        await fireEvent.change(
+          getByTestId("sign-up-password-input").querySelector("input"),
+          {
+            target: { value: "Super_Secret_Password1" },
+          }
+        )
+        const submitButton = getByTestId("sign-up-submit-button")
+        await fireEvent.click(submitButton)
+      })
+
+      // ASSERT
+      expect(gatsby.navigate).toHaveBeenCalledWith(ROUTES.SIGN_IN)
     })
   })
 })
