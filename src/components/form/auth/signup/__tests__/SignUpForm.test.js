@@ -3,10 +3,9 @@ import * as gatsby from "gatsby"
 import { render, fireEvent, act } from "@testing-library/react"
 import SignUpForm from "../SignUpForm"
 import * as auth from "../../../../firebase/auth"
-import * as validation from "../../utils/validation"
 import * as globalActions from "../../../../../context/global/actions"
 import * as persistence from "../../../../../context/auth/persistence"
-import ROUTES from "../../../../../utils/ROUTES"
+import ROUTES from "../../../../../utils/routes"
 
 // import firebase from "gatsby-plugin-firebase" causes error
 jest.mock("../../../../firebase/auth")
