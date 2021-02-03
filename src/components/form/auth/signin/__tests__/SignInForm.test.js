@@ -200,6 +200,7 @@ describe("SignInForm", () => {
         message: "Mock: User does not exist",
       }
       auth.signInUser = jest.fn(() => ({ error: mockServerError }))
+
       // ACT
       const { getByTestId, queryByTestId } = render(<SignInForm />)
       await act(async () => {
@@ -222,6 +223,7 @@ describe("SignInForm", () => {
 
       // ASSERT
       expect(authDisplayError).toBeTruthy()
+      expect(authDisplayError.textContent).toBe(mockServerError.message)
     })
     test(`when the user email address field is invalid and the user signs in, then no sign on takes place and a validation displays`, async () => {
       // ARRANGE
