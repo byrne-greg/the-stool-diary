@@ -126,7 +126,7 @@ describe("Forgot Password", () => {
       // ASSERT
       expect(auth.sendPasswordResetEmail.mock.calls.length).toBe(1)
     })
-    test.only(`when an error occurs in forgot password from firebase, the message is displayed to the user`, async () => {
+    test(`when an error occurs in forgot password from firebase, the message is displayed to the user`, async () => {
       // ARRANGE
       const mockServerError = { code: 101, message: "Cyberdyne Systems Model" }
       auth.sendPasswordResetEmail = jest.fn(() => ({ error: mockServerError }))
