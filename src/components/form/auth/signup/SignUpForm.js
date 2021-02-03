@@ -52,7 +52,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const SignUpFormComponent = ({ setIsUserSignedUp = () => {} }) => {
+const SignUpFormComponent = ({ setIsFormComplete = () => {} }) => {
   const { t } = useTranslation()
   const classes = useStyles()
 
@@ -120,7 +120,7 @@ const SignUpFormComponent = ({ setIsUserSignedUp = () => {} }) => {
         ...userProfileDetails,
       })
       if (signUpResponse.success) {
-        setIsUserSignedUp(true)
+        setIsFormComplete(true)
         const signInResponse = await signIn(emailPasswordCredentials)
         if (signInResponse.error) {
           navigate(ROUTES.SIGN_IN)
@@ -142,6 +142,7 @@ const SignUpFormComponent = ({ setIsUserSignedUp = () => {} }) => {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
+                data-testid="sign-up-forename-input"
                 variant="outlined"
                 required
                 fullWidth
@@ -156,6 +157,7 @@ const SignUpFormComponent = ({ setIsUserSignedUp = () => {} }) => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                data-testid="sign-up-surname-input"
                 variant="outlined"
                 required
                 fullWidth
@@ -170,6 +172,7 @@ const SignUpFormComponent = ({ setIsUserSignedUp = () => {} }) => {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                data-testid="sign-up-email-input"
                 variant="outlined"
                 required
                 fullWidth
@@ -184,6 +187,7 @@ const SignUpFormComponent = ({ setIsUserSignedUp = () => {} }) => {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                data-testid="sign-up-password-input"
                 variant="outlined"
                 required
                 fullWidth
@@ -206,12 +210,21 @@ const SignUpFormComponent = ({ setIsUserSignedUp = () => {} }) => {
             </Grid>
             <Grid item xs={12}>
               <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
+                control={
+                  <Checkbox
+                    data-testid="sign-up-tc-check"
+                    value="termsConditions"
+                    color="primary"
+                  />
+                }
                 label={
                   <div>
                     <span>
                       {`${t(`I agree to the`)} `}
-                      <Link href={ROUTES.PRIVACY_POLICY}>
+                      <Link
+                        data-testid="sign-up-tc-link"
+                        href={ROUTES.PRIVACY_POLICY}
+                      >
                         {t("terms and conditions")}
                       </Link>
                     </span>
@@ -221,6 +234,7 @@ const SignUpFormComponent = ({ setIsUserSignedUp = () => {} }) => {
             </Grid>
           </Grid>
           <Button
+            data-testid="sign-up-submit-button"
             type="submit"
             fullWidth
             variant="contained"
@@ -231,7 +245,7 @@ const SignUpFormComponent = ({ setIsUserSignedUp = () => {} }) => {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link data-testid="sign-up-sign-in-link" href="#" variant="body2">
                 <Typography>{t("Already have an account? Sign in")}</Typography>
               </Link>
             </Grid>
@@ -242,7 +256,7 @@ const SignUpFormComponent = ({ setIsUserSignedUp = () => {} }) => {
   )
 }
 SignUpFormComponent.propTypes = {
-  setIsUserSignedUp: PropTypes.func,
+  setIsFormComplete: PropTypes.func,
 }
 
 const SignUpForm = props => {
