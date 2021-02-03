@@ -5,9 +5,9 @@ name: CI Build & Test
 
 on:
   push:
-    branches: [ master, develop ]
+    branches: [ master, develop, revert-to-working-state ]
   pull_request:
-    branches: [ master, develop ]
+    branches: [ master, develop, revert-to-working-state ]
 
 jobs:
   build:
