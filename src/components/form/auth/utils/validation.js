@@ -55,8 +55,8 @@ export function validateFormTextField({
           .replace("{PASSWORD_CHAR_MINIMUM}", PASSWORD_CHAR_MINIMUM),
       }
 
-    // must contain at least one special char
-    const specialCharMatches = value.match(/[^\w]/g)
+    // must contain at least one special char (regex doesn't count _ as non-word char so added specially)
+    const specialCharMatches = value.match(/[^\w]|[_]/g)
     if (specialCharMatches === null)
       return {
         isInvalid: true,
