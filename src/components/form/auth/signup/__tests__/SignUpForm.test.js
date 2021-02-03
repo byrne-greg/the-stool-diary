@@ -236,7 +236,7 @@ describe("SignInForm", () => {
       auth.signUpUser = jest.fn(() => ({ success: true }))
       persistence.persistUserData = jest.fn()
       auth.signInUser = jest.fn(() => ({
-        success: true,
+        success: false,
         error: { code: 101, message: "Mock Error" },
       }))
       auth.getCurrentAuthUser = jest.fn(() => ({
@@ -279,6 +279,51 @@ describe("SignInForm", () => {
 
       // ASSERT
       expect(gatsby.navigate).toHaveBeenCalledWith(ROUTES.SIGN_IN)
+    })
+
+    test(`when an error occurs in sign up, the message is displayed to the user`, async () => {
+      // ARRANGE
+      const mockServerError = { code: 101, message: "Mock Server Error" }
+      auth.signUpUser = jest.fn(() => ({
+        success: false,
+        error: mockServerError,
+      }))
+
+      // ACT
+      const { getByTestId, queryByTestId } = render(<SignUpForm />)
+      await act(async () => {
+        await fireEvent.change(
+          getByTestId("sign-up-forename-input").querySelector("input"),
+          {
+            target: { value: "Johnny" },
+          }
+        )
+        await fireEvent.change(
+          getByTestId("sign-up-surname-input").querySelector("input"),
+          {
+            target: { value: "Test" },
+          }
+        )
+        await fireEvent.change(
+          getByTestId("sign-up-email-input").querySelector("input"),
+          {
+            target: { value: "johnny@test.com" },
+          }
+        )
+        await fireEvent.change(
+          getByTestId("sign-up-password-input").querySelector("input"),
+          {
+            target: { value: "Super_Secret_Password1" },
+          }
+        )
+        const submitButton = getByTestId("sign-up-submit-button")
+        await fireEvent.click(submitButton)
+      })
+      const authDisplayError = queryByTestId("sign-up-auth-error")
+
+      // ASSERT
+      expect(authDisplayError).toBeTruthy()
+      expect(authDisplayError.textContent).toBe(mockServerError.message)
     })
   })
 })

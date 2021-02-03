@@ -123,6 +123,7 @@ const SignUpFormComponent = ({ setIsFormComplete = () => {} }) => {
         setIsFormComplete(true)
         const signInResponse = await signIn(emailPasswordCredentials)
         if (signInResponse.error) {
+          setAuthError({ ...signInResponse.error })
           navigate(ROUTES.SIGN_IN)
         }
       } else {
@@ -200,10 +201,10 @@ const SignUpFormComponent = ({ setIsFormComplete = () => {} }) => {
                 helperText={getPasswordInvalidReason()}
                 onChange={e => setPassword(e.target.value)}
               />
-              {getAuthError().errorCode ? (
-                <div className={classes.alert}>
+              {getAuthError().code ? (
+                <div data-testid="sign-up-auth-error" className={classes.alert}>
                   <Alert variant="outlined" severity="error">
-                    {getAuthError().errorMessage}
+                    {getAuthError().message}
                   </Alert>
                 </div>
               ) : null}
