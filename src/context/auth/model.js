@@ -3,6 +3,10 @@ export const INITIAL_AUTH_STATE = {
   password: { value: null, error: { isInvalid: null, reason: null } },
   forename: { value: null, error: { isInvalid: null, reason: null } },
   surname: { value: null, error: { isInvalid: null, reason: null } },
+  termsAndConditionsAccepted: {
+    value: null,
+    error: { isInvalid: null, reason: null },
+  },
   authError: { displayText: null, code: null, message: null },
 }
 export default INITIAL_AUTH_STATE
