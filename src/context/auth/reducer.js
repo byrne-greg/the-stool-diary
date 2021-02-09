@@ -8,7 +8,6 @@ import {
   UPDATE_SURNAME,
   UPDATE_SURNAME_ERROR,
   UPDATE_TERMSANDCONDITIONS,
-  UPDATE_TERMSANDCONDITIONS_ERROR,
   UPDATE_AUTH_ERROR,
 } from "./actionTypes"
 
@@ -43,18 +42,9 @@ export const authReducer = (state, action) => {
     case UPDATE_TERMSANDCONDITIONS:
       newState = {
         ...state,
-        termsAndConditionsAccepted: {
-          ...state.termsAndConditionsAccepted,
+        isTermsAndConditionsAccepted: {
+          ...state.isTermsAndConditionsAccepted,
           value: newValue,
-        },
-      }
-      break
-    case UPDATE_TERMSANDCONDITIONS_ERROR:
-      newState = {
-        ...state,
-        termsAndConditionsAccepted: {
-          ...state.termsAndConditionsAccepted,
-          error: newValue,
         },
       }
       break

@@ -23,6 +23,7 @@ import {
   updateForenameError,
   updateSurname,
   updateSurnameError,
+  updateTermsAndConditions,
   updateAuthError,
 } from "../../../../context/auth/actions"
 import AuthContextProvider, {
@@ -64,6 +65,9 @@ const SignUpFormComponent = ({ setIsFormComplete = () => {} }) => {
   const setPassword = password => updatePassword(authDispatch, password)
   const setForename = forename => updateForename(authDispatch, forename)
   const setSurname = surname => updateSurname(authDispatch, surname)
+  const setIsAcceptedTermsAndConditions = isAccepted =>
+    updateTermsAndConditions(authDispatch, isAccepted)
+
   const setEmailError = error => updateEmailError(authDispatch, error)
   const setPasswordError = error => updatePasswordError(authDispatch, error)
   const setForenameError = error => updateForenameError(authDispatch, error)
@@ -82,30 +86,45 @@ const SignUpFormComponent = ({ setIsFormComplete = () => {} }) => {
   const getSurname = () => authState.surname.value
   const getIsSurnameInvalid = () => authState.surname.error.isInvalid
   const getSurnameInvalidReason = () => authState.surname.error.reason
+  const getIsAcceptedTermsAndConditions = () =>
+    authState.isTermsAndConditionsAccepted.value
   const getAuthError = () => authState.authError
 
   const handleSubmit = async e => {
     e.preventDefault()
+
     const emailValidation = validateFormTextField({
       value: getEmail(),
       type: VALIDATION_TYPE.EMAIL,
     })
     setEmailError(emailValidation)
+
     const passwordValidation = validateFormTextField({
       value: getPassword(),
       type: VALIDATION_TYPE.PASSWORD,
     })
     setPasswordError(passwordValidation)
+
     const forenameValidation = validateFormTextField({ value: getForename() })
     setForenameError(forenameValidation)
+
     const surnameValidation = validateFormTextField({ value: getSurname() })
     setSurnameError(surnameValidation)
-    const isAllowedToSignUp = !(
-      emailValidation.isInvalid ||
-      passwordValidation.isInvalid ||
-      forenameValidation.isInvalid ||
-      surnameValidation.isInvalid
-    )
+
+    if (!getIsAcceptedTermsAndConditions()) {
+      setAuthError({
+        code: "no-accept-t&c",
+        message: t("You must agree to the terms and conditions"),
+      })
+    }
+
+    const isAllowedToSignUp =
+      !(
+        emailValidation.isInvalid ||
+        passwordValidation.isInvalid ||
+        forenameValidation.isInvalid ||
+        surnameValidation.isInvalid
+      ) && getIsAcceptedTermsAndConditions()
     if (isAllowedToSignUp) {
       const emailPasswordCredentials = {
         email: getEmail(),
@@ -201,13 +220,6 @@ const SignUpFormComponent = ({ setIsFormComplete = () => {} }) => {
                 helperText={getPasswordInvalidReason()}
                 onChange={e => setPassword(e.target.value)}
               />
-              {getAuthError().code ? (
-                <div data-testid="sign-up-auth-error" className={classes.alert}>
-                  <Alert variant="outlined" severity="error">
-                    {getAuthError().message}
-                  </Alert>
-                </div>
-              ) : null}
             </Grid>
             <Grid item xs={12}>
               <FormControlLabel
@@ -216,6 +228,9 @@ const SignUpFormComponent = ({ setIsFormComplete = () => {} }) => {
                     data-testid="sign-up-tc-check"
                     value="termsConditions"
                     color="primary"
+                    onChange={e =>
+                      setIsAcceptedTermsAndConditions(e.target.checked)
+                    }
                   />
                 }
                 label={
@@ -234,6 +249,13 @@ const SignUpFormComponent = ({ setIsFormComplete = () => {} }) => {
               />
             </Grid>
           </Grid>
+          {getAuthError().code ? (
+            <div data-testid="sign-up-auth-error" className={classes.alert}>
+              <Alert variant="outlined" severity="error">
+                {getAuthError().message}
+              </Alert>
+            </div>
+          ) : null}
           <Button
             data-testid="sign-up-submit-button"
             type="submit"

@@ -8,7 +8,6 @@ import {
   UPDATE_PASSWORD_ERROR,
   UPDATE_FORENAME_ERROR,
   UPDATE_SURNAME_ERROR,
-  UPDATE_TERMSANDCONDITIONS_ERROR,
   UPDATE_AUTH_ERROR,
 } from "./actionTypes"
 
@@ -30,8 +29,6 @@ export const updatePasswordError = (dispatch, value) =>
   updateState(dispatch, UPDATE_PASSWORD_ERROR, value)
 export const updateTermsAndConditions = (dispatch, value) =>
   updateState(dispatch, UPDATE_TERMSANDCONDITIONS, value)
-export const updateTermsAndConditionsError = (dispatch, value) =>
-  updateState(dispatch, UPDATE_TERMSANDCONDITIONS_ERROR, value)
 export const updateAuthError = (dispatch, value) =>
   updateState(dispatch, UPDATE_AUTH_ERROR, value)
 
