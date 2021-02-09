@@ -87,13 +87,6 @@ export function validateFormTextField({
         reason: i18n.t("Password does not contain any numeric characters"),
       }
   } else {
-    // // must not contain any special or numeric characters
-    // if (value.match(/[^A-Za-z]/g))
-    //   return {
-    //     isInvalid: true,
-    //     reason: "Must not any special or numeric characters",
-    //   }
-
     // must contain more than the minimum chars allowed
     if (value.length < GENERIC_CHAR_MINIMUM) {
       return {

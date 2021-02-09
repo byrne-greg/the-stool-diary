@@ -6,7 +6,6 @@ import ROUTES from "../../utils/routes"
 export const useAuthUserOnlyRoute = () => {
   const { authUser } = useContext(GlobalStateContext)
   const isAuthenticatedUser = !!authUser
-  console.log("isAuthenticatedUser", isAuthenticatedUser)
 
   useEffect(() => {
     if (!isAuthenticatedUser) {

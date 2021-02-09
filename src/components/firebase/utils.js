@@ -44,8 +44,7 @@ export const signOutUser = async () => {
     .auth()
     .signOut()
     // .then(() => {
-    //   // Sign-out successful.
-    //   console.log("signout successful")
+    // Sign-out successful.
     // })
     .catch(error => {
       // Handle errors here.

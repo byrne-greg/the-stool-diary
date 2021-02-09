@@ -95,9 +95,6 @@ const RecordStoolFormScreens = ({
       ? moveFormScreenForward(formNavDispatch)
       : goToSummaryScreen()
 
-  // console.log(stoolState)
-  // console.log(formNavState)
-
   // load the record stool form screens on render
   useEffect(() => {
     const stoolFormScreens = [
