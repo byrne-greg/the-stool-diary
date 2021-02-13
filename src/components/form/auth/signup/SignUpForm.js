@@ -89,9 +89,16 @@ const SignUpFormComponent = ({ setIsFormComplete = () => {} }) => {
   const getIsAcceptedTermsAndConditions = () =>
     authState.isTermsAndConditionsAccepted.value
   const getAuthError = () => authState.authError
+  const resetAuthError = () =>
+    setAuthError({
+      code: null,
+      message: null,
+      displayText: null,
+    })
 
   const handleSubmit = async e => {
     e.preventDefault()
+    resetAuthError()
 
     const emailValidation = validateFormTextField({
       value: getEmail(),
