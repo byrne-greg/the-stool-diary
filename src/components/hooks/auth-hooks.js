@@ -26,16 +26,20 @@ export const useAuth = () => {
   }
 
   const setSignIn = async ({ email, password }) => {
+    console.log("in setSignIn")
     const response = await signInUser({
       email: email,
       password: password,
     })
+    console.log("setSignIn-response", response)
     if (response.success) {
       const currentUserResponse = await getCurrentAuthUser()
-      if (response.success) {
+      console.log("setSignIn-currentUserResponse", currentUserResponse)
+      if (currentUserResponse.success) {
         const { authUser } = currentUserResponse
         updateAuthUser(globalDispatch, authUser)
         const userRecord = await getUserRecordByEmail(authUser.email)
+        console.log("setSignIn-getUserRecordByEmail", userRecord)
         updateUser(globalDispatch, userRecord)
       }
     }
