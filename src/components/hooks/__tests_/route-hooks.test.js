@@ -47,7 +47,7 @@ const AuthUserHookUnderTest = () => {
   return <div />
 }
 
-describe("Auth User Only Redirect Hook", () => {
+describe("Route Hook - Auth User Only Redirect", () => {
   let hookSpy
   beforeEach(() => {
     hookSpy = jest.spyOn(routeHook, "useAuthUserOnlyRoute")
@@ -118,7 +118,7 @@ const AnonUserHookUnderTest = () => {
   return <div />
 }
 
-describe("Anon User Only Redirect Hook", () => {
+describe("Route Hook - Anon User Only Redirect", () => {
   let hookSpy
   beforeEach(() => {
     hookSpy = jest.spyOn(routeHook, "useAnonymousUserOnlyRoute")
