@@ -58,7 +58,8 @@
     "prettier": "2.0.5",
     "react": "^16.13.1",
     "react-is": "^16.13.1",
-    "react-test-renderer": "^16.13.1"
+    "react-test-renderer": "^16.13.1",
+    "testcafe": "^1.11.0"
   },
   "keywords": [
     "gatsby"
@@ -66,13 +67,16 @@
   "license": "MIT",
   "scripts": {
     "build": "gatsby build",
-    "develop": "npm run build && gatsby develop --port 8998",
+    "develop": "gatsby develop --port 8998",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "start": "npm run develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
-    "test": "jest",
-    "test:watch": "jest --watch",
+    "test": "npm run test:all",
+    "test:all": "npm run test:unit && npm run test:e2e",
+    "test:unit": "jest",
+    "test:unit:watch": "npm run test:unit -- --watch",
+    "test:e2e": "testcafe",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "sb": "NODE_ENV=production start-storybook -p 8997 -s static",

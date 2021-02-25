@@ -30,7 +30,7 @@ const Hero = () => {
   const { t } = useTranslation()
   const classes = useStyles()
   return (
-    <div className={classes.hero}>
+    <div className={classes.hero} data-testid="hero">
       <Typography variant="h1" gutterBottom>
         {t("Welcome to the Stool Diary")}
       </Typography>
@@ -42,7 +42,7 @@ const SubHero = () => {
   const { t } = useTranslation()
   const classes = useStyles()
   return (
-    <div className={classes.subhero}>
+    <div className={classes.subhero} data-testid="subhero">>
       <Typography variant="h2" gutterBottom>
         {t("Tracking your bowel movements for your health")}
       </Typography>

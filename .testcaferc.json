@@ -1,0 +1,6 @@
+{
+  "browsers": ["chrome:headless"],
+  "src": ["tests/e2e/**/*.e2e.test.js"],
+  "appCommand": "npm start",
+  "appInitDelay": 30000
+}
