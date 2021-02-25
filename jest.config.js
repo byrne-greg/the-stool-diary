@@ -10,7 +10,7 @@ module.exports = {
     `node_modules`,
     `\\.cache`,
     `<rootDir>.*/public`,
-    `<rootDir>.*/__tests__/e2e`,
+    `<rootDir>.*/tests/e2e`,
   ],
   transformIgnorePatterns: [`node_modules/(?!(gatsby)/)`],
   globals: {
