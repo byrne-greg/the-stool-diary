@@ -1,12 +1,24 @@
 /* eslint-disable new-cap */
 import { Selector } from "testcafe"
-import { getBaseUrl } from "../TestUtils"
+import PageObject from "./PageObject"
 
 /** Maps with /src/pages/index.js */
 
-export const URL = getBaseUrl()
-
-export const selectors = {
-  title: Selector('*[data-testid="hero"]'),
-  subtitle: Selector('*[data-testid="subhero"]'),
+const selectors = {
+  title: '*[data-testid="hero"]',
+  subtitle: '*[data-testid="subhero"]',
+}
+/**
+ *
+ *
+ * @export
+ * @class HomePage
+ * @extends {PageObject}
+ */
+export default class HomePage extends PageObject {
+  constructor(controller) {
+    super(controller, {
+      verifyExists: selectors,
+    })
+  }
 }
