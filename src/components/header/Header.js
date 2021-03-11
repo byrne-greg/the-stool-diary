@@ -76,9 +76,7 @@ const Header = () => {
               {`${t(`Welcome`)}, ${user.forename} ${user.surname}`}
             </Typography>
           ) : null}
-          <div>
-            <DrawerMenu />
-          </div>
+          <DrawerMenu />
         </div>
       </PageCenter>
     </header>

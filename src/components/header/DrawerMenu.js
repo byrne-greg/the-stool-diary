@@ -48,22 +48,35 @@ const DrawerMenu = () => {
   }
 
   return (
-    <>
-      <IconButton onClick={toggleDrawer} className={classes.menuButton}>
+    <div data-testid="menu">
+      <IconButton
+        onClick={toggleDrawer}
+        className={classes.menuButton}
+        data-testid="menu-open-button"
+      >
         <MenuIcon fontSize="large" />
       </IconButton>
-      <Drawer anchor="right" open={isDrawerOpen} onClose={toggleDrawer}>
-        <IconButton onClick={toggleDrawer}>
+      <Drawer
+        anchor="right"
+        open={isDrawerOpen}
+        onClose={toggleDrawer}
+        data-testid="menu-drawer"
+      >
+        <IconButton onClick={toggleDrawer} data-testid="menu-close-button">
           <CloseIcon fontSize="large" />
         </IconButton>
         <List>
           {menuRoutes.map(item =>
             item.action ? (
-              <ListItem key={item.text} onClick={item.action}>
+              <ListItem
+                key={item.text}
+                onClick={item.action}
+                data-testid={`menu-item-${item.text}`}
+              >
                 <Link to={item.route}>{item.text}</Link>
               </ListItem>
             ) : (
-              <ListItem key={item.text}>
+              <ListItem key={item.text} data-testid={`menu-item-${item.text}`}>
                 <Link to={item.route}>{item.text}</Link>
               </ListItem>
             )
@@ -73,7 +86,7 @@ const DrawerMenu = () => {
           </ListItem>
         </List>
       </Drawer>
-    </>
+    </div>
   )
 }
 export default DrawerMenu
