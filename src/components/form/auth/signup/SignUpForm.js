@@ -162,7 +162,7 @@ const SignUpFormComponent = ({ setIsFormComplete = () => {} }) => {
     <Container component="div" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Typography component="h1" variant="h4">
+        <Typography component="h1" variant="h4" data-testid="sign-up-heading">
           {t("Sign up")}
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>

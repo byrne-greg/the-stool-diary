@@ -1,5 +1,5 @@
 /* eslint-disable new-cap */
-import { Selector } from "testcafe"
+import { ClientFunction, Selector } from "testcafe"
 
 export const E2E_BASE_URL = process.env.E2E_BASE_URL
   ? process.env.E2E_BASE_URL
@@ -39,7 +39,7 @@ function getStringValues(jsonList) {
  */
 export default class PageObject {
   /**
-   * Creates an instance of PageObject.
+   *Creates an instance of PageObject.
    * @param {*} controller
    * @param {*} [{ url = E2E_BASE_URL, verifyExists = {}, clickList = {} }={}]
    * @memberof PageObject
@@ -74,5 +74,6 @@ export default class PageObject {
     this[`gotoUrl`] = async () => {
       await controller.navigateTo(url)
     }
+    this["getCurrentUrl"] = () => ClientFunction(() => window.location.href)
   }
 }

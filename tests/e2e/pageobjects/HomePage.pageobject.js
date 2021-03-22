@@ -1,5 +1,6 @@
 /* eslint-disable new-cap */
 import PageObject from "./PageObject"
+import ROUTES from "../../../src/utils/routes"
 
 /** Maps with /src/pages/index.js */
 
@@ -22,6 +23,7 @@ export default class HomePage extends PageObject {
   constructor(controller) {
     super(controller, {
       verifyExists: selectors,
+      url: `${process.env.E2E_BASE_URL}${ROUTES.HOME}`,
     })
   }
 }

@@ -76,7 +76,7 @@
     "test:all": "npm run test:unit && npm run test:e2e",
     "test:unit": "jest",
     "test:unit:watch": "npm run test:unit -- --watch",
-    "test:e2e": "testcafe",
+    "test:e2e": "E2E_BASE_URL=http://localhost:8998 testcafe",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "sb": "NODE_ENV=production start-storybook -p 8997 -s static",

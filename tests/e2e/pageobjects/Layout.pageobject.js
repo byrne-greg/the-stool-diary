@@ -6,7 +6,7 @@ const menuSelectors = {
   menuHomeLink: '*[data-testid="menu-item-Home"]',
   menuRecordStoolLink: '*[data-testid="menu-item-Record a Stool"]',
   menuMyStoolsLink: '*[data-testid="menu-item-My Stools"]',
-  menuSignUpStoolLink: '*[data-testid="menu-item-Sign Up"]',
+  menuSignUpLink: '*[data-testid="menu-item-Sign Up"]',
   menuSignInLink: '*[data-testid="menu-item-Sign In"]',
 }
 

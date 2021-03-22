@@ -5,7 +5,7 @@ import ROUTES from "../../../src/utils/routes"
 /** Maps with /src/pages/sign-up.js */
 
 const selectors = {
-  title: '*[data-testid="hero"]',
+  title: '*[data-testid="sign-up-heading"]',
   forenameInput: '*[data-testid="sign-up-forename-input"]',
   surnameInput: '*[data-testid="sign-up-surname-input"]',
   emailInput: '*[data-testid="sign-up-email-input"]',
@@ -32,7 +32,7 @@ export default class SignUpPage extends PageObject {
     super(controller, {
       clickList: selectors,
       verifyExists: selectors,
-      url: `${process.env.E2E_BASE_URL}/${ROUTES.SIGN_UP}`,
+      url: `${process.env.E2E_BASE_URL}${ROUTES.SIGN_UP}`,
     })
   }
 }
