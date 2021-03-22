@@ -26,20 +26,23 @@ function getKeysWithUpperFirstChar(jsonList) {
 function getStringValues(jsonList) {
   return Object.keys(jsonList)
     .filter(index => {
-      console.log(typeof jsonList[index])
       return typeof jsonList[index] === "string"
     })
     .map(index => jsonList[index])
 }
 
 /**
- *
+ * Page Object base class
  *
  * @export
  * @class PageObject
  */
 export default class PageObject {
   /**
+   * Creates an instance of PageObject.
+   * @param {*} controller
+   * @param {*} [{ url = E2E_BASE_URL, verifyExists = {}, clickList = {} }={}]
+   * @memberof PageObject
    */
   constructor(
     controller,
