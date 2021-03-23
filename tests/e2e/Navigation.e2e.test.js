@@ -26,5 +26,5 @@ test("traverse from home page to sign in page using menu", async t => {
   await pageLayout.clickMenuSignInLink()
 
   const signInPage = new SignInPage(t)
-  // await signInPage.verifySubmitButtonExists()
+  await signInPage.verifySubmitButtonExists()
 })

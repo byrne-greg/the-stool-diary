@@ -3,11 +3,11 @@ import PageObject from "./PageObject"
 const menuSelectors = {
   menuOpenButton: '*[data-testid="menu-open-button"]',
   menuCloseButton: '*[data-testid="menu-close-button"]',
-  menuHomeLink: '*[data-testid="menu-item-Home"]',
-  menuRecordStoolLink: '*[data-testid="menu-item-Record a Stool"]',
-  menuMyStoolsLink: '*[data-testid="menu-item-My Stools"]',
-  menuSignUpLink: '*[data-testid="menu-item-Sign Up"]',
-  menuSignInLink: '*[data-testid="menu-item-Sign In"]',
+  menuHomeLink: '*[data-testid="menu-item-Home"] > a',
+  menuRecordStoolLink: '*[data-testid="menu-item-Record a Stool"] > a',
+  menuMyStoolsLink: '*[data-testid="menu-item-My Stools"] > a',
+  menuSignUpLink: '*[data-testid="menu-item-Sign Up"] > a',
+  menuSignInLink: '*[data-testid="menu-item-Sign In"] > a',
 }
 
 const selectors = { ...menuSelectors }
