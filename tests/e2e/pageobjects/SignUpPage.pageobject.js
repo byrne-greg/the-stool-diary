@@ -5,7 +5,7 @@ import ROUTES from "../../../src/utils/routes"
 /** Maps with /src/pages/sign-up.js */
 
 const selectors = {
-  title: '*[data-testid="sign-up-heading"]',
+  heading: '*[data-testid="sign-up-heading"]',
   forenameInput: '*[data-testid="sign-up-forename-input"]',
   surnameInput: '*[data-testid="sign-up-surname-input"]',
   emailInput: '*[data-testid="sign-up-email-input"]',
@@ -13,13 +13,13 @@ const selectors = {
   termsCheckbox: '*[data-testid="sign-up-tc-check"]',
   termsLink: '*[data-testid="sign-up-tc-link"]',
   submitButton: '*[data-testid="sign-up-submit-button"]',
-  signInLink: '*[data-testid="sign-up-sign-in-link"]',
+  signInLink: '*[data-testid="sign-up-sign-in-link"] > *',
 }
 
 /**
  * SignUpPage representation
  * @export
- * @class HomePage
+ * @class SignUpPage
  * @extends {PageObject}
  */
 export default class SignUpPage extends PageObject {

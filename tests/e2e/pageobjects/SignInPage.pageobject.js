@@ -5,18 +5,18 @@ import ROUTES from "../../../src/utils/routes"
 /** Maps with /src/pages/sign-up.js */
 
 const selectors = {
-  title: '*[data-testid="sign-in-heading"]',
+  heading: '*[data-testid="sign-in-heading"]',
   emailInput: '*[data-testid="sign-in-email-input"]',
   passwordInput: '*[data-testid="sign-in-password-input"]',
   submitButton: '*[data-testid="sign-in-submit-button"]',
-  forgotPasswordLink: '*[data-testid="sign-in-forgot-password-link"]',
-  signUpLink: '*[data-testid="sign-in-sign-up-link"]',
+  forgotPasswordLink: '*[data-testid="sign-in-forgot-password-link"] > *',
+  signUpLink: '*[data-testid="sign-in-sign-up-link"] > *',
 }
 
 /**
  * SignInPage representation
  * @export
- * @class HomePage
+ * @class SignInPage
  * @extends {PageObject}
  */
 export default class SignInPage extends PageObject {

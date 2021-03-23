@@ -1,5 +1,5 @@
 /* eslint-disable new-cap */
-import { ClientFunction, Selector } from "testcafe"
+import { Selector } from "testcafe"
 
 export const E2E_BASE_URL = process.env.E2E_BASE_URL
   ? process.env.E2E_BASE_URL
@@ -74,6 +74,5 @@ export default class PageObject {
     this[`gotoUrl`] = async () => {
       await controller.navigateTo(url)
     }
-    this["getCurrentUrl"] = () => ClientFunction(() => window.location.href)
   }
 }
