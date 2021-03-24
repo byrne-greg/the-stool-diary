@@ -30,9 +30,9 @@ Non-MVP:
 
 ---
 
-## How the project is structured:
+## Project Structure
 
-Name-conventions:
+Name conventions:
 
 - `__something__`: (Folder) indicates a private folder not used in production (e.g. `__stories__`, `__tests__`)
 
@@ -50,6 +50,29 @@ Directory conventions:
 - `src/locales`: a generated folder of merged translations
 - `src/pages`: a folder for the page components (defines the routes of the web app)
 - `src/utils`: a folder for utility functions and web-app-used resources
+
+## Testing
+
+### Unit Tests
+
+StoolDiaryWeb uses `jest` and `react-testing-library` for unit testing the React components and agnostic/utility functions.
+
+Test files are co-located next to the file/component under test in a directory named `__tests__` and are appended with ".test." in the filename e.g.
+- (source) `src/components/form/stool/RecordStoolForm.js`
+- (test) `src/components/form/stool/__tests__/RecordStoolForm.test.js`
+
+Individual test names should apply the `when..., then...`; e.g.
+```javascript
+test(`when the add time toggle is turned on, then the time picker is displayed`,
+```
+
+### E2E Tests
+
+StoolDiaryWeb uses `testcafe` for end-to-end testing (i.e. user simulation testing).
+
+End-to-end (E2E) tests are located in `tests/e2e` directory.
+
+StoolDiaryWeb uses the Page Object Model for E2E testing, in that every page of the application (with exception to page layout) is a Page Object. Given a list of selectors for that page (`data-testid`), the parent `PageObject.js` class will generate clickable and verifiable functions against those selectors.
 
 ## Languages
 
@@ -73,7 +96,7 @@ During the build process, all translation files are gathered and merged into a s
 
 The build process that gathers and merges these translation files is defined in `gatsby-node.js`
 
-### How we change the App language
+### How the App changes language
 
 StoolDiaryWeb uses a global React context object to store the web app state including the displayed language. Using the `LanguageSelector` component, it uses the `GlobalContextProvider` (specifically it's State and Dispatch contexts) to update the language currently in use. When this change is made by the selector component, two changes are performed:
 
