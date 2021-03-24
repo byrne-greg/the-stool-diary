@@ -2,7 +2,7 @@
 import PageObject from "./PageObject"
 import ROUTES from "../../../src/utils/routes"
 
-/** Maps with /src/pages/sign-up.js */
+/** Maps with /src/pages/forgot-password.js */
 
 const selectors = {
   heading: '*[data-testid="forgot-password-heading"]',
