@@ -57,7 +57,7 @@ Directory conventions:
 
 StoolDiaryWeb uses `jest` and `react-testing-library` for unit testing the React components and agnostic/utility functions.
 
-Test files are co-located next to the file/component under test in a directory named `__tests__` and are appended with ".test." in the filename e.g.
+Test files are co-located next to the file/component under test in a directory named `__tests__` and are appended with _".test."_ in the filename e.g.
 - (source) `src/components/form/stool/RecordStoolForm.js`
 - (test) `src/components/form/stool/__tests__/RecordStoolForm.test.js`
 
@@ -68,11 +68,11 @@ test(`when the add time toggle is turned on, then the time picker is displayed`,
 
 ### E2E Tests
 
-StoolDiaryWeb uses `testcafe` for end-to-end testing (i.e. user simulation testing).
+StoolDiaryWeb uses `testcafe` for end-to-end testing (i.e. user simulation testing). Testcafe is configured for the project using `.testcaferc.json` file.
 
-End-to-end (E2E) tests are located in `tests/e2e` directory.
+End-to-end (E2E) tests are located in `tests/e2e` directory. Each E2E test file is appended _".e2e.test."_; e.g. `Navigation.e2e.test.js`.
 
-StoolDiaryWeb uses the Page Object Model for E2E testing, in that every page of the application (with exception to page layout) is a Page Object. Given a list of selectors for that page (`data-testid`), the parent `PageObject.js` class will generate clickable and verifiable functions against those selectors.
+StoolDiaryWeb uses the Page Object Model for E2E testing; every page of the application (with exception to page layout) is a page object located in the `tests/e2e/pageobjects` directory. Each page object is a file appended with _".pageobject."_ , e.g. `HomePage.pageobject.js`, and contains a list of document selectors for that page (preferably `data-testid`). Each page object is a class representing an application page and inherits from the parent `PageObject.js` class which will generate clickable and verifiable testcafe functions based on those selectors defined in the child class.
 
 ## Languages
 
