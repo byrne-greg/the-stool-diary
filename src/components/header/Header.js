@@ -24,16 +24,16 @@ const useStyles = makeStyles({
     display: "flex",
     alignItems: "center",
   },
-  titleimg: {
+  titleImg: {
     width: "15rem",
   },
-  titletext: {
+  titleText: {
     paddingLeft: "0.66rem",
     color: COLORS.PURPLE,
     fontSize: "1.6rem",
     fontWeight: "bold",
   },
-  titlelink: {
+  titleLink: {
     textDecoration: "none",
   },
   menuButton: {
@@ -45,15 +45,15 @@ const useStyles = makeStyles({
 })
 
 const Header = () => {
-  const data = useStaticQuery(graphql`
-    query SiteTitleQuery {
-      site {
-        siteMetadata {
-          title
-        }
-      }
-    }
-  `)
+  // const data = useStaticQuery(graphql`
+  //   query SiteTitleQuery {
+  //     site {
+  //       siteMetadata {
+  //         title
+  //       }
+  //     }
+  //   }
+  // `)
   // const siteTitle = t(data.site.siteMetadata.title)
 
   const classes = useStyles()
@@ -64,9 +64,13 @@ const Header = () => {
     <header className={classes.banner}>
       <PageCenter>
         <div className={classes.container}>
-          <Link to={ROUTES.HOME} className={classes.titlelink}>
+          <Link
+            to={ROUTES.HOME}
+            className={classes.titleLink}
+            data-testid="header-img-link"
+          >
             <div className={classes.title}>
-              <div className={classes.titleimg}>
+              <div className={classes.titleImg}>
                 <StoolDiaryLogo />
               </div>
             </div>
