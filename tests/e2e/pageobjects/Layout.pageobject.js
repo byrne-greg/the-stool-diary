@@ -10,7 +10,11 @@ const menuSelectors = {
   menuSignInLink: '*[data-testid="menu-item-Sign In"] > a',
 }
 
-const selectors = { ...menuSelectors }
+const headerSelectors = {
+  headerImgLink: '*[data-testid="header-img-link"]',
+}
+
+const selectors = { ...menuSelectors, ...headerSelectors }
 /**
  * Page Layout representation
  *

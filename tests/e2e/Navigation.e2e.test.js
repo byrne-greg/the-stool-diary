@@ -4,7 +4,6 @@ import {
   SignUpPage,
   SignInPage,
   ForgotPasswordPage,
-  MyStoolsPage,
 } from "./pageobjects"
 import { getRelativeUrl } from "./TestUtils"
 import ROUTES from "../../src/utils/routes"
@@ -96,4 +95,25 @@ test("when traversing unauthenticated from home page to my stools page using men
   await pageLayout.clickMenuMyStoolsLink()
 
   await t.expect(await getRelativeUrl()).contains(ROUTES.SIGN_IN)
+})
+
+test("when traversing from home page to record stool page using menu, then reach page", async t => {
+  const homePage = new HomePage(t)
+  await homePage.gotoUrl()
+
+  const pageLayout = new PageLayout(t)
+  await pageLayout.clickMenuOpenButton()
+  await pageLayout.clickMenuRecordStoolLink()
+
+  await t.expect(await getRelativeUrl()).contains(ROUTES.RECORD_STOOL)
+})
+
+test("when the header image link is pressed, then navigated to home page", async t => {
+  const signUpPage = new SignUpPage(t)
+  await signUpPage.gotoUrl()
+
+  const pageLayout = new PageLayout(t)
+  await pageLayout.clickHeaderImgLink()
+
+  await t.expect(await getRelativeUrl()).contains(ROUTES.HOME)
 })
