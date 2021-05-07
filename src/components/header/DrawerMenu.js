@@ -6,6 +6,7 @@ import Drawer from "@material-ui/core/Drawer"
 import IconButton from "@material-ui/core/IconButton"
 import MenuIcon from "@material-ui/icons/Menu"
 import CloseIcon from "@material-ui/icons/Close"
+import Typography from "@material-ui/core/Typography"
 import { List, ListItem } from "@material-ui/core"
 import COLORS from "../../utils/colors"
 import ROUTES from "../../utils/routes"
@@ -13,11 +14,31 @@ import { LanguageSelector } from "../i18n"
 import { GlobalStateContext } from "../../context/global/GlobalContextProvider"
 import { useAuth } from "../hooks"
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   menuButton: {
     color: COLORS.PURPLE,
   },
-})
+  paper: {
+    [theme.breakpoints.down("sm")]: {
+      width: "75vw",
+    },
+    [theme.breakpoints.up("sm")]: {
+      width: "30vw",
+    },
+  },
+  listItem: {
+    justifyContent: "center",
+    paddingTop: 16,
+    paddingBottom: 16,
+  },
+  menuItemLink: {
+    textDecoration: "none",
+    color: "inherit",
+  },
+  languageSelector: {
+    width: "100%",
+  },
+}))
 
 const DrawerMenu = () => {
   const classes = useStyles()
@@ -61,6 +82,7 @@ const DrawerMenu = () => {
         open={isDrawerOpen}
         onClose={toggleDrawer}
         data-testid="menu-drawer"
+        classes={{ paper: classes.paper }}
       >
         <IconButton onClick={toggleDrawer} data-testid="menu-close-button">
           <CloseIcon fontSize="large" />
@@ -72,18 +94,31 @@ const DrawerMenu = () => {
                 key={item.text}
                 onClick={item.action}
                 data-testid={`menu-item-${item.text}`}
+                className={classes.listItem}
               >
-                <Link to={item.route}>{item.text}</Link>
+                <Link className={classes.menuItemLink} to={item.route}>
+                  {item.text}
+                </Link>
               </ListItem>
             ) : (
-              <ListItem key={item.text} data-testid={`menu-item-${item.text}`}>
-                <Link to={item.route}>{item.text}</Link>
+              <ListItem
+                key={item.text}
+                data-testid={`menu-item-${item.text}`}
+                className={classes.listItem}
+              >
+                <Link className={classes.menuItemLink} to={item.route}>
+                  <Typography gutterBottom component="p" variant="h4">
+                    {item.text}
+                  </Typography>
+                </Link>
               </ListItem>
             )
           )}
-          <ListItem>
-            <LanguageSelector />
-          </ListItem>
+          {process.env.FEATURE_TOGGLE_LOCALIZATION ? (
+            <ListItem className={classes.listItem}>
+              <LanguageSelector />
+            </ListItem>
+          ) : null}
         </List>
       </Drawer>
     </div>
