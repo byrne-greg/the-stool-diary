@@ -44,7 +44,7 @@ const DrawerMenu = () => {
   const classes = useStyles()
 
   const { signOut } = useAuth()
-  const { user } = useContext(GlobalStateContext)
+  const { authUser } = useContext(GlobalStateContext)
 
   const [isDrawerOpen, setDrawerState] = useState(false)
   const toggleDrawer = () => setDrawerState(!isDrawerOpen)
@@ -56,11 +56,11 @@ const DrawerMenu = () => {
     { text: t("My Stools"), route: ROUTES.DASHBOARD },
   ]
 
-  if (!user) {
+  if (!authUser) {
     menuRoutes.push({ text: t("Sign Up"), route: ROUTES.SIGN_UP })
     menuRoutes.push({ text: t("Sign In"), route: ROUTES.SIGN_IN })
   }
-  if (user) {
+  if (authUser) {
     menuRoutes.push({
       text: t("Sign Out"),
       route: ROUTES.HOME,
