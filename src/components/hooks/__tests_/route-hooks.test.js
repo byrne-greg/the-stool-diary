@@ -8,6 +8,11 @@ import { GlobalDispatchContext } from "../../../context/global/GlobalContextProv
 import * as routeHook from "../route-hooks"
 import ROUTES from "../../../utils/routes"
 
+// import firebase from "gatsby-plugin-firebase" causes error
+jest.mock("../../firebase/auth")
+jest.mock("../../firebase/utils")
+jest.mock("../../firebase/firebase")
+
 // mocks the gatsby api
 jest.mock("gatsby", () => {
   const gatsby = jest.requireActual("gatsby")

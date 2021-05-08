@@ -10,6 +10,7 @@ import * as authHook from "../auth-hooks"
 // import firebase from "gatsby-plugin-firebase" causes error
 jest.mock("../../firebase/auth")
 jest.mock("../../firebase/utils")
+jest.mock("../../firebase/firebase")
 
 const SIGN_IN = "SIGN_IN"
 const SIGN_OUT = "SIGN_OUT"
