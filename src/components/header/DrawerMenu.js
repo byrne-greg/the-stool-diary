@@ -97,7 +97,9 @@ const DrawerMenu = () => {
                 className={classes.listItem}
               >
                 <Link className={classes.menuItemLink} to={item.route}>
-                  {item.text}
+                  <Typography gutterBottom component="p" variant="h4">
+                    {item.text}
+                  </Typography>
                 </Link>
               </ListItem>
             ) : (
