@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react"
+import React, { useEffect, useCallback, useContext, useState } from "react"
 import PropTypes from "prop-types"
 import { useTranslation } from "react-i18next"
 import { useTheme } from "@material-ui/core"
@@ -32,6 +32,7 @@ import {
   loadFormScreens,
   updateFormHasReachedSummary,
 } from "../../../context/form/actions"
+import { GlobalStateContext } from "../../../context/global/GlobalContextProvider"
 
 const RecordStoolForm = ({
   persistStoolDataFn = () => {},
@@ -86,14 +87,21 @@ const RecordStoolFormScreens = ({
   const stoolDispatch = useContext(RecordStoolDispatchContext)
   const formNavState = useContext(FormNavigationStateContext)
   const formNavDispatch = useContext(FormNavigationDispatchContext)
+  const { user } = useContext(GlobalStateContext)
   const getCurrentScreen = () =>
     formNavState.screens[formNavState.currentScreen]
-  const goToSummaryScreen = () =>
-    updateFormCurrentScreen(formNavDispatch, formNavState.screens.length - 1)
-  const goToNextOrSummaryScreen = () =>
-    !formNavState.hasReachedSummary
-      ? moveFormScreenForward(formNavDispatch)
-      : goToSummaryScreen()
+  const goToSummaryScreen = useCallback(
+    () =>
+      updateFormCurrentScreen(formNavDispatch, formNavState.screens.length - 1),
+    [formNavDispatch, formNavState.screens.length]
+  )
+  const goToNextOrSummaryScreen = useCallback(
+    () =>
+      !formNavState.hasReachedSummary
+        ? moveFormScreenForward(formNavDispatch)
+        : goToSummaryScreen(),
+    [formNavDispatch, formNavState.hasReachedSummary, goToSummaryScreen]
+  )
 
   // load the record stool form screens on render
   useEffect(() => {
@@ -102,7 +110,7 @@ const RecordStoolFormScreens = ({
         key="stool-type-capture"
         persistType={stoolType => {
           updateStoolType(stoolDispatch, stoolType)
-          goToNextOrSummaryScreen(formNavState)
+          goToNextOrSummaryScreen()
         }}
       />,
       <StoolSizeCapture
@@ -128,7 +136,7 @@ const RecordStoolFormScreens = ({
         }
         formNavButtons={
           <FormNavigationButtons
-            handleNavForward={() => goToNextOrSummaryScreen(formNavState)}
+            handleNavForward={() => goToNextOrSummaryScreen()}
             handleNavBackward={() => moveFormScreenBackward(formNavDispatch)}
           />
         }
@@ -155,7 +163,13 @@ const RecordStoolFormScreens = ({
               <PrimaryActionButton
                 color={theme.palette.success}
                 onClick={() => {
-                  persistStoolData(stoolState)
+                  if (user) {
+                    const stoolStateWithUserId = {
+                      ...stoolState,
+                      userId: user.id,
+                    }
+                    persistStoolData(stoolStateWithUserId)
+                  }
                   setFinished()
                 }}
                 data-testid={"formnavigationbuttons-button-save"}
@@ -169,7 +183,19 @@ const RecordStoolFormScreens = ({
       />,
     ]
     loadFormScreens(formNavDispatch, stoolFormScreens)
-  }, [stoolState])
+  }, [
+    formNavDispatch,
+    formNavState.hasReachedSummary,
+    goToNextOrSummaryScreen,
+    goToSummaryScreen,
+    persistStoolData,
+    setFinished,
+    stoolDispatch,
+    stoolState,
+    t,
+    theme.palette.success,
+    user,
+  ])
 
   return (
     <div>
