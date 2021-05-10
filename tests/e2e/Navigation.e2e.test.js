@@ -51,7 +51,7 @@ test("when traversing from sign up page to sign in page using sign in link, then
   await signUpPage.gotoUrl()
   await signUpPage.clickSignInLink()
 
-  await t.expect(await getRelativeUrl()).contains(ROUTES.SIGN_UP)
+  await t.expect(await getRelativeUrl()).contains(ROUTES.SIGN_IN)
 })
 
 test("when traversing from sign in page to forgot password page using forgot password link, then reach page", async t => {
