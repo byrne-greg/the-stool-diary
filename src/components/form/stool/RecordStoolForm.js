@@ -183,6 +183,7 @@ const RecordStoolFormScreens = ({
       />,
     ]
     loadFormScreens(formNavDispatch, stoolFormScreens)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     formNavDispatch,
     formNavState.hasReachedSummary,
@@ -192,7 +193,7 @@ const RecordStoolFormScreens = ({
     setFinished,
     stoolDispatch,
     stoolState,
-    t,
+    // t,
     theme.palette.success,
     user,
   ])

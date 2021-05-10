@@ -3,6 +3,28 @@ import { render, fireEvent } from "@testing-library/react"
 import { STOOL_SIZES } from "../../../../context/stool/model"
 import stoolClassifications from "../../../../utils/stool-classifications"
 import RecordStoolForm from "../RecordStoolForm"
+import {
+  GlobalStateContext,
+  GlobalDispatchContext,
+} from "../../../../context/global/GlobalContextProvider"
+
+// import firebase from "gatsby-plugin-firebase" causes error
+jest.mock("../../../firebase/auth")
+jest.mock("../../../firebase/utils")
+jest.mock("../../../firebase/firebase")
+
+// mocks the outbound backend connector used in validation.js
+jest.mock("../../../i18n/i18n")
+
+const RecordStoolFormTestComponent = props => {
+  return (
+    <GlobalStateContext.Provider value={{ user: { id: 12345 } }}>
+      <GlobalDispatchContext.Provider value={() => {}}>
+        <RecordStoolForm {...props} />
+      </GlobalDispatchContext.Provider>
+    </GlobalStateContext.Provider>
+  )
+}
 
 describe("RecordStoolForm", () => {
   describe("Functional", () => {
@@ -14,7 +36,7 @@ describe("RecordStoolForm", () => {
 
       // ACT
       const { getByTestId, queryByTestId } = render(
-        <RecordStoolForm persistStoolDataFn={persistStoolStubFn} />
+        <RecordStoolFormTestComponent persistStoolDataFn={persistStoolStubFn} />
       )
 
       // select the stool type because we don't have a next button on the type capture screen
@@ -44,7 +66,7 @@ describe("RecordStoolForm", () => {
 
       // ACT
       const { getByTestId, queryByTestId } = render(
-        <RecordStoolForm persistStoolDataFn={persistStoolStubFn} />
+        <RecordStoolFormTestComponent persistStoolDataFn={persistStoolStubFn} />
       )
 
       // select the stool type because we don't have a next button on the type capture screen
@@ -80,7 +102,7 @@ describe("RecordStoolForm", () => {
 
       // ACT
       const { getByTestId, queryByTestId } = render(
-        <RecordStoolForm persistStoolDataFn={persistStoolStubFn} />
+        <RecordStoolFormTestComponent persistStoolDataFn={persistStoolStubFn} />
       )
 
       // select the stool type because we don't have a next button on the type capture screen
@@ -119,7 +141,7 @@ describe("RecordStoolForm", () => {
 
       // ACT
       const { getByTestId, queryByTestId } = render(
-        <RecordStoolForm persistStoolDataFn={persistStoolStubFn} />
+        <RecordStoolFormTestComponent persistStoolDataFn={persistStoolStubFn} />
       )
 
       // select the stool type because we don't have a next button on the type capture screen
@@ -157,7 +179,7 @@ describe("RecordStoolForm", () => {
 
       // ACT
       const { getByTestId, queryByTestId } = render(
-        <RecordStoolForm persistStoolDataFn={persistStoolStubFn} />
+        <RecordStoolFormTestComponent persistStoolDataFn={persistStoolStubFn} />
       )
 
       // select the stool type because we don't have a next button on the type capture screen
@@ -193,7 +215,7 @@ describe("RecordStoolForm", () => {
 
       // ACT
       const { getByTestId, queryByTestId } = render(
-        <RecordStoolForm persistStoolDataFn={persistStoolStubFn} />
+        <RecordStoolFormTestComponent persistStoolDataFn={persistStoolStubFn} />
       )
 
       // select the stool type because we don't have a next button on the type capture screen
@@ -222,7 +244,7 @@ describe("RecordStoolForm", () => {
 
       // ACT
       const { getByTestId, queryByTestId } = render(
-        <RecordStoolForm persistStoolDataFn={persistStoolStubFn} />
+        <RecordStoolFormTestComponent persistStoolDataFn={persistStoolStubFn} />
       )
 
       // select the stool type because we don't have a next button on the type capture screen
