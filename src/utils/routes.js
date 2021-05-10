@@ -2,7 +2,7 @@ const HOME = { HOME: "/" }
 const AUTH = {
   SIGN_IN: "/test-signin",
   SIGN_UP: "/signup",
-  FORGOT_PASSWORD: "/test-forgotpassword",
+  FORGOT_PASSWORD: "/forgotpassword",
   PRIVACY_POLICY: "/test-privacypolicy",
 }
 const RECORD_STOOL = { RECORD_STOOL: "/test-record-stool" }
