@@ -1,7 +1,7 @@
 const HOME = { HOME: "/" }
 const AUTH = {
   SIGN_IN: "/test-signin",
-  SIGN_UP: "/test-signup",
+  SIGN_UP: "/signup",
   FORGOT_PASSWORD: "/test-forgotpassword",
   PRIVACY_POLICY: "/test-privacypolicy",
 }
