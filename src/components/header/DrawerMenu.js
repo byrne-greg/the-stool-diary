@@ -22,7 +22,13 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down("sm")]: {
       width: "75vw",
     },
-    [theme.breakpoints.up("sm")]: {
+    [theme.breakpoints.between("sm", "md")]: {
+      width: "60vw",
+    },
+    [theme.breakpoints.between("md", "lg")]: {
+      width: "45vw",
+    },
+    [theme.breakpoints.up("lg")]: {
       width: "30vw",
     },
   },
