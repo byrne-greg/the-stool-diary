@@ -308,7 +308,11 @@ const SignUpFormComponent = ({ setIsFormComplete = () => {} }) => {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link data-testid="sign-up-sign-in-link" href="#" variant="body2">
+              <Link
+                data-testid="sign-up-sign-in-link"
+                href={ROUTES.SIGN_IN}
+                variant="body2"
+              >
                 <Typography>{t("Already have an account? Sign in")}</Typography>
               </Link>
             </Grid>
