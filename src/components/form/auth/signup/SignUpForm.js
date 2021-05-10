@@ -1,17 +1,21 @@
-import React, { useContext } from "react"
+import React, { useContext, useState } from "react"
 import { navigate } from "gatsby"
 import PropTypes from "prop-types"
 import { useTranslation } from "react-i18next"
-import Button from "@material-ui/core/Button"
-import CssBaseline from "@material-ui/core/CssBaseline"
-import TextField from "@material-ui/core/TextField"
-import FormControlLabel from "@material-ui/core/FormControlLabel"
-import Checkbox from "@material-ui/core/Checkbox"
-import Link from "@material-ui/core/Link"
-import Grid from "@material-ui/core/Grid"
-import Typography from "@material-ui/core/Typography"
+import {
+  IconButton,
+  Button,
+  CssBaseline,
+  TextField,
+  FormControlLabel,
+  Checkbox,
+  Link,
+  Grid,
+  Typography,
+  Container,
+} from "@material-ui/core"
+import { Visibility, VisibilityOff } from "@material-ui/icons"
 import { makeStyles } from "@material-ui/core/styles"
-import Container from "@material-ui/core/Container"
 import Alert from "@material-ui/lab/Alert"
 import { validateFormTextField, VALIDATION_TYPE } from "../utils/validation"
 import {
@@ -51,6 +55,17 @@ const useStyles = makeStyles(theme => ({
     paddingTop: "0.5rem",
     paddingBottom: "0.5rem",
   },
+  passwordVisibilityToggle: {
+    display: "flex",
+    alignContent: "center",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    flexWrap: "wrap,",
+  },
+  passwordVisibilityTogglePart: {
+    paddingLeft: 12,
+    paddingRight: 12,
+  },
 }))
 
 const SignUpFormComponent = ({ setIsFormComplete = () => {} }) => {
@@ -60,6 +75,8 @@ const SignUpFormComponent = ({ setIsFormComplete = () => {} }) => {
   const authState = useContext(AuthStateContext)
   const authDispatch = useContext(AuthDispatchContext)
   const { signIn, signUp } = useAuth()
+
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false)
 
   const setEmail = email => updateEmail(authDispatch, email)
   const setPassword = password => updatePassword(authDispatch, password)
@@ -213,6 +230,22 @@ const SignUpFormComponent = ({ setIsFormComplete = () => {} }) => {
               />
             </Grid>
             <Grid item xs={12}>
+              <div className={classes.passwordVisibilityToggle}>
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+                  onMouseDown={e => e.preventDefault()}
+                  edge="end"
+                  className={classes.passwordVisibilityTogglePart}
+                >
+                  {isPasswordVisible ? <Visibility /> : <VisibilityOff />}
+                  <Typography className={classes.passwordVisibilityTogglePart}>
+                    {`${isPasswordVisible ? t("Hide") : t("Show")} ${t(
+                      "password"
+                    )}`}
+                  </Typography>
+                </IconButton>
+              </div>
               <TextField
                 data-testid="sign-up-password-input"
                 variant="outlined"
@@ -220,7 +253,7 @@ const SignUpFormComponent = ({ setIsFormComplete = () => {} }) => {
                 fullWidth
                 name="password"
                 label={t("Password")}
-                type="password"
+                type={isPasswordVisible ? "text" : "password"}
                 id="password"
                 autoComplete="current-password"
                 error={getIsPasswordInvalid()}
