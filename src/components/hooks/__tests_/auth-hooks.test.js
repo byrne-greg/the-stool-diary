@@ -72,7 +72,7 @@ describe("Auth Hook", () => {
       firebaseAuth.getCurrentAuthUser = jest.fn(() =>
         Promise.resolve({ success: true, ...mockAuthUser })
       )
-      authContextPersistence.getUserRecordByEmail = jest.fn(() =>
+      authContextPersistence.getUserRecord = jest.fn(() =>
         Promise.resolve({ ...mockUser })
       )
       globalContextActions.updateUser = jest.fn()
@@ -90,7 +90,7 @@ describe("Auth Hook", () => {
         password: MOCK_PASSWORD,
       })
       expect(firebaseAuth.getCurrentAuthUser).toHaveBeenCalled()
-      expect(authContextPersistence.getUserRecordByEmail).toHaveBeenCalledWith(
+      expect(authContextPersistence.getUserRecord).toHaveBeenCalledWith(
         MOCK_EMAIL
       )
       expect(globalContextActions.updateAuthUser).toHaveBeenCalledWith(
@@ -109,7 +109,7 @@ describe("Auth Hook", () => {
         Promise.resolve({ success: false })
       )
       firebaseAuth.getCurrentAuthUser = jest.fn()
-      authContextPersistence.getUserRecordByEmail = jest.fn()
+      authContextPersistence.getUserRecord = jest.fn()
       globalContextActions.updateUser = jest.fn()
       globalContextActions.updateAuthUser = jest.fn()
 
@@ -125,7 +125,7 @@ describe("Auth Hook", () => {
         password: MOCK_PASSWORD,
       })
       expect(firebaseAuth.getCurrentAuthUser).not.toHaveBeenCalled()
-      expect(authContextPersistence.getUserRecordByEmail).not.toHaveBeenCalled()
+      expect(authContextPersistence.getUserRecord).not.toHaveBeenCalled()
       expect(globalContextActions.updateAuthUser).not.toHaveBeenCalled()
       expect(globalContextActions.updateUser).not.toHaveBeenCalled()
     })
@@ -138,7 +138,7 @@ describe("Auth Hook", () => {
       firebaseAuth.getCurrentAuthUser = jest.fn(() =>
         Promise.resolve({ success: false })
       )
-      authContextPersistence.getUserRecordByEmail = jest.fn()
+      authContextPersistence.getUserRecord = jest.fn()
       globalContextActions.updateUser = jest.fn()
       globalContextActions.updateAuthUser = jest.fn()
 
@@ -154,7 +154,7 @@ describe("Auth Hook", () => {
         password: MOCK_PASSWORD,
       })
       expect(firebaseAuth.getCurrentAuthUser).toHaveBeenCalled()
-      expect(authContextPersistence.getUserRecordByEmail).not.toHaveBeenCalled()
+      expect(authContextPersistence.getUserRecord).not.toHaveBeenCalled()
       expect(globalContextActions.updateAuthUser).not.toHaveBeenCalled()
       expect(globalContextActions.updateUser).not.toHaveBeenCalled()
     })

@@ -87,7 +87,7 @@ const RecordStoolFormScreens = ({
   const stoolDispatch = useContext(RecordStoolDispatchContext)
   const formNavState = useContext(FormNavigationStateContext)
   const formNavDispatch = useContext(FormNavigationDispatchContext)
-  const { user } = useContext(GlobalStateContext)
+  const { authUser } = useContext(GlobalStateContext)
   const getCurrentScreen = () =>
     formNavState.screens[formNavState.currentScreen]
   const goToSummaryScreen = useCallback(
@@ -163,10 +163,10 @@ const RecordStoolFormScreens = ({
               <PrimaryActionButton
                 color={theme.palette.success}
                 onClick={() => {
-                  if (user) {
+                  if (authUser) {
                     const stoolStateWithUserId = {
                       ...stoolState,
-                      userId: user.id,
+                      uid: authUser.uid,
                     }
                     persistStoolData(stoolStateWithUserId)
                   }
@@ -195,7 +195,7 @@ const RecordStoolFormScreens = ({
     stoolState,
     // t,
     theme.palette.success,
-    user,
+    authUser,
   ])
 
   return (

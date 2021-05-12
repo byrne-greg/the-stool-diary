@@ -9,8 +9,8 @@ import {
 import { GlobalStateContext } from "../../context/global/GlobalContextProvider"
 
 const ListStoolRecordsScreen = () => {
-  const { user } = useContext(GlobalStateContext)
-  const [stoolRecords] = useStoolRecordsForPerson(user.id)
+  const { authUser } = useContext(GlobalStateContext)
+  const [stoolRecords] = useStoolRecordsForPerson(authUser.uid)
 
   const { t } = useTranslation()
 

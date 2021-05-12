@@ -36,6 +36,8 @@ import AuthContextProvider, {
 } from "../../../../context/auth/AuthContextProvider"
 import ROUTES from "../../../../utils/routes"
 import { useAuth } from "../../../hooks"
+import { GlobalDispatchContext } from "../../../../context/global/GlobalContextProvider"
+import { updateUser } from "../../../../context/global/actions"
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -72,9 +74,10 @@ const SignUpFormComponent = ({ setIsFormComplete = () => {} }) => {
   const { t } = useTranslation()
   const classes = useStyles()
 
+  const globalDispatch = useContext(GlobalDispatchContext)
   const authState = useContext(AuthStateContext)
   const authDispatch = useContext(AuthDispatchContext)
-  const { signIn, signUp } = useAuth()
+  const { signUp } = useAuth()
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)
 
@@ -163,12 +166,13 @@ const SignUpFormComponent = ({ setIsFormComplete = () => {} }) => {
         ...userProfileDetails,
       })
       if (signUpResponse.success) {
+        updateUser(globalDispatch, {
+          email: emailPasswordCredentials.email,
+          ...userProfileDetails,
+          uid: signUpResponse.data.uid,
+        })
         setIsFormComplete(true)
-        const signInResponse = await signIn(emailPasswordCredentials)
-        if (signInResponse.error) {
-          setAuthError({ ...signInResponse.error })
-          navigate(ROUTES.SIGN_IN)
-        }
+        navigate(ROUTES.HOME)
       } else {
         setAuthError({ ...signUpResponse.error })
       }

@@ -8,10 +8,7 @@ import {
 } from "../firebase/auth"
 import { updateAuthUser, updateUser } from "../../context/global/actions"
 import { GlobalDispatchContext } from "../../context/global/GlobalContextProvider"
-import {
-  getUserRecordByEmail,
-  persistUserData,
-} from "../../context/auth/persistence"
+import { getUserRecord, persistUserData } from "../../context/auth/persistence"
 
 export const useAuth = () => {
   const globalDispatch = useContext(GlobalDispatchContext)
@@ -35,7 +32,8 @@ export const useAuth = () => {
       if (currentUserResponse.success) {
         const { authUser } = currentUserResponse
         updateAuthUser(globalDispatch, authUser)
-        const userRecord = await getUserRecordByEmail(authUser.email)
+        console.log("setSignIn - authUser", authUser)
+        const userRecord = await getUserRecord(authUser.uid)
         updateUser(globalDispatch, userRecord)
       }
     }
@@ -47,8 +45,13 @@ export const useAuth = () => {
       email: email,
       password: password,
     })
-    if (response.success) {
-      await persistUserData({ email, ...userDetails })
+    const userRecord = {
+      email,
+      ...userDetails,
+      uid: response.data.userId,
+    }
+    if (response.success && response.data.userId) {
+      await persistUserData(userRecord)
     }
     return response
   }

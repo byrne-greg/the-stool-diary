@@ -16,6 +16,7 @@ export async function signUpUser(credentials) {
   const response = {
     error: null,
     success: false,
+    data: {},
   }
 
   if (typeof credentials === "object") {
@@ -23,8 +24,9 @@ export async function signUpUser(credentials) {
     if (email && password) {
       await firebaseAuth
         .createUserWithEmailAndPassword(email, password)
-        .then(() => {
+        .then(firebaseResponse => {
           response.success = true
+          response.data.userId = firebaseResponse.user.uid
         })
         .catch(error => {
           response.error = { ...error }

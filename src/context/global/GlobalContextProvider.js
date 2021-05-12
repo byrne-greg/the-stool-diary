@@ -4,7 +4,7 @@ import INITIAL_STATE from "./model"
 import reducer from "./reducer"
 import { firebaseAuth } from "../../components/firebase/firebase"
 import { updateAuthUser, updateUser } from "./actions"
-import { getUserRecordByEmail } from "../auth/persistence"
+import { getUserRecord } from "../auth/persistence"
 
 export const GlobalStateContext = React.createContext()
 export const GlobalDispatchContext = React.createContext()
@@ -16,7 +16,10 @@ const GlobalContextProvider = ({ children }) => {
     firebaseAuth.onAuthStateChanged(async authUser => {
       updateAuthUser(dispatch, authUser)
       if (authUser) {
-        updateUser(dispatch, await getUserRecordByEmail(authUser.email))
+        const userRecord = await getUserRecord(authUser.uid)
+        if (userRecord) {
+          updateUser(dispatch, userRecord)
+        }
       }
     })
   }, [])

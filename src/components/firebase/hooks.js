@@ -8,7 +8,7 @@ export const useStoolRecordsForPerson = userId => {
     if (userId) {
       const retrieveStoolRecords = async () => {
         setStoolRecords(
-          await retrieveRecordsByQuery(STOOL_NAMESPACE, `userId == ${userId}`)
+          await retrieveRecordsByQuery(STOOL_NAMESPACE, `uid == ${userId}`)
         )
       }
       retrieveStoolRecords()

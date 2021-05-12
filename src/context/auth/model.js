@@ -14,6 +14,7 @@ export const INITIAL_USER_STATE = {
   email: null,
   forename: null,
   surname: null,
+  uid: null,
 }
 
 export const INITIAL_USER_STATE_SIGNIN = {
