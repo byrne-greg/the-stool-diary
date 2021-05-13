@@ -32,7 +32,6 @@ export const useAuth = () => {
       if (currentUserResponse.success) {
         const { authUser } = currentUserResponse
         updateAuthUser(globalDispatch, authUser)
-        console.log("setSignIn - authUser", authUser)
         const userRecord = await getUserRecord(authUser.uid)
         updateUser(globalDispatch, userRecord)
       }
