@@ -1,12 +1,30 @@
 import React from "react"
-import { Link } from "gatsby"
 import { Typography, makeStyles } from "@material-ui/core"
 import { useTranslation } from "react-i18next"
 
 const useStyles = makeStyles({
   hero: {
+    // picture attributes
+    backgroundImage: "linear-gradient( rgba(0,0,0,.5), rgba(0,0,0,.5) ),url(/images/hero-lego.jpg)",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+    height: '400px',
+    // escapes full-width of parent container
+    position: "relative",
+    width: '100vw', 
+    left: '50%',
+    right: '50%',
+    marginLeft: '-50vw',
+    marginRight: '-50vw',
+    // centers children
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  heroText: {
     textAlign: "center",
-    padding: "5rem 0",
+    color: "#FAFAFA"
   },
   subhero: {
     textAlign: "center",
@@ -31,7 +49,7 @@ const Hero = () => {
   const classes = useStyles()
   return (
     <div className={classes.hero} data-testid="hero">
-      <Typography variant="h1" gutterBottom>
+      <Typography className={classes.heroText} variant="h1" gutterBottom>
         {t("Welcome to the Stool Diary")}
       </Typography>
     </div>
