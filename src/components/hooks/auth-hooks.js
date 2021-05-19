@@ -44,12 +44,13 @@ export const useAuth = () => {
       email: email,
       password: password,
     })
-    const userRecord = {
-      email,
-      ...userDetails,
-      uid: response.data.userId,
-    }
-    if (response.success && response.data.userId) {
+
+    if (response.success && response.data && response.data.userId) {
+      const userRecord = {
+        email,
+        ...userDetails,
+        uid: response.data.userId,
+      }
       await persistUserData(userRecord)
     }
     return response

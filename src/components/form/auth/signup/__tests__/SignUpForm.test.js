@@ -136,7 +136,10 @@ describe("SignInForm", () => {
     test(`when the sign up is successful, then the passed setIsFormComplete function should be true `, async () => {
       // ARRANGE
       const mockSetIsFormComplete = jest.fn()
-      auth.signUpUser = jest.fn(() => ({ success: true }))
+      auth.signUpUser = jest.fn(() => ({
+        success: true,
+        data: { userId: 111 },
+      }))
       persistence.persistUserData = jest.fn()
       auth.signInUser = jest.fn(() => ({
         success: true,
@@ -144,6 +147,9 @@ describe("SignInForm", () => {
       auth.getCurrentAuthUser = jest.fn(() => ({
         success: true,
         authUser: { email: "email" },
+      }))
+      persistence.getUserRecord = jest.fn(() => ({
+        details: "details",
       }))
       globalActions.updateUser = jest.fn()
       globalActions.updateAuthUser = jest.fn()
@@ -188,7 +194,10 @@ describe("SignInForm", () => {
     })
     test(`when the sign up is successful, then an attempt is made to sign in the user `, async () => {
       // ARRANGE
-      auth.signUpUser = jest.fn(() => ({ success: true }))
+      auth.signUpUser = jest.fn(() => ({
+        success: true,
+        data: { userId: 111 },
+      }))
       persistence.persistUserData = jest.fn()
       auth.signInUser = jest.fn(() => ({
         success: true,
@@ -239,7 +248,10 @@ describe("SignInForm", () => {
     test(`when the sign up is successful, then an attempt is made to sign in the user fails, then the user is navigated home `, async () => {
       // ARRANGE
       gatsby.navigate = jest.fn()
-      auth.signUpUser = jest.fn(() => ({ success: true }))
+      auth.signUpUser = jest.fn(() => ({
+        success: true,
+        data: { userId: 111 },
+      }))
       persistence.persistUserData = jest.fn()
       auth.signInUser = jest.fn(() => ({
         success: false,
@@ -286,7 +298,7 @@ describe("SignInForm", () => {
       })
 
       // ASSERT
-      expect(gatsby.navigate).toHaveBeenCalledWith(ROUTES.SIGN_IN)
+      expect(gatsby.navigate).toHaveBeenCalledWith(ROUTES.HOME)
     })
 
     test(`when an API error occurs in sign up, the message is displayed to the user`, async () => {

@@ -26,7 +26,16 @@ export async function signUpUser(credentials) {
         .createUserWithEmailAndPassword(email, password)
         .then(firebaseResponse => {
           response.success = true
-          response.data.userId = firebaseResponse.user.uid
+          response.data.userId =
+            firebaseResponse &&
+            firebaseResponse.user &&
+            firebaseResponse.user.uid
+              ? firebaseResponse.user.uid
+              : null
+
+          if (response.data.userId === null) {
+            throw new Error("User UID isn't contained on response")
+          }
         })
         .catch(error => {
           response.error = { ...error }

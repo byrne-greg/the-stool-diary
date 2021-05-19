@@ -20,6 +20,7 @@ const PASSWORD_RESET = "PASSWORD_RESET"
 const MOCK_EMAIL = "MOCK_EMAIL"
 const MOCK_PASSWORD = "MOCK_PASSWORD"
 const MOCK_USER_NAME = "MOCK_USER_NAME"
+const MOCK_UID = 111
 
 const AuthHookTestComponent = ({ cmd = "" }) => {
   return (
@@ -64,7 +65,7 @@ describe("Auth Hook", () => {
   describe("Sign In", () => {
     test("when sign-in called from hook with complete success, then sign-in is attempted and the user is updated", async () => {
       // ARRANGE
-      const mockAuthUser = { authUser: { email: MOCK_EMAIL } }
+      const mockAuthUser = { authUser: { email: MOCK_EMAIL, uid: MOCK_UID } }
       const mockUser = { user: { email: MOCK_EMAIL } }
       firebaseAuth.signInUser = jest.fn(() =>
         Promise.resolve({ success: true })
@@ -91,7 +92,7 @@ describe("Auth Hook", () => {
       })
       expect(firebaseAuth.getCurrentAuthUser).toHaveBeenCalled()
       expect(authContextPersistence.getUserRecord).toHaveBeenCalledWith(
-        MOCK_EMAIL
+        mockAuthUser.authUser.uid
       )
       expect(globalContextActions.updateAuthUser).toHaveBeenCalledWith(
         expect.any(Function),
@@ -163,7 +164,7 @@ describe("Auth Hook", () => {
     test("when sign-up called from hook with complete success, then sign-up is attempted and the user details are persisted", async () => {
       // ARRANGE
       firebaseAuth.signUpUser = jest.fn(() =>
-        Promise.resolve({ success: true })
+        Promise.resolve({ success: true, data: { userId: MOCK_UID } })
       )
       authContextPersistence.persistUserData = jest.fn(() =>
         Promise.resolve({})
@@ -183,12 +184,13 @@ describe("Auth Hook", () => {
       expect(authContextPersistence.persistUserData).toHaveBeenCalledWith({
         email: MOCK_EMAIL,
         name: MOCK_USER_NAME,
+        uid: MOCK_UID,
       })
     })
     test("when sign-up called from hook with failure, then sign-up is attempted but user details are not persisted", async () => {
       // ARRANGE
       firebaseAuth.signUpUser = jest.fn(() =>
-        Promise.resolve({ success: false })
+        Promise.resolve({ success: false, data: { uid: MOCK_UID } })
       )
       authContextPersistence.persistUserData = jest.fn(() =>
         Promise.resolve({})

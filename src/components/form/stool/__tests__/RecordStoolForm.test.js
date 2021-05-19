@@ -18,7 +18,7 @@ jest.mock("../../../i18n/i18n")
 
 const RecordStoolFormTestComponent = props => {
   return (
-    <GlobalStateContext.Provider value={{ user: { id: 12345 } }}>
+    <GlobalStateContext.Provider value={{ authUser: { uid: 12345 } }}>
       <GlobalDispatchContext.Provider value={() => {}}>
         <RecordStoolForm {...props} />
       </GlobalDispatchContext.Provider>
