@@ -234,6 +234,20 @@ const SignUpFormComponent = ({ setIsFormComplete = () => {} }) => {
               />
             </Grid>
             <Grid item xs={12}>
+              <TextField
+                data-testid="sign-up-password-input"
+                variant="outlined"
+                required
+                fullWidth
+                name="password"
+                label={t("Password")}
+                type={isPasswordVisible ? "text" : "password"}
+                id="password"
+                autoComplete="current-password"
+                error={getIsPasswordInvalid()}
+                helperText={getPasswordInvalidReason()}
+                onChange={e => setPassword(e.target.value)}
+              />
               <div className={classes.passwordVisibilityToggle}>
                 <IconButton
                   aria-label="toggle password visibility"
@@ -250,20 +264,6 @@ const SignUpFormComponent = ({ setIsFormComplete = () => {} }) => {
                   </Typography>
                 </IconButton>
               </div>
-              <TextField
-                data-testid="sign-up-password-input"
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
-                label={t("Password")}
-                type={isPasswordVisible ? "text" : "password"}
-                id="password"
-                autoComplete="current-password"
-                error={getIsPasswordInvalid()}
-                helperText={getPasswordInvalidReason()}
-                onChange={e => setPassword(e.target.value)}
-              />
             </Grid>
             <Grid item xs={12}>
               <FormControlLabel

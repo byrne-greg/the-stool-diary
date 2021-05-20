@@ -128,22 +128,6 @@ const SignInFormComponent = ({ setIsFormComplete = () => {} }) => {
               />
             </Grid>
             <Grid item xs={12}>
-              <div className={classes.passwordVisibilityToggle}>
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={() => setIsPasswordVisible(!isPasswordVisible)}
-                  onMouseDown={e => e.preventDefault()}
-                  edge="end"
-                  className={classes.passwordVisibilityTogglePart}
-                >
-                  {isPasswordVisible ? <Visibility /> : <VisibilityOff />}
-                  <Typography className={classes.passwordVisibilityTogglePart}>
-                    {`${isPasswordVisible ? t("Hide") : t("Show")} ${t(
-                      "password"
-                    )}`}
-                  </Typography>
-                </IconButton>
-              </div>
               <TextField
                 data-testid="sign-in-password-input"
                 variant="outlined"
@@ -163,6 +147,22 @@ const SignInFormComponent = ({ setIsFormComplete = () => {} }) => {
                   </Alert>
                 </div>
               ) : null}
+              <div className={classes.passwordVisibilityToggle}>
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+                  onMouseDown={e => e.preventDefault()}
+                  edge="end"
+                  className={classes.passwordVisibilityTogglePart}
+                >
+                  {isPasswordVisible ? <Visibility /> : <VisibilityOff />}
+                  <Typography className={classes.passwordVisibilityTogglePart}>
+                    {`${isPasswordVisible ? t("Hide") : t("Show")} ${t(
+                      "password"
+                    )}`}
+                  </Typography>
+                </IconButton>
+              </div>
             </Grid>
             {/* 
               <FormControlLabel
