@@ -109,12 +109,14 @@ const AuthInfo = () => {
   return (
     <div>
       <Typography variant="h3">What you can do</Typography>
-      <CardContainer>
+      <CardContainer cardWidth={"300px"}>
         <Card>
           <div className={classes.cardSpacing}>
             <div className={classes.cardSpacing}>
               <Typography variant="h4">Create a new account</Typography>
-              <Typography>Sign up now to start recording stools</Typography>
+              <div className={classes.cardSpacing}>
+                <Typography>Sign up now to start recording stools</Typography>
+              </div>
             </div>
             <CardActions>
               <FilledButton block onClick={() => navigate(ROUTES.SIGN_UP)}>
@@ -127,7 +129,9 @@ const AuthInfo = () => {
           <div className={classes.cardSpacing}>
             <div className={classes.cardSpacing}>
               <Typography variant="h4">See your stool diary</Typography>
-              <Typography>See your record of stools</Typography>
+              <div className={classes.cardSpacing}>
+                <Typography>See your record of stools</Typography>
+              </div>
             </div>
             <CardActions>
               <FilledButton block onClick={() => navigate(ROUTES.DASHBOARD)}>
