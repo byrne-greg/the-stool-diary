@@ -7,6 +7,7 @@ import React from "react"
 // Manually importing and wrapping the story with global components
 import GlobalContextProvider from "../src/context/global/GlobalContextProvider"
 import GlobalTheme from "../src/components/theme/GlobalTheme"
+
 addDecorator(Story => (
   <GlobalContextProvider>
     <GlobalTheme>
@@ -14,6 +15,7 @@ addDecorator(Story => (
     </GlobalTheme>
   </GlobalContextProvider>
 ))
+
 
 // Gatsby's Link overrides:
 // Gatsby Link calls the `enqueue` & `hovering` methods on the global variable ___loader.
