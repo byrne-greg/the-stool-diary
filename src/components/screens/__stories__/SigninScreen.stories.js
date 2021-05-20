@@ -9,7 +9,7 @@ export const Info = () => (
   <p>The following components are test screens for the login page</p>
 )
 
-import SigninPage from "../../../pages/test-signin"
+import SigninPage from "../../../pages/signin"
 export const Sign_In = () => (
   <ScreenWrapper>
     <SigninPage />
