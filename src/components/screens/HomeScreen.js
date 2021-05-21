@@ -42,6 +42,10 @@ const useStyles = makeStyles({
   cardSpacing: {
     padding: "1rem",
   },
+  cardText: {
+    padding: "1rem",
+    minHeight: "190px",
+  },
 })
 
 const HomeScreen = () => {
@@ -112,7 +116,7 @@ const AuthInfo = () => {
       <CardContainer cardWidth={"300px"}>
         <Card>
           <div className={classes.cardSpacing}>
-            <div className={classes.cardSpacing}>
+            <div className={classes.cardText}>
               <Typography variant="h4">Create a new account</Typography>
               <div className={classes.cardSpacing}>
                 <Typography>Sign up now to start recording stools</Typography>
@@ -127,7 +131,7 @@ const AuthInfo = () => {
         </Card>
         <Card>
           <div className={classes.cardSpacing}>
-            <div className={classes.cardSpacing}>
+            <div className={classes.cardText}>
               <Typography variant="h4">See your stool diary</Typography>
               <div className={classes.cardSpacing}>
                 <Typography>See your record of stools</Typography>
