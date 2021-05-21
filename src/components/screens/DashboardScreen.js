@@ -7,6 +7,11 @@ import {
   SeeStoolDiaryActionCard,
 } from "../card-mui/composite"
 import { GlobalStateContext } from "../../context/global/GlobalContextProvider"
+import { deleteUser } from "../firebase/utils"
+import { firebaseAuth } from "../firebase/firebase"
+import { useAuth } from "../hooks"
+import { navigate } from "gatsby-link"
+import ROUTES from "../../utils/routes"
 
 const useStyles = makeStyles({
   section: {
@@ -16,8 +21,9 @@ const useStyles = makeStyles({
 
 const DashboardScreen = () => {
   const classes = useStyles()
-  const { user } = useContext(GlobalStateContext)
+  const { user, authUser } = useContext(GlobalStateContext)
   const { t } = useTranslation()
+  const { signOut } = useAuth()
   return (
     <div>
       <section className={classes.section}>
@@ -30,7 +36,15 @@ const DashboardScreen = () => {
       <section className={classes.section}>
         <CardContainer cardWidth={"300px"}>
           <SeeStoolDiaryActionCard typographyTitleProps={{ variant: "h4" }} />
-          <DeleteAccountActionCard typographyTitleProps={{ variant: "h4" }} />
+          <DeleteAccountActionCard
+            typographyTitleProps={{ variant: "h4" }}
+            deleteAccountFn={async () => {
+              await deleteUser(authUser)
+              await firebaseAuth.currentUser.delete()
+              await signOut()
+              await navigate(ROUTES.HOME)
+            }}
+          />
         </CardContainer>
       </section>
     </div>

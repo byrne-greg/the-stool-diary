@@ -6,9 +6,6 @@ import MaterialCardContent from "@material-ui/core/CardContent"
 import Card from "../Card"
 import CardActions from "../CardActions"
 import { FilledButton } from "../../button-mui"
-import { useAuth } from "../../hooks"
-import { navigate } from "gatsby-link"
-import ROUTES from "../../../utils/routes"
 
 const DeleteAccountActionCard = ({
   typographyTitleProps = { variant: "h4" },
@@ -16,8 +13,6 @@ const DeleteAccountActionCard = ({
 }) => {
   const { t } = useTranslation()
   const { palette } = useTheme()
-  useTheme
-  const { signOut } = useAuth()
 
   return (
     <Card>
@@ -33,9 +28,7 @@ const DeleteAccountActionCard = ({
         <FilledButton
           color={palette.error}
           block
-          onClick={async () => {
-            await signOut()
-            await navigate(ROUTES.HOME)
+          onClick={() => {
             deleteAccountFn()
           }}
         >
@@ -49,4 +42,5 @@ export default DeleteAccountActionCard
 
 DeleteAccountActionCard.propTypes = {
   typographyTitleProps: PropTypes.object,
+  deleteAccountFn: PropTypes.func,
 }

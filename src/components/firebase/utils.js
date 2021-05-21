@@ -101,3 +101,14 @@ export const retrieveRecordsByQuery = (namespace, queryString) => {
 
   return getData()
 }
+
+export const deleteUser = async user => {
+  await firebase
+    .firestore()
+    .collection(USER_NAMESPACE)
+    .doc(user.uid) // set the document uid in firestore to the user uid
+    .delete()
+    .catch(error => {
+      console.error("Error deleting document:", error)
+    })
+}
