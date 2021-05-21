@@ -7,6 +7,7 @@ import MaterialCardContent from "@material-ui/core/CardContent"
 import Card from "../Card"
 import CardActions from "../CardActions"
 import { FilledButton } from "../../button-mui"
+import ROUTES from "../../../utils/routes"
 
 const SeeStoolDiaryActionCard = ({ titleHeadingLevel = "h4" }) => {
   const { t } = useTranslation()
