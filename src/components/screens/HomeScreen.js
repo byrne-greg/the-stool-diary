@@ -1,10 +1,11 @@
-import React from "react"
+import React, { useContext } from "react"
 import { Typography, makeStyles } from "@material-ui/core"
 import { useTranslation } from "react-i18next"
 import { Card, CardContainer, CardActions } from "../card-mui"
 import { FilledButton } from "../button-mui"
 import { navigate } from "gatsby-link"
 import ROUTES from "../../utils/routes"
+import { GlobalStateContext } from "../../context/global/GlobalContextProvider"
 
 const useStyles = makeStyles({
   hero: {
@@ -60,7 +61,7 @@ const HomeScreen = () => {
         <PurposeInfo />
       </HomeScreenSection>
       <HomeScreenSection>
-        <AuthInfo />
+        <UserActionCards />
       </HomeScreenSection>
       <HomeScreenSection>
         <FAQ />
@@ -133,27 +134,31 @@ const PurposeInfo = () => {
   )
 }
 
-const AuthInfo = () => {
+const UserActionCards = () => {
+  const { authUser } = useContext(GlobalStateContext)
+
   const classes = useStyles()
   return (
     <div>
       <Typography variant="h3">What you can do</Typography>
       <CardContainer cardWidth={"300px"}>
-        <Card>
-          <div className={classes.cardSpacing}>
-            <div className={classes.cardText}>
-              <Typography variant="h4">Create a new account</Typography>
-              <div className={classes.cardSpacing}>
-                <Typography>Sign up now to start recording stools</Typography>
+        {!authUser ? (
+          <Card>
+            <div className={classes.cardSpacing}>
+              <div className={classes.cardText}>
+                <Typography variant="h4">Create a new account</Typography>
+                <div className={classes.cardSpacing}>
+                  <Typography>Sign up now to start recording stools</Typography>
+                </div>
               </div>
+              <CardActions>
+                <FilledButton block onClick={() => navigate(ROUTES.SIGN_UP)}>
+                  Sign Up
+                </FilledButton>
+              </CardActions>
             </div>
-            <CardActions>
-              <FilledButton block onClick={() => navigate(ROUTES.SIGN_UP)}>
-                Sign Up
-              </FilledButton>
-            </CardActions>
-          </div>
-        </Card>
+          </Card>
+        ) : null}
         <Card>
           <div className={classes.cardSpacing}>
             <div className={classes.cardText}>
@@ -163,7 +168,7 @@ const AuthInfo = () => {
               </div>
             </div>
             <CardActions>
-              <FilledButton block onClick={() => navigate(ROUTES.DASHBOARD)}>
+              <FilledButton block onClick={() => navigate(ROUTES.LIST_STOOL)}>
                 See Diary
               </FilledButton>
             </CardActions>
