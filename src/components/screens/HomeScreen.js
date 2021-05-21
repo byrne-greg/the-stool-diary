@@ -46,6 +46,9 @@ const useStyles = makeStyles({
     padding: "1rem",
     minHeight: "190px",
   },
+  textPadding: {
+    padding: 12,
+  },
 })
 
 const HomeScreen = () => {
@@ -100,10 +103,32 @@ const HomeScreenSection = ({ children }) => {
 }
 
 const PurposeInfo = () => {
+  const classes = useStyles()
   return (
     <div>
       <Typography variant="h3">Why</Typography>
-      <Typography>TODO Why are you here</Typography>
+      <Typography className={classes.textPadding}>
+        After a healthy gut has absorbed all usable nutrients from food, you
+        don&apos;t need what remains and it&apos;s <b>essential</b> to get rid
+        of it. Your gut, when it&apos;s working well, is a healthy garbage
+        disposal unit, effectively ridding your body of what it doesn&apos;t
+        require, and pooping is the way you do this.
+      </Typography>
+      <Typography className={classes.textPadding}>
+        Tracking bowel movements can be a <b>useful tool</b> to gauge your stool
+        health over time and potentially uncover any chronic problems you might
+        have such as: IBS (Irritable bowel syndrome), Crohn&apos;s disease,
+        Colitis, Celiac disease, Chronic Diarrhea, or Constipation by noticing
+        patterns and irregularities in your stool that you may not have noticed
+        otherwise.
+      </Typography>
+      <Typography className={classes.textPadding}>
+        If you already suffer from a chronic bowel condition, you can also
+        benefit from maintaining a poop log as it allows you to{" "}
+        <b>monitor the severity of your symptoms and progression</b> of these
+        life altering diseases over time and share this data quickly and easily
+        with your doctor.
+      </Typography>
     </div>
   )
 }
