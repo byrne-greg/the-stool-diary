@@ -14,6 +14,16 @@ jest.mock("../../../../firebase/firebase")
 // mocks the outbound backend connector used in validation.js
 jest.mock("../../../../i18n/i18n")
 
+// mocks the gatsby api
+jest.mock("gatsby", () => {
+  const gatsby = jest.requireActual("gatsby")
+
+  return {
+    ...gatsby,
+    navigate: jest.fn(),
+  }
+})
+
 beforeEach(() => {
   document.body.innerHTML = null
 })

@@ -5,6 +5,11 @@ import { STOOL_SIZES } from "../../../../context/stool/model"
 import stoolClassifications from "../../../../utils/stool-classifications"
 import { convertToProperCase } from "../../../../utils/text"
 
+// import firebase from "gatsby-plugin-firebase" causes error
+jest.mock("../../../firebase/auth")
+jest.mock("../../../firebase/utils")
+jest.mock("../../../firebase/firebase")
+
 const stoolSizeKeys = Object.keys(STOOL_SIZES)
 
 describe("StoolCaptureSummary", () => {

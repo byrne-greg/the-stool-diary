@@ -245,7 +245,7 @@ describe("SignInForm", () => {
       // ASSERT
       expect(auth.signUpUser).toHaveBeenCalled()
     })
-    test(`when the sign up is successful, then an attempt is made to sign in the user fails, then the user is navigated home `, async () => {
+    test(`when the sign up is successful, then an attempt is made to sign in the user fails, then the user is navigated to dashboard `, async () => {
       // ARRANGE
       gatsby.navigate = jest.fn()
       auth.signUpUser = jest.fn(() => ({
@@ -298,7 +298,7 @@ describe("SignInForm", () => {
       })
 
       // ASSERT
-      expect(gatsby.navigate).toHaveBeenCalledWith(ROUTES.HOME)
+      expect(gatsby.navigate).toHaveBeenCalledWith(ROUTES.DASHBOARD)
     })
 
     test(`when an API error occurs in sign up, the message is displayed to the user`, async () => {
