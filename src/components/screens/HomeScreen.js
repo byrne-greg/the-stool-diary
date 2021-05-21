@@ -6,6 +6,10 @@ import { FilledButton } from "../button-mui"
 import { navigate } from "gatsby-link"
 import ROUTES from "../../utils/routes"
 import { GlobalStateContext } from "../../context/global/GlobalContextProvider"
+import {
+  SeeStoolDiaryActionCard,
+  SignUpActionCard,
+} from "../card-mui/composite"
 
 const useStyles = makeStyles({
   hero: {
@@ -39,13 +43,6 @@ const useStyles = makeStyles({
   section: {
     textAlign: "center",
     padding: "2rem 0",
-  },
-  cardSpacing: {
-    padding: "1rem",
-  },
-  cardText: {
-    padding: "1rem",
-    minHeight: "190px",
   },
   textPadding: {
     padding: 12,
@@ -136,44 +133,12 @@ const PurposeInfo = () => {
 
 const UserActionCards = () => {
   const { authUser } = useContext(GlobalStateContext)
-
-  const classes = useStyles()
   return (
     <div>
       <Typography variant="h3">What you can do</Typography>
       <CardContainer cardWidth={"300px"}>
-        {!authUser ? (
-          <Card>
-            <div className={classes.cardSpacing}>
-              <div className={classes.cardText}>
-                <Typography variant="h4">Create a new account</Typography>
-                <div className={classes.cardSpacing}>
-                  <Typography>Sign up now to start recording stools</Typography>
-                </div>
-              </div>
-              <CardActions>
-                <FilledButton block onClick={() => navigate(ROUTES.SIGN_UP)}>
-                  Sign Up
-                </FilledButton>
-              </CardActions>
-            </div>
-          </Card>
-        ) : null}
-        <Card>
-          <div className={classes.cardSpacing}>
-            <div className={classes.cardText}>
-              <Typography variant="h4">See your stool diary</Typography>
-              <div className={classes.cardSpacing}>
-                <Typography>See your record of stools</Typography>
-              </div>
-            </div>
-            <CardActions>
-              <FilledButton block onClick={() => navigate(ROUTES.LIST_STOOL)}>
-                See Diary
-              </FilledButton>
-            </CardActions>
-          </div>
-        </Card>
+        {!authUser ? <SignUpActionCard titleHeadingLevel="h4" /> : null}
+        <SeeStoolDiaryActionCard titleHeadingLevel="h4" />
       </CardContainer>
     </div>
   )
