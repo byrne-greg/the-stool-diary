@@ -56,11 +56,16 @@ const DrawerMenu = () => {
   const toggleDrawer = () => setDrawerState(!isDrawerOpen)
 
   const { t } = useTranslation()
-  const menuRoutes = [
-    { text: t("Home"), route: ROUTES.HOME },
-    { text: t("Record a Stool"), route: ROUTES.RECORD_STOOL },
-    { text: t("My Stools"), route: ROUTES.DASHBOARD },
-  ]
+  const menuRoutes = []
+
+  if (!authUser) {
+    menuRoutes.push({ text: t("Home"), route: ROUTES.HOME })
+  } else {
+    menuRoutes.push({ text: t("Your Account"), route: ROUTES.DASHBOARD })
+  }
+
+  menuRoutes.push({ text: t("Record a Stool"), route: ROUTES.RECORD_STOOL })
+  menuRoutes.push({ text: t("My Stools"), route: ROUTES.LIST_STOOL })
 
   if (!authUser) {
     menuRoutes.push({ text: t("Sign Up"), route: ROUTES.SIGN_UP })

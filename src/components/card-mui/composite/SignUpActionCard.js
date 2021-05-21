@@ -9,13 +9,13 @@ import CardActions from "../CardActions"
 import { FilledButton } from "../../button-mui"
 import ROUTES from "../../../utils/routes"
 
-const SignUpActionCard = ({ titleHeadingLevel = "h4" }) => {
+const SignUpActionCard = ({ typographyTitleProps = { variant: "h4" } }) => {
   const { t } = useTranslation()
   return (
     <Card>
       <MaterialCardContent>
-        <Typography variant={titleHeadingLevel} gutterBottom>
-          {t("Create a new account")}
+        <Typography align="center" {...typographyTitleProps} gutterBottom>
+          {t("Create new account")}
         </Typography>
         <Typography>{t("Sign up now to start recording stools")}</Typography>
       </MaterialCardContent>
@@ -30,5 +30,5 @@ const SignUpActionCard = ({ titleHeadingLevel = "h4" }) => {
 export default SignUpActionCard
 
 SignUpActionCard.propTypes = {
-  titleHeadingLevel: PropTypes.string,
+  typographyTitleProps: PropTypes.object,
 }

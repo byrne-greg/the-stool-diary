@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react"
+import { navigate } from "gatsby"
 import PropTypes from "prop-types"
 import { useTranslation } from "react-i18next"
 import {
@@ -96,6 +97,7 @@ const SignInFormComponent = ({ setIsFormComplete = () => {} }) => {
       })
       if (isSignIn.success) {
         setIsFormComplete(true)
+        navigate(ROUTES.DASHBOARD)
       }
       if (isSignIn.error) {
         setAuthError({ ...isSignIn.error })

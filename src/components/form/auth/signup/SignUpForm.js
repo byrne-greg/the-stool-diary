@@ -172,7 +172,7 @@ const SignUpFormComponent = ({ setIsFormComplete = () => {} }) => {
           uid: signUpResponse.data.uid,
         })
         setIsFormComplete(true)
-        navigate(ROUTES.HOME)
+        navigate(ROUTES.DASHBOARD)
       } else {
         setAuthError({ ...signUpResponse.error })
       }

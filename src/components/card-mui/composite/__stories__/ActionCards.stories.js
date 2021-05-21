@@ -1,5 +1,9 @@
 import React from "react"
-import { SignUpActionCard, SeeStoolDiaryActionCard } from ".."
+import {
+  SignUpActionCard,
+  SeeStoolDiaryActionCard,
+  DeleteAccountActionCard,
+} from ".."
 import CardContainer from "../../CardContainer"
 
 export default {
@@ -18,6 +22,14 @@ export const See_Stool_Diary_Action_Card = () => {
   return (
     <CardContainer>
       <SeeStoolDiaryActionCard />
+    </CardContainer>
+  )
+}
+
+export const Delete_Account_Action_Card = () => {
+  return (
+    <CardContainer>
+      <DeleteAccountActionCard />
     </CardContainer>
   )
 }

@@ -1,10 +1,7 @@
 import React, { useContext } from "react"
 import { Typography, makeStyles } from "@material-ui/core"
 import { useTranslation } from "react-i18next"
-import { Card, CardContainer, CardActions } from "../card-mui"
-import { FilledButton } from "../button-mui"
-import { navigate } from "gatsby-link"
-import ROUTES from "../../utils/routes"
+import { CardContainer } from "../card-mui"
 import { GlobalStateContext } from "../../context/global/GlobalContextProvider"
 import {
   SeeStoolDiaryActionCard,

@@ -9,13 +9,15 @@ import CardActions from "../CardActions"
 import { FilledButton } from "../../button-mui"
 import ROUTES from "../../../utils/routes"
 
-const SeeStoolDiaryActionCard = ({ titleHeadingLevel = "h4" }) => {
+const SeeStoolDiaryActionCard = ({
+  typographyTitleProps = { variant: "h4" },
+}) => {
   const { t } = useTranslation()
   return (
     <Card>
       <MaterialCardContent>
-        <Typography variant={titleHeadingLevel} gutterBottom>
-          {t("See your stools")}
+        <Typography align="center" {...typographyTitleProps} gutterBottom>
+          {t("See stools")}
         </Typography>
         <Typography>{t("View your recorded stools over time")}</Typography>
       </MaterialCardContent>
@@ -30,5 +32,5 @@ const SeeStoolDiaryActionCard = ({ titleHeadingLevel = "h4" }) => {
 export default SeeStoolDiaryActionCard
 
 SeeStoolDiaryActionCard.propTypes = {
-  titleHeadingLevel: PropTypes.string,
+  typographyTitleProps: PropTypes.object,
 }

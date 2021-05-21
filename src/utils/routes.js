@@ -5,14 +5,17 @@ const AUTH = {
   FORGOT_PASSWORD: "/forgotpassword",
   PRIVACY_POLICY: "/test-privacypolicy",
 }
-const RECORD_STOOL = { RECORD_STOOL: "/test-record-stool" }
-const DASHBOARD = { DASHBOARD: "/test-list-stool" }
+const STOOL = {
+  RECORD_STOOL: "/test-record-stool",
+  LIST_STOOL: "/test-list-stool",
+}
+const DASHBOARD = { DASHBOARD: "/dashboard" }
 const MISSING = { MISSING: "/404" }
 
 export default {
   ...HOME,
   ...AUTH,
-  ...RECORD_STOOL,
+  ...STOOL,
   ...DASHBOARD,
   ...MISSING,
 }

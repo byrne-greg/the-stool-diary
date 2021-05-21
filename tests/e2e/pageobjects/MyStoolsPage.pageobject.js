@@ -22,7 +22,7 @@ export default class MyStoolsPage extends PageObject {
     super(controller, {
       clickList: selectors,
       verifyExists: selectors,
-      url: `${process.env.E2E_BASE_URL}${ROUTES.DASHBOARD}`,
+      url: `${process.env.E2E_BASE_URL}${ROUTES.LIST_STOOL}`,
     })
   }
 }
