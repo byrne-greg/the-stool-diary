@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import PropTypes from "prop-types"
 import { useTranslation } from "react-i18next"
 import { useTheme, Typography } from "@material-ui/core"
@@ -6,11 +6,13 @@ import MaterialCardContent from "@material-ui/core/CardContent"
 import Card from "../Card"
 import CardActions from "../CardActions"
 import { FilledButton } from "../../button-mui"
+import DeleteAccountConfirmationDialog from "../../dialog/composites/DeleteAccountConfirmationDialog"
 
 const DeleteAccountActionCard = ({
   typographyTitleProps = { variant: "h4" },
   deleteAccountFn = () => {},
 }) => {
+  const [isDialogTriggered, setDialogTriggered] = useState(false)
   const { t } = useTranslation()
   const { palette } = useTheme()
 
@@ -29,11 +31,16 @@ const DeleteAccountActionCard = ({
           color={palette.error}
           block
           onClick={() => {
-            deleteAccountFn()
+            setDialogTriggered(true)
           }}
         >
           {t("Delete account")}
         </FilledButton>
+        <DeleteAccountConfirmationDialog
+          isOpen={isDialogTriggered}
+          setOpen={setDialogTriggered}
+          handleDeleteConfirm={deleteAccountFn}
+        />
       </CardActions>
     </Card>
   )
