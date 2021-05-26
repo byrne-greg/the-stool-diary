@@ -238,13 +238,17 @@ describe("RecordStoolForm", () => {
       expect(persistStoolStubFn.mock.calls.length).toBe(1)
     })
 
-    test("when submitted stool, then stool submission screen should display", async () => {
+    test("when submitted stool, set is user finished should have been called", async () => {
       // ARRANGE
       const persistStoolStubFn = jest.fn()
+      const setIsUserFinishedStubFn = jest.fn()
 
       // ACT
       const { getByTestId, queryByTestId } = render(
-        <RecordStoolFormTestComponent persistStoolDataFn={persistStoolStubFn} />
+        <RecordStoolFormTestComponent
+          persistStoolDataFn={persistStoolStubFn}
+          setIsUserFinished={setIsUserFinishedStubFn}
+        />
       )
 
       // select the stool type because we don't have a next button on the type capture screen
@@ -264,7 +268,8 @@ describe("RecordStoolForm", () => {
       await fireEvent.click(getByTestId("formnavigationbuttons-button-save"))
 
       // ASSERT
-      expect(queryByTestId("stool-form-submitted-screen-title")).toBeTruthy()
+      expect(setIsUserFinishedStubFn).toHaveBeenCalledTimes(1)
+      expect(setIsUserFinishedStubFn).toHaveBeenCalledWith(true)
     })
   })
 })

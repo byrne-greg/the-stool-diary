@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useContext, useState } from "react"
+import React, { useEffect, useCallback, useContext } from "react"
 import PropTypes from "prop-types"
 import { useTranslation } from "react-i18next"
 import { useTheme } from "@material-ui/core"
@@ -36,45 +36,22 @@ import { GlobalStateContext } from "../../../context/global/GlobalContextProvide
 
 const RecordStoolForm = ({
   persistStoolDataFn = () => {},
-  isFinished = false,
+  setIsUserFinished = () => {},
 }) => {
-  const [isUserFinished, setIsUserFinished] = useState(isFinished)
-  const { t } = useTranslation()
   return (
     <FormNavigationContextProvider>
       <RecordStoolContextProvider>
-        {!isUserFinished ? (
-          <RecordStoolFormScreens
-            persistStoolData={persistStoolDataFn}
-            setFinished={() => setIsUserFinished(true)}
-          />
-        ) : (
-          <div>
-            <Typography gutterBottom variant="h2" component="h1">
-              {t("Recording Stool")}
-            </Typography>
-            <Typography
-              gutterBottom
-              variant="h3"
-              component="h2"
-              data-testid="stool-form-submitted-screen-title"
-            >
-              {t("Submitted")}
-            </Typography>
-            <Typography gutterBottom variant="body1" component="p">
-              {t(
-                "Fantastic! You've just finished recording a stool. See your stool record on the My Stools page."
-              )}
-            </Typography>
-          </div>
-        )}
+        <RecordStoolFormScreens
+          persistStoolData={persistStoolDataFn}
+          setFinished={() => setIsUserFinished(true)}
+        />
       </RecordStoolContextProvider>
     </FormNavigationContextProvider>
   )
 }
 RecordStoolForm.propTypes = {
   persistStoolDataFn: PropTypes.func,
-  isFinished: PropTypes.bool,
+  setIsUserFinished: PropTypes.func,
 }
 
 const RecordStoolFormScreens = ({
