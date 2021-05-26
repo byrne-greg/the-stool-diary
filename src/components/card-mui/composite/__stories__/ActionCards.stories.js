@@ -5,6 +5,7 @@ import {
   DeleteAccountActionCard,
 } from ".."
 import CardContainer from "../../CardContainer"
+import RecordStoolActionCard from "../RecordStoolActionCard"
 
 export default {
   title: "Card-Mui/Composite/Action Cards",
@@ -22,6 +23,14 @@ export const See_Stool_Diary_Action_Card = () => {
   return (
     <CardContainer>
       <SeeStoolDiaryActionCard />
+    </CardContainer>
+  )
+}
+
+export const Record_Stool_Action_Card = () => {
+  return (
+    <CardContainer>
+      <RecordStoolActionCard />
     </CardContainer>
   )
 }

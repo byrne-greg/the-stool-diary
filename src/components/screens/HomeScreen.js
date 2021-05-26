@@ -7,6 +7,7 @@ import {
   SeeStoolDiaryActionCard,
   SignUpActionCard,
 } from "../card-mui/composite"
+import RecordStoolActionCard from "../card-mui/composite/RecordStoolActionCard"
 
 const useStyles = makeStyles({
   hero: {
@@ -135,6 +136,7 @@ const UserActionCards = () => {
       <Typography variant="h3">What you can do</Typography>
       <CardContainer cardWidth={"300px"}>
         {!authUser ? <SignUpActionCard titleHeadingLevel="h4" /> : null}
+        <RecordStoolActionCard titleHeadingLevel="h4" />
         <SeeStoolDiaryActionCard titleHeadingLevel="h4" />
       </CardContainer>
     </div>

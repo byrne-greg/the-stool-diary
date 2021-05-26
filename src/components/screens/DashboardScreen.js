@@ -12,6 +12,7 @@ import { firebaseAuth } from "../firebase/firebase"
 import { useAuth } from "../hooks"
 import { navigate } from "gatsby-link"
 import ROUTES from "../../utils/routes"
+import RecordStoolActionCard from "../card-mui/composite/RecordStoolActionCard"
 
 const useStyles = makeStyles({
   section: {
@@ -35,6 +36,7 @@ const DashboardScreen = () => {
       </section>
       <section className={classes.section}>
         <CardContainer cardWidth={"300px"}>
+          <RecordStoolActionCard typographyTitleProps={{ variant: "h4" }} />
           <SeeStoolDiaryActionCard typographyTitleProps={{ variant: "h4" }} />
           <DeleteAccountActionCard
             typographyTitleProps={{ variant: "h4" }}

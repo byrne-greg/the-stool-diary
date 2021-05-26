@@ -8,35 +8,29 @@ import Card from "../Card"
 import CardActions from "../CardActions"
 import { FilledButton } from "../../button-mui"
 import ROUTES from "../../../utils/routes"
-import { useTheme } from "@material-ui/core"
 
-const SeeStoolDiaryActionCard = ({
+const RecordStoolActionCard = ({
   typographyTitleProps = { variant: "h4" },
 }) => {
   const { t } = useTranslation()
-  const { palette } = useTheme()
   return (
     <Card>
       <MaterialCardContent>
         <Typography align="center" {...typographyTitleProps} gutterBottom>
-          {t("See stools")}
+          {t("Add stool record")}
         </Typography>
-        <Typography>{t("View your recorded stools over time")}</Typography>
+        <Typography>{t("Add a new stool record to your diary")}</Typography>
       </MaterialCardContent>
       <CardActions>
-        <FilledButton
-          block
-          color={palette.info}
-          onClick={() => navigate(ROUTES.LIST_STOOL)}
-        >
-          {t("See Diary")}
+        <FilledButton block onClick={() => navigate(ROUTES.RECORD_STOOL)}>
+          {t("Add record")}
         </FilledButton>
       </CardActions>
     </Card>
   )
 }
-export default SeeStoolDiaryActionCard
+export default RecordStoolActionCard
 
-SeeStoolDiaryActionCard.propTypes = {
+RecordStoolActionCard.propTypes = {
   typographyTitleProps: PropTypes.object,
 }
