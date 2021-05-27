@@ -58,9 +58,6 @@ const HomeScreen = () => {
       <HomeScreenSection>
         <UserActionCards />
       </HomeScreenSection>
-      <HomeScreenSection>
-        <FAQ />
-      </HomeScreenSection>
     </>
   )
 }
@@ -139,15 +136,6 @@ const UserActionCards = () => {
         <RecordStoolActionCard titleHeadingLevel="h4" />
         <SeeStoolDiaryActionCard titleHeadingLevel="h4" />
       </CardContainer>
-    </div>
-  )
-}
-
-const FAQ = () => {
-  return (
-    <div>
-      <Typography variant="h3">FAQ</Typography>
-      <Typography>TODO FAQ goes here</Typography>
     </div>
   )
 }
