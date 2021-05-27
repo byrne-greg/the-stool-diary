@@ -3,7 +3,7 @@ const AUTH = {
   SIGN_IN: "/signin",
   SIGN_UP: "/signup",
   FORGOT_PASSWORD: "/forgotpassword",
-  PRIVACY_POLICY: "/test-privacypolicy",
+  PRIVACY_POLICY: "/privacypolicy",
 }
 const STOOL = {
   RECORD_STOOL: "/test-record-stool",
