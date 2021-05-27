@@ -185,13 +185,13 @@ const RecordStoolFormScreens = ({
       </Typography>
       {!authUser ? (
         <Alert severity="warning">
-          <AlertTitle>{t("You are not logged-in")}</AlertTitle>
+          <AlertTitle>{t("This stool record will not be saved")}</AlertTitle>
           {t("You need a user account to record stools. ")}
           <span>
             <Link to={routes.SIGN_UP}>{t("Sign-up")}</Link>
             {t(" or ")}
             <Link to={routes.SIGN_IN}>{t("log-in")}</Link>
-            {t(" to have your stool record saved to your diary")}
+            {t(" to have your stool record saved to your diary.")}
           </span>
         </Alert>
       ) : null}
