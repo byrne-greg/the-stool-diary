@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 import { useTranslation } from "react-i18next"
 import { useTheme } from "@material-ui/core"
 import Typography from "@material-ui/core/Typography"
+import { Alert, AlertTitle } from "@material-ui/lab"
 import {
   StoolTypeCapture,
   StoolDateTimeCapture,
@@ -33,6 +34,8 @@ import {
   updateFormHasReachedSummary,
 } from "../../../context/form/actions"
 import { GlobalStateContext } from "../../../context/global/GlobalContextProvider"
+import { Link } from "gatsby"
+import routes from "../../../utils/routes"
 
 const RecordStoolForm = ({
   persistStoolDataFn = () => {},
@@ -180,6 +183,18 @@ const RecordStoolFormScreens = ({
       <Typography gutterBottom variant="h2" component="h1">
         {t("Recording Stool")}
       </Typography>
+      {!authUser ? (
+        <Alert severity="warning">
+          <AlertTitle>{t("You are not logged-in")}</AlertTitle>
+          {t("You need a user account to record stools. ")}
+          <span>
+            <Link to={routes.SIGN_UP}>{t("Sign-up")}</Link>
+            {t(" or ")}
+            <Link to={routes.SIGN_IN}>{t("log-in")}</Link>
+            {t(" to have your stool record saved to your diary")}
+          </span>
+        </Alert>
+      ) : null}
       <div>{getCurrentScreen()}</div>
     </div>
   )
