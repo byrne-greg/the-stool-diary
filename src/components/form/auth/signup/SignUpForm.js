@@ -285,7 +285,7 @@ const SignUpFormComponent = ({ setIsFormComplete = () => {} }) => {
                         data-testid="sign-up-tc-link"
                         href={ROUTES.PRIVACY_POLICY}
                       >
-                        {t("terms and conditions")}
+                        {t("privacy policy")}
                       </Link>
                     </span>
                   </div>
