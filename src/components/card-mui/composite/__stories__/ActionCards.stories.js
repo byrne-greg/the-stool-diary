@@ -3,6 +3,7 @@ import {
   SignUpActionCard,
   SeeStoolDiaryActionCard,
   DeleteAccountActionCard,
+  LogInActionCard,
 } from ".."
 import CardContainer from "../../CardContainer"
 import RecordStoolActionCard from "../RecordStoolActionCard"
@@ -15,6 +16,14 @@ export const Sign_Up_Action_Card = () => {
   return (
     <CardContainer>
       <SignUpActionCard />
+    </CardContainer>
+  )
+}
+
+export const Log_In_Action_Card = () => {
+  return (
+    <CardContainer>
+      <LogInActionCard />
     </CardContainer>
   )
 }
