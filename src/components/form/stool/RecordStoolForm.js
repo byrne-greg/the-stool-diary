@@ -190,7 +190,7 @@ const RecordStoolFormScreens = ({
           <span>
             <Link to={routes.SIGN_UP}>{t("Sign-up")}</Link>
             {t(" or ")}
-            <Link to={routes.SIGN_IN}>{t("log-in")}</Link>
+            <Link to={routes.SIGN_IN}>{t("sign-in")}</Link>
             {t(" to have your stool record saved to your diary.")}
           </span>
         </Alert>
