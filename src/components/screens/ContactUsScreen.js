@@ -128,7 +128,6 @@ const ContactUsScreen = () => {
     status: PENDING_STATUS,
     error: null,
   })
-  console.log(contactFormState)
   return (
     <Container component="div" maxWidth="xs">
       <CssBaseline />
