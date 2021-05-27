@@ -79,6 +79,8 @@ const DrawerMenu = () => {
     })
   }
 
+  menuRoutes.push({ text: t("Contact"), route: ROUTES.CONTACTUS })
+
   return (
     <div data-testid="menu">
       <IconButton

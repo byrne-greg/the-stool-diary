@@ -11,6 +11,7 @@ const STOOL = {
 }
 const DASHBOARD = { DASHBOARD: "/dashboard" }
 const MISSING = { MISSING: "/404" }
+const CONTACT = { CONTACTUS: "/contact" }
 
 export default {
   ...HOME,
@@ -18,4 +19,5 @@ export default {
   ...STOOL,
   ...DASHBOARD,
   ...MISSING,
+  ...CONTACT,
 }
