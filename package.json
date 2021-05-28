@@ -2,8 +2,9 @@
   "name": "stool-diary-web-app",
   "private": true,
   "description": "A diary for recording your bowel movements",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "author": "Greg Byrne",
+  "website": "https://github.com/byrne-greg/the-stool-diary",
   "dependencies": {
     "@date-io/moment": "^1.3.13",
     "@material-ui/core": "^4.10.1",
