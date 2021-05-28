@@ -14,11 +14,6 @@ const ListStoolRecordsPage = () => {
       {isAuthenticated ? (
         <PageLayout title="List Recorded Stool">
           <ListStoolRecordsScreen />
-          <ul>
-            <li>
-              <Link to="/">Go home</Link>
-            </li>
-          </ul>
         </PageLayout>
       ) : null}
     </>

@@ -6,8 +6,8 @@ const AUTH = {
   PRIVACY_POLICY: "/privacypolicy",
 }
 const STOOL = {
-  RECORD_STOOL: "/test-record-stool",
-  LIST_STOOL: "/test-list-stool",
+  RECORD_STOOL: "/record-stool",
+  LIST_STOOL: "/list-stool",
 }
 const DASHBOARD = { DASHBOARD: "/dashboard" }
 const MISSING = { MISSING: "/404" }
