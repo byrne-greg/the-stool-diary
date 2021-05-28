@@ -6,6 +6,7 @@ import ForgotPasswordScreen from "./ForgotPasswordScreen"
 import HomeScreen from "./HomeScreen"
 import DashboardScreen from "./DashboardScreen"
 import ContactUsScreen from "./ContactUsScreen"
+import PageNotFoundScreen from "./PageNotFoundScreen"
 
 export {
   RecordStoolFormScreen,
@@ -16,4 +17,5 @@ export {
   HomeScreen,
   DashboardScreen,
   ContactUsScreen,
+  PageNotFoundScreen,
 }
