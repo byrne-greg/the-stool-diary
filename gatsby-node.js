@@ -29,7 +29,7 @@ function generateTranslationFiles() {
       .forEach(file => {
         // merge this json file into a common translations object
         console.info(
-          `i18n: merging translation file ${path.relative(__dirname, file)}`
+          `i18n: collating translation file ${path.relative(__dirname, file)}`
         )
         languageTranslation = {
           ...languageTranslation,
@@ -43,8 +43,9 @@ function generateTranslationFiles() {
       path.join(languageLocaleDir, "/translation.json"),
       minify(JSON.stringify(languageTranslation, null, 2))
     )
-    console.info(
-      `i18n: ${language} translation file generated to ${path.relative(
+    console.log(
+      "\x1b[32msuccess",
+      `\x1b[37mi18n: ${language} translation file generated to ${path.relative(
         __dirname,
         languageLocaleDir
       )}`
@@ -57,7 +58,10 @@ function generateTranslationFiles() {
     path.join(__dirname, "/public/locales")
   )
 
-  console.log("\x1b[32msuccess", "\x1b[37mi18n: translation files generated")
+  console.log(
+    "\x1b[32msuccess",
+    "\x1b[37mi18n: all translation files generated"
+  )
 }
 
 // --------------------

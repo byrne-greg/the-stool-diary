@@ -12,23 +12,41 @@ import { Footer } from "../footer"
 import { PageCenter } from "."
 import { SEO } from "../meta"
 import Container from "@material-ui/core/Container"
+import { makeStyles } from "@material-ui/core/styles"
+
+const useStyles = makeStyles(() => {
+  return {
+    pushFooter: {
+      display: "flex",
+      minHeight: "100vh",
+      flexDirection: "column",
+      justifyContent: "space-between",
+    },
+  }
+})
 
 const PageLayout = ({ title, children }) => {
+  const classes = useStyles()
   return (
-    <>
+    <div>
       <Header />
       <SEO title={title} />
       <PageCenter>
-        <Container disableGutters component="main">
+        <Container
+          disableGutters
+          component="main"
+          className={classes.pushFooter}
+        >
           {children}
         </Container>
       </PageCenter>
       <Footer />
-    </>
+    </div>
   )
 }
 
 PageLayout.propTypes = {
+  title: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
 }
 

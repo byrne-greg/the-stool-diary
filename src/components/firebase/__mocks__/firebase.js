@@ -1,3 +1,4 @@
+
 export const firebaseAuth = { 
   createUserWithEmailAndPassword: () => {},
   signInWithEmailAndPassword: () => {},

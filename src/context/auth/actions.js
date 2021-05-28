@@ -3,6 +3,7 @@ import {
   UPDATE_PASSWORD,
   UPDATE_FORENAME,
   UPDATE_SURNAME,
+  UPDATE_TERMSANDCONDITIONS,
   UPDATE_EMAIL_ERROR,
   UPDATE_PASSWORD_ERROR,
   UPDATE_FORENAME_ERROR,
@@ -26,6 +27,8 @@ export const updatePassword = (dispatch, value) =>
   updateState(dispatch, UPDATE_PASSWORD, value)
 export const updatePasswordError = (dispatch, value) =>
   updateState(dispatch, UPDATE_PASSWORD_ERROR, value)
+export const updateTermsAndConditions = (dispatch, value) =>
+  updateState(dispatch, UPDATE_TERMSANDCONDITIONS, value)
 export const updateAuthError = (dispatch, value) =>
   updateState(dispatch, UPDATE_AUTH_ERROR, value)
 

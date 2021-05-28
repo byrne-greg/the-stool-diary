@@ -4,13 +4,25 @@ import SignInForm from "../SignInForm"
 import * as auth from "../../../../firebase/auth"
 import * as validation from "../../utils/validation"
 import * as globalActions from "../../../../../context/global/actions"
+import * as persistence from "../../../../../context/auth/persistence"
 
 // import firebase from "gatsby-plugin-firebase" causes error
 jest.mock("../../../../firebase/auth")
 jest.mock("../../../../firebase/utils")
+jest.mock("../../../../firebase/firebase")
 
 // mocks the outbound backend connector used in validation.js
 jest.mock("../../../../i18n/i18n")
+
+// mocks the gatsby api
+jest.mock("gatsby", () => {
+  const gatsby = jest.requireActual("gatsby")
+
+  return {
+    ...gatsby,
+    navigate: jest.fn(),
+  }
+})
 
 beforeEach(() => {
   document.body.innerHTML = null
@@ -95,6 +107,10 @@ describe("SignInForm", () => {
   describe("Functional", () => {
     test(`when the sign in is successful, then the passed setIsFormComplete function should be true `, async () => {
       // ARRANGE
+      auth.signInUser = jest.fn(() => ({ success: true }))
+      persistence.getUserRecord = jest.fn(() => ({
+        details: "details",
+      }))
       auth.signInUser = jest.fn(() => ({ success: true }))
       auth.getCurrentAuthUser = jest.fn(() => ({
         success: true,
@@ -200,6 +216,7 @@ describe("SignInForm", () => {
         message: "Mock: User does not exist",
       }
       auth.signInUser = jest.fn(() => ({ error: mockServerError }))
+
       // ACT
       const { getByTestId, queryByTestId } = render(<SignInForm />)
       await act(async () => {
@@ -222,6 +239,7 @@ describe("SignInForm", () => {
 
       // ASSERT
       expect(authDisplayError).toBeTruthy()
+      expect(authDisplayError.textContent).toBe(mockServerError.message)
     })
     test(`when the user email address field is invalid and the user signs in, then no sign on takes place and a validation displays`, async () => {
       // ARRANGE

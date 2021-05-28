@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useContext } from "react"
 import { Typography } from "@material-ui/core"
 import { useTranslation } from "react-i18next"
 import useStoolRecordsForPerson from "../firebase/hooks"
@@ -6,15 +6,18 @@ import {
   SevenDayStoolCountTable,
   MonthlyStoolCountTable,
 } from "../table/composites"
+import { GlobalStateContext } from "../../context/global/GlobalContextProvider"
 
 const ListStoolRecordsScreen = () => {
-  const [stoolRecords] = useStoolRecordsForPerson()
+  const { authUser } = useContext(GlobalStateContext)
+  const [stoolRecords] = useStoolRecordsForPerson(authUser.uid)
+
   const { t } = useTranslation()
 
   return (
     <div>
       <Typography gutterBottom variant="h2" component="h1">
-        Your Stool Records
+        {t("Your Stool Records")}
       </Typography>
       <SevenDayStoolCountTable
         recordedStools={stoolRecords}

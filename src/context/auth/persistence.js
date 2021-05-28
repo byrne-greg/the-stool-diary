@@ -1,7 +1,4 @@
-import {
-  persistData,
-  retrieveRecordsByQuery,
-} from "../../components/firebase/utils"
+import { persistData, retrieveUser } from "../../components/firebase/utils"
 import { USER_NAMESPACE } from "../../components/firebase/namespaces"
 import { INITIAL_USER_STATE } from "./model"
 
@@ -10,15 +7,10 @@ export function persistUserData(data) {
   userObject.email = data.email
   userObject.forename = data.forename
   userObject.surname = data.surname
+  userObject.uid = data.uid
   persistData(USER_NAMESPACE, userObject)
 }
 
-export async function getUserRecordByEmail(email) {
-  const userRecordsByEmail = await retrieveRecordsByQuery(
-    USER_NAMESPACE,
-    `email == ${email}`
-  )
-
-  // the user records should each contain unique emails and is enforced by auth
-  return userRecordsByEmail[0]
+export async function getUserRecord(uid) {
+  return await retrieveUser(USER_NAMESPACE, uid)
 }

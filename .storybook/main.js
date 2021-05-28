@@ -33,6 +33,7 @@ module.exports = {
     config.resolve.alias['i18next-http-backend'] = require.resolve('../src/components/i18n/__mocks__/i18n')
     config.resolve.alias['i18next-browser-languagedetector'] = require.resolve('../src/components/i18n/__mocks__/i18n')
     config.resolve.alias['react-i18next'] = require.resolve('../src/components/i18n/__mocks__/react-i18next')
+    config.resolve.alias['gatsby-plugin-firebase'] = require.resolve('../__mocks__/firebase')
 
 
     

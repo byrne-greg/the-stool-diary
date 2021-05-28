@@ -1,8 +1,9 @@
-import React, { useEffect, useContext, useState } from "react"
+import React, { useEffect, useCallback, useContext } from "react"
 import PropTypes from "prop-types"
 import { useTranslation } from "react-i18next"
 import { useTheme } from "@material-ui/core"
 import Typography from "@material-ui/core/Typography"
+import { Alert, AlertTitle } from "@material-ui/lab"
 import {
   StoolTypeCapture,
   StoolDateTimeCapture,
@@ -32,48 +33,28 @@ import {
   loadFormScreens,
   updateFormHasReachedSummary,
 } from "../../../context/form/actions"
+import { GlobalStateContext } from "../../../context/global/GlobalContextProvider"
+import { Link } from "gatsby"
+import routes from "../../../utils/routes"
 
 const RecordStoolForm = ({
   persistStoolDataFn = () => {},
-  isFinished = false,
+  setIsUserFinished = () => {},
 }) => {
-  const [isUserFinished, setIsUserFinished] = useState(isFinished)
-  const { t } = useTranslation()
   return (
     <FormNavigationContextProvider>
       <RecordStoolContextProvider>
-        {!isUserFinished ? (
-          <RecordStoolFormScreens
-            persistStoolData={persistStoolDataFn}
-            setFinished={() => setIsUserFinished(true)}
-          />
-        ) : (
-          <div>
-            <Typography gutterBottom variant="h2" component="h1">
-              {t("Recording Stool")}
-            </Typography>
-            <Typography
-              gutterBottom
-              variant="h3"
-              component="h2"
-              data-testid="stool-form-submitted-screen-title"
-            >
-              {t("Submitted")}
-            </Typography>
-            <Typography gutterBottom variant="body1" component="p">
-              {t(
-                "Fantastic! You've just finished recording a stool. See your stool record on the My Stools page."
-              )}
-            </Typography>
-          </div>
-        )}
+        <RecordStoolFormScreens
+          persistStoolData={persistStoolDataFn}
+          setFinished={() => setIsUserFinished(true)}
+        />
       </RecordStoolContextProvider>
     </FormNavigationContextProvider>
   )
 }
 RecordStoolForm.propTypes = {
   persistStoolDataFn: PropTypes.func,
-  isFinished: PropTypes.bool,
+  setIsUserFinished: PropTypes.func,
 }
 
 const RecordStoolFormScreens = ({
@@ -86,17 +67,21 @@ const RecordStoolFormScreens = ({
   const stoolDispatch = useContext(RecordStoolDispatchContext)
   const formNavState = useContext(FormNavigationStateContext)
   const formNavDispatch = useContext(FormNavigationDispatchContext)
+  const { authUser } = useContext(GlobalStateContext)
   const getCurrentScreen = () =>
     formNavState.screens[formNavState.currentScreen]
-  const goToSummaryScreen = () =>
-    updateFormCurrentScreen(formNavDispatch, formNavState.screens.length - 1)
-  const goToNextOrSummaryScreen = () =>
-    !formNavState.hasReachedSummary
-      ? moveFormScreenForward(formNavDispatch)
-      : goToSummaryScreen()
-
-  // console.log(stoolState)
-  // console.log(formNavState)
+  const goToSummaryScreen = useCallback(
+    () =>
+      updateFormCurrentScreen(formNavDispatch, formNavState.screens.length - 1),
+    [formNavDispatch, formNavState.screens.length]
+  )
+  const goToNextOrSummaryScreen = useCallback(
+    () =>
+      !formNavState.hasReachedSummary
+        ? moveFormScreenForward(formNavDispatch)
+        : goToSummaryScreen(),
+    [formNavDispatch, formNavState.hasReachedSummary, goToSummaryScreen]
+  )
 
   // load the record stool form screens on render
   useEffect(() => {
@@ -105,7 +90,7 @@ const RecordStoolFormScreens = ({
         key="stool-type-capture"
         persistType={stoolType => {
           updateStoolType(stoolDispatch, stoolType)
-          goToNextOrSummaryScreen(formNavState)
+          goToNextOrSummaryScreen()
         }}
       />,
       <StoolSizeCapture
@@ -131,7 +116,7 @@ const RecordStoolFormScreens = ({
         }
         formNavButtons={
           <FormNavigationButtons
-            handleNavForward={() => goToNextOrSummaryScreen(formNavState)}
+            handleNavForward={() => goToNextOrSummaryScreen()}
             handleNavBackward={() => moveFormScreenBackward(formNavDispatch)}
           />
         }
@@ -158,7 +143,13 @@ const RecordStoolFormScreens = ({
               <PrimaryActionButton
                 color={theme.palette.success}
                 onClick={() => {
-                  persistStoolData(stoolState)
+                  if (authUser) {
+                    const stoolStateWithUserId = {
+                      ...stoolState,
+                      uid: authUser.uid,
+                    }
+                    persistStoolData(stoolStateWithUserId)
+                  }
                   setFinished()
                 }}
                 data-testid={"formnavigationbuttons-button-save"}
@@ -172,13 +163,38 @@ const RecordStoolFormScreens = ({
       />,
     ]
     loadFormScreens(formNavDispatch, stoolFormScreens)
-  }, [stoolState])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    formNavDispatch,
+    formNavState.hasReachedSummary,
+    goToNextOrSummaryScreen,
+    goToSummaryScreen,
+    persistStoolData,
+    setFinished,
+    stoolDispatch,
+    stoolState,
+    // t,
+    theme.palette.success,
+    authUser,
+  ])
 
   return (
     <div>
       <Typography gutterBottom variant="h2" component="h1">
         {t("Recording Stool")}
       </Typography>
+      {!authUser ? (
+        <Alert severity="warning">
+          <AlertTitle>{t("This stool record will not be saved")}</AlertTitle>
+          {t("You need a user account to record stools. ")}
+          <span>
+            <Link to={routes.SIGN_UP}>{t("Sign-up")}</Link>
+            {t(" or ")}
+            <Link to={routes.SIGN_IN}>{t("sign-in")}</Link>
+            {t(" to have your stool record saved to your diary.")}
+          </span>
+        </Alert>
+      ) : null}
       <div>{getCurrentScreen()}</div>
     </div>
   )

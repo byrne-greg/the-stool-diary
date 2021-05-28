@@ -2,6 +2,7 @@ import React from "react"
 import * as gatsby from "gatsby"
 import { render, fireEvent, act } from "@testing-library/react"
 import SignUpForm from "../SignUpForm"
+import translations from "../locales/SignUpForm.locale.en.json"
 import * as auth from "../../../../firebase/auth"
 import * as globalActions from "../../../../../context/global/actions"
 import * as persistence from "../../../../../context/auth/persistence"
@@ -10,6 +11,7 @@ import ROUTES from "../../../../../utils/routes"
 // import firebase from "gatsby-plugin-firebase" causes error
 jest.mock("../../../../firebase/auth")
 jest.mock("../../../../firebase/utils")
+jest.mock("../../../../firebase/firebase")
 
 // mocks the outbound backend connector used in validation.js
 jest.mock("../../../../i18n/i18n")
@@ -134,7 +136,10 @@ describe("SignInForm", () => {
     test(`when the sign up is successful, then the passed setIsFormComplete function should be true `, async () => {
       // ARRANGE
       const mockSetIsFormComplete = jest.fn()
-      auth.signUpUser = jest.fn(() => ({ success: true }))
+      auth.signUpUser = jest.fn(() => ({
+        success: true,
+        data: { userId: 111 },
+      }))
       persistence.persistUserData = jest.fn()
       auth.signInUser = jest.fn(() => ({
         success: true,
@@ -142,6 +147,9 @@ describe("SignInForm", () => {
       auth.getCurrentAuthUser = jest.fn(() => ({
         success: true,
         authUser: { email: "email" },
+      }))
+      persistence.getUserRecord = jest.fn(() => ({
+        details: "details",
       }))
       globalActions.updateUser = jest.fn()
       globalActions.updateAuthUser = jest.fn()
@@ -175,6 +183,8 @@ describe("SignInForm", () => {
             target: { value: "Super_Secret_Password1" },
           }
         )
+        await fireEvent.click(getByTestId("sign-up-tc-check"))
+
         const submitButton = getByTestId("sign-up-submit-button")
         await fireEvent.click(submitButton)
       })
@@ -184,7 +194,10 @@ describe("SignInForm", () => {
     })
     test(`when the sign up is successful, then an attempt is made to sign in the user `, async () => {
       // ARRANGE
-      auth.signUpUser = jest.fn(() => ({ success: true }))
+      auth.signUpUser = jest.fn(() => ({
+        success: true,
+        data: { userId: 111 },
+      }))
       persistence.persistUserData = jest.fn()
       auth.signInUser = jest.fn(() => ({
         success: true,
@@ -223,6 +236,8 @@ describe("SignInForm", () => {
             target: { value: "Super_Secret_Password1" },
           }
         )
+        await fireEvent.click(getByTestId("sign-up-tc-check"))
+
         const submitButton = getByTestId("sign-up-submit-button")
         await fireEvent.click(submitButton)
       })
@@ -230,13 +245,16 @@ describe("SignInForm", () => {
       // ASSERT
       expect(auth.signUpUser).toHaveBeenCalled()
     })
-    test(`when the sign up is successful, then an attempt is made to sign in the user fails, then the user is navigated home `, async () => {
+    test(`when the sign up is successful, then an attempt is made to sign in the user fails, then the user is navigated to dashboard `, async () => {
       // ARRANGE
       gatsby.navigate = jest.fn()
-      auth.signUpUser = jest.fn(() => ({ success: true }))
+      auth.signUpUser = jest.fn(() => ({
+        success: true,
+        data: { userId: 111 },
+      }))
       persistence.persistUserData = jest.fn()
       auth.signInUser = jest.fn(() => ({
-        success: true,
+        success: false,
         error: { code: 101, message: "Mock Error" },
       }))
       auth.getCurrentAuthUser = jest.fn(() => ({
@@ -273,12 +291,250 @@ describe("SignInForm", () => {
             target: { value: "Super_Secret_Password1" },
           }
         )
+        await fireEvent.click(getByTestId("sign-up-tc-check"))
+
         const submitButton = getByTestId("sign-up-submit-button")
         await fireEvent.click(submitButton)
       })
 
       // ASSERT
-      expect(gatsby.navigate).toHaveBeenCalledWith(ROUTES.SIGN_IN)
+      expect(gatsby.navigate).toHaveBeenCalledWith(ROUTES.DASHBOARD)
+    })
+
+    test(`when an API error occurs in sign up, the message is displayed to the user`, async () => {
+      // ARRANGE
+      const mockServerError = { code: 101, message: "Mock Server Error" }
+      auth.signUpUser = jest.fn(() => ({
+        success: false,
+        error: mockServerError,
+      }))
+
+      // ACT
+      const { getByTestId, queryByTestId } = render(<SignUpForm />)
+      await act(async () => {
+        await fireEvent.change(
+          getByTestId("sign-up-forename-input").querySelector("input"),
+          {
+            target: { value: "Johnny" },
+          }
+        )
+        await fireEvent.change(
+          getByTestId("sign-up-surname-input").querySelector("input"),
+          {
+            target: { value: "Test" },
+          }
+        )
+        await fireEvent.change(
+          getByTestId("sign-up-email-input").querySelector("input"),
+          {
+            target: { value: "johnny@test.com" },
+          }
+        )
+        await fireEvent.change(
+          getByTestId("sign-up-password-input").querySelector("input"),
+          {
+            target: { value: "Super_Secret_Password1" },
+          }
+        )
+        await fireEvent.click(getByTestId("sign-up-tc-check"))
+
+        const submitButton = getByTestId("sign-up-submit-button")
+        await fireEvent.click(submitButton)
+      })
+      const authDisplayError = queryByTestId("sign-up-auth-error")
+
+      // ASSERT
+      expect(authDisplayError).toBeTruthy()
+      expect(authDisplayError.textContent).toBe(mockServerError.message)
+    })
+    test(`when the first name field is empty or invalid and attempt to sign up occurs, then sign up does not happen`, async () => {
+      // ARRANGE
+      auth.signUpUser = jest.fn()
+
+      // ACT
+      const { getByTestId } = render(<SignUpForm />)
+      await act(async () => {
+        await fireEvent.change(
+          getByTestId("sign-up-surname-input").querySelector("input"),
+          {
+            target: { value: "Test" },
+          }
+        )
+        await fireEvent.change(
+          getByTestId("sign-up-email-input").querySelector("input"),
+          {
+            target: { value: "johnny@test.com" },
+          }
+        )
+        await fireEvent.change(
+          getByTestId("sign-up-password-input").querySelector("input"),
+          {
+            target: { value: "Super_Secret_Password1" },
+          }
+        )
+        const submitButton = getByTestId("sign-up-submit-button")
+        await fireEvent.click(submitButton)
+      })
+
+      // ASSERT
+      expect(auth.signUpUser).not.toHaveBeenCalled()
+    })
+
+    test(`when the last name field is empty or invalid and attempt to sign up occurs, then sign up does not happen`, async () => {
+      // ARRANGE
+      auth.signUpUser = jest.fn()
+
+      // ACT
+      const { getByTestId } = render(<SignUpForm />)
+      await act(async () => {
+        await fireEvent.change(
+          getByTestId("sign-up-forename-input").querySelector("input"),
+          {
+            target: { value: "Johnny" },
+          }
+        )
+        await fireEvent.change(
+          getByTestId("sign-up-email-input").querySelector("input"),
+          {
+            target: { value: "johnny@test.com" },
+          }
+        )
+        await fireEvent.change(
+          getByTestId("sign-up-password-input").querySelector("input"),
+          {
+            target: { value: "Super_Secret_Password1" },
+          }
+        )
+        const submitButton = getByTestId("sign-up-submit-button")
+        await fireEvent.click(submitButton)
+      })
+
+      // ASSERT
+      expect(auth.signUpUser).not.toHaveBeenCalled()
+    })
+    test(`when the email field is empty or invalid and attempt to sign up occurs, then sign up does not happen`, async () => {
+      // ARRANGE
+      auth.signUpUser = jest.fn()
+
+      // ACT
+      const { getByTestId } = render(<SignUpForm />)
+      await act(async () => {
+        await fireEvent.change(
+          getByTestId("sign-up-forename-input").querySelector("input"),
+          {
+            target: { value: "Johnny" },
+          }
+        )
+        await fireEvent.change(
+          getByTestId("sign-up-surname-input").querySelector("input"),
+          {
+            target: { value: "Test" },
+          }
+        )
+        await fireEvent.change(
+          getByTestId("sign-up-password-input").querySelector("input"),
+          {
+            target: { value: "Super_Secret_Password1" },
+          }
+        )
+        const submitButton = getByTestId("sign-up-submit-button")
+        await fireEvent.click(submitButton)
+      })
+
+      // ASSERT
+      expect(auth.signUpUser).not.toHaveBeenCalled()
+    })
+    test(`when the password field is empty or invalid and attempt to sign up occurs, then sign up does not happen`, async () => {
+      // ARRANGE
+      auth.signUpUser = jest.fn()
+
+      // ACT
+      const { getByTestId } = render(<SignUpForm />)
+      await act(async () => {
+        await fireEvent.change(
+          getByTestId("sign-up-forename-input").querySelector("input"),
+          {
+            target: { value: "Johnny" },
+          }
+        )
+        await fireEvent.change(
+          getByTestId("sign-up-surname-input").querySelector("input"),
+          {
+            target: { value: "Test" },
+          }
+        )
+        await fireEvent.change(
+          getByTestId("sign-up-email-input").querySelector("input"),
+          {
+            target: { value: "johnny@test.com" },
+          }
+        )
+        const submitButton = getByTestId("sign-up-submit-button")
+        await fireEvent.click(submitButton)
+      })
+
+      // ASSERT
+      expect(auth.signUpUser).not.toHaveBeenCalled()
+    })
+    test(`when the terms and conditions are not accepted, then sign up does not happen and a message is displayed to the user `, async () => {
+      // ARRANGE
+      auth.signUpUser = jest.fn()
+
+      // ACT
+      const { getByTestId, queryByTestId } = render(<SignUpForm />)
+      await act(async () => {
+        await fireEvent.change(
+          getByTestId("sign-up-forename-input").querySelector("input"),
+          {
+            target: { value: "Johnny" },
+          }
+        )
+        await fireEvent.change(
+          getByTestId("sign-up-surname-input").querySelector("input"),
+          {
+            target: { value: "Test" },
+          }
+        )
+        await fireEvent.change(
+          getByTestId("sign-up-email-input").querySelector("input"),
+          {
+            target: { value: "johnny@test.com" },
+          }
+        )
+        await fireEvent.change(
+          getByTestId("sign-up-password-input").querySelector("input"),
+          {
+            target: { value: "Super_Secret_Password1" },
+          }
+        )
+        const submitButton = getByTestId("sign-up-submit-button")
+        await fireEvent.click(submitButton)
+      })
+      const authDisplayError = queryByTestId("sign-up-auth-error")
+
+      // ASSERT
+      expect(auth.signUpUser).not.toHaveBeenCalled()
+      expect(authDisplayError).toBeTruthy()
+      expect(authDisplayError.textContent).toBe(
+        translations["You must agree to the terms and conditions"]
+      )
+    })
+    test(`when user is shown the error on not accepting the terms and conditions and checks the terms and conditions while another validation error occurs, the error message for not accepting terms and conditions is not shown`, async () => {
+      // ARRANGE
+      auth.signUpUser = jest.fn()
+
+      // ACT
+      const { getByTestId, queryByTestId } = render(<SignUpForm />)
+      await act(async () => {
+        const submitButton = getByTestId("sign-up-submit-button")
+        await fireEvent.click(submitButton)
+        await fireEvent.click(getByTestId("sign-up-tc-check"))
+        await fireEvent.click(submitButton)
+      })
+      const authDisplayError = queryByTestId("sign-up-auth-error")
+
+      // ASSERT
+      expect(authDisplayError).toBeFalsy()
     })
   })
 })

@@ -1,15 +1,19 @@
 import { useEffect, useState } from "react"
-import { retrieveData } from "./utils"
+import { retrieveRecordsByQuery } from "./utils"
 import { STOOL_NAMESPACE } from "./namespaces"
 
-export const useStoolRecordsForPerson = () => {
+export const useStoolRecordsForPerson = userId => {
   const [stoolRecords, setStoolRecords] = useState([])
   useEffect(() => {
-    const retrieveStoolRecords = async () => {
-      setStoolRecords(await retrieveData(STOOL_NAMESPACE))
+    if (userId) {
+      const retrieveStoolRecords = async () => {
+        setStoolRecords(
+          await retrieveRecordsByQuery(STOOL_NAMESPACE, `uid == ${userId}`)
+        )
+      }
+      retrieveStoolRecords()
     }
-    retrieveStoolRecords()
-  }, [])
+  }, [userId])
 
   return [stoolRecords]
 }

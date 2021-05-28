@@ -3,6 +3,11 @@ import { render, fireEvent } from "@testing-library/react"
 import StoolTypeCapture from "../StoolTypeCapture"
 import stoolClassifications from "../../../../utils/stool-classifications"
 
+// import firebase from "gatsby-plugin-firebase" causes error
+jest.mock("../../../firebase/auth")
+jest.mock("../../../firebase/utils")
+jest.mock("../../../firebase/firebase")
+
 describe("StoolTypeCapture", () => {
   describe("UI", () => {
     stoolClassifications.forEach(stoolClassification => {

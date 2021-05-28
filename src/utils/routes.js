@@ -1,18 +1,23 @@
 const HOME = { HOME: "/" }
 const AUTH = {
-  SIGN_IN: "/test-signin",
-  SIGN_UP: "/test-signup",
-  FORGOT_PASSWORD: "/test-forgotpassword",
-  PRIVACY_POLICY: "/test-privacypolicy",
+  SIGN_IN: "/signin",
+  SIGN_UP: "/signup",
+  FORGOT_PASSWORD: "/forgotpassword",
+  PRIVACY_POLICY: "/privacypolicy",
 }
-const RECORD_STOOL = { RECORD_STOOL: "/test-record-stool" }
-const DASHBOARD = { DASHBOARD: "/test-list-stool" }
+const STOOL = {
+  RECORD_STOOL: "/record-stool",
+  LIST_STOOL: "/list-stool",
+}
+const DASHBOARD = { DASHBOARD: "/dashboard" }
 const MISSING = { MISSING: "/404" }
+const CONTACT = { CONTACTUS: "/contact" }
 
 export default {
   ...HOME,
   ...AUTH,
-  ...RECORD_STOOL,
+  ...STOOL,
   ...DASHBOARD,
   ...MISSING,
+  ...CONTACT,
 }

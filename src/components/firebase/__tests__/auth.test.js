@@ -76,9 +76,10 @@ describe("Firebase Auth", () => {
     })
     test(`when email and password is provided and sign up is success, return success response`, async () => {
       // ARRANGE
-      firebaseAuth.createUserWithEmailAndPassword = jest.fn(() =>
-        Promise.resolve()
-      )
+
+      firebaseAuth.createUserWithEmailAndPassword = jest
+        .fn()
+        .mockResolvedValue({ user: { uid: 1 } })
 
       // ACT
       const response = await signUpUser({

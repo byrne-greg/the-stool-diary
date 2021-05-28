@@ -7,6 +7,7 @@ import {
   UPDATE_FORENAME_ERROR,
   UPDATE_SURNAME,
   UPDATE_SURNAME_ERROR,
+  UPDATE_TERMSANDCONDITIONS,
   UPDATE_AUTH_ERROR,
 } from "./actionTypes"
 
@@ -37,6 +38,15 @@ export const authReducer = (state, action) => {
       break
     case UPDATE_SURNAME_ERROR:
       newState = { ...state, surname: { ...state.surname, error: newValue } }
+      break
+    case UPDATE_TERMSANDCONDITIONS:
+      newState = {
+        ...state,
+        isTermsAndConditionsAccepted: {
+          ...state.isTermsAndConditionsAccepted,
+          value: newValue,
+        },
+      }
       break
     case UPDATE_AUTH_ERROR:
       newState = { ...state, authError: newValue }
